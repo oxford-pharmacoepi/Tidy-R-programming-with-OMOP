@@ -1,8 +1,6 @@
-# Darwin Developer Documentation
+# R programming with databases: applications with the OMOP CDM
 
-<https://darwin-eu.quarto.pub/devguide/>
-
-This repo contains the source code for the Darwin Developer website. This website is the central hub for information related to the developing the tools used in Darwin to conduct studies. It outlines everything a developer needs to know to contribute to the project.
+<https://darwin-eu.quarto.pub/rprogrammingwithdatabases/>
 
 ## Updating the website
 
