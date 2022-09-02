@@ -6,7 +6,7 @@ execute:
 
 book:
   title: "DARWIN EU(c) R programming with databases: applications with the OMOP CDM"
-  author: "Edward Burn, Adam Black, Marti Catala"
+  author: "Edward Burn, Adam Black, Marti Catala, Berta Raventós "
   date: today
   chapters:
     - index.qmd
