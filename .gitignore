@@ -1,0 +1,5 @@
+.Rproj.user/*
+.Rhistory
+/_site/
+/.quarto/
+.Rproj.user

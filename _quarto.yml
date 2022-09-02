@@ -1,0 +1,32 @@
+project:
+  type: book
+
+execute:
+  freeze: true
+
+book:
+  title: "DARWIN EU(c) R programming with databases: applications with the OMOP CDM"
+  author: "Edward Burn, Adam Black, Marti Catala"
+  date: today
+  chapters:
+    - index.qmd
+    - getting_started_with_r.qmd
+    - projects.qmd
+    - databases_and_r.qmd
+    - arrow_and_r.qmd
+    - analysis_in_r.qmd
+    - references.qmd
+
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+
+
+  

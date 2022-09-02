@@ -1,0 +1,98 @@
+# Getting started with R
+
+## Installing R and R Studio
+
+https://cran.r-project.org/bin/windows/base/
+
+https://www.rstudio.com/products/rstudio/download/
+
+## A first data analysis in R
+
+![](images/lter_penguins.png){width="250"}
+
+*Artwork by \@allison_horst*
+
+For a quick example of a data analysis with R, let´s use the data from palmerpenguins package (https://allisonhorst.github.io/palmerpenguins/), which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
+
+Because we´ll be using a few packages not included in base R, first we need to install these if we don´t already have them.
+
+```{r, eval=FALSE}
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("palmerpenguins")
+```
+
+Once installed, we can load them like so.
+
+```{r, message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(palmerpenguins)
+```
+
+We can get an overview of the data using the `glimpse()` command.
+
+```{r}
+glimpse(penguins)
+```
+
+Let´s get a count by species
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  count()
+```
+
+Now suppose we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarise(not_missing_body_mass_g=sum(!is.na(body_mass_g)==TRUE),
+            missing_body_mass_g=sum(is.na(body_mass_g)==TRUE))
+```
+
+We can get the mean for each of the species (dropping those two missing records).
+
+```{r, warning=FALSE, message=FALSE}
+penguins %>% 
+  group_by(species) %>% 
+  summarise(mean_body_mass_g=round(mean(body_mass_g, na.rm=TRUE)))
+```
+
+We can then also do a histogram for each of the species.
+
+```{r, warning=FALSE, message=FALSE}
+penguins %>% 
+  ggplot(aes(group=species, fill=species))+
+  facet_grid(species~ .) +
+  geom_histogram(aes(body_mass_g), colour="black", binwidth = 100)+
+  theme_bw()+
+  theme(legend.position = "none") 
+```
+
+How about the relationship between body mass and bill depth?
+
+```{r, warning=FALSE, message=FALSE}
+penguins %>% 
+  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+
+  geom_point()+
+  geom_smooth(method="lm",se=FALSE )+
+  theme_bw()+
+  theme(legend.position = "none") 
+```
+
+But what about by species?
+
+```{r, warning=FALSE, message=FALSE}
+penguins %>% 
+  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+
+  facet_grid(species~ .) +
+  geom_point()+
+  geom_smooth(method="lm",se=FALSE )+
+  theme_bw()+
+  theme(legend.position = "none") 
+```
+
+Oh, your first data analysis and you have already found an example of [Simpson´s paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox)!

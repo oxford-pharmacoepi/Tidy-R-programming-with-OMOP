@@ -1,0 +1,5 @@
+# Working with Apache Arrow from R
+
+The Apache Arrow project defines two data formats for tabular data. The Arrow Dataset is an in-memory format for columnar data that can be accessed and used from multiple programming languages including R, python, and Java, and more. The feather file format is an on-disk format that can be used to efficently store and manipulate larger than memory dataframes. The [arrow R package](https://arrow.apache.org/docs/r/) provides tools for working with both of these from R.
+
+The [Andromeda](https://ohdsi.github.io/Andromeda/) R package provides a way to manipulate larger than memory dataframes in R. There is an open issue to convert Andromeda to arrow and much of that work has been completed but not yet released in OHDSI. Andromeda objects are simply a list references to on-disk feather files that can be manipulated from R using `dplyr`. Andromeda should only be used if data cannot be constrained to available RAM.

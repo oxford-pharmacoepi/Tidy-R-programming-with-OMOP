@@ -1,0 +1,21 @@
+# Working with databases from R
+
+## CDMConnector
+
+## Dbplyr
+
+### show_query()
+
+### filter(), select(), mutate()
+
+### right_join(), left_join(), inner_join(), and anti_join()
+
+### summarise()
+
+### collect() and compute()
+
+### working with dates
+
+### working with strings
+
+## sqlRender

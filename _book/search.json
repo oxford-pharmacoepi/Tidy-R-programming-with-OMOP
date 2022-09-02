@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "DARWIN EU(c) R programming with databases: applications with the OMOP CDM",
+    "section": "",
+    "text": "This book is written for analysts writing analytic code with R to run against the OMOP CDM. This source code for the book can be found at this Github repository Please open an issue there if you have a question or suggestion. Pull requests with suggested changes and additions are also most welcome."
+  },
+  {
+    "objectID": "getting_started_with_r.html",
+    "href": "getting_started_with_r.html",
+    "title": "1  Getting started with R",
+    "section": "",
+    "text": "https://cran.r-project.org/bin/windows/base/\nhttps://www.rstudio.com/products/rstudio/download/"
+  },
+  {
+    "objectID": "getting_started_with_r.html#a-first-data-analysis",
+    "href": "getting_started_with_r.html#a-first-data-analysis",
+    "title": "1  Getting started with R",
+    "section": "1.2 A first data analysis",
+    "text": "1.2 A first data analysis\n\nArtwork by @allison_horst\nFor a quick example of a data analysis with R, let´s use the data from palmerpenguins package (https://allisonhorst.github.io/palmerpenguins/), which contains data on penguins collected from the Palmer Station in Antarctica.\nBecause we´ll be using a few packages not included in base R, first we need to install these if we don´t already have them.\n\ninstall.packages(\"dplyr\")\ninstall.packages(\"ggplot2\")\ninstall.packages(\"palmerpenguins\")\n\nOnce installed, we can load them like so.\n\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(palmerpenguins)\n\nWe can get an overview of the data using the glimpse() command.\n\nglimpse(penguins)\n\nRows: 344\nColumns: 8\n$ species           <fct> Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…\n$ island            <fct> Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…\n$ bill_length_mm    <dbl> 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …\n$ bill_depth_mm     <dbl> 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …\n$ flipper_length_mm <int> 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…\n$ body_mass_g       <int> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …\n$ sex               <fct> male, female, female, NA, female, male, female, male…\n$ year              <int> 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…\n\n\nLet´s get a count by species\n\npenguins %>% \n  group_by(species) %>% \n  count()\n\n# A tibble: 3 × 2\n# Groups:   species [3]\n  species       n\n  <fct>     <int>\n1 Adelie      152\n2 Chinstrap    68\n3 Gentoo      124\n\n\nNow suppose we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.\n\npenguins %>% \n  group_by(species) %>% \n  summarise(not_missing_body_mass_g=sum(!is.na(body_mass_g)==TRUE),\n            missing_body_mass_g=sum(is.na(body_mass_g)==TRUE))\n\n# A tibble: 3 × 3\n  species   not_missing_body_mass_g missing_body_mass_g\n  <fct>                       <int>               <int>\n1 Adelie                        151                   1\n2 Chinstrap                      68                   0\n3 Gentoo                        123                   1\n\n\nWe can get the mean for each of the species (dropping those two missing records).\n\npenguins %>% \n  group_by(species) %>% \n  summarise(mean_body_mass_g=round(mean(body_mass_g, na.rm=TRUE)))\n\n# A tibble: 3 × 2\n  species   mean_body_mass_g\n  <fct>                <dbl>\n1 Adelie                3701\n2 Chinstrap             3733\n3 Gentoo                5076\n\n\nWe can then also do a histogram for each of the species.\n\npenguins %>% \n  ggplot(aes(group=species, fill=species))+\n  facet_grid(species~ .) +\n  geom_histogram(aes(body_mass_g), colour=\"black\", binwidth = 100)+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nHow about the relationship between body mass and bill depth?\n\npenguins %>% \n  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+\n  geom_point()+\n  geom_smooth(method=\"lm\",se=FALSE )+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nBut what about by species?\n\npenguins %>% \n  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+\n  facet_grid(species~ .) +\n  geom_point()+\n  geom_smooth(method=\"lm\",se=FALSE )+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nOh, your first data analysis and you have already found an example of Simpson´s paradox!"
+  },
+  {
+    "objectID": "projects.html#structure-of-an-r-project",
+    "href": "projects.html#structure-of-an-r-project",
+    "title": "2  Structure of a project",
+    "section": "2.2 Structure of an R project",
+    "text": "2.2 Structure of an R project"
+  },
+  {
+    "objectID": "projects.html#adding-renv",
+    "href": "projects.html#adding-renv",
+    "title": "2  Structure of a project",
+    "section": "2.3 Adding renv",
+    "text": "2.3 Adding renv"
+  },
+  {
+    "objectID": "databases_and_r.html#dbplyr",
+    "href": "databases_and_r.html#dbplyr",
+    "title": "3  Working with databases from R",
+    "section": "3.2 Dbplyr",
+    "text": "3.2 Dbplyr\n\n3.2.1 show_query()\n\n\n3.2.2 filter(), select(), mutate()\n\n\n3.2.3 right_join(), left_join(), inner_join(), and anti_join()\n\n\n3.2.4 summarise()\n\n\n3.2.5 collect() and compute()\n\n\n3.2.6 working with dates\n\n\n3.2.7 working with strings"
+  },
+  {
+    "objectID": "databases_and_r.html#sqlrender",
+    "href": "databases_and_r.html#sqlrender",
+    "title": "3  Working with databases from R",
+    "section": "3.3 sqlRender",
+    "text": "3.3 sqlRender"
+  },
+  {
+    "objectID": "arrow_and_r.html",
+    "href": "arrow_and_r.html",
+    "title": "4  Working with Apache Arrow from R",
+    "section": "",
+    "text": "The Andromeda R package provides a way to manipulate larger than memory dataframes in R. There is an open issue to convert Andromeda to arrow and much of that work has been completed but not yet released in OHDSI. Andromeda objects are simply a list references to on-disk feather files that can be manipulated from R using dplyr. Andromeda should only be used if data cannot be constrained to available RAM."
+  },
+  {
+    "objectID": "getting_started_with_r.html#a-first-data-analysis-in-r",
+    "href": "getting_started_with_r.html#a-first-data-analysis-in-r",
+    "title": "1  Getting started with R",
+    "section": "1.2 A first data analysis in R",
+    "text": "1.2 A first data analysis in R\n\nArtwork by @allison_horst\nFor a quick example of a data analysis with R, let´s use the data from palmerpenguins package (https://allisonhorst.github.io/palmerpenguins/), which contains data on penguins collected from the Palmer Station in Antarctica.\nBecause we´ll be using a few packages not included in base R, first we need to install these if we don´t already have them.\n\ninstall.packages(\"dplyr\")\ninstall.packages(\"ggplot2\")\ninstall.packages(\"palmerpenguins\")\n\nOnce installed, we can load them like so.\n\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(palmerpenguins)\n\nWe can get an overview of the data using the glimpse() command.\n\nglimpse(penguins)\n\nRows: 344\nColumns: 8\n$ species           <fct> Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…\n$ island            <fct> Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…\n$ bill_length_mm    <dbl> 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …\n$ bill_depth_mm     <dbl> 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …\n$ flipper_length_mm <int> 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…\n$ body_mass_g       <int> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …\n$ sex               <fct> male, female, female, NA, female, male, female, male…\n$ year              <int> 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…\n\n\nLet´s get a count by species\n\npenguins %>% \n  group_by(species) %>% \n  count()\n\n# A tibble: 3 × 2\n# Groups:   species [3]\n  species       n\n  <fct>     <int>\n1 Adelie      152\n2 Chinstrap    68\n3 Gentoo      124\n\n\nNow suppose we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.\n\npenguins %>% \n  group_by(species) %>% \n  summarise(not_missing_body_mass_g=sum(!is.na(body_mass_g)==TRUE),\n            missing_body_mass_g=sum(is.na(body_mass_g)==TRUE))\n\n# A tibble: 3 × 3\n  species   not_missing_body_mass_g missing_body_mass_g\n  <fct>                       <int>               <int>\n1 Adelie                        151                   1\n2 Chinstrap                      68                   0\n3 Gentoo                        123                   1\n\n\nWe can get the mean for each of the species (dropping those two missing records).\n\npenguins %>% \n  group_by(species) %>% \n  summarise(mean_body_mass_g=round(mean(body_mass_g, na.rm=TRUE)))\n\n# A tibble: 3 × 2\n  species   mean_body_mass_g\n  <fct>                <dbl>\n1 Adelie                3701\n2 Chinstrap             3733\n3 Gentoo                5076\n\n\nWe can then also do a histogram for each of the species.\n\npenguins %>% \n  ggplot(aes(group=species, fill=species))+\n  facet_grid(species~ .) +\n  geom_histogram(aes(body_mass_g), colour=\"black\", binwidth = 100)+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nHow about the relationship between body mass and bill depth?\n\npenguins %>% \n  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+\n  geom_point()+\n  geom_smooth(method=\"lm\",se=FALSE )+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nBut what about by species?\n\npenguins %>% \n  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+\n  facet_grid(species~ .) +\n  geom_point()+\n  geom_smooth(method=\"lm\",se=FALSE )+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nOh, your first data analysis and you have already found an example of Simpson´s paradox!"
+  }
+]

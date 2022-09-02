@@ -1,0 +1,5 @@
+# Preface {.unnumbered}
+
+This book is written for analysts writing analytic code with R to run against the OMOP CDM. This source code for the book can be found at this [Github repository](https://github.com/darwin-eu/darwin-devguide "darwin-devguide") Please open an issue there if you have a question or suggestion. Pull requests with suggested changes and additions are also most welcome.
+
+![](images/paste-BCCDE85B.png){fig-align="right" width="240"}

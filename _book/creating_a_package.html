@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>DARWIN EU(c) R packages: development, maintenance, and software peer review - 6&nbsp; Creating a package</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./contributing_to_a_package.html" rel="next">
+<link href="./design_guide.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Creating a package</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">DARWIN EU(c) R packages: development, maintenance, and software peer review</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./omop.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">OHDSI and the OMOP CDM</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coordination.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">General policies</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roadmap.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Development Roadmap</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./design_guide.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Design considerations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./creating_a_package.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Creating a package</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contributing_to_a_package.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Contributing to a package</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./code_review.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Code review</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./package_maintenance.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Package maintenance</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./getting_started_with_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting started with R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./databases_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Working with databases from R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Working with Apache Arrow from R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./teams.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Working collaboratively</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#software-specification" id="toc-software-specification" class="nav-link active" data-scroll-target="#software-specification"> <span class="header-section-number">6.1</span> Software specification</a></li>
+  <li><a href="#test-plan" id="toc-test-plan" class="nav-link" data-scroll-target="#test-plan"> <span class="header-section-number">6.2</span> Test plan</a></li>
+  <li><a href="#prototyping" id="toc-prototyping" class="nav-link" data-scroll-target="#prototyping"> <span class="header-section-number">6.3</span> Prototyping</a></li>
+  <li><a href="#an-empty-package" id="toc-an-empty-package" class="nav-link" data-scroll-target="#an-empty-package"> <span class="header-section-number">6.4</span> An empty package</a></li>
+  <li><a href="#adding-features-with-test-driven-development" id="toc-adding-features-with-test-driven-development" class="nav-link" data-scroll-target="#adding-features-with-test-driven-development"> <span class="header-section-number">6.5</span> Adding features with test driven development</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation"> <span class="header-section-number">6.6</span> Documentation</a></li>
+  <li><a href="#seeking-feedback" id="toc-seeking-feedback" class="nav-link" data-scroll-target="#seeking-feedback"> <span class="header-section-number">6.7</span> Seeking feedback</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Creating a package</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="software-specification" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="software-specification"><span class="header-section-number">6.1</span> Software specification</h2>
+<p>So you want to create a new package for DARWIN. The first question to ask is “What is the responsibility of this package and why does it not fit into an existing DARWIN package?” Each DARWIN package represents a set responsibilities and exports the required necessary to meet those responsibilities. Once you have a clear idea of the package responsibility and believe the functionality needs to be separated from other packages the next set is to create the interface. In R the interface will be a collection of functions that work together to solve the problem. R packages can also have data embedded in them so also consider what data your package should export. Aim for a narrow interface that supports deeper functionality instead of a wide interface that supports shallow functionality. <img src="images/deep-modules.png" class="img-fluid"></p>
+<p>Figure from “A Philosophy Of Software Design” by John Ousterhout</p>
+<p>This does not mean that your package should export one function that does everything. On the contrary it is about what information can be hidden behind the interface that the user never needs to know about. The more information that can be hidden from the user of the interface, the narrower the interface needs to be. Wrapper functions that primarily pass data around tend to be shallow.</p>
+<p>Divide what your package needs to do into three categories:</p>
+<ul>
+<li><p>calculations</p></li>
+<li><p>actions</p></li>
+<li><p>data</p></li>
+</ul>
+<p>Calculations refer to so called “pure” functions that take some input and return a value. They do not modify the external state at all and have no side effects. Most of your functions should be calculations because they make code safer and easier to reason about. Given the same input a calculation will always return the same output. It does not matter when or how many times a calculation runs.</p>
+<p>Actions are functions with side effects. They change the external world in some observable way such as saving a file, creating a new table in a database, updating a database table, printing a value, displaying a plot, changing a global option or environment variable. Your package will need actions but they should be separate from calculations.</p>
+<p>Data are inert. Data does not need to do anything which makes it much simpler than calculations or actions. Include inert data that your package needs with <code>usethis::use_data(iris, internal = FALSE)</code>. Data can be internal or exported from the package.</p>
+<p>Reference “Grokking Simplicity” by Eric Normand</p>
+<p>A specification or a blueprint is simply a document that describes what the package does. It should describe the interface and the functionality. It does not describe how the package works. It also does not need to be formal. For R packages we can think of the package manual, function interface documentation, and vignettes as the specification of the software.</p>
+</section>
+<section id="test-plan" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="test-plan"><span class="header-section-number">6.2</span> Test plan</h2>
+<p>As much as possible strive to test all functionality that is added to the code base. This can be difficult because much of DARWIN code is designed to run on remote databases. There will be databases set up to use for testing functionality that requires a remote database. Tests should run quickly if at all possible so that we can all run tests very frequently during development.</p>
+</section>
+<section id="prototyping" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="prototyping"><span class="header-section-number">6.3</span> Prototyping</h2>
+<blockquote class="blockquote">
+<p>If a picture is worth 1000 words, a prototype is worth a 1000 meetings</p>
+<p>IDEO</p>
+</blockquote>
+<p>“The Pragmatic Programmer” describes a concept called <em>tracer bullets</em>. These are working prototypes that mimic the real implementation as much as possible with minimal effort. They are working code examples that could grow into a full solution: a “bare bones” implementation. They give the programmer rapid feedback on an idea.</p>
+</section>
+<section id="an-empty-package" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="an-empty-package"><span class="header-section-number">6.4</span> An empty package</h2>
+<p>usethis and devtools</p>
+</section>
+<section id="adding-features-with-test-driven-development" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="adding-features-with-test-driven-development"><span class="header-section-number">6.5</span> Adding features with test driven development</h2>
+</section>
+<section id="documentation" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="documentation"><span class="header-section-number">6.6</span> Documentation</h2>
+<blockquote class="blockquote">
+<p>The faintest ink is more powerful than the strongest memory</p>
+</blockquote>
+<p>Documentation is just as important as the working code. As mentioned before the package manual and vignettes are the specification of the software. Vignettes should contain working code examples that should be rebuilt before each release so that they are up to date.</p>
+</section>
+<section id="seeking-feedback" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="seeking-feedback"><span class="header-section-number">6.7</span> Seeking feedback</h2>
+<blockquote class="blockquote">
+<p>“Our highest priority is to satisfy the customer through early and continuous delivery of valuable software”</p>
+<p>Agile manifesto</p>
+</blockquote>
+<p>Software is never complete and needs to be designed to change in response to user needs. “Soft” in software is meant to imply “easy to change”. Changing software in response to feedback from users and other developers is important to the success of DARWIN software.</p>
+<p>User review is the process of requesting input from one or more potential users of your software.</p>
+<p>Code review involves having another developer review your code, make comments, and suggest changes.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./design_guide.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Design considerations</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./contributing_to_a_package.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Contributing to a package</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
