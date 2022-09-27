@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.0.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Edward Burn, Adam Black, Marti Catala, Berta Raventós">
-<meta name="dcterms.date" content="2022-09-02">
+<meta name="dcterms.date" content="2022-09-26">
 
-<title>DARWIN EU(c) R programming with databases: applications with the OMOP CDM</title>
+<title>Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -62,11 +62,12 @@ ul.task-list{list-style: none;}
 
 <body class="nav-sidebar floating">
 
+
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">DARWIN EU(c) R programming with databases: applications with the OMOP CDM</h1>
+      <h1 class="quarto-secondary-nav-title">Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -79,7 +80,7 @@ ul.task-list{list-style: none;}
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">DARWIN EU(c) R programming with databases: applications with the OMOP CDM</a> 
+      <a href="./">Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model</a> 
     </div>
       </div>
       <div class="mt-2 flex-shrink-0 align-items-center">
@@ -96,27 +97,42 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting_started_with_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started with R</span></a>
+  <a href="./getting_started_with_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started with R and database</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./projects.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Structure of a project</span></a>
+  <a href="./connecting_to_cdm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">connecting_to_cdm.html</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./databases_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Working with databases from R</span></a>
+  <a href="./exploring_the_cdm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Exploring the CDM</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./arrow_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Working with Apache Arrow from R</span></a>
+  <a href="./databases_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">filter(), select(), mutate()</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./analysis_in_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Analysis in R</span></a>
+  <a href="./working_with_multiple_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">right_join(), left_join(), inner_join(), and anti_join()</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./moving_to_arrow_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Getting to tidy data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis_in_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysis in R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./projects.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">projects.html</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -142,7 +158,7 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">DARWIN EU(c) R programming with databases: applications with the OMOP CDM</h1>
+<h1 class="title d-none d-lg-block">Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model</h1>
 </div>
 
 
@@ -159,7 +175,7 @@ ul.task-list{list-style: none;}
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 2, 2022</p>
+      <p class="date">September 26, 2022</p>
     </div>
   </div>
     
@@ -170,12 +186,7 @@ ul.task-list{list-style: none;}
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>This book is written for analysts writing analytic code with R to run against the OMOP CDM. This source code for the book can be found at this <a href="https://github.com/darwin-eu/darwin-devguide" title="darwin-devguide">Github repository</a> Please open an issue there if you have a question or suggestion. Pull requests with suggested changes and additions are also most welcome.</p>
-<div class="quarto-figure quarto-figure-right">
-<figure class="figure">
-<p><img src="images/paste-BCCDE85B.png" class="img-fluid figure-img" width="240"></p>
-</figure>
-</div>
+<p>This book is written for analysts writing analytic code with R to run against the OMOP CDM. This source code for the book can be found at this <a href="https://github.com/edward-burn/darwin-devguide" title="TidyRProgrammingWithDatabases">Github repository</a> Please open an issue there if you have a question or suggestion. Pull requests with suggested changes and additions are also most welcome.</p>
 
 
 </section>
@@ -283,7 +294,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./getting_started_with_r.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started with R</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started with R and database</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

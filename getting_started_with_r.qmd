@@ -1,24 +1,22 @@
-# Getting started with R
+# Getting started with R and database
 
-## Installing R and R Studio
-
-https://cran.r-project.org/bin/windows/base/
-
-https://www.rstudio.com/products/rstudio/download/
-
-## A first data analysis in R
+## A first data analysis in R with a database
 
 ![](images/lter_penguins.png){width="250"}
 
 *Artwork by \@allison_horst*
 
-For a quick example of a data analysis with R, let´s use the data from palmerpenguins package (https://allisonhorst.github.io/palmerpenguins/), which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
+Before we start thinking about working with health care data spread across the OMOP common data model, let's first do a quick data analysis using a simpler dataset. For this we'll use data data from [palmerpenguins package](https://allisonhorst.github.io/palmerpenguins/), which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
 
-Because we´ll be using a few packages not included in base R, first we need to install these if we don´t already have them.
+## Getting set up
+
+Assuming that you have R and RStudio already set up, first we need to install a few packages not included in base R if we don´t already have them.
 
 ```{r, eval=FALSE}
 install.packages("dplyr")
 install.packages("ggplot2")
+install.packages("DBI")
+install.packages("duckdb")
 install.packages("palmerpenguins")
 ```
 
@@ -27,8 +25,12 @@ Once installed, we can load them like so.
 ```{r, message=FALSE}
 library(dplyr)
 library(ggplot2)
+library(DBI)
+library(duckdb)
 library(palmerpenguins)
 ```
+
+## Taking a peek at the data
 
 We can get an overview of the data using the `glimpse()` command.
 
@@ -36,10 +38,47 @@ We can get an overview of the data using the `glimpse()` command.
 glimpse(penguins)
 ```
 
+Or we could take a look at the first row of the data using `head()`
+
+```{r}
+head(penguins, 1)
+```
+
+## Inserting data into a database
+
+Let's put our penguins data into a duckdb database. We first create the duckdb database, then add the penguins data, and the create a reference to the table with the data.
+
+```{r}
+db<-dbConnect(duckdb::duckdb(), dbdir=":memory:")
+dbWriteTable(db, "penguins", penguins)
+penguins_db<-tbl(db, "penguins")
+```
+
+Now the data is in a database we could use SQL to get the first row that we saw before
+
+```{r}
+dbGetQuery(db, "SELECT * FROM penguins LIMIT 1")
+```
+
+But we could also use the same R code as before
+
+```{r}
+head(penguins_db, 1)
+```
+
+## Analysis
+
+The magic here is provided by dbplyr which takes the R code and converts it into SQL, which is this case looks like
+
+```{r}
+head(penguins_db, 1) %>% 
+  show_query()
+```
+
 Let´s get a count by species
 
 ```{r}
-penguins %>% 
+penguins_db %>% 
   group_by(species) %>% 
   count()
 ```
@@ -47,24 +86,27 @@ penguins %>%
 Now suppose we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.
 
 ```{r}
-penguins %>% 
-  group_by(species) %>% 
-  summarise(not_missing_body_mass_g=sum(!is.na(body_mass_g)==TRUE),
-            missing_body_mass_g=sum(is.na(body_mass_g)==TRUE))
+penguins_db %>% 
+  mutate(missing_body_mass_g=if_else(
+    is.na(body_mass_g),1,0
+  )) %>% 
+  group_by(species, missing_body_mass_g) %>% 
+  tally()
 ```
 
 We can get the mean for each of the species (dropping those two missing records).
 
 ```{r, warning=FALSE, message=FALSE}
-penguins %>% 
+penguins_db %>% 
   group_by(species) %>% 
-  summarise(mean_body_mass_g=round(mean(body_mass_g, na.rm=TRUE)))
+  summarise(mean_body_mass_g=round(mean(body_mass_g, na.rm=TRUE),0))
 ```
 
-We can then also do a histogram for each of the species.
+We can then also do a histogram for each of the species. For this we need to bring the data into R so that we can work with `ggplot()`, and we use `collect()` to do this.
 
 ```{r, warning=FALSE, message=FALSE}
-penguins %>% 
+penguins_db %>% 
+  collect() %>% 
   ggplot(aes(group=species, fill=species))+
   facet_grid(species~ .) +
   geom_histogram(aes(body_mass_g), colour="black", binwidth = 100)+
@@ -76,6 +118,7 @@ How about the relationship between body mass and bill depth?
 
 ```{r, warning=FALSE, message=FALSE}
 penguins %>% 
+  collect() %>% 
   ggplot(aes(x=bill_depth_mm,y=body_mass_g))+
   geom_point()+
   geom_smooth(method="lm",se=FALSE )+
@@ -87,6 +130,7 @@ But what about by species?
 
 ```{r, warning=FALSE, message=FALSE}
 penguins %>% 
+  collect() %>% 
   ggplot(aes(x=bill_depth_mm,y=body_mass_g))+
   facet_grid(species~ .) +
   geom_point()+
@@ -95,4 +139,18 @@ penguins %>%
   theme(legend.position = "none") 
 ```
 
-Oh, your first data analysis and you have already found an example of [Simpson´s paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox)!
+As well as having an example of working with data in database from R, you also have an example of [Simpson´s paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox)! And now we've reached the end of this example, we can close the database like so
+
+```{r}
+dbDisconnect(db)
+```
+
+## Organising data analyses 
+
+![](images/EnepKxNVQAAhNhg.jpg){width="250"}
+
+*Artwork by \@allison_horst*
+
+## Reproducibility in renv
+
+## 

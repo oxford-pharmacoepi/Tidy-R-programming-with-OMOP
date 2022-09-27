@@ -1,4 +1,6 @@
 - source: project
   quarto-pub:
     - id: 249548ee-de12-42af-b2f3-e02a63cfbe79
-      url: 'https://quartopub.com/sites/darwin-eu/rprogrammingwithdatabases'
+      url: 'https://quartopub.com/sites/edward-burn/rprogrammingwithdatabasesandarrow'
+    - id: 2ba41437-56aa-4925-b607-c62d7d3eff21
+      url: 'https://quartopub.com/sites/e-burn/rprogrammingwithdatabases'

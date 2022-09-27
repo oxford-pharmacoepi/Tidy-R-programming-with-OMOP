@@ -1,7 +1,0 @@
-# Structure of a project
-
-## Scripts, projects, and packages
-
-## Structure of an R project 
-
-## Adding renv

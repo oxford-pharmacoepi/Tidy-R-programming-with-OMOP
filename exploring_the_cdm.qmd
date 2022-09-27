@@ -1,0 +1,11 @@
+## Exploring the CDM
+
+### tally()
+
+### distinct()
+
+### rename()
+
+### group_by()
+
+### summarise()

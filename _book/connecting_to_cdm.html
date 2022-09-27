@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model - 4&nbsp; filter(), select(), mutate()</title>
+<title>Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model – connecting_to_cdm</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,8 +25,8 @@ ul.task-list{list-style: none;}
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./strings.html" rel="next">
-<link href="./exploring_the_cdm.html" rel="prev">
+<link href="./exploring_the_cdm.html" rel="next">
+<link href="./getting_started_with_r.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -59,14 +59,14 @@ ul.task-list{list-style: none;}
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating fullcontent">
 
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">filter(), select(), mutate()</span></h1>
+      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -101,7 +101,7 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./connecting_to_cdm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">connecting_to_cdm.html</span></a>
+  <a href="./connecting_to_cdm.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">connecting_to_cdm.html</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -111,7 +111,7 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./databases_and_r.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">filter(), select(), mutate()</span></a>
+  <a href="./databases_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">filter(), select(), mutate()</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -153,47 +153,14 @@ ul.task-list{list-style: none;}
     </div>
 </nav>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#if_else" id="toc-if_else" class="nav-link active" data-scroll-target="#if_else"> <span class="header-section-number">4.0.1</span> if_else()</a></li>
-  <li><a href="#paste0-glue" id="toc-paste0-glue" class="nav-link" data-scroll-target="#paste0-glue"> <span class="header-section-number">4.0.2</span> paste0 / glue</a></li>
-  <li><a href="#working-with-strings" id="toc-working-with-strings" class="nav-link" data-scroll-target="#working-with-strings"> <span class="header-section-number">4.0.3</span> working with strings</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">filter(), select(), mutate()</span></h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
 
-    
-    
-  </div>
-  
-
-</header>
-
-<section id="if_else" class="level3" data-number="4.0.1">
-<h3 data-number="4.0.1" class="anchored" data-anchor-id="if_else"><span class="header-section-number">4.0.1</span> if_else()</h3>
-</section>
-<section id="paste0-glue" class="level3" data-number="4.0.2">
-<h3 data-number="4.0.2" class="anchored" data-anchor-id="paste0-glue"><span class="header-section-number">4.0.2</span> paste0 / glue</h3>
-</section>
-<section id="working-with-strings" class="level3" data-number="4.0.3">
-<h3 data-number="4.0.3" class="anchored" data-anchor-id="working-with-strings"><span class="header-section-number">4.0.3</span> working with strings</h3>
-
-
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -295,13 +262,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./exploring_the_cdm.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Exploring the CDM</span></span>
+      <a href="./getting_started_with_r.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started with R and database</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./strings.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">strings.html</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./exploring_the_cdm.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Exploring the CDM</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

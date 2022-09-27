@@ -5,15 +5,19 @@ execute:
   freeze: true
 
 book:
-  title: "DARWIN EU(c) R programming with databases: applications with the OMOP CDM"
-  author: "Edward Burn, Adam Black, Marti Catala, Berta Raventós "
+  title: "Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model"
+  author: "Edward Burn, Adam Black, Marti Catala, Berta Raventós"
   date: today
   chapters:
     - index.qmd
     - getting_started_with_r.qmd
-    - projects.qmd
+    - connecting_to_cdm.qmd
+    - exploring_the_cdm.qmd
     - databases_and_r.qmd
-    - arrow_and_r.qmd
+    - strings.qmd
+    - dates.qmd
+    - working_with_multiple_tables.qmd
+    - moving_to_arrow_and_r.qmd
     - analysis_in_r.qmd
     - references.qmd
 
