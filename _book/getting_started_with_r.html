@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.37">
+<meta name="generator" content="quarto-1.0.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -204,11 +204,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./projects.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">projects.html</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -227,9 +222,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#inserting-data-into-a-database" id="toc-inserting-data-into-a-database" class="nav-link" data-scroll-target="#inserting-data-into-a-database"> <span class="header-section-number">1.4</span> Inserting data into a database</a></li>
   <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"> <span class="header-section-number">1.5</span> Analysis</a></li>
   <li><a href="#organising-data-analyses" id="toc-organising-data-analyses" class="nav-link" data-scroll-target="#organising-data-analyses"> <span class="header-section-number">1.6</span> Organising data analyses</a></li>
-  <li><a href="#a-note-on-file-paths" id="toc-a-note-on-file-paths" class="nav-link" data-scroll-target="#a-note-on-file-paths"> <span class="header-section-number">1.7</span> A note on file paths</a></li>
-  <li><a href="#adding-renv" id="toc-adding-renv" class="nav-link" data-scroll-target="#adding-renv"> <span class="header-section-number">1.8</span> Adding renv</a></li>
-  <li><a href="#structure-of-an-r-project" id="toc-structure-of-an-r-project" class="nav-link" data-scroll-target="#structure-of-an-r-project"> <span class="header-section-number">1.9</span> Structure of an R project</a></li>
+  <li><a href="#reproducibility-in-renv" id="toc-reproducibility-in-renv" class="nav-link" data-scroll-target="#reproducibility-in-renv"> <span class="header-section-number">1.7</span> Reproducibility in renv</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"> <span class="header-section-number">1.8</span> </a></li>
   </ul>
 </nav>
     </div>
@@ -330,7 +324,7 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins_db, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [1 x 8]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]
+# Database: DuckDB 0.5.1 [martics@Windows 10 x64:R 4.2.1/:memory:]
   species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year
   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
 1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007
@@ -358,7 +352,7 @@ LIMIT 1</code></pre>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [3 x 2]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]
+# Database: DuckDB 0.5.1 [martics@Windows 10 x64:R 4.2.1/:memory:]
   species       n
   &lt;fct&gt;     &lt;dbl&gt;
 1 Adelie      152
@@ -376,7 +370,7 @@ LIMIT 1</code></pre>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [5 x 3]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]
+# Database: DuckDB 0.5.1 [martics@Windows 10 x64:R 4.2.1/:memory:]
 # Groups:   species
   species   missing_body_mass_g     n
   &lt;fct&gt;                   &lt;dbl&gt; &lt;dbl&gt;
@@ -394,7 +388,7 @@ LIMIT 1</code></pre>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_body_mass_g=</span><span class="fu">round</span>(<span class="fu">mean</span>(body_mass_g, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [3 x 2]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]
+# Database: DuckDB 0.5.1 [martics@Windows 10 x64:R 4.2.1/:memory:]
   species   mean_body_mass_g
   &lt;fct&gt;                &lt;dbl&gt;
 1 Adelie                3701
@@ -452,14 +446,11 @@ LIMIT 1</code></pre>
 <p><img src="images/EnepKxNVQAAhNhg.jpg" class="img-fluid" width="250"></p>
 <p><em>Artwork by @allison_horst</em></p>
 </section>
-<section id="a-note-on-file-paths" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="a-note-on-file-paths"><span class="header-section-number">1.7</span> A note on file paths</h2>
+<section id="reproducibility-in-renv" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="reproducibility-in-renv"><span class="header-section-number">1.7</span> Reproducibility in renv</h2>
 </section>
-<section id="adding-renv" class="level2" data-number="1.8">
-<h2 data-number="1.8" class="anchored" data-anchor-id="adding-renv"><span class="header-section-number">1.8</span> Adding renv</h2>
-</section>
-<section id="structure-of-an-r-project" class="level2" data-number="1.9">
-<h2 data-number="1.9" class="anchored" data-anchor-id="structure-of-an-r-project"><span class="header-section-number">1.9</span> Structure of an R project</h2>
+<section id="section" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="section"><span class="header-section-number">1.8</span> </h2>
 
 
 </section>
