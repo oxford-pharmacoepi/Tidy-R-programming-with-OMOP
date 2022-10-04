@@ -1,4 +1,4 @@
-# Getting started with R and database
+# Getting started
 
 ## A first data analysis in R with a database
 
@@ -38,15 +38,15 @@ We can get an overview of the data using the `glimpse()` command.
 glimpse(penguins)
 ```
 
-Or we could take a look at the first row of the data using `head()`
+Or we could take a look at the first rows of the data using `head()`
 
 ```{r}
-head(penguins, 1)
+head(penguins, 5)
 ```
 
 ## Inserting data into a database
 
-Let's put our penguins data into a duckdb database. We first create the duckdb database, then add the penguins data, and the create a reference to the table with the data.
+Let's put our penguins data into a duckdb database. We create the duckdb database, add the penguins data, and then create a reference to the table containing the data.
 
 ```{r}
 db<-dbConnect(duckdb::duckdb(), dbdir=":memory:")
@@ -54,19 +54,19 @@ dbWriteTable(db, "penguins", penguins)
 penguins_db<-tbl(db, "penguins")
 ```
 
-Now the data is in a database we could use SQL to get the first row that we saw before
+Now the data is in a database we could use SQL to get the first rows that we saw before
 
 ```{r}
-dbGetQuery(db, "SELECT * FROM penguins LIMIT 1")
+dbGetQuery(db, "SELECT * FROM penguins LIMIT 5")
 ```
 
 But we could also use the same R code as before
 
 ```{r}
-head(penguins_db, 1)
+head(penguins_db, 5)
 ```
 
-## Analysis
+## Translation from R to SQL
 
 The magic here is provided by dbplyr which takes the R code and converts it into SQL, which is this case looks like
 
@@ -75,7 +75,41 @@ head(penguins_db, 1) %>%
   show_query()
 ```
 
-Let´s get a count by species
+More complicated SQL can also be written in what might be familiar dplyr code, for example
+
+```{r, warning=FALSE}
+penguins_db %>% 
+  group_by(species) %>% 
+  summarise(min_bill_length_mm=min(bill_length_mm),
+            median_bill_length_mm=median(bill_length_mm),
+            max_bill_length_mm=max(bill_length_mm)) %>% 
+  mutate(min_max_bill_length_mm=paste0(min_bill_length_mm, 
+                                       " to ",
+                                       max_bill_length_mm)) %>% 
+  select("species", 
+         "median_bill_length_mm",
+         "min_max_bill_length_mm")
+```
+
+with the corresponding SQL looking like
+
+```{r, warning=FALSE}
+penguins_db %>% 
+  group_by(species) %>% 
+  summarise(min_bill_length_mm=min(bill_length_mm),
+            median_bill_length_mm=median(bill_length_mm),
+            max_bill_length_mm=max(bill_length_mm)) %>% 
+  mutate(min_max_bill_length_mm=paste0(min, " to ", max)) %>% 
+  select("species", 
+         "median_bill_length_mm",
+         "min_max_bill_length_mm") %>% 
+  show_query()
+```
+
+
+## Example analysis
+
+Let´s start by getting a count by species
 
 ```{r}
 penguins_db %>% 
@@ -144,13 +178,3 @@ As well as having an example of working with data in database from R, you also h
 ```{r}
 dbDisconnect(db)
 ```
-
-## Organising data analyses 
-
-![](images/EnepKxNVQAAhNhg.jpg){width="250"}
-
-*Artwork by \@allison_horst*
-
-## Reproducibility in renv
-
-## 

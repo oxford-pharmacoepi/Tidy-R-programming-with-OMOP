@@ -5,7 +5,7 @@ execute:
   freeze: true
 
 book:
-  title: "Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model"
+  title: "Tidy R programming with data in databases: applications with the OMOP common data model"
   author: "Edward Burn, Adam Black, Marti Catala, Berta Raventós"
   date: today
   chapters:
@@ -19,6 +19,7 @@ book:
     - working_with_multiple_tables.qmd
     - moving_to_arrow_and_r.qmd
     - analysis_in_r.qmd
+    - other.qmd
     - references.qmd
 
 

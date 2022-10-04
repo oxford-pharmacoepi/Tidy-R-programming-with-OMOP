@@ -2,6 +2,6 @@
 
 ### if_else()
 
-### paste0 / glue 
+### paste0 / glue
 
 ### working with strings

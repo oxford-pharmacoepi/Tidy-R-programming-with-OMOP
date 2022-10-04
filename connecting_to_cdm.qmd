@@ -1,1 +1,87 @@
+## Connecting to a database from R
 
+Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitate by database specific driver packages, with applications then using the front-end API. As an example, lets say we want to work with a local duckdb from R. In this case the we can use the duckdb R package as the driver. In this case we can also create the database in-memory
+
+```{r}
+
+db<-dbConnect(duckdb::duckdb(), dbdir=":memory:")
+
+```
+
+If we instead wanted to connect to other database management systems, these connections could look like
+
+```{r, eval=FALSE}
+# Postgres
+db <- DBI::dbConnect(RPostgres::Postgres(),
+                      dbname = Sys.getenv("CDM5_POSTGRESQL_DBNAME"),
+                      host = Sys.getenv("CDM5_POSTGRESQL_HOST"),
+                      user = Sys.getenv("CDM5_POSTGRESQL_USER"),
+                      password = Sys.getenv("CDM5_POSTGRESQL_PASSWORD"))
+# Redshift (almost identical to Postgres)
+db <- DBI::dbConnect(RPostgres::Redshift(),
+                      dbname   = Sys.getenv("CDM5_REDSHIFT_DBNAME"),
+                      host     = Sys.getenv("CDM5_REDSHIFT_HOST"),
+                      port     = Sys.getenv("CDM5_REDSHIFT_PORT"),
+                      user     = Sys.getenv("CDM5_REDSHIFT_USER"),
+                      password = Sys.getenv("CDM5_REDSHIFT_PASSWORD"))
+# SQL Server
+db <- DBI::dbConnect(odbc::odbc(),
+                      Driver   = "ODBC Driver 18 for SQL Server",
+                      Server   = Sys.getenv("CDM5_SQL_SERVER_SERVER"),
+                      Database = Sys.getenv("CDM5_SQL_SERVER_CDM_DATABASE"),
+                      UID      = Sys.getenv("CDM5_SQL_SERVER_USER"),
+                      PWD      = Sys.getenv("CDM5_SQL_SERVER_PASSWORD"),
+                      TrustServerCertificate="yes",
+                      Port     = 1433)
+```
+
+Other databases ......
+
+Functionality provided by DBI.....
+
+## Connecting to a database with the OMOP common data model
+
+```{r}
+db <- DBI::dbConnect(duckdb::duckdb(), dbdir = CDMConnector::eunomia_dir())
+cdm <- CDMConnector::cdm_from_con(db)
+cdm$person
+```
+
+## CDMConnector
+
+If we have a connection we can use CDMConnector specific function so that the tables are easier to manage:
+
+```{r, echo = TRUE}
+cdm <- CDMConnector::cdm_from_con(db, cdm_schema = "main")
+cdm
+```
+
+## CDMConnector
+
+Then we can read the tables with "\$" operator or \[\[""\]\]
+
+```{r, echo = TRUE}
+cdm$observation_period
+cdm[["observation_period"]]
+```
+
+## CDMConnector
+
+We can specify the cdm schema and the tables we want to read:
+
+```{r, echo = TRUE}
+cdm <- CDMConnector::cdm_from_con(db, cdm_schema = "main", cdm_tables = c("person","observation_period"))
+cdm
+```
+
+We can also specify the writable schema and the tables that we are interested on it:
+
+```{r, echo = TRUE, eval = FALSE}
+cdm <- CDMConnector::cdm_from_con(db,
+  cdm_schema = "main",
+  cdm_tables = c("person","observation_period"),
+  write_schema = "results",
+  cohort_tables = c("outcomes"))
+```
+
+## Eunomia
