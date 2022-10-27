@@ -1,11 +1,123 @@
 ## Exploring the CDM
 
+Let's first connect again to our Eunomia data and create the reference to the common data model.
+
+```{r}
+library(DBI)
+library(dplyr)
+```
+
+```{r, echo = FALSE}
+db <- DBI::dbConnect(duckdb::duckdb(), 
+                     dbdir = CDMConnector::eunomia_dir())
+cdm <- CDMConnector::cdm_from_con(db, 
+                                  cdm_schema = "main")
+```
+
 ### tally()
 
-### distinct()
+Let's say we want to get a count of the people in the person table. For this we can use the tally or count verbs from dbplyr
 
-### rename()
+```{r, echo = TRUE}
+cdm$person %>% 
+  count()
+```
 
-### group_by()
+This count was done on the database side, with the code we wrote in dplyr style translated into sql.
+```{r, echo = TRUE}
+cdm$person %>% 
+  count() %>% 
+  show_query()
+```
+
 
 ### summarise()
+Another way to get the same count would be to use the summarise verb
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  summarise(n = n())
+
+cdm$person %>% 
+  summarise(n = n())%>% 
+  show_query()
+```
+
+We can also use summarise for various other calculations
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  summarise(median = median(year_of_birth, na.rm=TRUE))
+
+cdm$person %>% 
+  summarise(median = median(year_of_birth, na.rm=TRUE))%>% 
+  show_query()
+```
+
+### group_by()
+What if we want to get a count of people in the person table by gender concept id? In this case we can use group_by 
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  group_by(gender_concept_id) %>% 
+  count()
+
+cdm$person %>% 
+  group_by(gender_concept_id) %>% 
+  count() %>% 
+  show_query()
+```
+
+Similarly we could use group_by to calculate median year of birth by gender concept id.
+```{r, echo = TRUE}
+cdm$person %>% 
+  group_by(gender_concept_id) %>% 
+  summarise(median = median(year_of_birth, na.rm=TRUE))
+
+cdm$person %>% 
+  group_by(gender_concept_id) %>% 
+  summarise(median = median(year_of_birth, na.rm=TRUE)) %>% 
+  show_query()
+```
+
+### filter()
+Or if we wanted a count within only for those with a specific gender concept id we can use the filter verb to subset the data before summarising it 
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  filter(gender_concept_id == "8532") %>% 
+  count()
+
+cdm$person %>% 
+  filter(gender_concept_id == "8532") %>% 
+  count() %>% 
+  show_query()
+```
+
+Similarly we could have 
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  filter(year_of_birth < 1970) %>% 
+  summarise(median = median(year_of_birth, na.rm=TRUE))
+
+cdm$person %>% 
+  filter(year_of_birth < 1970) %>% 
+  summarise(median = median(year_of_birth, na.rm=TRUE))%>% 
+  show_query()
+```
+
+We can combine the above, with a filter, followed by a group_by, and then followed by a summarise
+```{r, echo = TRUE}
+cdm$person %>% 
+  filter(year_of_birth < 1970) %>% 
+  group_by(gender_concept_id) %>% 
+  summarise(median = median(year_of_birth, na.rm=TRUE))
+
+cdm$person %>% 
+  filter(year_of_birth < 1970) %>% 
+  group_by(gender_concept_id) %>% 
+  summarise(median = median(year_of_birth, na.rm=TRUE))%>% 
+  show_query()
+```
+

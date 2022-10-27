@@ -5,7 +5,7 @@ execute:
   freeze: true
 
 book:
-  title: "Tidy R programming with data in databases: applications with the OMOP common data model"
+  title: "Tidy R programming with the OMOP common data model"
   author: "Edward Burn, Adam Black, Marti Catala, Berta Raventós"
   date: today
   chapters:
@@ -21,6 +21,7 @@ book:
     - analysis_in_r.qmd
     - other.qmd
     - references.qmd
+    - learning_r.qmd
 
 
 bibliography: references.bib

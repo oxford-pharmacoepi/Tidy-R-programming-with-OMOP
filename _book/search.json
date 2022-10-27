@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model",
+    "objectID": "connecting_to_cdm.html",
+    "href": "connecting_to_cdm.html",
+    "title": "2  Creating a reference to the common data model",
     "section": "",
-    "text": "This book is written for analysts writing analytic code with R to run against the OMOP CDM. This source code for the book can be found at this Github repository Please open an issue there if you have a question or suggestion. Pull requests with suggested changes and additions are also most welcome."
+    "text": "Database connections from R can be made using the DBI package. The back-end for DBI is facilitated by database specific driver packages. As an example, lets say we want to work with a local duckdb from R. In this case the we can use the duckdb R package as the driver.\n\nlibrary(DBI)\ndb<-dbConnect(duckdb::duckdb(), dbdir=\":memory:\")\n\nIf we instead wanted to connect to other database management systems, these connections would be supported by the associated back-end packages and could look something like:\n\n# Postgres\ndb <- DBI::dbConnect(RPostgres::Postgres(),\n                      dbname = Sys.getenv(\"CDM5_POSTGRESQL_DBNAME\"),\n                      host = Sys.getenv(\"CDM5_POSTGRESQL_HOST\"),\n                      user = Sys.getenv(\"CDM5_POSTGRESQL_USER\"),\n                      password = Sys.getenv(\"CDM5_POSTGRESQL_PASSWORD\"))\n# Redshift (almost identical to Postgres)\ndb <- DBI::dbConnect(RPostgres::Redshift(),\n                      dbname   = Sys.getenv(\"CDM5_REDSHIFT_DBNAME\"),\n                      host     = Sys.getenv(\"CDM5_REDSHIFT_HOST\"),\n                      port     = Sys.getenv(\"CDM5_REDSHIFT_PORT\"),\n                      user     = Sys.getenv(\"CDM5_REDSHIFT_USER\"),\n                      password = Sys.getenv(\"CDM5_REDSHIFT_PASSWORD\"))\n# SQL Server\ndb <- DBI::dbConnect(odbc::odbc(),\n                      Driver   = \"ODBC Driver 18 for SQL Server\",\n                      Server   = Sys.getenv(\"CDM5_SQL_SERVER_SERVER\"),\n                      Database = Sys.getenv(\"CDM5_SQL_SERVER_CDM_DATABASE\"),\n                      UID      = Sys.getenv(\"CDM5_SQL_SERVER_USER\"),\n                      PWD      = Sys.getenv(\"CDM5_SQL_SERVER_PASSWORD\"),\n                      TrustServerCertificate=\"yes\",\n                      Port     = 1433)"
   },
   {
     "objectID": "getting_started_with_r.html",
@@ -35,60 +35,46 @@
     "text": "1.4 Inserting data into a database\nLet’s put our penguins data into a duckdb database. We create the duckdb database, add the penguins data, and then create a reference to the table containing the data.\n\ndb<-dbConnect(duckdb::duckdb(), dbdir=\":memory:\")\ndbWriteTable(db, \"penguins\", penguins)\npenguins_db<-tbl(db, \"penguins\")\n\nNow the data is in a database we could use SQL to get the first rows that we saw before\n\ndbGetQuery(db, \"SELECT * FROM penguins LIMIT 5\")\n\n  species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n1  Adelie Torgersen           39.1          18.7               181        3750\n2  Adelie Torgersen           39.5          17.4               186        3800\n3  Adelie Torgersen           40.3          18.0               195        3250\n4  Adelie Torgersen             NA            NA                NA          NA\n5  Adelie Torgersen           36.7          19.3               193        3450\n     sex year\n1   male 2007\n2 female 2007\n3 female 2007\n4   <NA> 2007\n5 female 2007\n\n\nBut we could also use the same R code as before\n\nhead(penguins_db, 5)\n\n# Source:   SQL [5 x 8]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n  species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year\n  <fct>   <fct>              <dbl>         <dbl>       <int>   <int> <fct> <int>\n1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007\n2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007\n3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007\n4 Adelie  Torgersen           NA            NA            NA      NA <NA>   2007\n5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007\n# … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g"
   },
   {
-    "objectID": "getting_started_with_r.html#analysis",
-    "href": "getting_started_with_r.html#analysis",
+    "objectID": "getting_started_with_r.html#translation-from-r-to-sql",
+    "href": "getting_started_with_r.html#translation-from-r-to-sql",
     "title": "1  Getting started",
-    "section": "1.6 Analysis",
-    "text": "1.6 Analysis\nLet´s get a count by species\n\npenguins_db %>% \n  group_by(species) %>% \n  count()\n\n# Source:   SQL [3 x 2]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n  species       n\n  <fct>     <dbl>\n1 Adelie      152\n2 Gentoo      124\n3 Chinstrap    68\n\n\nNow suppose we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.\n\npenguins_db %>% \n  mutate(missing_body_mass_g=if_else(\n    is.na(body_mass_g),1,0\n  )) %>% \n  group_by(species, missing_body_mass_g) %>% \n  tally()\n\n# Source:   SQL [5 x 3]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n# Groups:   species\n  species   missing_body_mass_g     n\n  <fct>                   <dbl> <dbl>\n1 Adelie                      0   151\n2 Adelie                      1     1\n3 Gentoo                      0   123\n4 Gentoo                      1     1\n5 Chinstrap                   0    68\n\n\nWe can get the mean for each of the species (dropping those two missing records).\n\npenguins_db %>% \n  group_by(species) %>% \n  summarise(mean_body_mass_g=round(mean(body_mass_g, na.rm=TRUE),0))\n\n# Source:   SQL [3 x 2]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n  species   mean_body_mass_g\n  <fct>                <dbl>\n1 Adelie                3701\n2 Gentoo                5076\n3 Chinstrap             3733\n\n\nWe can then also do a histogram for each of the species. For this we need to bring the data into R so that we can work with ggplot(), and we use collect() to do this.\n\npenguins_db %>% \n  collect() %>% \n  ggplot(aes(group=species, fill=species))+\n  facet_grid(species~ .) +\n  geom_histogram(aes(body_mass_g), colour=\"black\", binwidth = 100)+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nHow about the relationship between body mass and bill depth?\n\npenguins %>% \n  collect() %>% \n  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+\n  geom_point()+\n  geom_smooth(method=\"lm\",se=FALSE )+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nBut what about by species?\n\npenguins %>% \n  collect() %>% \n  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+\n  facet_grid(species~ .) +\n  geom_point()+\n  geom_smooth(method=\"lm\",se=FALSE )+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nAs well as having an example of working with data in database from R, you also have an example of Simpson´s paradox! And now we’ve reached the end of this example, we can close the database like so\n\ndbDisconnect(db)"
+    "section": "1.5 Translation from R to SQL",
+    "text": "1.5 Translation from R to SQL\nThe magic here is provided by dbplyr which takes the R code and converts it into SQL, which is this case looks like\n\nhead(penguins_db, 1) %>% \n  show_query()\n\n<SQL>\nSELECT *\nFROM penguins\nLIMIT 1\n\n\nMore complicated SQL can also be written in what might be familiar dplyr code, for example\n\npenguins_db %>% \n  group_by(species) %>% \n  summarise(min_bill_length_mm=min(bill_length_mm),\n            median_bill_length_mm=median(bill_length_mm),\n            max_bill_length_mm=max(bill_length_mm)) %>% \n  mutate(min_max_bill_length_mm=paste0(min_bill_length_mm, \n                                       \" to \",\n                                       max_bill_length_mm)) %>% \n  select(\"species\", \n         \"median_bill_length_mm\",\n         \"min_max_bill_length_mm\")\n\n# Source:   SQL [3 x 3]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n  species   median_bill_length_mm min_max_bill_length_mm\n  <fct>                     <dbl> <chr>                 \n1 Adelie                     38.8 32.1 to 46.0          \n2 Gentoo                     47.3 40.9 to 59.6          \n3 Chinstrap                  49.6 40.9 to 58.0          \n\n\nwith the corresponding SQL looking like\n\npenguins_db %>% \n  group_by(species) %>% \n  summarise(min_bill_length_mm=min(bill_length_mm),\n            median_bill_length_mm=median(bill_length_mm),\n            max_bill_length_mm=max(bill_length_mm)) %>% \n  mutate(min_max_bill_length_mm=paste0(min, \" to \", max)) %>% \n  select(\"species\", \n         \"median_bill_length_mm\",\n         \"min_max_bill_length_mm\") %>% \n  show_query()\n\n<SQL>\nSELECT\n  species,\n  median_bill_length_mm,\n  CONCAT_WS('', .Primitive(\"min\"), ' to ', .Primitive(\"max\")) AS min_max_bill_length_mm\nFROM (\n  SELECT\n    species,\n    MIN(bill_length_mm) AS min_bill_length_mm,\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY bill_length_mm) AS median_bill_length_mm,\n    MAX(bill_length_mm) AS max_bill_length_mm\n  FROM penguins\n  GROUP BY species\n) q01"
   },
   {
-    "objectID": "databases_and_r.html#section",
-    "href": "databases_and_r.html#section",
-    "title": "4  filter(), select(), mutate()",
-    "section": "4.1 ",
-    "text": "4.1"
-  },
-  {
-    "objectID": "projects.html",
-    "href": "projects.html",
-    "title": "8  Structure of an analysis",
-    "section": "",
-    "text": "Artwork by @allison_horst"
-  },
-  {
-    "objectID": "projects.html#a-note-on-file-paths",
-    "href": "projects.html#a-note-on-file-paths",
-    "title": "8  Structure of an analysis",
-    "section": "8.2 A note on file paths",
-    "text": "8.2 A note on file paths"
-  },
-  {
-    "objectID": "projects.html#section",
-    "href": "projects.html#section",
-    "title": "8  Structure of an analysis",
-    "section": "8.3 ",
-    "text": "8.3"
-  },
-  {
-    "objectID": "projects.html#adding-renv",
-    "href": "projects.html#adding-renv",
-    "title": "8  Structure of an analysis",
-    "section": "8.4 Adding renv",
-    "text": "8.4 Adding renv"
-  },
-  {
-    "objectID": "projects.html#structure-of-an-r-project",
-    "href": "projects.html#structure-of-an-r-project",
-    "title": "8  Structure of an analysis",
-    "section": "8.5 Structure of an R project",
-    "text": "8.5 Structure of an R project"
+    "objectID": "getting_started_with_r.html#example-analysis",
+    "href": "getting_started_with_r.html#example-analysis",
+    "title": "1  Getting started",
+    "section": "1.6 Example analysis",
+    "text": "1.6 Example analysis\nLet´s start by getting a count by species\n\npenguins_db %>% \n  group_by(species) %>% \n  count()\n\n# Source:   SQL [3 x 2]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n  species       n\n  <fct>     <dbl>\n1 Adelie      152\n2 Gentoo      124\n3 Chinstrap    68\n\n\nNow suppose we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.\n\npenguins_db %>% \n  mutate(missing_body_mass_g=if_else(\n    is.na(body_mass_g),1,0\n  )) %>% \n  group_by(species, missing_body_mass_g) %>% \n  tally()\n\n# Source:   SQL [5 x 3]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n# Groups:   species\n  species   missing_body_mass_g     n\n  <fct>                   <dbl> <dbl>\n1 Adelie                      0   151\n2 Adelie                      1     1\n3 Gentoo                      0   123\n4 Gentoo                      1     1\n5 Chinstrap                   0    68\n\n\nWe can get the mean for each of the species (dropping those two missing records).\n\npenguins_db %>% \n  group_by(species) %>% \n  summarise(mean_body_mass_g=round(mean(body_mass_g, na.rm=TRUE),0))\n\n# Source:   SQL [3 x 2]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n  species   mean_body_mass_g\n  <fct>                <dbl>\n1 Adelie                3701\n2 Gentoo                5076\n3 Chinstrap             3733\n\n\nWe can then also do a histogram for each of the species. For this we need to bring the data into R so that we can work with ggplot(), and we use collect() to do this.\n\npenguins_db %>% \n  collect() %>% \n  ggplot(aes(group=species, fill=species))+\n  facet_grid(species~ .) +\n  geom_histogram(aes(body_mass_g), colour=\"black\", binwidth = 100)+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nHow about the relationship between body mass and bill depth?\n\npenguins %>% \n  collect() %>% \n  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+\n  geom_point()+\n  geom_smooth(method=\"lm\",se=FALSE )+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nBut what about by species?\n\npenguins %>% \n  collect() %>% \n  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+\n  facet_grid(species~ .) +\n  geom_point()+\n  geom_smooth(method=\"lm\",se=FALSE )+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nAs well as having an example of working with data in database from R, you also have an example of Simpson´s paradox! And now we’ve reached the end of this example, we can close the database like so\n\ndbDisconnect(db)"
   },
   {
     "objectID": "exploring_the_cdm.html",
     "href": "exploring_the_cdm.html",
     "title": "3  Exploring the CDM",
     "section": "",
-    "text": "3.0.2 distinct()\n\n\n3.0.3 rename()\n\n\n3.0.4 group_by()\n\n\n3.0.5 summarise()"
+    "text": "library(DBI)\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\n\n\n\n\n3.0.1 tally()\nLet’s say we want to get a count of the people in the person table. For this we can use the tally or count verbs from dbplyr\n\ncdm$person %>% \n  count()\n\n# Source:   SQL [1 x 1]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpwN49HX/snxvulrx/cdm.duckdb]\n      n\n  <dbl>\n1  2694\n\n\nThis count was done on the database side, with the code we wrote in dplyr style translated into sql.\n\ncdm$person %>% \n  count() %>% \n  show_query()\n\n<SQL>\nSELECT COUNT(*) AS n\nFROM main.person\n\n\n\n\n3.0.2 summarise()\nAnother way to get the same count would be to use the summarise verb\n\ncdm$person %>% \n  summarise(n = n())\n\n# Source:   SQL [1 x 1]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpwN49HX/snxvulrx/cdm.duckdb]\n      n\n  <dbl>\n1  2694\n\ncdm$person %>% \n  summarise(n = n())%>% \n  show_query()\n\n<SQL>\nSELECT COUNT(*) AS n\nFROM main.person\n\n\nWe can also use summarise for various other calculations\n\ncdm$person %>% \n  summarise(median = median(year_of_birth, na.rm=TRUE))\n\n# Source:   SQL [1 x 1]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpwN49HX/snxvulrx/cdm.duckdb]\n  median\n   <dbl>\n1   1961\n\ncdm$person %>% \n  summarise(median = median(year_of_birth, na.rm=TRUE))%>% \n  show_query()\n\n<SQL>\nSELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY year_of_birth) AS median\nFROM main.person\n\n\n\n\n3.0.3 group_by()\nWhat if we want to get a count of people in the person table by gender concept id? In this case we can use group_by\n\ncdm$person %>% \n  group_by(gender_concept_id) %>% \n  count()\n\n# Source:   SQL [2 x 2]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpwN49HX/snxvulrx/cdm.duckdb]\n  gender_concept_id     n\n              <dbl> <dbl>\n1              8532  1373\n2              8507  1321\n\ncdm$person %>% \n  group_by(gender_concept_id) %>% \n  count() %>% \n  show_query()\n\n<SQL>\nSELECT gender_concept_id, COUNT(*) AS n\nFROM main.person\nGROUP BY gender_concept_id\n\n\nSimilarly we could use group_by to calculate median year of birth by gender concept id.\n\ncdm$person %>% \n  group_by(gender_concept_id) %>% \n  summarise(median = median(year_of_birth, na.rm=TRUE))\n\n# Source:   SQL [2 x 2]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpwN49HX/snxvulrx/cdm.duckdb]\n  gender_concept_id median\n              <dbl>  <dbl>\n1              8532   1961\n2              8507   1961\n\ncdm$person %>% \n  group_by(gender_concept_id) %>% \n  summarise(median = median(year_of_birth, na.rm=TRUE)) %>% \n  show_query()\n\n<SQL>\nSELECT\n  gender_concept_id,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY year_of_birth) AS median\nFROM main.person\nGROUP BY gender_concept_id\n\n\n\n\n3.0.4 filter()\nOr if we wanted a count within only for those with a specific gender concept id we can use the filter verb to subset the data before summarising it\n\ncdm$person %>% \n  filter(gender_concept_id == \"8532\") %>% \n  count()\n\n# Source:   SQL [1 x 1]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpwN49HX/snxvulrx/cdm.duckdb]\n      n\n  <dbl>\n1  1373\n\ncdm$person %>% \n  filter(gender_concept_id == \"8532\") %>% \n  count() %>% \n  show_query()\n\n<SQL>\nSELECT COUNT(*) AS n\nFROM main.person\nWHERE (gender_concept_id = '8532')\n\n\nSimilarly we could have\n\ncdm$person %>% \n  filter(year_of_birth < 1970) %>% \n  summarise(median = median(year_of_birth, na.rm=TRUE))\n\n# Source:   SQL [1 x 1]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpwN49HX/snxvulrx/cdm.duckdb]\n  median\n   <dbl>\n1   1955\n\ncdm$person %>% \n  filter(year_of_birth < 1970) %>% \n  summarise(median = median(year_of_birth, na.rm=TRUE))%>% \n  show_query()\n\n<SQL>\nSELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY year_of_birth) AS median\nFROM main.person\nWHERE (year_of_birth < 1970.0)\n\n\nWe can combine the above, with a filter, followed by a group_by, and then followed by a summarise\n\ncdm$person %>% \n  filter(year_of_birth < 1970) %>% \n  group_by(gender_concept_id) %>% \n  summarise(median = median(year_of_birth, na.rm=TRUE))\n\n# Source:   SQL [2 x 2]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpwN49HX/snxvulrx/cdm.duckdb]\n  gender_concept_id median\n              <dbl>  <dbl>\n1              8532   1955\n2              8507   1956\n\ncdm$person %>% \n  filter(year_of_birth < 1970) %>% \n  group_by(gender_concept_id) %>% \n  summarise(median = median(year_of_birth, na.rm=TRUE))%>% \n  show_query()\n\n<SQL>\nSELECT\n  gender_concept_id,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY year_of_birth) AS median\nFROM main.person\nWHERE (year_of_birth < 1970.0)\nGROUP BY gender_concept_id"
+  },
+  {
+    "objectID": "databases_and_r.html",
+    "href": "databases_and_r.html",
+    "title": "4  select()",
+    "section": "",
+    "text": "cdm$person %>%\n  select(\"person_id\", \"gender_concept_id\") \n\n# Source:   SQL [?? x 2]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpWUJzrQ/qrvujnam/cdm.duckdb]\n   person_id gender_concept_id\n       <dbl>             <dbl>\n 1         6              8532\n 2       123              8507\n 3       129              8507\n 4        16              8532\n 5        65              8532\n 6        74              8532\n 7        42              8532\n 8       187              8507\n 9        18              8532\n10       111              8532\n# … with more rows\n# ℹ Use `print(n = ...)` to see more rows\n\ncdm$person %>%\n  select(\"person_id\", \"gender_concept_id\") %>% \n  show_query()\n\n<SQL>\nSELECT person_id, gender_concept_id\nFROM main.person\n\n\n\n4.0.1 mutate()\n\ncdm$person %>%\n  mutate(new_variable=1) \n\n# Source:   SQL [?? x 19]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpWUJzrQ/qrvujnam/cdm.duckdb]\n   person_id gende…¹ year_…² month…³ day_o…⁴ birth_datetime      race_…⁵ ethni…⁶\n       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <dttm>                <dbl>   <dbl>\n 1         6    8532    1963      12      31 1963-12-31 00:00:00    8516       0\n 2       123    8507    1950       4      12 1950-04-12 00:00:00    8527       0\n 3       129    8507    1974      10       7 1974-10-07 00:00:00    8527       0\n 4        16    8532    1971      10      13 1971-10-13 00:00:00    8527       0\n 5        65    8532    1967       3      31 1967-03-31 00:00:00    8516       0\n 6        74    8532    1972       1       5 1972-01-05 00:00:00    8527       0\n 7        42    8532    1909      11       2 1909-11-02 00:00:00    8527       0\n 8       187    8507    1945       7      23 1945-07-23 00:00:00    8527       0\n 9        18    8532    1965      11      17 1965-11-17 00:00:00    8527       0\n10       111    8532    1975       5       2 1975-05-02 00:00:00    8527       0\n# … with more rows, 11 more variables: location_id <lgl>, provider_id <lgl>,\n#   care_site_id <lgl>, person_source_value <chr>, gender_source_value <chr>,\n#   gender_source_concept_id <dbl>, race_source_value <chr>,\n#   race_source_concept_id <dbl>, ethnicity_source_value <chr>,\n#   ethnicity_source_concept_id <dbl>, new_variable <dbl>, and abbreviated\n#   variable names ¹​gender_concept_id, ²​year_of_birth, ³​month_of_birth,\n#   ⁴​day_of_birth, ⁵​race_concept_id, ⁶​ethnicity_concept_id\n# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names\n\ncdm$person %>%\n  mutate(new_variable=1) %>%\n  show_query()\n\n<SQL>\nSELECT *, 1.0 AS new_variable\nFROM main.person\n\n\n\n\n4.0.2 if_else()\n\ncdm$person %>%\n  mutate(new_variable=if_else(gender_concept_id==\"8532\", \"Male\", \"Female\")) \n\n# Source:   SQL [?? x 19]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpWUJzrQ/qrvujnam/cdm.duckdb]\n   person_id gende…¹ year_…² month…³ day_o…⁴ birth_datetime      race_…⁵ ethni…⁶\n       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <dttm>                <dbl>   <dbl>\n 1         6    8532    1963      12      31 1963-12-31 00:00:00    8516       0\n 2       123    8507    1950       4      12 1950-04-12 00:00:00    8527       0\n 3       129    8507    1974      10       7 1974-10-07 00:00:00    8527       0\n 4        16    8532    1971      10      13 1971-10-13 00:00:00    8527       0\n 5        65    8532    1967       3      31 1967-03-31 00:00:00    8516       0\n 6        74    8532    1972       1       5 1972-01-05 00:00:00    8527       0\n 7        42    8532    1909      11       2 1909-11-02 00:00:00    8527       0\n 8       187    8507    1945       7      23 1945-07-23 00:00:00    8527       0\n 9        18    8532    1965      11      17 1965-11-17 00:00:00    8527       0\n10       111    8532    1975       5       2 1975-05-02 00:00:00    8527       0\n# … with more rows, 11 more variables: location_id <lgl>, provider_id <lgl>,\n#   care_site_id <lgl>, person_source_value <chr>, gender_source_value <chr>,\n#   gender_source_concept_id <dbl>, race_source_value <chr>,\n#   race_source_concept_id <dbl>, ethnicity_source_value <chr>,\n#   ethnicity_source_concept_id <dbl>, new_variable <chr>, and abbreviated\n#   variable names ¹​gender_concept_id, ²​year_of_birth, ³​month_of_birth,\n#   ⁴​day_of_birth, ⁵​race_concept_id, ⁶​ethnicity_concept_id\n# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names\n\ncdm$person %>%\n  mutate(new_variable=if_else(gender_concept_id==\"8532\", \"Male\", \"Female\")) %>%\n  show_query()\n\n<SQL>\nSELECT\n  *,\n  CASE WHEN (gender_concept_id = '8532') THEN 'Male' WHEN NOT (gender_concept_id = '8532') THEN 'Female' END AS new_variable\nFROM main.person\n\n\n\n\n4.0.3 paste0\n\ncdm$person %>%\n  mutate(date_of_birth = paste0(\"year_of_birth\", \"-\",\n                                \"month_of_birth\", \"-\",\n                                \"day_of_birth\"))\n\n# Source:   SQL [?? x 19]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpWUJzrQ/qrvujnam/cdm.duckdb]\n   person_id gende…¹ year_…² month…³ day_o…⁴ birth_datetime      race_…⁵ ethni…⁶\n       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <dttm>                <dbl>   <dbl>\n 1         6    8532    1963      12      31 1963-12-31 00:00:00    8516       0\n 2       123    8507    1950       4      12 1950-04-12 00:00:00    8527       0\n 3       129    8507    1974      10       7 1974-10-07 00:00:00    8527       0\n 4        16    8532    1971      10      13 1971-10-13 00:00:00    8527       0\n 5        65    8532    1967       3      31 1967-03-31 00:00:00    8516       0\n 6        74    8532    1972       1       5 1972-01-05 00:00:00    8527       0\n 7        42    8532    1909      11       2 1909-11-02 00:00:00    8527       0\n 8       187    8507    1945       7      23 1945-07-23 00:00:00    8527       0\n 9        18    8532    1965      11      17 1965-11-17 00:00:00    8527       0\n10       111    8532    1975       5       2 1975-05-02 00:00:00    8527       0\n# … with more rows, 11 more variables: location_id <lgl>, provider_id <lgl>,\n#   care_site_id <lgl>, person_source_value <chr>, gender_source_value <chr>,\n#   gender_source_concept_id <dbl>, race_source_value <chr>,\n#   race_source_concept_id <dbl>, ethnicity_source_value <chr>,\n#   ethnicity_source_concept_id <dbl>, date_of_birth <chr>, and abbreviated\n#   variable names ¹​gender_concept_id, ²​year_of_birth, ³​month_of_birth,\n#   ⁴​day_of_birth, ⁵​race_concept_id, ⁶​ethnicity_concept_id\n# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names\n\ncdm$person %>%\n  mutate(date_of_birth = paste0(\"year_of_birth\", \"-\",\n                                \"month_of_birth\", \"-\",\n                                \"day_of_birth\")) %>%\n  show_query()\n\n<SQL>\nSELECT\n  *,\n  CONCAT_WS('', 'year_of_birth', '-', 'month_of_birth', '-', 'day_of_birth') AS date_of_birth\nFROM main.person\n\n\n\n\n4.0.4 distinct()\n\ncdm$person %>%\n  select(\"gender_concept_id\") %>%\n  distinct() \n\n# Source:   SQL [2 x 1]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpWUJzrQ/qrvujnam/cdm.duckdb]\n  gender_concept_id\n              <dbl>\n1              8532\n2              8507\n\ncdm$person %>%\n  select(\"gender_concept_id\") %>%\n  distinct() %>%\n  show_query()\n\n<SQL>\nSELECT DISTINCT gender_concept_id\nFROM main.person\n\n\n\n\n4.0.5 rename()\n\ncdm$person %>%\n  rename(\"sex_concept_id\" = \"gender_concept_id\")\n\n# Source:   SQL [?? x 18]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\RtmpWUJzrQ/qrvujnam/cdm.duckdb]\n   person_id sex_c…¹ year_…² month…³ day_o…⁴ birth_datetime      race_…⁵ ethni…⁶\n       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <dttm>                <dbl>   <dbl>\n 1         6    8532    1963      12      31 1963-12-31 00:00:00    8516       0\n 2       123    8507    1950       4      12 1950-04-12 00:00:00    8527       0\n 3       129    8507    1974      10       7 1974-10-07 00:00:00    8527       0\n 4        16    8532    1971      10      13 1971-10-13 00:00:00    8527       0\n 5        65    8532    1967       3      31 1967-03-31 00:00:00    8516       0\n 6        74    8532    1972       1       5 1972-01-05 00:00:00    8527       0\n 7        42    8532    1909      11       2 1909-11-02 00:00:00    8527       0\n 8       187    8507    1945       7      23 1945-07-23 00:00:00    8527       0\n 9        18    8532    1965      11      17 1965-11-17 00:00:00    8527       0\n10       111    8532    1975       5       2 1975-05-02 00:00:00    8527       0\n# … with more rows, 10 more variables: location_id <lgl>, provider_id <lgl>,\n#   care_site_id <lgl>, person_source_value <chr>, gender_source_value <chr>,\n#   gender_source_concept_id <dbl>, race_source_value <chr>,\n#   race_source_concept_id <dbl>, ethnicity_source_value <chr>,\n#   ethnicity_source_concept_id <dbl>, and abbreviated variable names\n#   ¹​sex_concept_id, ²​year_of_birth, ³​month_of_birth, ⁴​day_of_birth,\n#   ⁵​race_concept_id, ⁶​ethnicity_concept_id\n# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names\n\ncdm$person %>%\n  rename(\"sex_concept_id\" = \"gender_concept_id\") %>%\n  show_query()\n\n<SQL>\nSELECT\n  person_id,\n  gender_concept_id AS sex_concept_id,\n  year_of_birth,\n  month_of_birth,\n  day_of_birth,\n  birth_datetime,\n  race_concept_id,\n  ethnicity_concept_id,\n  location_id,\n  provider_id,\n  care_site_id,\n  person_source_value,\n  gender_source_value,\n  gender_source_concept_id,\n  race_source_value,\n  race_source_concept_id,\n  ethnicity_source_value,\n  ethnicity_source_concept_id\nFROM main.person\n\n\n\n\n4.0.6 working with strings"
+  },
+  {
+    "objectID": "strings.html",
+    "href": "strings.html",
+    "title": "Tidy R programming with the OMOP common data model",
+    "section": "",
+    "text": "strings"
+  },
+  {
+    "objectID": "dates.html",
+    "href": "dates.html",
+    "title": "Tidy R programming with the OMOP common data model",
+    "section": "",
+    "text": "Dates"
   },
   {
     "objectID": "moving_to_arrow_and_r.html",
@@ -98,76 +84,6 @@
     "text": "8.0.2 collect()\n\n\n8.0.3 pull()"
   },
   {
-    "objectID": "getting_started_with_r.html#organising-data-analyses",
-    "href": "getting_started_with_r.html#organising-data-analyses",
-    "title": "1  Getting started with R and database",
-    "section": "1.6 Organising data analyses",
-    "text": "1.6 Organising data analyses\n\nArtwork by @allison_horst"
-  },
-  {
-    "objectID": "getting_started_with_r.html#a-note-on-file-paths",
-    "href": "getting_started_with_r.html#a-note-on-file-paths",
-    "title": "1  Getting started with R and database",
-    "section": "1.7 A note on file paths",
-    "text": "1.7 A note on file paths"
-  },
-  {
-    "objectID": "getting_started_with_r.html#adding-renv",
-    "href": "getting_started_with_r.html#adding-renv",
-    "title": "1  Getting started with R and database",
-    "section": "1.8 Adding renv",
-    "text": "1.8 Adding renv"
-  },
-  {
-    "objectID": "getting_started_with_r.html#structure-of-an-r-project",
-    "href": "getting_started_with_r.html#structure-of-an-r-project",
-    "title": "1  Getting started with R and database",
-    "section": "1.9 Structure of an R project",
-    "text": "1.9 Structure of an R project"
-  },
-  {
-    "objectID": "strings.html",
-    "href": "strings.html",
-    "title": "Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model",
-    "section": "",
-    "text": "strings"
-  },
-  {
-    "objectID": "databases_and_r.html",
-    "href": "databases_and_r.html",
-    "title": "4  filter(), select(), mutate()",
-    "section": "",
-    "text": "4.0.2 paste0 / glue\n\n\n4.0.3 working with strings"
-  },
-  {
-    "objectID": "dates.html",
-    "href": "dates.html",
-    "title": "Tidy R programming with data in databases and Apache Arrow: applications with the OMOP common data model",
-    "section": "",
-    "text": "Dates"
-  },
-  {
-    "objectID": "getting_started_with_r.html#reproducibility-in-renv",
-    "href": "getting_started_with_r.html#reproducibility-in-renv",
-    "title": "1  Getting started with R and database",
-    "section": "1.7 Reproducibility in renv",
-    "text": "1.7 Reproducibility in renv"
-  },
-  {
-    "objectID": "getting_started_with_r.html#section",
-    "href": "getting_started_with_r.html#section",
-    "title": "1  Getting started with R and database",
-    "section": "1.8 ",
-    "text": "1.8"
-  },
-  {
-    "objectID": "getting_started_with_r.html#translation-from-r-to-sql",
-    "href": "getting_started_with_r.html#translation-from-r-to-sql",
-    "title": "1  Getting started",
-    "section": "1.5 Translation from R to SQL",
-    "text": "1.5 Translation from R to SQL\nThe magic here is provided by dbplyr which takes the R code and converts it into SQL, which is this case looks like\n\nhead(penguins_db, 1) %>% \n  show_query()\n\n<SQL>\nSELECT *\nFROM penguins\nLIMIT 1\n\n\nMore complicated SQL can also be written in what might be familiar dplyr code, for example\n\npenguins_db %>% \n  group_by(species) %>% \n  summarise(min_bill_length_mm=min(bill_length_mm),\n            median_bill_length_mm=median(bill_length_mm),\n            max_bill_length_mm=max(bill_length_mm)) %>% \n  mutate(min_max_bill_length_mm=paste0(min_bill_length_mm, \n                                       \" to \",\n                                       max_bill_length_mm)) %>% \n  select(\"species\", \n         \"median_bill_length_mm\",\n         \"min_max_bill_length_mm\")\n\n# Source:   SQL [3 x 3]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n  species   median_bill_length_mm min_max_bill_length_mm\n  <fct>                     <dbl> <chr>                 \n1 Adelie                     38.8 32.1 to 46.0          \n2 Gentoo                     47.3 40.9 to 59.6          \n3 Chinstrap                  49.6 40.9 to 58.0          \n\n\nwith the corresponding SQL looking like\n\npenguins_db %>% \n  group_by(species) %>% \n  summarise(min_bill_length_mm=min(bill_length_mm),\n            median_bill_length_mm=median(bill_length_mm),\n            max_bill_length_mm=max(bill_length_mm)) %>% \n  mutate(min_max_bill_length_mm=paste0(min, \" to \", max)) %>% \n  select(\"species\", \n         \"median_bill_length_mm\",\n         \"min_max_bill_length_mm\") %>% \n  show_query()\n\n<SQL>\nSELECT\n  species,\n  median_bill_length_mm,\n  CONCAT_WS('', .Primitive(\"min\"), ' to ', .Primitive(\"max\")) AS min_max_bill_length_mm\nFROM (\n  SELECT\n    species,\n    MIN(bill_length_mm) AS min_bill_length_mm,\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY bill_length_mm) AS median_bill_length_mm,\n    MAX(bill_length_mm) AS max_bill_length_mm\n  FROM penguins\n  GROUP BY species\n) q01"
-  },
-  {
     "objectID": "other.html",
     "href": "other.html",
     "title": "10  Organising data analyses with projects and renv",
@@ -175,10 +91,73 @@
     "text": "Artwork by @allison_horst"
   },
   {
-    "objectID": "getting_started_with_r.html#example-analysis",
-    "href": "getting_started_with_r.html#example-analysis",
-    "title": "1  Getting started",
-    "section": "1.6 Example analysis",
-    "text": "1.6 Example analysis\nLet´s start by getting a count by species\n\npenguins_db %>% \n  group_by(species) %>% \n  count()\n\n# Source:   SQL [3 x 2]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n  species       n\n  <fct>     <dbl>\n1 Adelie      152\n2 Gentoo      124\n3 Chinstrap    68\n\n\nNow suppose we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.\n\npenguins_db %>% \n  mutate(missing_body_mass_g=if_else(\n    is.na(body_mass_g),1,0\n  )) %>% \n  group_by(species, missing_body_mass_g) %>% \n  tally()\n\n# Source:   SQL [5 x 3]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n# Groups:   species\n  species   missing_body_mass_g     n\n  <fct>                   <dbl> <dbl>\n1 Adelie                      0   151\n2 Adelie                      1     1\n3 Gentoo                      0   123\n4 Gentoo                      1     1\n5 Chinstrap                   0    68\n\n\nWe can get the mean for each of the species (dropping those two missing records).\n\npenguins_db %>% \n  group_by(species) %>% \n  summarise(mean_body_mass_g=round(mean(body_mass_g, na.rm=TRUE),0))\n\n# Source:   SQL [3 x 2]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/:memory:]\n  species   mean_body_mass_g\n  <fct>                <dbl>\n1 Adelie                3701\n2 Gentoo                5076\n3 Chinstrap             3733\n\n\nWe can then also do a histogram for each of the species. For this we need to bring the data into R so that we can work with ggplot(), and we use collect() to do this.\n\npenguins_db %>% \n  collect() %>% \n  ggplot(aes(group=species, fill=species))+\n  facet_grid(species~ .) +\n  geom_histogram(aes(body_mass_g), colour=\"black\", binwidth = 100)+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nHow about the relationship between body mass and bill depth?\n\npenguins %>% \n  collect() %>% \n  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+\n  geom_point()+\n  geom_smooth(method=\"lm\",se=FALSE )+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nBut what about by species?\n\npenguins %>% \n  collect() %>% \n  ggplot(aes(x=bill_depth_mm,y=body_mass_g))+\n  facet_grid(species~ .) +\n  geom_point()+\n  geom_smooth(method=\"lm\",se=FALSE )+\n  theme_bw()+\n  theme(legend.position = \"none\") \n\n\n\n\nAs well as having an example of working with data in database from R, you also have an example of Simpson´s paradox! And now we’ve reached the end of this example, we can close the database like so\n\ndbDisconnect(db)"
+    "objectID": "learning_r.html",
+    "href": "learning_r.html",
+    "title": "Tidy R programming with the OMOP common data model",
+    "section": "",
+    "text": "Learning R"
+  },
+  {
+    "objectID": "connecting_to_cdm.html#creating-a-reference-to-the-omop-common-data-model",
+    "href": "connecting_to_cdm.html#creating-a-reference-to-the-omop-common-data-model",
+    "title": "2  Creating a reference to the common data model",
+    "section": "2.2 Creating a reference to the OMOP common data model",
+    "text": "2.2 Creating a reference to the OMOP common data model\nIf we have connected to a database which contains data mapped to the format of the OMOP common data model the CDMConnector provides functionality to simplify our work with a database. Because we already know the structure of the common data model, CDMConnector can be used to create a reference to the various tables that are used.\n\nlibrary(CDMConnector)\n\nIn this case we’ll use the Eunomia example data contained in a duckdb database.\n\ndb <- DBI::dbConnect(duckdb::duckdb(), \n                     dbdir = CDMConnector::eunomia_dir())\ncdm <- CDMConnector::cdm_from_con(db, \n                                  cdm_schema = \"main\")\ncdm\n\n# OMOP CDM reference (tbl_duckdb_connection)\n\nTables: person, observation_period, visit_occurrence, visit_detail, condition_occurrence, drug_exposure, procedure_occurrence, measurement, observation, death, location, care_site, provider, drug_era, dose_era, condition_era, concept, vocabulary, concept_relationship, concept_ancestor, drug_strength\n\n\nOnce we have created the our reference, we can read the tables with “$” operator or [[““]].\n\ncdm$observation_period\n\n# Source:   table<main.observation_period> [?? x 5]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\Rtmpqoo4N4/bxeovbro/cdm.duckdb]\n   observation_period_id person_id observation_period_start…¹ observat…² perio…³\n                   <dbl>     <dbl> <date>                     <date>       <dbl>\n 1                     6         6 1963-12-31                 2007-02-06  4.48e7\n 2                    13        13 2009-04-26                 2019-04-14  4.48e7\n 3                    27        27 2002-01-30                 2018-11-21  4.48e7\n 4                    16        16 1971-10-14                 2017-11-02  4.48e7\n 5                    55        55 2009-05-30                 2019-03-23  4.48e7\n 6                    60        60 1990-11-21                 2019-01-23  4.48e7\n 7                    42        42 1909-11-03                 2019-03-13  4.48e7\n 8                    33        33 1986-05-12                 2018-09-10  4.48e7\n 9                    18        18 1965-11-17                 2018-11-07  4.48e7\n10                    25        25 2007-03-18                 2019-04-07  4.48e7\n# … with more rows, and abbreviated variable names\n#   ¹​observation_period_start_date, ²​observation_period_end_date,\n#   ³​period_type_concept_id\n# ℹ Use `print(n = ...)` to see more rows\n\ncdm[[\"observation_period\"]]\n\n# Source:   table<main.observation_period> [?? x 5]\n# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\\Users\\eburn\\AppData\\Local\\Temp\\Rtmpqoo4N4/bxeovbro/cdm.duckdb]\n   observation_period_id person_id observation_period_start…¹ observat…² perio…³\n                   <dbl>     <dbl> <date>                     <date>       <dbl>\n 1                     6         6 1963-12-31                 2007-02-06  4.48e7\n 2                    13        13 2009-04-26                 2019-04-14  4.48e7\n 3                    27        27 2002-01-30                 2018-11-21  4.48e7\n 4                    16        16 1971-10-14                 2017-11-02  4.48e7\n 5                    55        55 2009-05-30                 2019-03-23  4.48e7\n 6                    60        60 1990-11-21                 2019-01-23  4.48e7\n 7                    42        42 1909-11-03                 2019-03-13  4.48e7\n 8                    33        33 1986-05-12                 2018-09-10  4.48e7\n 9                    18        18 1965-11-17                 2018-11-07  4.48e7\n10                    25        25 2007-03-18                 2019-04-07  4.48e7\n# … with more rows, and abbreviated variable names\n#   ¹​observation_period_start_date, ²​observation_period_end_date,\n#   ³​period_type_concept_id\n# ℹ Use `print(n = ...)` to see more rows\n\n\nWhen we create our reference we could have also specified the tables we want to read:\n\ncdm <- CDMConnector::cdm_from_con(db, \n                                  cdm_tables = c(\"person\",\"observation_period\"))\ncdm\n\n# OMOP CDM reference (tbl_duckdb_connection)\n\nTables: person, observation_period\n\n\nMoreover, we can also specify the writable schema and the tables that we are interested in it when creating our reference. For example, if we wanted to create a reference to the person and observation period tables in the common data model along with cohort tables in a schema we have write access to, we could do this like so:\n\ncdm <- CDMConnector::cdm_from_con(db,\n  cdm_schema = \"main\",\n  cdm_tables = c(\"person\",\"observation_period\"),\n  write_schema = \"results\",\n  cohort_tables = c(\"exposure_cohort\", \"outcome_cohort\"))"
+  },
+  {
+    "objectID": "databases_and_r.html#show_query",
+    "href": "databases_and_r.html#show_query",
+    "title": "4  Working with databases from R",
+    "section": "4.1 show_query()",
+    "text": "4.1 show_query()"
+  },
+  {
+    "objectID": "databases_and_r.html#filter-select-mutate",
+    "href": "databases_and_r.html#filter-select-mutate",
+    "title": "4  Working with databases from R",
+    "section": "4.2 filter(), select(), mutate()",
+    "text": "4.2 filter(), select(), mutate()"
+  },
+  {
+    "objectID": "databases_and_r.html#right_join-left_join-inner_join-and-anti_join",
+    "href": "databases_and_r.html#right_join-left_join-inner_join-and-anti_join",
+    "title": "4  Working with databases from R",
+    "section": "4.3 right_join(), left_join(), inner_join(), and anti_join()",
+    "text": "4.3 right_join(), left_join(), inner_join(), and anti_join()"
+  },
+  {
+    "objectID": "databases_and_r.html#summarise",
+    "href": "databases_and_r.html#summarise",
+    "title": "4  Working with databases from R",
+    "section": "4.4 summarise()",
+    "text": "4.4 summarise()"
+  },
+  {
+    "objectID": "databases_and_r.html#collect-and-compute",
+    "href": "databases_and_r.html#collect-and-compute",
+    "title": "4  Working with databases from R",
+    "section": "4.5 collect() and compute()",
+    "text": "4.5 collect() and compute()"
+  },
+  {
+    "objectID": "databases_and_r.html#working-with-dates",
+    "href": "databases_and_r.html#working-with-dates",
+    "title": "4  Working with databases from R",
+    "section": "4.6 working with dates",
+    "text": "4.6 working with dates\nHere be dragons"
+  },
+  {
+    "objectID": "databases_and_r.html#working-with-strings",
+    "href": "databases_and_r.html#working-with-strings",
+    "title": "4  Working with databases from R",
+    "section": "4.7 working with strings",
+    "text": "4.7 working with strings"
+  },
+  {
+    "objectID": "databases_and_r.html#bespoke-sql",
+    "href": "databases_and_r.html#bespoke-sql",
+    "title": "4  Working with databases from R",
+    "section": "4.8 bespoke sql",
+    "text": "4.8 bespoke sql\nAlternative approaches\n1) Where to do computation\n- Database side vs in local memory vs R\n2) Scope of a package\n3) Scope of analysis code All in one vs one at a time"
   }
 ]
