@@ -280,7 +280,7 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>, <span class="st">"gender_concept_id"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 2]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpWUJzrQ/qrvujnam/cdm.duckdb]
+# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpSOkqhP/lsrdewlz/cdm.duckdb]
    person_id gender_concept_id
        &lt;dbl&gt;             &lt;dbl&gt;
  1         6              8532
@@ -312,7 +312,7 @@ FROM main.person</code></pre>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">new_variable=</span><span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 19]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpWUJzrQ/qrvujnam/cdm.duckdb]
+# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpSOkqhP/lsrdewlz/cdm.duckdb]
    person_id gende…¹ year_…² month…³ day_o…⁴ birth_datetime      race_…⁵ ethni…⁶
        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dttm&gt;                &lt;dbl&gt;   &lt;dbl&gt;
  1         6    8532    1963      12      31 1963-12-31 00:00:00    8516       0
@@ -351,7 +351,7 @@ FROM main.person</code></pre>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">new_variable=</span><span class="fu">if_else</span>(gender_concept_id<span class="sc">==</span><span class="st">"8532"</span>, <span class="st">"Male"</span>, <span class="st">"Female"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 19]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpWUJzrQ/qrvujnam/cdm.duckdb]
+# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpSOkqhP/lsrdewlz/cdm.duckdb]
    person_id gende…¹ year_…² month…³ day_o…⁴ birth_datetime      race_…⁵ ethni…⁶
        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dttm&gt;                &lt;dbl&gt;   &lt;dbl&gt;
  1         6    8532    1963      12      31 1963-12-31 00:00:00    8516       0
@@ -394,7 +394,7 @@ FROM main.person</code></pre>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"day_of_birth"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 19]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpWUJzrQ/qrvujnam/cdm.duckdb]
+# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpSOkqhP/lsrdewlz/cdm.duckdb]
    person_id gende…¹ year_…² month…³ day_o…⁴ birth_datetime      race_…⁵ ethni…⁶
        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dttm&gt;                &lt;dbl&gt;   &lt;dbl&gt;
  1         6    8532    1963      12      31 1963-12-31 00:00:00    8516       0
@@ -438,7 +438,7 @@ FROM main.person</code></pre>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [2 x 1]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpWUJzrQ/qrvujnam/cdm.duckdb]
+# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpSOkqhP/lsrdewlz/cdm.duckdb]
   gender_concept_id
               &lt;dbl&gt;
 1              8532
@@ -462,7 +462,7 @@ FROM main.person</code></pre>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"sex_concept_id"</span> <span class="ot">=</span> <span class="st">"gender_concept_id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 18]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpWUJzrQ/qrvujnam/cdm.duckdb]
+# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpSOkqhP/lsrdewlz/cdm.duckdb]
    person_id sex_c…¹ year_…² month…³ day_o…⁴ birth_datetime      race_…⁵ ethni…⁶
        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dttm&gt;                &lt;dbl&gt;   &lt;dbl&gt;
  1         6    8532    1963      12      31 1963-12-31 00:00:00    8516       0

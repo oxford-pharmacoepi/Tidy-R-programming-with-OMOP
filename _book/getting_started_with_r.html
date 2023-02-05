@@ -169,42 +169,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./exploring_the_cdm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Exploring the CDM</span></a>
+  <a href="./adding_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Adding a cohort</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./databases_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">filter(), select(), mutate()</span></a>
+  <a href="./exploring_the_cdm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploring the CDM</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./strings.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">strings.html</span></a>
+  <a href="./databases_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">select()</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">dates.html</span></a>
+  <a href="./strings.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">strings.html</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./working_with_multiple_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">right_join(), left_join(), inner_join(), and anti_join()</span></a>
+  <a href="./dates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">dates.html</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./moving_to_arrow_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Getting to tidy data</span></a>
+  <a href="./working_with_multiple_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">right_join(), left_join(), inner_join(), and anti_join()</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./analysis_in_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Analysis in R</span></a>
+  <a href="./moving_to_arrow_and_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Getting to tidy data</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./other.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Organising data analyses with projects and renv</span></a>
+  <a href="./analysis_in_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analysis in R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./other.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Organising data analyses with projects and renv</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -214,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./learning_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">learning_r.html</span></a>
+  <a href="./learning_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">learning_r.html</span></a>
   </div>
 </li>
     </ul>
@@ -232,6 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#inserting-data-into-a-database" id="toc-inserting-data-into-a-database" class="nav-link" data-scroll-target="#inserting-data-into-a-database"> <span class="header-section-number">1.4</span> Inserting data into a database</a></li>
   <li><a href="#translation-from-r-to-sql" id="toc-translation-from-r-to-sql" class="nav-link" data-scroll-target="#translation-from-r-to-sql"> <span class="header-section-number">1.5</span> Translation from R to SQL</a></li>
   <li><a href="#example-analysis" id="toc-example-analysis" class="nav-link" data-scroll-target="#example-analysis"> <span class="header-section-number">1.6</span> Example analysis</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"> <span class="header-section-number">1.7</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
@@ -517,8 +523,16 @@ FROM (
 </div>
 <p>As well as having an example of working with data in database from R, you also have an example of <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox">Simpson´s paradox</a>! And now we’ve reached the end of this example, we can close the database like so</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
+</section>
+<section id="further-reading" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">1.7</span> Further reading</h2>
+<ul>
+<li><p><a href="https://r4ds.had.co.nz/relational-data.html">R for Data Science (Chapter 13: Relational data)</a></p></li>
+<li><p><a href="https://dbplyr.tidyverse.org/articles/sql.html">Writing SQL with dbplyr</a></p></li>
+<li><p><a href="https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html">Data Carpentry: SQL databases and R</a></p></li>
+</ul>
 
 
 </section>

@@ -10,9 +10,10 @@ book:
   date: today
   chapters:
     - index.qmd
-    - getting_started_with_r.qmd
-    - connecting_to_cdm.qmd
+    - ch_1_getting_started.qmd
+    - ch_2_cdm_reference.qmd
     - exploring_the_cdm.qmd
+    - adding_a_cohort.qmd
     - databases_and_r.qmd
     - strings.qmd
     - dates.qmd

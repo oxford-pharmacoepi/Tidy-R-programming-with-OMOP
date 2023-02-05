@@ -1,0 +1,101 @@
+# Creating a reference to a database using the OMOP common data model
+
+## Connecting to a database from R using DBI
+
+Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. As an example, lets say we want to work with a local duckdb from R. In this case the we can use the duckdb R package as the driver.
+
+```{r}
+library(DBI)
+db<-dbConnect(duckdb::duckdb(), dbdir=":memory:")
+```
+
+If we instead wanted to connect to other database management systems, these connections would be supported by the associated back-end packages and could look something like the below example for Postgres:
+
+```{r, eval=FALSE}
+# Postgres
+db <- DBI::dbConnect(RPostgres::Postgres(),
+                      dbname = Sys.getenv("CDM5_POSTGRESQL_DBNAME"),
+                      host = Sys.getenv("CDM5_POSTGRESQL_HOST"),
+                      user = Sys.getenv("CDM5_POSTGRESQL_USER"),
+                      password = Sys.getenv("CDM5_POSTGRESQL_PASSWORD"))
+```
+
+## Creating a reference to the OMOP common data model
+
+As seen in the previous chapter, once a connection to the database has been created then we could create references to the various tables in the database and build queries using in a familiar dplyr style. However, as we already know what the structure of the OMOP CDM looks like, we can avoid the overhead of building *ad hoc* references by instead using the `CDMConnector` package to quickly create a reference to the OMOP CDM data as a whole.
+
+If you don't already have it installed, the first step would be to install `CDMConnector` from CRAN.
+
+```{r, eval=FALSE}
+install.packages("CDMConnector")
+```
+
+Once we have it installed, we can then load it as with other R packages.
+
+```{r, echo = TRUE, warning=FALSE, message=FALSE}
+library(CDMConnector)
+```
+
+For this example, we'll use the Eunomia example data contained in a duckdb database. First we need to download the data. And once downloaded, make sure to add the path to your Renviron.
+
+```{r, eval = FALSE}
+# change pathToData to the location you want to save the data
+CDMConnector::downloadEunomiaData(
+  pathToData = here::here(), 
+  overwrite = TRUE
+)
+# once downloaded, save your pathToData to your Renviron (and then restart R)
+# EUNOMIA_DATA_FOLDER="......"
+```
+
+```{r, echo = TRUE}
+db <- DBI::dbConnect(duckdb::duckdb(), 
+                     dbdir = CDMConnector::eunomia_dir())
+cdm <- CDMConnector::cdm_from_con(con = db, 
+                                  cdm_schema = "main")
+cdm
+```
+
+Once we have created the our reference to the overall OMOP CDM, we can reference specific tables using the "\$" operator or \[\[""\]\].
+
+```{r, echo = TRUE}
+cdm$observation_period
+cdm[["observation_period"]]
+```
+
+When we created our reference we could have also specified a subset of cdm tables that we want to read:
+
+```{r, echo = TRUE}
+cdm <- CDMConnector::cdm_from_con(db, 
+                                  cdm_tables = c("person","observation_period"))
+cdm
+```
+
+Moreover, we can also specify a write schema and the tables that we are interested in it when creating our reference. For example, if we wanted to create a reference to the person and observation period tables in the common data model along with cohort tables in a schema we have write access to, we could do this like so:
+
+```{r, echo = TRUE, eval = FALSE}
+cdm <- CDMConnector::cdm_from_con(db,
+  cdm_schema = "main",
+  cdm_tables = c("person","observation_period"),
+  write_schema = "results",
+  cohort_tables = c("exposure_cohort", "outcome_cohort"))
+```
+
+## Database snapshot
+
+We can also use `CDMConnector` to provide a summary of the metadata for the OMOP CDM data we have connected to
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+```
+
+```{r}
+cdm_from_con(con = db, 
+             cdm_schema = "main") %>% 
+  snapshot() %>% 
+  glimpse()
+```
+
+## Further reading
+
+-   [CDMConnector package](https://darwin-eu.github.io/CDMConnector)
