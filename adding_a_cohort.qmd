@@ -1,7 +1,0 @@
-# Adding a cohort
-
-## Finding codes with CodelistGenerator
-
-## Defining a cohort with capr
-
-## Adding a cohort to your cdm reference

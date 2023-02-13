@@ -1,4 +1,4 @@
-# Creating a reference to a database using the OMOP common data model
+# Creating a reference to the OMOP common data model
 
 ## Connecting to a database from R using DBI
 
@@ -22,7 +22,7 @@ db <- DBI::dbConnect(RPostgres::Postgres(),
 
 ## Creating a reference to the OMOP common data model
 
-As seen in the previous chapter, once a connection to the database has been created then we could create references to the various tables in the database and build queries using in a familiar dplyr style. However, as we already know what the structure of the OMOP CDM looks like, we can avoid the overhead of building *ad hoc* references by instead using the `CDMConnector` package to quickly create a reference to the OMOP CDM data as a whole.
+As seen in the previous chapter, once a connection to the database has been created we could then create references to the various tables in the database and build queries using in a familiar dplyr style. However, as we already know what the structure of the OMOP CDM looks like, we can avoid the overhead of creating references to the OMOP CDM tables by using the `CDMConnector` package to quickly create a reference to the database as a whole.
 
 If you don't already have it installed, the first step would be to install `CDMConnector` from CRAN.
 
@@ -30,13 +30,11 @@ If you don't already have it installed, the first step would be to install `CDMC
 install.packages("CDMConnector")
 ```
 
-Once we have it installed, we can then load it as with other R packages.
+For this example, we'll use the Eunomia example data contained in a duckdb database. First we need to download the data. And once downloaded, make sure to add the path to your Renviron.
 
 ```{r, echo = TRUE, warning=FALSE, message=FALSE}
 library(CDMConnector)
 ```
-
-For this example, we'll use the Eunomia example data contained in a duckdb database. First we need to download the data. And once downloaded, make sure to add the path to your Renviron.
 
 ```{r, eval = FALSE}
 # change pathToData to the location you want to save the data
@@ -56,34 +54,46 @@ cdm <- CDMConnector::cdm_from_con(con = db,
 cdm
 ```
 
-Once we have created the our reference to the overall OMOP CDM, we can reference specific tables using the "\$" operator or \[\[""\]\].
+Once we have created the our reference to the overall OMOP CDM, we can reference specific tables using the "\$" operator.
 
 ```{r, echo = TRUE}
 cdm$observation_period
+```
+
+Alternatively, you could also access a specific table reference like so
+```{r, echo = TRUE}
 cdm[["observation_period"]]
 ```
 
-When we created our reference we could have also specified a subset of cdm tables that we want to read:
+When we created our reference we could have also specified a subset of cdm tables that we want to reference to:
 
 ```{r, echo = TRUE}
-cdm <- CDMConnector::cdm_from_con(db, 
-                                  cdm_tables = c("person","observation_period"))
+cdm <- cdm_from_con(db, 
+                    cdm_tables = c("person","observation_period"))
 cdm
 ```
 
-Moreover, we can also specify a write schema and the tables that we are interested in it when creating our reference. For example, if we wanted to create a reference to the person and observation period tables in the common data model along with cohort tables in a schema we have write access to, we could do this like so:
-
+Moreover, we can also specify a write schema. This would be a schema in which we have permission to create tables (as we're unlikely to have that permission for the schema containing the tables with the patient-level data). 
 ```{r, echo = TRUE, eval = FALSE}
-cdm <- CDMConnector::cdm_from_con(db,
+cdm <- cdm_from_con(db,
+  cdm_schema = "main",
+  cdm_tables = c("person","observation_period"),
+  write_schema = "results")
+```
+
+And if we already had some cohort tables in the results schema, we could include references to these like so:
+```{r, echo = TRUE, eval = FALSE}
+cdm <- cdm_from_con(db,
   cdm_schema = "main",
   cdm_tables = c("person","observation_period"),
   write_schema = "results",
   cohort_tables = c("exposure_cohort", "outcome_cohort"))
 ```
 
+
 ## Database snapshot
 
-We can also use `CDMConnector` to provide a summary of the metadata for the OMOP CDM data we have connected to
+We can also use `CDMConnector` to provide a summary of the metadata for the OMOP CDM data we have connected to using the `snapshot()` function.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)

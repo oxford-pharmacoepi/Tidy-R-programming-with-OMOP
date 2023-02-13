@@ -1,5 +1,0 @@
-## Organising data analyses with projects and renv
-
-![](images/EnepKxNVQAAhNhg.jpg){width="250"}
-
-*Artwork by \@allison_horst*

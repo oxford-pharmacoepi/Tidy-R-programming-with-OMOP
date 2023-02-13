@@ -1,0 +1,13 @@
+# Adding a cohort
+
+## Defining a cohort definition
+
+capr - defining json ....
+
+## Adding a cohort to the CDM
+
+via cdm connector
+
+## Cohort summary
+
+Attributes: Cohort count, settings, attrition .....

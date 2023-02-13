@@ -5,25 +5,17 @@ execute:
   freeze: true
 
 book:
-  title: "Tidy R programming with the OMOP common data model"
-  author: "Edward Burn, Adam Black, Marti Catala, Berta Raventós"
+  title: "An introduction to tidy R programming with the OMOP common data model"
+  author: "Edward Burn, Adam Black, Berta Raventós, Yuchen Guo, Mike Du, Kim López Güell, Martí Català Sabaté"
   date: today
   chapters:
     - index.qmd
     - ch_1_getting_started.qmd
     - ch_2_cdm_reference.qmd
-    - exploring_the_cdm.qmd
-    - adding_a_cohort.qmd
-    - databases_and_r.qmd
-    - strings.qmd
-    - dates.qmd
-    - working_with_multiple_tables.qmd
-    - moving_to_arrow_and_r.qmd
-    - analysis_in_r.qmd
-    - other.qmd
+    - ch_3_exploring_the_cdm.qmd
+    - ch_4_building_a_cohort.qmd
+    - ch_5_describing_a_cohort.qmd
     - references.qmd
-    - learning_r.qmd
-
 
 bibliography: references.bib
 

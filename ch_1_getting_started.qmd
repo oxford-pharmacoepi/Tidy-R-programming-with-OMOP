@@ -135,7 +135,7 @@ penguins_db %>%
   summarise(mean_body_mass_g=round(mean(body_mass_g, na.rm=TRUE),0))
 ```
 
-We can then also do a histogram for each of the species. For this we need to bring the data into R so that we can work with `ggplot()`, and we use `collect()` to do this.
+We can then also do a histogram for each of the species.
 
 ```{r, warning=FALSE, message=FALSE}
 penguins_db %>% 
@@ -146,6 +146,14 @@ penguins_db %>%
   theme_bw()+
   theme(legend.position = "none") 
 ```
+
+::: {.callout-tip collapse="true"}
+## Choosing the right time to collect 
+
+`collect()` brings data out of the database and into R. Above we use it to bring the entire penguins data back into R so that we can then use `ggplot()` to make our histogram. 
+
+In practice, however, we wouldn't be reading out entire database tables as typically we are working with a database because we have data of a size that wouldn't fit in the memory of our computer. Generally we would collect only once we prepared our data for extraction (i.e. limiting to rows and columns of interest). 
+:::
 
 How about the relationship between body mass and bill depth?
 
@@ -159,7 +167,7 @@ penguins %>%
   theme(legend.position = "none") 
 ```
 
-But what about by species?
+A negative correlation between body mass and bill depth, that seems a little unexpected. What about if we stratify by species?
 
 ```{r, warning=FALSE, message=FALSE}
 penguins %>% 
@@ -174,7 +182,7 @@ penguins %>%
 
 As well as having an example of working with data in database from R, you also have an example of [Simpson´s paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox)! And now we've reached the end of this example, we can close the database like so
 
-```{r, echo=FALSE}
+```{r}
 dbDisconnect(db)
 ```
 

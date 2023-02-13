@@ -1,3 +1,0 @@
-### right_join(), left_join(), inner_join(), and anti_join()
-
-### and union() and union_all()

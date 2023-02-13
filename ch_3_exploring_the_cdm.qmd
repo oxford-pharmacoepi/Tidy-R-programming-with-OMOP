@@ -1,0 +1,290 @@
+## Exploring the CDM
+
+Let's first connect again to our Eunomia data and create the reference to the common data model.
+
+```{r, warning=FALSE, message=FALSE}
+library(dbplyr)
+library(dplyr)
+library(CDMConnector)
+library(ggplot2)
+```
+
+```{r}
+db <- DBI::dbConnect(duckdb::duckdb(), 
+                     dbdir = CDMConnector::eunomia_dir())
+cdm <- cdm_from_con(db, cdm_schema = "main")
+```
+
+## Counting people
+
+The OMOP CDM is person-centric, with the person table containing records to uniquely identify each person in the database. As each row refers to a unique person, we can quickly get a count of the number of individuals in the database like so
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  count() %>% 
+  pull()
+```
+
+The person table also contains some demographic information, including a gender_concept_id for each person. We can get a count grouped by this variable, but as this uses a concept we'll also need to join to the concept table to get the corresponding concept name for each concept id.
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  group_by(gender_concept_id) %>% 
+  count() %>% 
+  left_join(cdm$concept, 
+            by=c("gender_concept_id" = "concept_id")) %>% 
+              select("gender_concept_id", "concept_name", "n") %>% 
+  collect()
+```
+
+The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:
+
+```{r, echo = TRUE}
+first_observation_period <- cdm$observation_period %>%
+    group_by(person_id) %>% 
+    filter(dplyr::row_number() == 1) %>% 
+    compute()
+
+cdm$person %>% 
+  left_join(first_observation_period,
+            by = "person_id") %>% 
+  mutate(observation_period_start_year=year(observation_period_start_date)) %>% 
+  group_by(observation_period_start_year) %>% 
+  count() %>% 
+  collect() %>% 
+  ggplot() +
+  geom_col(aes(observation_period_start_year, n)) +
+  theme_bw()
+```
+
+
+
+::: {.callout-tip collapse="true"}
+## To compute or not to compute
+
+The  compute() function will force the computation of a query. In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.  
+
+```{r, echo = TRUE}
+cdm$observation_period %>%
+    group_by(person_id) %>% 
+    filter(dplyr::row_number() == 1) %>% 
+    show_query()
+```
+
+Followed by a second query that left joins the person table with the result from the first (which is now in a temporary table), followed by extracted the year in which peoples first observation period starts and then, finally, a count by year.
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  left_join(first_observation_period,
+            by = "person_id") %>% 
+  mutate(observation_period_start_year=year(observation_period_start_date)) %>% 
+  group_by(observation_period_start_year) %>% 
+  count() %>% 
+  show_query()
+```
+
+We could, however, have done this without compute, with instead the SQL being done all at once.
+```{r, echo = TRUE}
+cdm$person %>% 
+  left_join(cdm$observation_period %>%
+    group_by(person_id) %>% 
+    filter(dplyr::row_number() == 1),
+            by = "person_id") %>% 
+  mutate(observation_period_start_year=year(observation_period_start_date)) %>% 
+  group_by(observation_period_start_year) %>% 
+  count() %>% 
+  show_query()
+```
+
+In this case the SQL is not much more complicated than before. However, you can imagine that without forcing computation, the SQL associated with a series of data manipulations could quickly become unmanageable. So although we don't want to overuse compute, it is often a necessity when writing analysis scripts.
+
+An advantage of using compute, is that we can use the result for multiple subsequent queries. For example, say we want a count of condition occurrence and drug exposure records for those born before 1970. We could get these counts independently:
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  filter(year_of_birth < "1970") %>% 
+  select("person_id") %>% 
+  left_join(cdm$condition_occurrence,
+            by="person_id") %>% 
+  tally()
+
+cdm$person %>% 
+  filter(year_of_birth < "1970") %>% 
+  select("person_id") %>% 
+  left_join(cdm$drug_exposure,
+            by="person_id") %>% 
+  tally()
+```
+
+But we could have instead first subsetted the person table and then used the result for both queries. 
+
+```{r, echo = TRUE}
+cdm$person_pre_1970 <- cdm$person %>% 
+  filter(year_of_birth < "1970") %>% 
+  compute()
+
+cdm$person_pre_1970 %>% 
+  select("person_id") %>% 
+  left_join(cdm$condition_occurrence,
+            by="person_id") %>% 
+  tally()
+
+cdm$person_pre_1970 %>% 
+  select("person_id") %>% 
+  left_join(cdm$drug_exposure,
+            by="person_id") %>% 
+  tally()
+```
+
+:::
+
+
+::: {.callout-tip collapse="true"}
+## computeQuery()
+The `compute()` function from dplyr is currently somewhat inconsistent across database platforms. For this reason CDMConnector provides the `computeQuery()` which does the same job, but with greater consistency across its supported database management systems.
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  tally() %>% 
+  computeQuery()
+```
+
+:::
+
+## Counting records
+
+Number of drug exposure records per person
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  left_join(cdm$measurement %>% 
+  group_by(person_id) %>% 
+  count(name = "condition_occurrence_records"),
+            by="person_id") %>% 
+  mutate(condition_occurrence_records = if_else(
+    is.na(condition_occurrence_records), 0,
+    condition_occurrence_records)) %>% 
+  group_by(condition_occurrence_records) %>%
+  count() %>% 
+  collect() %>% 
+  ggplot() +
+  geom_col(aes(condition_occurrence_records, n)) +
+  theme_bw()
+```
+
+## Working with dates
+
+Dates are supported somewhat inconsistently by dbplyr but, as with `computeQuery()`, CDMConnector also provides some date functions that are tested to work across supported databases. We can use the `datediff()` function for example to calculate the difference between two dates. We can use this below to get the number of years observation periods last for.
+
+```{r, echo = TRUE}
+cdm$observation_period %>%
+  dplyr::mutate(observation_years = 
+                  !!CDMConnector::datediff("observation_period_start_date", 
+                             "observation_period_end_date", 
+                             interval = "year"))  %>% 
+  collect() %>% 
+  ggplot() +
+  geom_histogram(aes(observation_years), 
+                 binwidth=2, colour="grey") +
+  theme_bw()
+```
+
+## Statistical summaries
+
+We can also use summarise for various other calculations
+
+```{r, echo = TRUE}
+cdm$person %>% 
+  summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
+            q05_year_of_birth = quantile(year_of_birth, 0.05, na.rm=TRUE),
+            mean_year_of_birth = round(mean(year_of_birth, na.rm=TRUE),0),
+            median_year_of_birth = median(year_of_birth, na.rm=TRUE),
+            q95_year_of_birth = quantile(year_of_birth, 0.95, na.rm=TRUE),
+            max_year_of_birth = max(year_of_birth, na.rm=TRUE)) %>%  
+  glimpse()
+```
+
+::: {.callout-tip collapse="true"}
+## Piping and SQL
+Although piping queries has little impact on performance when using R with data in memory, when working with a database the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call. 
+
+For example, the single summarise function above would generate the below SQL.
+```{r, echo = TRUE}
+cdm$person %>% 
+  summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
+            q05_year_of_birth = quantile(year_of_birth, 0.05, na.rm=TRUE),
+            mean_year_of_birth = round(mean(year_of_birth, na.rm=TRUE),0),
+            median_year_of_birth = median(year_of_birth, na.rm=TRUE),
+            q95_year_of_birth = quantile(year_of_birth, 0.95, na.rm=TRUE),
+            max_year_of_birth = max(year_of_birth, na.rm=TRUE)) %>% 
+  show_query()
+```
+
+Calling summarise for each though would lead to a more involved query.
+```{r, echo = TRUE}
+cdm$person %>% 
+  summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE)) %>% 
+  summarise(q05_year_of_birth = quantile(year_of_birth, 0.05, na.rm=TRUE)) %>% 
+  summarise(mean_year_of_birth = round(mean(year_of_birth, na.rm=TRUE),0)) %>% 
+  summarise(median_year_of_birth = median(year_of_birth, na.rm=TRUE)) %>% 
+  summarise(q95_year_of_birth = quantile(year_of_birth, 0.95, na.rm=TRUE)) %>% 
+  summarise(max_year_of_birth = max(year_of_birth, na.rm=TRUE)) %>% 
+  show_query()
+```
+
+A similar story can be seen with mutate
+```{r, echo = TRUE}
+cdm$observation_period %>%
+  mutate(observation_days = !!datediff("observation_period_start_date", 
+                             "observation_period_end_date", 
+                             interval = "day"),
+        observation_years = !!datediff("observation_period_start_date", 
+                             "observation_period_end_date", 
+                             interval = "year")) %>% 
+  select("observation_period_id", "person_id", 
+         "observation_days","observation_years") %>% 
+  show_query()
+```
+
+```{r, echo = TRUE}
+cdm$observation_period %>%
+  mutate(observation_days = !!datediff("observation_period_start_date", 
+                             "observation_period_end_date", 
+                             interval = "day")) %>% 
+  mutate(observation_years = !!datediff("observation_period_start_date", 
+                             "observation_period_end_date", 
+                             interval = "year")) %>% 
+  select("observation_period_id", "person_id", 
+         "observation_days","observation_years") %>% 
+  show_query()
+```
+:::
+
+
+As we've seen before, we can also quickly get results for various groupings or restrictions
+
+```{r, echo = TRUE}
+cdm$person %>% 
+   group_by(gender_concept_id) %>% 
+   summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
+            q25_year_of_birth = quantile(year_of_birth, 0.25, na.rm=TRUE),
+            median_year_of_birth = median(year_of_birth, na.rm=TRUE),
+            q75_year_of_birth = quantile(year_of_birth, 0.75, na.rm=TRUE),
+            max_year_of_birth = max(year_of_birth, na.rm=TRUE)) %>% 
+  left_join(cdm$concept, 
+            by=c("gender_concept_id" = "concept_id")) %>% 
+   collect() %>% 
+  ggplot(aes(x = concept_name, group = concept_name,
+             fill = concept_name)) +
+  geom_boxplot(aes(
+    lower = q25_year_of_birth, 
+    upper = q75_year_of_birth, 
+    middle = median_year_of_birth, 
+    ymin = min_year_of_birth, 
+    ymax = max_year_of_birth),
+    stat = "identity", width = 0.5) + 
+  theme_bw()+ 
+  theme(legend.position = "none") +
+  xlab("")
+
+```
