@@ -1,20 +1,23 @@
-# Adding a cohort
+# Adding cohorts to the CDM
+
+## Cohort definitions
+
+When performing research with the OMOP common data model we often want to identify groups of individuals who share some set of characteristics. The criteria for including individuals can range from the seemingly simple (e.g. people diagnosed with asthma) to the much more complicated (e.g. adults diagnosed with asthma who had a year of prior observation time in the database prior to their diagnosis, had no prior history of chronic obstructive pulmonary disease, and no history of use of short-acting beta-agonists). The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields: cohort_definition_id (a unique identifier for each cohort), subject_id (a foreign key to the subject in the cohort - typically referring to records in the person table), cohort_start_date, and cohort_end_date.
+
+Cohorts can be defined using entirely bespoke code (so long as the output fits the cohort table specification). However because cohort definitions often follow a similar logic, tools have also be developed to facilitate cohort creation. In particular, [ATLAS](https://atlas-demo.ohdsi.org) provides a graphical user interface which can be used to create cohort definitions that are expressed as JSON which can subsequently be rendered to SQL. The Capr R package, used below, provides a means of definining the JSON via R code instead.
+
+## Defining cohorts programmatically
+
+We can define a cohort programmatically using the Capr package. In addition we the CodelistGenerator package can be used to help find the codes to use in our cohort definitions.
+
+Let´s load the required packages and connect to the Eunomia data again.
 
 ```{r, warning=FALSE, message=FALSE}
 library(CDMConnector)
 library(dplyr)
-library(CodelistGenerator)
 library(Capr)
-```
+library(CodelistGenerator)
 
-
-## Defining a cohort definition
-
-In the previous ch containing patient-level data that we explored in the previous chapter, 
-
-We can define a cohort programmatically using the Capr package. 
-
-```{r}
 con <- DBI::dbConnect(duckdb::duckdb(), eunomia_dir())
 
 cdm <- CDMConnector::cdm_from_con(
@@ -24,33 +27,50 @@ cdm <- CDMConnector::cdm_from_con(
 )
 ```
 
+Say we want to create a cohort of people with a gastrointestinal hemorrhage. We´ll start by getting the code that represents "gastrointestinal hemorrhage" 
 
-Let´s say we want to identify people with a gastrointestinal hemorrhage. First we´ll need to identify the code ... and generate a conc
 ```{r}
 gibleed_codes <- getCandidateCodes(cdm = cdm, 
                   keywords = "gastrointestinal hemorrhage",
                   domains = "condition",
                   exactMatch = TRUE,
                   includeDescendants = FALSE)
+gibleed_codes %>% 
+  glimpse()
 gibleed_concept_set <- cs(descendants(gibleed_codes$concept_id))
 ```
 
-We can now us
-```{r}
+::: {.callout-tip collapse="true"}
+## Finding appropriate codes
+The above gives the impression that identifying concepts that represent a particular clinical idea is straightforward. In practice, however, this is rarely the case. Identifying the codes that could represent a condition and then choosing which does though is typically a time consuming task .....
 
+```{r}
+getCandidateCodes(cdm = cdm, 
+                  keywords = "fracture",
+                  domains = "condition",
+                  includeDescendants = TRUE)
+```
+
+:::
+
+
+Once we´ve identified our codes we´ll create a concept set that includes this code or any of its descendants.
+```{r}
+gibleed_concept_set <- cs(descendants(gibleed_codes$concept_id))
+```
+
+We can now use this concept set in a cohort definition. We´ll look for anyone with a correspong record in the condition occurrence table. We´ll also require that this is their first such record.
+
+```{r}
 entry_criteria <- entry(
     condition(gibleed_concept_set),
-    observationWindow = continuousObservation(priorDays = 365L, 
-                                              postDays = 0L),
     primaryCriteriaLimit = "First"
   )
 
-
 gibleed_cohort_definition <- cohort(entry = entry_criteria)
-
 ```
 
-Let´s make things a little more complicated. We´ll exclude people with rheumatoid arthritis (regardless of when they were diagnosed). We´ll also require that people 
+We could though make things a little more complicated. What if we wanted to exclude anyone with rheumatoid arthritis (regardless of when they were diagnosed). To do this we´ll first need to create another concept set, this time for rheumatoid arthritis.
 
 ```{r}
 rheumatoid_arthritis_codes <- getCandidateCodes(cdm = cdm, 
@@ -58,11 +78,25 @@ rheumatoid_arthritis_codes <- getCandidateCodes(cdm = cdm,
                   domains = "condition",
                   exactMatch = TRUE,
                   includeDescendants = FALSE)
+rheumatoid_arthritis_codes %>% 
+  glimpse()
 rheumatoid_arthritis_concept_set <- cs(descendants(
   rheumatoid_arthritis_codes$concept_id))
+```
 
+::: {.callout-tip collapse="true"}
+## JSON representation of a concept set
 
+```{r, echo = TRUE}
+cat(as.json(gibleed_concept_set))
 
+cat(as.json(rheumatoid_arthritis_concept_set))
+```
+:::
+
+And now we can add this excluision criteria to our cohort definition.
+
+```{r}
 gibleed_no_RA_cohort_definition <- cohort(
    entry = entry(
     condition(gibleed_concept_set),
@@ -94,35 +128,16 @@ gibleed_cohort_set <- readCohortSet(path = path)
 
 ```
 
-::: {.callout-tip collapse="true"}
-
-
-## JSON representation of a concept set
-
-
-```{r, echo = TRUE}
-cat(as.json(gibleed_concept_set))
-
-cat(as.json(rheumatoid_arthritis_concept_set))
-```
-
-:::
-
 
 ::: {.callout-tip collapse="true"}
-
-
 ## JSON representation of a cohort
-
 
 ```{r, echo = TRUE}
 cat(as.json((gibleed_cohort_definition)))
 
 cat(as.json((gibleed_no_RA_cohort_definition)))
 ```
-
 :::
-
 
 ## Adding a cohort to the CDM
 

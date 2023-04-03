@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>An introduction to tidy R programming with the OMOP common data model - 4&nbsp; Adding a cohort</title>
+<title>An introduction to tidy R programming with the OMOP common data model - 4&nbsp; Adding cohorts to the CDM</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -128,7 +128,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding a cohort</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -173,7 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_4_building_a_cohort.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding a cohort</span></a>
+  <a href="./ch_4_building_a_cohort.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -195,9 +195,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#defining-a-cohort-definition" id="toc-defining-a-cohort-definition" class="nav-link active" data-scroll-target="#defining-a-cohort-definition"> <span class="header-section-number">4.1</span> Defining a cohort definition</a></li>
-  <li><a href="#adding-a-cohort-to-the-cdm" id="toc-adding-a-cohort-to-the-cdm" class="nav-link" data-scroll-target="#adding-a-cohort-to-the-cdm"> <span class="header-section-number">4.2</span> Adding a cohort to the CDM</a></li>
-  <li><a href="#cohort-summary" id="toc-cohort-summary" class="nav-link" data-scroll-target="#cohort-summary"> <span class="header-section-number">4.3</span> Cohort summary</a></li>
+  <li><a href="#cohort-definitions" id="toc-cohort-definitions" class="nav-link active" data-scroll-target="#cohort-definitions"> <span class="header-section-number">4.1</span> Cohort definitions</a></li>
+  <li><a href="#defining-cohorts-programmatically" id="toc-defining-cohorts-programmatically" class="nav-link" data-scroll-target="#defining-cohorts-programmatically"> <span class="header-section-number">4.2</span> Defining cohorts programmatically</a></li>
+  <li><a href="#adding-a-cohort-to-the-cdm" id="toc-adding-a-cohort-to-the-cdm" class="nav-link" data-scroll-target="#adding-a-cohort-to-the-cdm"> <span class="header-section-number">4.3</span> Adding a cohort to the CDM</a></li>
+  <li><a href="#cohort-summary" id="toc-cohort-summary" class="nav-link" data-scroll-target="#cohort-summary"> <span class="header-section-number">4.4</span> Cohort summary</a></li>
   </ul>
 </nav>
     </div>
@@ -206,7 +207,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding a cohort</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></h1>
 </div>
 
 
@@ -220,82 +221,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<section id="cohort-definitions" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="cohort-definitions"><span class="header-section-number">4.1</span> Cohort definitions</h2>
+<p>When performing research with the OMOP common data model we often want to identify groups of individuals who share some set of characteristics. The criteria for including individuals can range from the seemingly simple (e.g.&nbsp;people diagnosed with asthma) to the much more complicated (e.g.&nbsp;adults diagnosed with asthma who had a year of prior observation time in the database prior to their diagnosis, had no prior history of chronic obstructive pulmonary disease, and no history of use of short-acting beta-agonists). The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields: cohort_definition_id (a unique identifier for each cohort), subject_id (a foreign key to the subject in the cohort - typically referring to records in the person table), cohort_start_date, and cohort_end_date.</p>
+<p>Cohorts can be defined using entirely bespoke code (so long as the output fits the cohort table specification). However because cohort definitions often follow a similar logic, tools have also be developed to facilitate cohort creation. In particular, <a href="https://atlas-demo.ohdsi.org">ATLAS</a> provides a graphical user interface which can be used to create cohort definitions that are expressed as JSON which can subsequently be rendered to SQL. The Capr R package, used below, provides a means of definining the JSON via R code instead.</p>
+</section>
+<section id="defining-cohorts-programmatically" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="defining-cohorts-programmatically"><span class="header-section-number">4.2</span> Defining cohorts programmatically</h2>
+<p>We can define a cohort programmatically using the Capr package. In addition we the CodelistGenerator package can be used to help find the codes to use in our cohort definitions.</p>
+<p>Let´s load the required packages and connect to the Eunomia data again.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CodelistGenerator)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Capr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Capr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CodelistGenerator)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="fu">eunomia_dir</span>())</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> CDMConnector<span class="sc">::</span><span class="fu">cdm_from_con</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">con =</span> con,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_schema =</span> <span class="st">"main"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">write_schema =</span> <span class="st">"main"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="defining-a-cohort-definition" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="defining-a-cohort-definition"><span class="header-section-number">4.1</span> Defining a cohort definition</h2>
-<p>We can define a cohort programmatically using the Capr package.</p>
+<p>Say we want to create a cohort of people with a gastrointestinal hemorrhage. We´ll start by getting the code that represents “gastrointestinal hemorrhage”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="fu">eunomia_dir</span>())</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> CDMConnector<span class="sc">::</span><span class="fu">cdm_from_con</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">con =</span> con,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_schema =</span> <span class="st">"main"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">write_schema =</span> <span class="st">"main"</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gibleed_codes <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(<span class="at">cdm =</span> cdm, </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">keywords =</span> <span class="st">"gastrointestinal hemorrhage"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">domains =</span> <span class="st">"condition"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">exactMatch =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">includeDescendants =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>gibleed_codes <span class="sc">%&gt;%</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1
+Columns: 6
+$ concept_id       &lt;dbl&gt; 192671
+$ concept_name     &lt;chr&gt; "Gastrointestinal hemorrhage"
+$ domain_id        &lt;chr&gt; "condition"
+$ concept_class_id &lt;chr&gt; "clinical finding"
+$ vocabulary_id    &lt;chr&gt; "snomed"
+$ found_from       &lt;chr&gt; "From initial search"</code></pre>
 </div>
-<p>Let´s say we want to identify people with a gastrointestinal hemorrhage. First we´ll need to identify the code … and generate a conc</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gibleed_codes <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(<span class="at">cdm =</span> cdm, </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">keywords =</span> <span class="st">"gastrointestinal hemorrhage"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">domains =</span> <span class="st">"condition"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">exactMatch =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">includeDescendants =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>gibleed_concept_set <span class="ot">&lt;-</span> <span class="fu">cs</span>(<span class="fu">descendants</span>(gibleed_codes<span class="sc">$</span>concept_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We can now us</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gibleed_cohort_definition <span class="ot">&lt;-</span> <span class="fu">cohort</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">entry =</span> <span class="fu">entry</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">condition</span>(gibleed_concept_set),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">primaryCriteriaLimit =</span> <span class="st">"First"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Let´s make things a little more complicated. We´ll exclude people with rheumatoid arthritis (regardless of when they were diagnosed). We´ll also require that people</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rheumatoid_arthritis_codes <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(<span class="at">cdm =</span> cdm, </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">keywords =</span> <span class="st">"rheumatoid arthritis"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">domains =</span> <span class="st">"condition"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">exactMatch =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">includeDescendants =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>rheumatoid_arthritis_concept_set <span class="ot">&lt;-</span> <span class="fu">cs</span>(<span class="fu">descendants</span>(</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  rheumatoid_arthritis_codes<span class="sc">$</span>concept_id))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>gibleed_no_RA_cohort_definition <span class="ot">&lt;-</span> <span class="fu">cohort</span>(</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>   <span class="at">entry =</span> <span class="fu">entry</span>(</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">condition</span>(gibleed_concept_set),</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">observationWindow =</span> <span class="fu">continuousObservation</span>(0L, 0L),</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">primaryCriteriaLimit =</span> <span class="st">"First"</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">attrition =</span> <span class="fu">attrition</span>(</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"no RA"</span> <span class="ot">=</span> <span class="fu">withAll</span>(</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">exactly</span>(<span class="dv">0</span>,</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>              <span class="fu">condition</span>(rheumatoid_arthritis_concept_set),</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>              <span class="fu">duringInterval</span>(<span class="fu">eventStarts</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="cn">Inf</span>))))</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">"cohorts"</span>)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(path)</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="fu">writeCohort</span>(gibleed_cohort_definition, <span class="fu">file.path</span>(path, <span class="st">"gibleed.json"</span>))</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>gibleed_cohort_set <span class="ot">&lt;-</span> <span class="fu">readCohortSet</span>(<span class="at">path =</span> path)</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co"># cdm &lt;- generateCohortSet(</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co">#   cdm,</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co">#   gibleed_cohort_set,</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co">#   name = "gibleed",</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co">#   computeAttrition = TRUE</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gibleed_concept_set <span class="ot">&lt;-</span> <span class="fu">cs</span>(<span class="fu">descendants</span>(gibleed_codes<span class="sc">$</span>concept_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -303,14 +271,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-JSON representation of a cohort
+Finding appropriate codes
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p>The above gives the impression that identifying concepts that represent a particular clinical idea is straightforward. In practice, however, this is rarely the case. Identifying the codes that could represent a condition and then choosing which does though is typically a time consuming task …..</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">as.json</span>(gibleed_concept_set))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getCandidateCodes</span>(<span class="at">cdm =</span> cdm, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">keywords =</span> <span class="st">"fracture"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">domains =</span> <span class="st">"condition"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">includeDescendants =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 6
+  concept_id concept_name                        domai…¹ conce…² vocab…³ found…⁴
+       &lt;dbl&gt; &lt;chr&gt;                               &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1    4048695 Fracture of vertebral column witho… condit… clinic… snomed  From i…
+2    4142905 Fracture of rib                     condit… clinic… snomed  From i…
+3    4278672 Fracture of forearm                 condit… clinic… snomed  From i…
+4    4237458 Fracture of clavicle                condit… clinic… snomed  From i…
+5    4230399 Closed fracture of hip              condit… clinic… snomed  From i…
+6   40480160 Pathological fracture due to osteo… condit… clinic… snomed  From i…
+7    4066995 Fracture of vertebral column with … condit… clinic… snomed  From i…
+8    4059173 Fracture of ankle                   condit… clinic… snomed  From i…
+9    4134304 Fracture subluxation of wrist       condit… clinic… snomed  From i…
+# … with abbreviated variable names ¹​domain_id, ²​concept_class_id,
+#   ³​vocabulary_id, ⁴​found_from</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Once we´ve identified our codes we´ll create a concept set that includes this code or any of its descendants.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gibleed_concept_set <span class="ot">&lt;-</span> <span class="fu">cs</span>(<span class="fu">descendants</span>(gibleed_codes<span class="sc">$</span>concept_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can now use this concept set in a cohort definition. We´ll look for anyone with a correspong record in the condition occurrence table. We´ll also require that this is their first such record.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>entry_criteria <span class="ot">&lt;-</span> <span class="fu">entry</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">condition</span>(gibleed_concept_set),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">primaryCriteriaLimit =</span> <span class="st">"First"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>gibleed_cohort_definition <span class="ot">&lt;-</span> <span class="fu">cohort</span>(<span class="at">entry =</span> entry_criteria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We could though make things a little more complicated. What if we wanted to exclude anyone with rheumatoid arthritis (regardless of when they were diagnosed). To do this we´ll first need to create another concept set, this time for rheumatoid arthritis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rheumatoid_arthritis_codes <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(<span class="at">cdm =</span> cdm, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">keywords =</span> <span class="st">"rheumatoid arthritis"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">domains =</span> <span class="st">"condition"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">exactMatch =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">includeDescendants =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>rheumatoid_arthritis_codes <span class="sc">%&gt;%</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1
+Columns: 6
+$ concept_id       &lt;dbl&gt; 80809
+$ concept_name     &lt;chr&gt; "Rheumatoid arthritis"
+$ domain_id        &lt;chr&gt; "condition"
+$ concept_class_id &lt;chr&gt; "clinical finding"
+$ vocabulary_id    &lt;chr&gt; "snomed"
+$ found_from       &lt;chr&gt; "From initial search"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rheumatoid_arthritis_concept_set <span class="ot">&lt;-</span> <span class="fu">cs</span>(<span class="fu">descendants</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  rheumatoid_arthritis_codes<span class="sc">$</span>concept_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+JSON representation of a concept set
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">as.json</span>(gibleed_concept_set))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{
   "items": [
@@ -334,7 +375,7 @@ JSON representation of a cohort
   ]
 }</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">as.json</span>(rheumatoid_arthritis_concept_set))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">as.json</span>(rheumatoid_arthritis_concept_set))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{
   "items": [
@@ -362,8 +403,39 @@ JSON representation of a cohort
 </div>
 </div>
 </div>
+<p>And now we can add this excluision criteria to our cohort definition.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>gibleed_no_RA_cohort_definition <span class="ot">&lt;-</span> <span class="fu">cohort</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">entry =</span> <span class="fu">entry</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">condition</span>(gibleed_concept_set),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">primaryCriteriaLimit =</span> <span class="st">"First"</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">attrition =</span> <span class="fu">attrition</span>(</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"no RA"</span> <span class="ot">=</span> <span class="fu">withAll</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">exactly</span>(<span class="dv">0</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">condition</span>(rheumatoid_arthritis_concept_set),</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">duringInterval</span>(<span class="fu">eventStarts</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="cn">Inf</span>))))</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">"cohorts"</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(path)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="fu">writeCohort</span>(gibleed_cohort_definition, <span class="fu">file.path</span>(path, <span class="st">"gibleed.json"</span>))</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>gibleed_cohort_set <span class="ot">&lt;-</span> <span class="fu">readCohortSet</span>(<span class="at">path =</span> path)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co"># cdm &lt;- generateCohortSet(</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co">#   cdm,</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co">#   gibleed_cohort_set,</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co">#   name = "gibleed",</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co">#   computeAttrition = TRUE</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -372,10 +444,10 @@ JSON representation of a cohort
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">as.json</span>((gibleed_cohort_definition)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">as.json</span>((gibleed_cohort_definition)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{
   "ConceptSets": [
@@ -437,7 +509,7 @@ JSON representation of a cohort
   "cdmVersionRange": "&gt;=5.0.0"
 }</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">as.json</span>((gibleed_no_RA_cohort_definition)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">as.json</span>((gibleed_no_RA_cohort_definition)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{
   "ConceptSets": [
@@ -561,12 +633,12 @@ JSON representation of a cohort
 </div>
 </div>
 </section>
-<section id="adding-a-cohort-to-the-cdm" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="adding-a-cohort-to-the-cdm"><span class="header-section-number">4.2</span> Adding a cohort to the CDM</h2>
+<section id="adding-a-cohort-to-the-cdm" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="adding-a-cohort-to-the-cdm"><span class="header-section-number">4.3</span> Adding a cohort to the CDM</h2>
 <p>via cdm connector</p>
 </section>
-<section id="cohort-summary" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="cohort-summary"><span class="header-section-number">4.3</span> Cohort summary</h2>
+<section id="cohort-summary" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="cohort-summary"><span class="header-section-number">4.4</span> Cohort summary</h2>
 <p>Attributes: Cohort count, settings, attrition …..</p>
 
 
