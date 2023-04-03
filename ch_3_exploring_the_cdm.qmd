@@ -15,6 +15,14 @@ db <- DBI::dbConnect(duckdb::duckdb(),
 cdm <- cdm_from_con(db, cdm_schema = "main")
 ```
 
+## Vocabulary tables
+ADD SOME INTRODUCTION TO THE VOCAB TABLES
+```{r, echo = TRUE}
+cdm$concept %>% 
+  glimpse()
+```
+
+
 ## Counting people
 
 The OMOP CDM is person-centric, with the person table containing records to uniquely identify each person in the database. As each row refers to a unique person, we can quickly get a count of the number of individuals in the database like so
@@ -57,12 +65,10 @@ cdm$person %>%
   theme_bw()
 ```
 
-
-
 ::: {.callout-tip collapse="true"}
 ## To compute or not to compute
 
-The  compute() function will force the computation of a query. In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.  
+The compute() function will force the computation of a query. In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.
 
 ```{r, echo = TRUE}
 cdm$observation_period %>%
@@ -84,6 +90,7 @@ cdm$person %>%
 ```
 
 We could, however, have done this without compute, with instead the SQL being done all at once.
+
 ```{r, echo = TRUE}
 cdm$person %>% 
   left_join(cdm$observation_period %>%
@@ -116,7 +123,7 @@ cdm$person %>%
   tally()
 ```
 
-But we could have instead first subsetted the person table and then used the result for both queries. 
+But we could have instead first subsetted the person table and then used the result for both queries.
 
 ```{r, echo = TRUE}
 cdm$person_pre_1970 <- cdm$person %>% 
@@ -135,12 +142,11 @@ cdm$person_pre_1970 %>%
             by="person_id") %>% 
   tally()
 ```
-
 :::
-
 
 ::: {.callout-tip collapse="true"}
 ## computeQuery()
+
 The `compute()` function from dplyr is currently somewhat inconsistent across database platforms. For this reason CDMConnector provides the `computeQuery()` which does the same job, but with greater consistency across its supported database management systems.
 
 ```{r, echo = TRUE}
@@ -148,7 +154,6 @@ cdm$person %>%
   tally() %>% 
   computeQuery()
 ```
-
 :::
 
 ## Counting records
@@ -206,9 +211,11 @@ cdm$person %>%
 
 ::: {.callout-tip collapse="true"}
 ## Piping and SQL
-Although piping queries has little impact on performance when using R with data in memory, when working with a database the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call. 
+
+Although piping queries has little impact on performance when using R with data in memory, when working with a database the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.
 
 For example, the single summarise function above would generate the below SQL.
+
 ```{r, echo = TRUE}
 cdm$person %>% 
   summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
@@ -221,6 +228,7 @@ cdm$person %>%
 ```
 
 Calling summarise for each though would lead to a more involved query.
+
 ```{r, echo = TRUE}
 cdm$person %>% 
   summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE)) %>% 
@@ -233,6 +241,7 @@ cdm$person %>%
 ```
 
 A similar story can be seen with mutate
+
 ```{r, echo = TRUE}
 cdm$observation_period %>%
   mutate(observation_days = !!datediff("observation_period_start_date", 
@@ -259,7 +268,6 @@ cdm$observation_period %>%
   show_query()
 ```
 :::
-
 
 As we've seen before, we can also quickly get results for various groupings or restrictions
 
@@ -288,3 +296,5 @@ cdm$person %>%
   xlab("")
 
 ```
+
+

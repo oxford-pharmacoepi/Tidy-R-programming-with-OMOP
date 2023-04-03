@@ -1,8 +1,128 @@
 # Adding a cohort
 
+```{r, warning=FALSE, message=FALSE}
+library(CDMConnector)
+library(dplyr)
+library(CodelistGenerator)
+library(Capr)
+```
+
+
 ## Defining a cohort definition
 
-capr - defining json ....
+In the previous ch containing patient-level data that we explored in the previous chapter, 
+
+We can define a cohort programmatically using the Capr package. 
+
+```{r}
+con <- DBI::dbConnect(duckdb::duckdb(), eunomia_dir())
+
+cdm <- CDMConnector::cdm_from_con(
+  con = con,
+  cdm_schema = "main",
+  write_schema = "main"
+)
+```
+
+
+Let´s say we want to identify people with a gastrointestinal hemorrhage. First we´ll need to identify the code ... and generate a conc
+```{r}
+gibleed_codes <- getCandidateCodes(cdm = cdm, 
+                  keywords = "gastrointestinal hemorrhage",
+                  domains = "condition",
+                  exactMatch = TRUE,
+                  includeDescendants = FALSE)
+gibleed_concept_set <- cs(descendants(gibleed_codes$concept_id))
+```
+
+We can now us
+```{r}
+
+entry_criteria <- entry(
+    condition(gibleed_concept_set),
+    observationWindow = continuousObservation(priorDays = 365L, 
+                                              postDays = 0L),
+    primaryCriteriaLimit = "First"
+  )
+
+
+gibleed_cohort_definition <- cohort(entry = entry_criteria)
+
+```
+
+Let´s make things a little more complicated. We´ll exclude people with rheumatoid arthritis (regardless of when they were diagnosed). We´ll also require that people 
+
+```{r}
+rheumatoid_arthritis_codes <- getCandidateCodes(cdm = cdm, 
+                  keywords = "rheumatoid arthritis",
+                  domains = "condition",
+                  exactMatch = TRUE,
+                  includeDescendants = FALSE)
+rheumatoid_arthritis_concept_set <- cs(descendants(
+  rheumatoid_arthritis_codes$concept_id))
+
+
+
+gibleed_no_RA_cohort_definition <- cohort(
+   entry = entry(
+    condition(gibleed_concept_set),
+    primaryCriteriaLimit = "First"
+  ),
+  attrition = attrition(
+    "no RA" = withAll(
+      exactly(0,
+              condition(rheumatoid_arthritis_concept_set),
+              duringInterval(eventStarts(-Inf, Inf))))
+  ))
+
+
+
+
+path <- file.path(tempdir(), "cohorts")
+dir.create(path)
+writeCohort(gibleed_cohort_definition, file.path(path, "gibleed.json"))
+gibleed_cohort_set <- readCohortSet(path = path)
+
+
+
+# cdm <- generateCohortSet(
+#   cdm,
+#   gibleed_cohort_set,
+#   name = "gibleed",
+#   computeAttrition = TRUE
+# )
+
+```
+
+::: {.callout-tip collapse="true"}
+
+
+## JSON representation of a concept set
+
+
+```{r, echo = TRUE}
+cat(as.json(gibleed_concept_set))
+
+cat(as.json(rheumatoid_arthritis_concept_set))
+```
+
+:::
+
+
+::: {.callout-tip collapse="true"}
+
+
+## JSON representation of a cohort
+
+
+```{r, echo = TRUE}
+cat(as.json((gibleed_cohort_definition)))
+
+cat(as.json((gibleed_no_RA_cohort_definition)))
+```
+
+:::
+
 
 ## Adding a cohort to the CDM
 

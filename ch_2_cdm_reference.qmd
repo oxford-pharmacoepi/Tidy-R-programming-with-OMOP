@@ -61,6 +61,7 @@ cdm$observation_period
 ```
 
 Alternatively, you could also access a specific table reference like so
+
 ```{r, echo = TRUE}
 cdm[["observation_period"]]
 ```
@@ -73,7 +74,8 @@ cdm <- cdm_from_con(db,
 cdm
 ```
 
-Moreover, we can also specify a write schema. This would be a schema in which we have permission to create tables (as we're unlikely to have that permission for the schema containing the tables with the patient-level data). 
+Moreover, we can also specify a write schema. This would be a schema in which we have permission to create tables (as we're unlikely to have that permission for the schema containing the tables with the patient-level data).
+
 ```{r, echo = TRUE, eval = FALSE}
 cdm <- cdm_from_con(db,
   cdm_schema = "main",
@@ -82,6 +84,7 @@ cdm <- cdm_from_con(db,
 ```
 
 And if we already had some cohort tables in the results schema, we could include references to these like so:
+
 ```{r, echo = TRUE, eval = FALSE}
 cdm <- cdm_from_con(db,
   cdm_schema = "main",
@@ -89,7 +92,6 @@ cdm <- cdm_from_con(db,
   write_schema = "results",
   cohort_tables = c("exposure_cohort", "outcome_cohort"))
 ```
-
 
 ## Database snapshot
 

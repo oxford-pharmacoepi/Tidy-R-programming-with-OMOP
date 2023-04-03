@@ -148,11 +148,11 @@ penguins_db %>%
 ```
 
 ::: {.callout-tip collapse="true"}
-## Choosing the right time to collect 
+## Choosing the right time to collect
 
-`collect()` brings data out of the database and into R. Above we use it to bring the entire penguins data back into R so that we can then use `ggplot()` to make our histogram. 
+`collect()` brings data out of the database and into R. Above we use it to bring the entire penguins data back into R so that we can then use `ggplot()` to make our histogram.
 
-In practice, however, we wouldn't be reading out entire database tables as typically we are working with a database because we have data of a size that wouldn't fit in the memory of our computer. Generally we would collect only once we prepared our data for extraction (i.e. limiting to rows and columns of interest). 
+In practice, however, we wouldn't be reading out entire database tables as typically we are working with a database because we have data of a size that wouldn't fit in the memory of our computer. Generally we would collect only once we prepared our data for extraction (i.e. limiting to rows and columns of interest).
 :::
 
 How about the relationship between body mass and bill depth?
