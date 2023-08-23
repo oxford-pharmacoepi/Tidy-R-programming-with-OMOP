@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.0.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>An introduction to tidy R programming with the OMOP common data model - 5&nbsp; Dscribing a cohort</title>
+<title>An introduction to tidy R programming with the OMOP common data model - 5&nbsp; Describing a cohort</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,7 +25,7 @@ ul.task-list{list-style: none;}
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./ch_6_sampling_the_cdm.html" rel="next">
 <link href="./ch_4_building_a_cohort.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -65,7 +65,7 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dscribing a cohort</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Describing a cohort</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -115,7 +115,17 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_5_describing_a_cohort.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dscribing a cohort</span></a>
+  <a href="./ch_5_describing_a_cohort.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Describing a cohort</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_6_sampling_the_cdm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling the cdm</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_7_cdm_locations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Bringing data into memory</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -132,7 +142,7 @@ ul.task-list{list-style: none;}
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#cohortprofiles" id="toc-cohortprofiles" class="nav-link active" data-scroll-target="#cohortprofiles"> <span class="header-section-number">5.1</span> CohortProfiles</a></li>
+  <li><a href="#patientprofiles" id="toc-patientprofiles" class="nav-link active" data-scroll-target="#patientprofiles"> <span class="header-section-number">5.1</span> PatientProfiles</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"> <span class="header-section-number">5.2</span> </a></li>
   </ul>
 </nav>
@@ -142,7 +152,7 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dscribing a cohort</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Describing a cohort</span></h1>
 </div>
 
 
@@ -156,8 +166,8 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<section id="cohortprofiles" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="cohortprofiles"><span class="header-section-number">5.1</span> CohortProfiles</h2>
+<section id="patientprofiles" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="patientprofiles"><span class="header-section-number">5.1</span> PatientProfiles</h2>
 </section>
 <section id="section" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="section"><span class="header-section-number">5.2</span> </h2>
@@ -270,8 +280,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./ch_6_sampling_the_cdm.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling the cdm</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

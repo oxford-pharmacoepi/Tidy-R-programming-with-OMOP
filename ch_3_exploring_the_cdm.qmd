@@ -1,27 +1,22 @@
 ## Exploring the CDM
 
-Let's first connect again to our Eunomia data and create the reference to the common data model.
+For this chapter, lets continue using our example COVID-19 dataset.
 
 ```{r, warning=FALSE, message=FALSE}
+library(DBI)
 library(dbplyr)
 library(dplyr)
+library(here)
 library(CDMConnector)
 library(ggplot2)
 ```
 
 ```{r}
-db <- DBI::dbConnect(duckdb::duckdb(), 
-                     dbdir = CDMConnector::eunomia_dir())
-cdm <- cdm_from_con(db, cdm_schema = "main")
+db<-dbConnect(duckdb::duckdb(), 
+              dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
+cdm <- cdm_from_con(db, 
+                    cdm_schema = "main")
 ```
-
-## Vocabulary tables
-ADD SOME INTRODUCTION TO THE VOCAB TABLES
-```{r, echo = TRUE}
-cdm$concept %>% 
-  glimpse()
-```
-
 
 ## Counting people
 
@@ -33,7 +28,7 @@ cdm$person %>%
   pull()
 ```
 
-The person table also contains some demographic information, including a gender_concept_id for each person. We can get a count grouped by this variable, but as this uses a concept we'll also need to join to the concept table to get the corresponding concept name for each concept id.
+The person table also contains some demographic information, including a gender concept for each person. We can get a count grouped by this variable, but as this uses a concept we'll also need to join to the concept table to get the corresponding concept name for each concept id.
 
 ```{r, echo = TRUE}
 cdm$person %>% 
@@ -50,8 +45,8 @@ The observation period table contains records indicating spans of time over whic
 ```{r, echo = TRUE}
 first_observation_period <- cdm$observation_period %>%
     group_by(person_id) %>% 
-    filter(dplyr::row_number() == 1) %>% 
-    compute()
+    filter(row_number() == 1) %>% 
+    computeQuery()
 
 cdm$person %>% 
   left_join(first_observation_period,
@@ -66,14 +61,14 @@ cdm$person %>%
 ```
 
 ::: {.callout-tip collapse="true"}
-## To compute or not to compute
+## Computing intermediate queries
 
-The compute() function will force the computation of a query. In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.
+The computeQuery() function will force the computation of a query. In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.
 
 ```{r, echo = TRUE}
 cdm$observation_period %>%
     group_by(person_id) %>% 
-    filter(dplyr::row_number() == 1) %>% 
+    filter(row_number() == 1) %>% 
     show_query()
 ```
 
@@ -95,7 +90,7 @@ We could, however, have done this without compute, with instead the SQL being do
 cdm$person %>% 
   left_join(cdm$observation_period %>%
     group_by(person_id) %>% 
-    filter(dplyr::row_number() == 1),
+    filter(row_number() == 1),
             by = "person_id") %>% 
   mutate(observation_period_start_year=year(observation_period_start_date)) %>% 
   group_by(observation_period_start_year) %>% 
@@ -103,9 +98,9 @@ cdm$person %>%
   show_query()
 ```
 
-In this case the SQL is not much more complicated than before. However, you can imagine that without forcing computation, the SQL associated with a series of data manipulations could quickly become unmanageable. So although we don't want to overuse compute, it is often a necessity when writing analysis scripts.
+In this case the SQL is not much more complicated than before. However, you can imagine that without forcing computation, the SQL associated with a series of data manipulations could quickly become unmanageable. So although we don't want to overuse computation of intermediate queries, it is often a necessity when writing analysis scripts.
 
-An advantage of using compute, is that we can use the result for multiple subsequent queries. For example, say we want a count of condition occurrence and drug exposure records for those born before 1970. We could get these counts independently:
+An advantage of computing a query, is that we can then use the result for multiple subsequent queries. For example, say we want a count of condition occurrence and drug exposure records for those born before 1970. We could get these counts independently:
 
 ```{r, echo = TRUE}
 cdm$person %>% 
@@ -128,7 +123,7 @@ But we could have instead first subsetted the person table and then used the res
 ```{r, echo = TRUE}
 cdm$person_pre_1970 <- cdm$person %>% 
   filter(year_of_birth < "1970") %>% 
-  compute()
+  computeQuery()
 
 cdm$person_pre_1970 %>% 
   select("person_id") %>% 
@@ -142,12 +137,8 @@ cdm$person_pre_1970 %>%
             by="person_id") %>% 
   tally()
 ```
-:::
 
-::: {.callout-tip collapse="true"}
-## computeQuery()
-
-The `compute()` function from dplyr is currently somewhat inconsistent across database platforms. For this reason CDMConnector provides the `computeQuery()` which does the same job, but with greater consistency across its supported database management systems.
+Here we've been using `computeQuery()` from the `CDMConnector` package. This function is an extension of the `compute()` function from `dplyr`, with `computeQuery()` providing greater consistency across its supported database management systems.
 
 ```{r, echo = TRUE}
 cdm$person %>% 
@@ -158,14 +149,14 @@ cdm$person %>%
 
 ## Counting records
 
-Number of drug exposure records per person
+What's the number of condition occurrence records per person in the database? We can find out like so
 
 ```{r, echo = TRUE}
 cdm$person %>% 
-  left_join(cdm$measurement %>% 
+  left_join(cdm$condition_occurrence %>% 
   group_by(person_id) %>% 
   count(name = "condition_occurrence_records"),
-            by="person_id") %>% 
+  by="person_id") %>% 
   mutate(condition_occurrence_records = if_else(
     is.na(condition_occurrence_records), 0,
     condition_occurrence_records)) %>% 
@@ -176,6 +167,48 @@ cdm$person %>%
   geom_col(aes(condition_occurrence_records, n)) +
   theme_bw()
 ```
+
+How about we were interested in getting record counts for some specific concepts related to COVID-19 symptoms?
+
+```{r, echo = TRUE}
+cdm$condition_occurrence %>% 
+  filter(condition_concept_id %in% c(437663,437390,31967,
+                                     4289517,4223659, 312437,
+                                     434490,254761,77074)) %>% 
+  group_by(condition_concept_id) %>% 
+  count() %>% 
+  left_join(cdm$concept,
+            by=c("condition_concept_id" = "concept_id")) %>% 
+  collect() %>% 
+  ggplot() +
+  geom_col(aes(concept_name, n)) +
+  theme_bw()+
+  xlab("")
+
+```
+
+::: {.callout-tip collapse="true"}
+## Vocabulary tables
+
+Above we've got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associate with the concept, along with other information such as it's domain and vocabulary id.
+
+```{r, echo = TRUE}
+cdm$concept %>% 
+  glimpse()
+```
+
+Other vocabulary tables capture other information about concepts, such as the direct relationships between concepts (the concept relationship table) and hierarchical relationships between (the concept ancestor table).
+
+```{r, echo = TRUE}
+cdm$concept_relationship %>% 
+  glimpse()
+
+cdm$concept_ancestor %>% 
+  glimpse()
+```
+
+More information on the vocabulary tables (as well as other tables in the OMOP CDM version 5.3) can be found at <https://ohdsi.github.io/CommonDataModel/cdm53.html#Vocabulary_Tables>.
+:::
 
 ## Working with dates
 
@@ -214,33 +247,7 @@ cdm$person %>%
 
 Although piping queries has little impact on performance when using R with data in memory, when working with a database the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.
 
-For example, the single summarise function above would generate the below SQL.
-
-```{r, echo = TRUE}
-cdm$person %>% 
-  summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
-            q05_year_of_birth = quantile(year_of_birth, 0.05, na.rm=TRUE),
-            mean_year_of_birth = round(mean(year_of_birth, na.rm=TRUE),0),
-            median_year_of_birth = median(year_of_birth, na.rm=TRUE),
-            q95_year_of_birth = quantile(year_of_birth, 0.95, na.rm=TRUE),
-            max_year_of_birth = max(year_of_birth, na.rm=TRUE)) %>% 
-  show_query()
-```
-
-Calling summarise for each though would lead to a more involved query.
-
-```{r, echo = TRUE}
-cdm$person %>% 
-  summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE)) %>% 
-  summarise(q05_year_of_birth = quantile(year_of_birth, 0.05, na.rm=TRUE)) %>% 
-  summarise(mean_year_of_birth = round(mean(year_of_birth, na.rm=TRUE),0)) %>% 
-  summarise(median_year_of_birth = median(year_of_birth, na.rm=TRUE)) %>% 
-  summarise(q95_year_of_birth = quantile(year_of_birth, 0.95, na.rm=TRUE)) %>% 
-  summarise(max_year_of_birth = max(year_of_birth, na.rm=TRUE)) %>% 
-  show_query()
-```
-
-A similar story can be seen with mutate
+For example, a single mutate function above would generate the below SQL.
 
 ```{r, echo = TRUE}
 cdm$observation_period %>%
@@ -254,6 +261,8 @@ cdm$observation_period %>%
          "observation_days","observation_years") %>% 
   show_query()
 ```
+
+Whereas the SQL will be different if using multiple mutate calls (now using a sub-query).
 
 ```{r, echo = TRUE}
 cdm$observation_period %>%
@@ -296,5 +305,3 @@ cdm$person %>%
   xlab("")
 
 ```
-
-

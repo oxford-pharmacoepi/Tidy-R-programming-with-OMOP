@@ -15,6 +15,8 @@ book:
     - ch_3_exploring_the_cdm.qmd
     - ch_4_building_a_cohort.qmd
     - ch_5_describing_a_cohort.qmd
+    - ch_6_sampling_the_cdm.qmd
+    - ch_7_cdm_locations.qmd
     - references.qmd
 
 bibliography: references.bib

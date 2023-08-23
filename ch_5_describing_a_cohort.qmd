@@ -1,5 +1,5 @@
-# Dscribing a cohort
+# Describing a cohort
 
-## CohortProfiles
+## PatientProfiles
 
 ## 

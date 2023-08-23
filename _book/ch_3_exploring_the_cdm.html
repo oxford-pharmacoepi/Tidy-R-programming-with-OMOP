@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.0.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -173,12 +173,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_4_building_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding a cohort</span></a>
+  <a href="./ch_4_building_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_5_describing_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dscribing a cohort</span></a>
+  <a href="./ch_5_describing_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Describing a cohort</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_6_sampling_the_cdm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling the cdm</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_7_cdm_locations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Bringing data into memory</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -195,11 +205,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#vocabulary-tables" id="toc-vocabulary-tables" class="nav-link active" data-scroll-target="#vocabulary-tables"> <span class="header-section-number">3.1</span> Vocabulary tables</a></li>
-  <li><a href="#counting-people" id="toc-counting-people" class="nav-link" data-scroll-target="#counting-people"> <span class="header-section-number">3.2</span> Counting people</a></li>
-  <li><a href="#counting-records" id="toc-counting-records" class="nav-link" data-scroll-target="#counting-records"> <span class="header-section-number">3.3</span> Counting records</a></li>
-  <li><a href="#working-with-dates" id="toc-working-with-dates" class="nav-link" data-scroll-target="#working-with-dates"> <span class="header-section-number">3.4</span> Working with dates</a></li>
-  <li><a href="#statistical-summaries" id="toc-statistical-summaries" class="nav-link" data-scroll-target="#statistical-summaries"> <span class="header-section-number">3.5</span> Statistical summaries</a></li>
+  <li><a href="#counting-people" id="toc-counting-people" class="nav-link active" data-scroll-target="#counting-people"> <span class="header-section-number">3.1</span> Counting people</a></li>
+  <li><a href="#counting-records" id="toc-counting-records" class="nav-link" data-scroll-target="#counting-records"> <span class="header-section-number">3.2</span> Counting records</a></li>
+  <li><a href="#working-with-dates" id="toc-working-with-dates" class="nav-link" data-scroll-target="#working-with-dates"> <span class="header-section-number">3.3</span> Working with dates</a></li>
+  <li><a href="#statistical-summaries" id="toc-statistical-summaries" class="nav-link" data-scroll-target="#statistical-summaries"> <span class="header-section-number">3.4</span> Statistical summaries</a></li>
   </ul>
 </nav>
     </div>
@@ -222,88 +231,69 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Let’s first connect again to our Eunomia data and create the reference to the common data model.</p>
+<p>For this chapter, lets continue using our example COVID-19 dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dbplyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dbplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dbdir =</span> CDMConnector<span class="sc">::</span><span class="fu">eunomia_dir</span>())</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(db, <span class="at">cdm_schema =</span> <span class="st">"main"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>db<span class="ot">&lt;-</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">dbdir =</span> <span class="fu">eunomiaDir</span>(<span class="at">datasetName =</span> <span class="st">"synthea-covid19-10k"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(db, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cdm_schema =</span> <span class="st">"main"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="vocabulary-tables" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="vocabulary-tables"><span class="header-section-number">3.1</span> Vocabulary tables</h2>
-<p>ADD SOME INTRODUCTION TO THE VOCAB TABLES</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>concept <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: ??
-Columns: 10
-Database: DuckDB 0.5.1 [edbur@Windows 10 x64:R 4.2.1/C:\Users\edbur\AppData\Local\Temp\RtmpaqH8R0/zjntpkde]
-$ concept_id       &lt;dbl&gt; 35208414, 1118088, 40213201, 1557272, 4336464, 429588…
-$ concept_name     &lt;chr&gt; "Gastrointestinal hemorrhage, unspecified", "celecoxi…
-$ domain_id        &lt;chr&gt; "Condition", "Drug", "Drug", "Drug", "Procedure", "Pr…
-$ vocabulary_id    &lt;chr&gt; "ICD10CM", "RxNorm", "CVX", "RxNorm", "SNOMED", "SNOM…
-$ concept_class_id &lt;chr&gt; "4-char billing code", "Branded Drug", "CVX", "Ingred…
-$ standard_concept &lt;chr&gt; NA, "S", "S", "S", "S", "S", "S", "S", NA, NA, "S", "…
-$ concept_code     &lt;chr&gt; "K92.2", "213469", "33", "46041", "232717009", "76601…
-$ valid_start_date &lt;date&gt; 2007-01-01, 1970-01-01, 2008-12-01, 1970-01-01, 1970…
-$ valid_end_date   &lt;date&gt; 2099-12-31, 2099-12-31, 2099-12-31, 2099-12-31, 2099…
-$ invalid_reason   &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</code></pre>
-</div>
-</div>
-</section>
-<section id="counting-people" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="counting-people"><span class="header-section-number">3.2</span> Counting people</h2>
+<section id="counting-people" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="counting-people"><span class="header-section-number">3.1</span> Counting people</h2>
 <p>The OMOP CDM is person-centric, with the person table containing records to uniquely identify each person in the database. As each row refers to a unique person, we can quickly get a count of the number of individuals in the database like so</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2694</code></pre>
+<pre><code>[1] 10754</code></pre>
 </div>
 </div>
-<p>The person table also contains some demographic information, including a gender_concept_id for each person. We can get a count grouped by this variable, but as this uses a concept we’ll also need to join to the concept table to get the corresponding concept name for each concept id.</p>
+<p>The person table also contains some demographic information, including a gender concept for each person. We can get a count grouped by this variable, but as this uses a concept we’ll also need to join to the concept table to get the corresponding concept name for each concept id.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender_concept_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept, </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="fu">c</span>(<span class="st">"gender_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="st">"gender_concept_id"</span>, <span class="st">"concept_name"</span>, <span class="st">"n"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender_concept_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="fu">c</span>(<span class="st">"gender_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="st">"gender_concept_id"</span>, <span class="st">"concept_name"</span>, <span class="st">"n"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
+# Groups:   gender_concept_id [2]
   gender_concept_id concept_name     n
-              &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
-1              8532 FEMALE        1373
-2              8507 MALE          1321</code></pre>
+              &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt;
+1              8532 FEMALE        5165
+2              8507 MALE          5589</code></pre>
 </div>
 </div>
 <p>The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>first_observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(person_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(dplyr<span class="sc">::</span><span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">compute</span>()</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(first_observation_period,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year=</span><span class="fu">year</span>(observation_period_start_date)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(observation_period_start_year) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(observation_period_start_year, n)) <span class="sc">+</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>first_observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(person_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">computeQuery</span>()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(first_observation_period,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year=</span><span class="fu">year</span>(observation_period_start_date)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(observation_period_start_year) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(observation_period_start_year, n)) <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="ch_3_exploring_the_cdm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="ch_3_exploring_the_cdm_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -312,18 +302,18 @@ $ invalid_reason   &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-To compute or not to compute
+Computing intermediate queries
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The compute() function will force the computation of a query. In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.</p>
+<p>The computeQuery() function will force the computation of a query. In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(person_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(dplyr<span class="sc">::</span><span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(person_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT
@@ -341,13 +331,13 @@ WHERE (q03 = 1.0)</code></pre>
 </div>
 <p>Followed by a second query that left joins the person table with the result from the first (which is now in a temporary table), followed by extracted the year in which peoples first observation period starts and then, finally, a count by year.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(first_observation_period,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year=</span><span class="fu">year</span>(observation_period_start_date)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(observation_period_start_year) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(first_observation_period,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year=</span><span class="fu">year</span>(observation_period_start_date)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(observation_period_start_year) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT observation_period_start_year, COUNT(*) AS n
@@ -357,31 +347,14 @@ FROM (
     EXTRACT(year FROM observation_period_start_date) AS observation_period_start_year
   FROM (
     SELECT
-      LHS.person_id AS person_id,
-      gender_concept_id,
-      year_of_birth,
-      month_of_birth,
-      day_of_birth,
-      birth_datetime,
-      race_concept_id,
-      ethnicity_concept_id,
-      location_id,
-      provider_id,
-      care_site_id,
-      person_source_value,
-      gender_source_value,
-      gender_source_concept_id,
-      race_source_value,
-      race_source_concept_id,
-      ethnicity_source_value,
-      ethnicity_source_concept_id,
+      "main.person".*,
       observation_period_id,
       observation_period_start_date,
       observation_period_end_date,
       period_type_concept_id
-    FROM main.person AS LHS
-    LEFT JOIN dbplyr_001 AS RHS
-      ON (LHS.person_id = RHS.person_id)
+    FROM main.person AS "main.person"
+    LEFT JOIN dbplyr_001
+      ON ("main.person".person_id = dbplyr_001.person_id)
   ) q01
 ) q02
 GROUP BY observation_period_start_year</code></pre>
@@ -389,15 +362,15 @@ GROUP BY observation_period_start_year</code></pre>
 </div>
 <p>We could, however, have done this without compute, with instead the SQL being done all at once.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(person_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(dplyr<span class="sc">::</span><span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">1</span>),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year=</span><span class="fu">year</span>(observation_period_start_date)) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(observation_period_start_year) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(person_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year=</span><span class="fu">year</span>(observation_period_start_date)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(observation_period_start_year) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT observation_period_start_year, COUNT(*) AS n
@@ -407,29 +380,12 @@ FROM (
     EXTRACT(year FROM observation_period_start_date) AS observation_period_start_year
   FROM (
     SELECT
-      LHS.person_id AS person_id,
-      gender_concept_id,
-      year_of_birth,
-      month_of_birth,
-      day_of_birth,
-      birth_datetime,
-      race_concept_id,
-      ethnicity_concept_id,
-      location_id,
-      provider_id,
-      care_site_id,
-      person_source_value,
-      gender_source_value,
-      gender_source_concept_id,
-      race_source_value,
-      race_source_concept_id,
-      ethnicity_source_value,
-      ethnicity_source_concept_id,
+      "main.person".*,
       observation_period_id,
       observation_period_start_date,
       observation_period_end_date,
       period_type_concept_id
-    FROM main.person AS LHS
+    FROM main.person AS "main.person"
     LEFT JOIN (
       SELECT
         observation_period_id,
@@ -443,74 +399,129 @@ FROM (
       ) q01
       WHERE (q03 = 1.0)
     ) RHS
-      ON (LHS.person_id = RHS.person_id)
+      ON ("main.person".person_id = RHS.person_id)
   ) q02
 ) q03
 GROUP BY observation_period_start_year</code></pre>
 </div>
 </div>
-<p>In this case the SQL is not much more complicated than before. However, you can imagine that without forcing computation, the SQL associated with a series of data manipulations could quickly become unmanageable. So although we don’t want to overuse compute, it is often a necessity when writing analysis scripts.</p>
-<p>An advantage of using compute, is that we can use the result for multiple subsequent queries. For example, say we want a count of condition occurrence and drug exposure records for those born before 1970. We could get these counts independently:</p>
+<p>In this case the SQL is not much more complicated than before. However, you can imagine that without forcing computation, the SQL associated with a series of data manipulations could quickly become unmanageable. So although we don’t want to overuse computation of intermediate queries, it is often a necessity when writing analysis scripts.</p>
+<p>An advantage of computing a query, is that we can then use the result for multiple subsequent queries. For example, say we want a count of condition occurrence and drug exposure records for those born before 1970. We could get these counts independently:</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year_of_birth <span class="sc">&lt;</span> <span class="st">"1970"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>condition_occurrence,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   SQL [1 x 1]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpCMC78k\file7682aec4f5a.duckdb]
+      n
+  &lt;dbl&gt;
+1  9305</code></pre>
+</div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year_of_birth <span class="sc">&lt;</span> <span class="st">"1970"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>condition_occurrence,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>drug_exposure,</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [1 x 1]
-# Database: DuckDB 0.5.1 [edbur@Windows 10 x64:R 4.2.1/C:\Users\edbur\AppData\Local\Temp\RtmpaqH8R0/zjntpkde]
-      n
-  &lt;dbl&gt;
-1 51858</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year_of_birth <span class="sc">&lt;</span> <span class="st">"1970"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>drug_exposure,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># Source:   SQL [1 x 1]
-# Database: DuckDB 0.5.1 [edbur@Windows 10 x64:R 4.2.1/C:\Users\edbur\AppData\Local\Temp\RtmpaqH8R0/zjntpkde]
-      n
-  &lt;dbl&gt;
-1 49447</code></pre>
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpCMC78k\file7682aec4f5a.duckdb]
+       n
+   &lt;dbl&gt;
+1 165681</code></pre>
 </div>
 </div>
 <p>But we could have instead first subsetted the person table and then used the result for both queries.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_pre_1970 <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year_of_birth <span class="sc">&lt;</span> <span class="st">"1970"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>()</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_pre_1970 <span class="sc">%&gt;%</span> </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>condition_occurrence,</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_pre_1970 <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year_of_birth <span class="sc">&lt;</span> <span class="st">"1970"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">computeQuery</span>()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_pre_1970 <span class="sc">%&gt;%</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>condition_occurrence,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [1 x 1]
-# Database: DuckDB 0.5.1 [edbur@Windows 10 x64:R 4.2.1/C:\Users\edbur\AppData\Local\Temp\RtmpaqH8R0/zjntpkde]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpCMC78k\file7682aec4f5a.duckdb]
       n
   &lt;dbl&gt;
-1 51858</code></pre>
+1  9305</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_pre_1970 <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>drug_exposure,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_pre_1970 <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>drug_exposure,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [1 x 1]
-# Database: DuckDB 0.5.1 [edbur@Windows 10 x64:R 4.2.1/C:\Users\edbur\AppData\Local\Temp\RtmpaqH8R0/zjntpkde]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpCMC78k\file7682aec4f5a.duckdb]
+       n
+   &lt;dbl&gt;
+1 165681</code></pre>
+</div>
+</div>
+<p>Here we’ve been using <code>computeQuery()</code> from the <code>CDMConnector</code> package. This function is an extension of the <code>compute()</code> function from <code>dplyr</code>, with <code>computeQuery()</code> providing greater consistency across its supported database management systems.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">computeQuery</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   table&lt;dbplyr_003&gt; [1 x 1]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpCMC78k\file7682aec4f5a.duckdb]
       n
   &lt;dbl&gt;
-1 49447</code></pre>
+1 10754</code></pre>
 </div>
 </div>
 </div>
+</div>
+</div>
+</section>
+<section id="counting-records" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="counting-records"><span class="header-section-number">3.2</span> Counting records</h2>
+<p>What’s the number of condition occurrence records per person in the database? We can find out like so</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>condition_occurrence <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(person_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">by=</span><span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">if_else</span>(</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(condition_occurrence_records), <span class="dv">0</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    condition_occurrence_records)) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition_occurrence_records) <span class="sc">%&gt;%</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(condition_occurrence_records, n)) <span class="sc">+</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ch_3_exploring_the_cdm_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>How about we were interested in getting record counts for some specific concepts related to COVID-19 symptoms?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(condition_concept_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">437663</span>,<span class="dv">437390</span>,<span class="dv">31967</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="dv">4289517</span>,<span class="dv">4223659</span>, <span class="dv">312437</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="dv">434490</span>,<span class="dv">254761</span>,<span class="dv">77074</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition_concept_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="fu">c</span>(<span class="st">"condition_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(concept_name, n)) <span class="sc">+</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ch_3_exploring_the_cdm_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -519,93 +530,105 @@ GROUP BY observation_period_start_year</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-computeQuery()
+Vocabulary tables
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The <code>compute()</code> function from dplyr is currently somewhat inconsistent across database platforms. For this reason CDMConnector provides the <code>computeQuery()</code> which does the same job, but with greater consistency across its supported database management systems.</p>
+<p>Above we’ve got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associate with the concept, along with other information such as it’s domain and vocabulary id.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">computeQuery</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>concept <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   table&lt;dbplyr_003&gt; [1 x 1]
-# Database: DuckDB 0.5.1 [edbur@Windows 10 x64:R 4.2.1/C:\Users\edbur\AppData\Local\Temp\RtmpaqH8R0/zjntpkde]
-      n
-  &lt;dbl&gt;
-1  2694</code></pre>
+<pre><code>Rows: ??
+Columns: 10
+Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpCMC78k\file7682aec4f5a.duckdb]
+$ concept_id       &lt;int&gt; 45756805, 45756804, 45756803, 45756802, 45756801, 457…
+$ concept_name     &lt;chr&gt; "Pediatric Cardiology", "Pediatric Anesthesiology", "…
+$ domain_id        &lt;chr&gt; "Provider", "Provider", "Provider", "Provider", "Prov…
+$ vocabulary_id    &lt;chr&gt; "ABMS", "ABMS", "ABMS", "ABMS", "ABMS", "ABMS", "ABMS…
+$ concept_class_id &lt;chr&gt; "Physician Specialty", "Physician Specialty", "Physic…
+$ standard_concept &lt;chr&gt; "S", "S", "S", "S", "S", "S", "S", "S", "S", "S", "S"…
+$ concept_code     &lt;chr&gt; "OMOP4821938", "OMOP4821939", "OMOP4821940", "OMOP482…
+$ valid_start_date &lt;date&gt; 1970-01-01, 1970-01-01, 1970-01-01, 1970-01-01, 1970…
+$ valid_end_date   &lt;date&gt; 2099-12-31, 2099-12-31, 2099-12-31, 2099-12-31, 2099…
+$ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</code></pre>
 </div>
 </div>
-</div>
-</div>
-</div>
-</section>
-<section id="counting-records" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="counting-records"><span class="header-section-number">3.3</span> Counting records</h2>
-<p>Number of drug exposure records per person</p>
+<p>Other vocabulary tables capture other information about concepts, such as the direct relationships between concepts (the concept relationship table) and hierarchical relationships between (the concept ancestor table).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>measurement <span class="sc">%&gt;%</span> </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(person_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">if_else</span>(</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(condition_occurrence_records), <span class="dv">0</span>,</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    condition_occurrence_records)) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition_occurrence_records) <span class="sc">%&gt;%</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(condition_occurrence_records, n)) <span class="sc">+</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="ch_3_exploring_the_cdm_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="working-with-dates" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="working-with-dates"><span class="header-section-number">3.4</span> Working with dates</h2>
-<p>Dates are supported somewhat inconsistently by dbplyr but, as with <code>computeQuery()</code>, CDMConnector also provides some date functions that are tested to work across supported databases. We can use the <code>datediff()</code> function for example to calculate the difference between two dates. We can use this below to get the number of years observation periods last for.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">observation_years =</span> </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                  <span class="sc">!!</span>CDMConnector<span class="sc">::</span><span class="fu">datediff</span>(<span class="st">"observation_period_start_date"</span>, </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"observation_period_end_date"</span>, </span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">interval =</span> <span class="st">"year"</span>))  <span class="sc">%&gt;%</span> </span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(observation_years), </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">binwidth=</span><span class="dv">2</span>, <span class="at">colour=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="ch_3_exploring_the_cdm_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="statistical-summaries" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="statistical-summaries"><span class="header-section-number">3.5</span> Statistical summaries</h2>
-<p>We can also use summarise for various other calculations</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">q05_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.05</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_year_of_birth =</span> <span class="fu">round</span>(<span class="fu">mean</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">0</span>),</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">q95_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.95</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span>  </span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>concept_relationship <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB 0.5.1 [edbur@Windows 10 x64:R 4.2.1/C:\Users\edbur\AppData\Local\Temp\RtmpaqH8R0/zjntpkde]
-$ min_year_of_birth    &lt;dbl&gt; 1908
-$ q05_year_of_birth    &lt;dbl&gt; 1922
-$ mean_year_of_birth   &lt;dbl&gt; 1958
-$ median_year_of_birth &lt;dbl&gt; 1961
-$ q95_year_of_birth    &lt;dbl&gt; 1979
-$ max_year_of_birth    &lt;dbl&gt; 1986</code></pre>
+Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpCMC78k\file7682aec4f5a.duckdb]
+$ concept_id_1     &lt;int&gt; 35804314, 35804314, 35804314, 35804327, 35804327, 358…
+$ concept_id_2     &lt;int&gt; 912065, 42542145, 42542145, 35803584, 42542145, 42542…
+$ relationship_id  &lt;chr&gt; "Has modality", "Has accepted use", "Is current in", …
+$ valid_start_date &lt;date&gt; 2021-01-26, 2019-08-29, 2019-08-29, 2019-05-27, 2019…
+$ valid_end_date   &lt;date&gt; 2099-12-31, 2099-12-31, 2099-12-31, 2099-12-31, 2099…
+$ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>concept_ancestor <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: ??
+Columns: 4
+Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpCMC78k\file7682aec4f5a.duckdb]
+$ ancestor_concept_id      &lt;int&gt; 375415, 727760, 735979, 438112, 529411, 14196…
+$ descendant_concept_id    &lt;int&gt; 4335743, 2056453, 41070383, 36566114, 4326940…
+$ min_levels_of_separation &lt;int&gt; 4, 1, 3, 2, 3, 3, 4, 3, 2, 5, 1, 3, 4, 2, 2, …
+$ max_levels_of_separation &lt;int&gt; 4, 1, 5, 3, 3, 6, 12, 3, 2, 10, 1, 3, 4, 2, 2…</code></pre>
+</div>
+</div>
+<p>More information on the vocabulary tables (as well as other tables in the OMOP CDM version 5.3) can be found at <a href="https://ohdsi.github.io/CommonDataModel/cdm53.html#Vocabulary_Tables" class="uri">https://ohdsi.github.io/CommonDataModel/cdm53.html#Vocabulary_Tables</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="working-with-dates" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="working-with-dates"><span class="header-section-number">3.3</span> Working with dates</h2>
+<p>Dates are supported somewhat inconsistently by dbplyr but, as with <code>computeQuery()</code>, CDMConnector also provides some date functions that are tested to work across supported databases. We can use the <code>datediff()</code> function for example to calculate the difference between two dates. We can use this below to get the number of years observation periods last for.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">observation_years =</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                  <span class="sc">!!</span>CDMConnector<span class="sc">::</span><span class="fu">datediff</span>(<span class="st">"observation_period_start_date"</span>, </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"observation_period_end_date"</span>, </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">interval =</span> <span class="st">"year"</span>))  <span class="sc">%&gt;%</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(observation_years), </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">binwidth=</span><span class="dv">2</span>, <span class="at">colour=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ch_3_exploring_the_cdm_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="statistical-summaries" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="statistical-summaries"><span class="header-section-number">3.4</span> Statistical summaries</h2>
+<p>We can also use summarise for various other calculations</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">q05_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.05</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_year_of_birth =</span> <span class="fu">round</span>(<span class="fu">mean</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">0</span>),</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">q95_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.95</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span>  </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: ??
+Columns: 6
+Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpCMC78k\file7682aec4f5a.duckdb]
+$ min_year_of_birth    &lt;int&gt; 1923
+$ q05_year_of_birth    &lt;dbl&gt; 1927
+$ mean_year_of_birth   &lt;dbl&gt; 1971
+$ median_year_of_birth &lt;dbl&gt; 1970
+$ q95_year_of_birth    &lt;dbl&gt; 2018
+$ max_year_of_birth    &lt;int&gt; 2023</code></pre>
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -621,99 +644,49 @@ Piping and SQL
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Although piping queries has little impact on performance when using R with data in memory, when working with a database the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.</p>
-<p>For example, the single summarise function above would generate the below SQL.</p>
+<p>For example, a single mutate function above would generate the below SQL.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">q05_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.05</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_year_of_birth =</span> <span class="fu">round</span>(<span class="fu">mean</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">0</span>),</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">q95_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.95</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;SQL&gt;
-SELECT
-  MIN(year_of_birth) AS min_year_of_birth,
-  PERCENTILE_CONT(0.05) WITHIN GROUP (ORDER BY year_of_birth) AS q05_year_of_birth,
-  ROUND(AVG(year_of_birth), CAST(ROUND(0.0, 0) AS INTEGER)) AS mean_year_of_birth,
-  PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY year_of_birth) AS median_year_of_birth,
-  PERCENTILE_CONT(0.95) WITHIN GROUP (ORDER BY year_of_birth) AS q95_year_of_birth,
-  MAX(year_of_birth) AS max_year_of_birth
-FROM main.person</code></pre>
-</div>
-</div>
-<p>Calling summarise for each though would lead to a more involved query.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">q05_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.05</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_year_of_birth =</span> <span class="fu">round</span>(<span class="fu">mean</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">q95_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.95</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;SQL&gt;
-SELECT MAX(year_of_birth) AS max_year_of_birth
-FROM (
-  SELECT PERCENTILE_CONT(0.95) WITHIN GROUP (ORDER BY year_of_birth) AS q95_year_of_birth
-  FROM (
-    SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY year_of_birth) AS median_year_of_birth
-    FROM (
-      SELECT ROUND(AVG(year_of_birth), CAST(ROUND(0.0, 0) AS INTEGER)) AS mean_year_of_birth
-      FROM (
-        SELECT PERCENTILE_CONT(0.05) WITHIN GROUP (ORDER BY year_of_birth) AS q05_year_of_birth
-        FROM (
-          SELECT MIN(year_of_birth) AS min_year_of_birth
-          FROM main.person
-        ) q01
-      ) q02
-    ) q03
-  ) q04
-) q05</code></pre>
-</div>
-</div>
-<p>A similar story can be seen with mutate</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_days =</span> <span class="sc">!!</span><span class="fu">datediff</span>(<span class="st">"observation_period_start_date"</span>, </span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"observation_period_end_date"</span>, </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">interval =</span> <span class="st">"day"</span>),</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">observation_years =</span> <span class="sc">!!</span><span class="fu">datediff</span>(<span class="st">"observation_period_start_date"</span>, </span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"observation_period_end_date"</span>, </span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">interval =</span> <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"observation_period_id"</span>, <span class="st">"person_id"</span>, </span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>         <span class="st">"observation_days"</span>,<span class="st">"observation_years"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_days =</span> <span class="sc">!!</span><span class="fu">datediff</span>(<span class="st">"observation_period_start_date"</span>, </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"observation_period_end_date"</span>, </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">interval =</span> <span class="st">"day"</span>),</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">observation_years =</span> <span class="sc">!!</span><span class="fu">datediff</span>(<span class="st">"observation_period_start_date"</span>, </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"observation_period_end_date"</span>, </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">interval =</span> <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"observation_period_id"</span>, <span class="st">"person_id"</span>, </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>         <span class="st">"observation_days"</span>,<span class="st">"observation_years"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT
   observation_period_id,
   person_id,
   datediff('day', observation_period_start_date, observation_period_end_date) AS observation_days,
-  datediff('year', observation_period_start_date, observation_period_end_date) AS observation_years
+  FLOOR((date_part('year', observation_period_end_date) * 10000 + date_part('month', observation_period_end_date) * 100 + date_part('day', observation_period_end_date) -
+(date_part('year', observation_period_start_date) * 10000 + date_part('month', observation_period_start_date) * 100 + date_part('day', observation_period_start_date))) / 10000) AS observation_years
 FROM main.observation_period</code></pre>
 </div>
 </div>
+<p>Whereas the SQL will be different if using multiple mutate calls (now using a sub-query).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_days =</span> <span class="sc">!!</span><span class="fu">datediff</span>(<span class="st">"observation_period_start_date"</span>, </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"observation_period_end_date"</span>, </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">interval =</span> <span class="st">"day"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_years =</span> <span class="sc">!!</span><span class="fu">datediff</span>(<span class="st">"observation_period_start_date"</span>, </span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"observation_period_end_date"</span>, </span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">interval =</span> <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"observation_period_id"</span>, <span class="st">"person_id"</span>, </span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>         <span class="st">"observation_days"</span>,<span class="st">"observation_years"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_days =</span> <span class="sc">!!</span><span class="fu">datediff</span>(<span class="st">"observation_period_start_date"</span>, </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"observation_period_end_date"</span>, </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">interval =</span> <span class="st">"day"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_years =</span> <span class="sc">!!</span><span class="fu">datediff</span>(<span class="st">"observation_period_start_date"</span>, </span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"observation_period_end_date"</span>, </span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">interval =</span> <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"observation_period_id"</span>, <span class="st">"person_id"</span>, </span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>         <span class="st">"observation_days"</span>,<span class="st">"observation_years"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT
   observation_period_id,
   person_id,
   observation_days,
-  datediff('year', observation_period_start_date, observation_period_end_date) AS observation_years
+  FLOOR((date_part('year', observation_period_end_date) * 10000 + date_part('month', observation_period_end_date) * 100 + date_part('day', observation_period_end_date) -
+(date_part('year', observation_period_start_date) * 10000 + date_part('month', observation_period_start_date) * 100 + date_part('day', observation_period_start_date))) / 10000) AS observation_years
 FROM (
   SELECT
     *,
@@ -727,28 +700,28 @@ FROM (
 </div>
 <p>As we’ve seen before, we can also quickly get results for various groupings or restrictions</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(gender_concept_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">q25_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.25</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">q75_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.75</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept, </span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="fu">c</span>(<span class="st">"gender_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> concept_name, <span class="at">group =</span> concept_name,</span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> concept_name)) <span class="sc">+</span></span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(</span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower =</span> q25_year_of_birth, </span>
-<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper =</span> q75_year_of_birth, </span>
-<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">middle =</span> median_year_of_birth, </span>
-<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> min_year_of_birth, </span>
-<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> max_year_of_birth),</span>
-<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span> </span>
-<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(gender_concept_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">q25_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.25</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">q75_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.75</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept, </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">by=</span><span class="fu">c</span>(<span class="st">"gender_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> concept_name, <span class="at">group =</span> concept_name,</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> concept_name)) <span class="sc">+</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower =</span> q25_year_of_birth, </span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper =</span> q75_year_of_birth, </span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">middle =</span> median_year_of_birth, </span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> min_year_of_birth, </span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> max_year_of_birth),</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span> </span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ch_3_exploring_the_cdm_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -863,7 +836,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./ch_4_building_a_cohort.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding a cohort</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

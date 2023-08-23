@@ -4,3 +4,4 @@
 /.quarto/
 .Rproj.user
 *.zip
+*.duckdb

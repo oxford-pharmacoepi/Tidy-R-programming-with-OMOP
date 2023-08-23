@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.0.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -173,12 +173,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_4_building_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding a cohort</span></a>
+  <a href="./ch_4_building_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_5_describing_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dscribing a cohort</span></a>
+  <a href="./ch_5_describing_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Describing a cohort</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_6_sampling_the_cdm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling the cdm</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_7_cdm_locations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Bringing data into memory</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -197,8 +207,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#connecting-to-a-database-from-r-using-dbi" id="toc-connecting-to-a-database-from-r-using-dbi" class="nav-link active" data-scroll-target="#connecting-to-a-database-from-r-using-dbi"> <span class="header-section-number">2.1</span> Connecting to a database from R using DBI</a></li>
   <li><a href="#creating-a-reference-to-the-omop-common-data-model" id="toc-creating-a-reference-to-the-omop-common-data-model" class="nav-link" data-scroll-target="#creating-a-reference-to-the-omop-common-data-model"> <span class="header-section-number">2.2</span> Creating a reference to the OMOP common data model</a></li>
-  <li><a href="#database-snapshot" id="toc-database-snapshot" class="nav-link" data-scroll-target="#database-snapshot"> <span class="header-section-number">2.3</span> Database snapshot</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"> <span class="header-section-number">2.4</span> Further reading</a></li>
+  <li><a href="#cdm-name" id="toc-cdm-name" class="nav-link" data-scroll-target="#cdm-name"> <span class="header-section-number">2.3</span> CDM name</a></li>
+  <li><a href="#database-snapshot" id="toc-database-snapshot" class="nav-link" data-scroll-target="#database-snapshot"> <span class="header-section-number">3</span> Database snapshot</a></li>
+  <li><a href="#disconnecting" id="toc-disconnecting" class="nav-link" data-scroll-target="#disconnecting"> <span class="header-section-number">4</span> Disconnecting</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"> <span class="header-section-number">5</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
@@ -223,152 +235,210 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="connecting-to-a-database-from-r-using-dbi" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="connecting-to-a-database-from-r-using-dbi"><span class="header-section-number">2.1</span> Connecting to a database from R using DBI</h2>
-<p>Database connections from R can be made using the <a href="https://dbi.r-dbi.org/">DBI package</a>. The back-end for <code>DBI</code> is facilitated by database specific driver packages. As an example, lets say we want to work with a local duckdb from R. In this case the we can use the duckdb R package as the driver.</p>
+<p>Database connections from R can be made using the <a href="https://dbi.r-dbi.org/">DBI package</a>. The back-end for <code>DBI</code> is facilitated by database specific driver packages. As an example, lets say we want to work with a local duckdb from R. In this case the we can use the duckdb R package as the driver, connecting to a database with the OMOP CDM for a synthetic population of 200,000 people.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>db<span class="ot">&lt;-</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="at">dbdir=</span><span class="st">":memory:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If we instead wanted to connect to other database management systems, these connections would be supported by the associated back-end packages and could look something like the below example for Postgres:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Postgres</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(RPostgres<span class="sc">::</span><span class="fu">Postgres</span>(),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dbname =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDM5_POSTGRESQL_DBNAME"</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">host =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDM5_POSTGRESQL_HOST"</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">user =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDM5_POSTGRESQL_USER"</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">password =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDM5_POSTGRESQL_PASSWORD"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>db<span class="ot">&lt;-</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">dbdir=</span> <span class="fu">Sys.getenv</span>(<span class="st">"DUCKDB"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If we instead wanted to connect to other database management systems, these connections would be supported by the associated back-end packages. For example a connection to a Postgres database would look something like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Postgres</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(RPostgres<span class="sc">::</span><span class="fu">Postgres</span>(),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dbname =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDM5_POSTGRESQL_DBNAME"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">host =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDM5_POSTGRESQL_HOST"</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">user =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDM5_POSTGRESQL_USER"</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">password =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDM5_POSTGRESQL_PASSWORD"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="creating-a-reference-to-the-omop-common-data-model" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="creating-a-reference-to-the-omop-common-data-model"><span class="header-section-number">2.2</span> Creating a reference to the OMOP common data model</h2>
-<p>As seen in the previous chapter, once a connection to the database has been created we could then create references to the various tables in the database and build queries using in a familiar dplyr style. However, as we already know what the structure of the OMOP CDM looks like, we can avoid the overhead of creating references to the OMOP CDM tables by using the <code>CDMConnector</code> package to quickly create a reference to the database as a whole.</p>
+<p>As seen in the previous chapter, once a connection to the database has been created we could then create references to the various tables in the database and build queries using in a familiar dplyr style. However, as we the structure of the OMOP CDM is already known, we can avoid the overhead of creating individual references to the OMOP CDM tables by using the <code>CDMConnector</code> package. <code>CDMConnector</code> will do the work for us and quickly create a joint reference for all the tables in the OMOP CDM.</p>
 <p>If you don’t already have it installed, the first step would be to install <code>CDMConnector</code> from CRAN.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"CDMConnector"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"CDMConnector"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>For this example, we’ll use the Eunomia example data contained in a duckdb database. First we need to download the data. And once downloaded, make sure to add the path to your Renviron.</p>
+<p>For this example, we’ll use an example dataset (<em>synthea-covid19-10k</em>) provided by <code>CDMConnector</code>. First let’s load packages and then download the example data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change pathToData to the location you want to save the data</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>CDMConnector<span class="sc">::</span><span class="fu">downloadEunomiaData</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pathToData =</span> here<span class="sc">::</span><span class="fu">here</span>(), </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">overwrite =</span> <span class="cn">TRUE</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># once downloaded, save your pathToData to your Renviron (and then restart R)</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># EUNOMIA_DATA_FOLDER="......"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dbdir =</span> CDMConnector<span class="sc">::</span><span class="fu">eunomia_dir</span>())</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> CDMConnector<span class="sc">::</span><span class="fu">cdm_from_con</span>(<span class="at">con =</span> db, </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">cdm_schema =</span> <span class="st">"main"</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>cdm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">downloadEunomiaData</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">datasetName =</span> <span class="st">"synthea-covid19-10k"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmVersion =</span> <span class="st">"5.3"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pathToData =</span> <span class="fu">here</span>(),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">overwrite =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After connecting to the database containing the OMOP CDM, we use <code>CDMConnector</code> to create our cdm reference.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>db<span class="ot">&lt;-</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">dbdir =</span> <span class="fu">eunomiaDir</span>(<span class="at">datasetName =</span> <span class="st">"synthea-covid19-10k"</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(<span class="at">con =</span> db, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cdm_schema =</span> <span class="st">"main"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>cdm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># OMOP CDM reference (tbl_duckdb_connection)
 
-Tables: person, observation_period, visit_occurrence, visit_detail, condition_occurrence, drug_exposure, procedure_occurrence, measurement, observation, death, location, care_site, provider, drug_era, dose_era, condition_era, cdm_source, concept, vocabulary, concept_relationship, concept_synonym, concept_ancestor, drug_strength</code></pre>
+Tables: person, observation_period, visit_occurrence, visit_detail, condition_occurrence, drug_exposure, procedure_occurrence, device_exposure, measurement, observation, death, note, note_nlp, specimen, fact_relationship, location, care_site, provider, payer_plan_period, cost, drug_era, dose_era, condition_era, metadata, cdm_source, concept, vocabulary, domain, concept_class, concept_relationship, relationship, concept_synonym, concept_ancestor, source_to_concept_map, drug_strength, cohort_definition, attribute_definition</code></pre>
 </div>
 </div>
 <p>Once we have created the our reference to the overall OMOP CDM, we can reference specific tables using the “$” operator.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;main.observation_period&gt; [?? x 5]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpELVYgC/ofdkwfsp]
-   observation_period_id person_id observation_period_start…¹ observat…² perio…³
-                   &lt;dbl&gt;     &lt;dbl&gt; &lt;date&gt;                     &lt;date&gt;       &lt;dbl&gt;
- 1                     6         6 1963-12-31                 2007-02-06  4.48e7
- 2                    13        13 2009-04-26                 2019-04-14  4.48e7
- 3                    27        27 2002-01-30                 2018-11-21  4.48e7
- 4                    16        16 1971-10-14                 2017-11-02  4.48e7
- 5                    55        55 2009-05-30                 2019-03-23  4.48e7
- 6                    60        60 1990-11-21                 2019-01-23  4.48e7
- 7                    42        42 1909-11-03                 2019-03-13  4.48e7
- 8                    33        33 1986-05-12                 2018-09-10  4.48e7
- 9                    18        18 1965-11-17                 2018-11-07  4.48e7
-10                    25        25 2007-03-18                 2019-04-07  4.48e7
-# … with more rows, and abbreviated variable names
-#   ¹​observation_period_start_date, ²​observation_period_end_date,
-#   ³​period_type_concept_id</code></pre>
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmp4qxVqZ\file741c562069a2.duckdb]
+   observation_period_id person_id observation_period_s…¹ observation_period_e…²
+                   &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
+ 1                     1         1 2014-05-09             2023-05-12            
+ 2                     2         2 1977-04-11             1986-09-15            
+ 3                     3         3 2014-04-19             2023-04-22            
+ 4                     4         4 2014-03-22             2023-04-08            
+ 5                     5         5 2013-11-13             2023-01-04            
+ 6                     6         6 2013-07-17             2021-08-04            
+ 7                     7         7 2013-06-26             2022-08-17            
+ 8                     8         8 2018-08-20             2022-07-25            
+ 9                     9         9 2013-08-03             2022-09-24            
+10                    10        10 2013-08-11             2023-04-02            
+# ℹ more rows
+# ℹ abbreviated names: ¹​observation_period_start_date,
+#   ²​observation_period_end_date
+# ℹ 1 more variable: period_type_concept_id &lt;int&gt;</code></pre>
 </div>
 </div>
 <p>Alternatively, you could also access a specific table reference like so</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cdm[[<span class="st">"observation_period"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cdm[[<span class="st">"observation_period"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;main.observation_period&gt; [?? x 5]
-# Database: DuckDB 0.5.0 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpELVYgC/ofdkwfsp]
-   observation_period_id person_id observation_period_start…¹ observat…² perio…³
-                   &lt;dbl&gt;     &lt;dbl&gt; &lt;date&gt;                     &lt;date&gt;       &lt;dbl&gt;
- 1                     6         6 1963-12-31                 2007-02-06  4.48e7
- 2                    13        13 2009-04-26                 2019-04-14  4.48e7
- 3                    27        27 2002-01-30                 2018-11-21  4.48e7
- 4                    16        16 1971-10-14                 2017-11-02  4.48e7
- 5                    55        55 2009-05-30                 2019-03-23  4.48e7
- 6                    60        60 1990-11-21                 2019-01-23  4.48e7
- 7                    42        42 1909-11-03                 2019-03-13  4.48e7
- 8                    33        33 1986-05-12                 2018-09-10  4.48e7
- 9                    18        18 1965-11-17                 2018-11-07  4.48e7
-10                    25        25 2007-03-18                 2019-04-07  4.48e7
-# … with more rows, and abbreviated variable names
-#   ¹​observation_period_start_date, ²​observation_period_end_date,
-#   ³​period_type_concept_id</code></pre>
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmp4qxVqZ\file741c562069a2.duckdb]
+   observation_period_id person_id observation_period_s…¹ observation_period_e…²
+                   &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
+ 1                     1         1 2014-05-09             2023-05-12            
+ 2                     2         2 1977-04-11             1986-09-15            
+ 3                     3         3 2014-04-19             2023-04-22            
+ 4                     4         4 2014-03-22             2023-04-08            
+ 5                     5         5 2013-11-13             2023-01-04            
+ 6                     6         6 2013-07-17             2021-08-04            
+ 7                     7         7 2013-06-26             2022-08-17            
+ 8                     8         8 2018-08-20             2022-07-25            
+ 9                     9         9 2013-08-03             2022-09-24            
+10                    10        10 2013-08-11             2023-04-02            
+# ℹ more rows
+# ℹ abbreviated names: ¹​observation_period_start_date,
+#   ²​observation_period_end_date
+# ℹ 1 more variable: period_type_concept_id &lt;int&gt;</code></pre>
 </div>
 </div>
-<p>When we created our reference we could have also specified a subset of cdm tables that we want to reference to:</p>
+<p>When creating our cdm reference we can also specify a write schema. This would be a schema in which we have permission to create tables (as we’re unlikely to have that permission for the schema containing the tables with the patient-level data).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(db, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cdm_tables =</span> <span class="fu">c</span>(<span class="st">"person"</span>,<span class="st">"observation_period"</span>))</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>cdm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># OMOP CDM reference (tbl_duckdb_connection)
-
-Tables: person, observation_period</code></pre>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(db,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_schema =</span> <span class="st">"main"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">write_schema =</span> <span class="st">"results"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>Moreover, we can also specify a write schema. This would be a schema in which we have permission to create tables (as we’re unlikely to have that permission for the schema containing the tables with the patient-level data).</p>
+<div class="callout-caption-container flex-fill">
+Setting a write prefix
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We can set a prefix that to use when permanent tables are created the write schema. This can be useful when we’re sharing our write schema with others and want to avoid table name conflicts.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(db,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_schema =</span> <span class="st">"main"</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_tables =</span> <span class="fu">c</span>(<span class="st">"person"</span>,<span class="st">"observation_period"</span>),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">write_schema =</span> <span class="st">"results"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">write_schema =</span> <span class="fu">c</span>(<span class="at">schema=</span><span class="st">"main"</span>, <span class="at">prefix =</span> <span class="st">"example_"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>And if we already had some cohort tables in the results schema, we could include references to these like so:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(db,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_schema =</span> <span class="st">"main"</span>,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_tables =</span> <span class="fu">c</span>(<span class="st">"person"</span>,<span class="st">"observation_period"</span>),</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">write_schema =</span> <span class="st">"results"</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cohort_tables =</span> <span class="fu">c</span>(<span class="st">"exposure_cohort"</span>, <span class="st">"outcome_cohort"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 </div>
 </section>
-<section id="database-snapshot" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="database-snapshot"><span class="header-section-number">2.3</span> Database snapshot</h2>
-<p>We can also use <code>CDMConnector</code> to provide a summary of the metadata for the OMOP CDM data we have connected to using the <code>snapshot()</code> function.</p>
+<section id="cdm-name" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="cdm-name"><span class="header-section-number">2.3</span> CDM name</h2>
+<p>Our cdm reference will be associated with a name. By default this name will be taken from the cdm source name field from the cdm source table. We can though set this to a different name when creating our cdm reference. This cdm name attribute of our reference is particularly useful in the context of network studies to keep track of which results are associated with which database.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(db,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_schema =</span> <span class="st">"main"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cdm_source</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   table&lt;main.cdm_source&gt; [1 x 10]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmp4qxVqZ\file741c562069a2.duckdb]
+  cdm_source_name cdm_source_abbreviation cdm_holder source_description    
+  &lt;chr&gt;           &lt;chr&gt;                   &lt;chr&gt;      &lt;chr&gt;                 
+1 Synthea         Synthea                 ""         Synthea Synthetic Data
+# ℹ 6 more variables: source_documentation_reference &lt;chr&gt;,
+#   cdm_etl_reference &lt;chr&gt;, source_release_date &lt;date&gt;,
+#   cdm_release_date &lt;date&gt;, cdm_version &lt;chr&gt;, vocabulary_version &lt;chr&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(cdm, <span class="st">"cdm_name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Synthea"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(db,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_schema =</span> <span class="st">"main"</span>, </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_name =</span> <span class="st">"my_cdm"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(cdm, <span class="st">"cdm_name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "my_cdm"</code></pre>
+</div>
+</div>
+</section>
+<section id="database-snapshot" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Database snapshot</h1>
+<p>After creating our cdm reference we can get a summary of the metadata for the OMOP CDM data using the <code>snapshot()</code> function from <code>CDMConnector</code>.</p>
 <div class="cell">
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdm_from_con</span>(<span class="at">con =</span> db, </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">cdm_schema =</span> <span class="st">"main"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">snapshot</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cdm_snapshot <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(<span class="at">con =</span> db, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">cdm_name =</span> <span class="st">"my_cdm"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">cdm_schema =</span> <span class="st">"main"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">snapshot</span>()</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>cdm_snapshot <span class="sc">%&gt;%</span> </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>List of 7
- $ cdm_source_name       : chr "Synthea synthetic health database"
- $ cdm_version           : chr "v5.3.1"
- $ cdm_holder            : chr "OHDSI Community"
- $ cdm_release_date      : Date[1:1], format: "2019-05-25"
- $ vocabulary_version    : chr "v5.0 18-JAN-19"
- $ person_cnt            : num 2694
- $ observation_period_cnt: num 5343
- - attr(*, "class")= chr "cdm_snapshot"</code></pre>
+<pre><code>Rows: 1
+Columns: 13
+$ cdm_name                               &lt;chr&gt; "my_cdm"
+$ cdm_source_name                        &lt;chr&gt; "Synthea"
+$ cdm_description                        &lt;chr&gt; "Synthea Synthetic Data"
+$ cdm_documentation_reference            &lt;chr&gt; "https://synthetichealth.github…
+$ cdm_version                            &lt;chr&gt; "5.3.1"
+$ cdm_holder                             &lt;chr&gt; ""
+$ cdm_release_date                       &lt;chr&gt; "2023-06-14"
+$ vocabulary_version                     &lt;chr&gt; "v5.0 22-JUN-22"
+$ person_count                           &lt;chr&gt; "10754"
+$ observation_period_count               &lt;chr&gt; "10754"
+$ earliest_observation_period_start_date &lt;chr&gt; "1923-12-29"
+$ latest_observation_period_end_date     &lt;chr&gt; "2023-06-14"
+$ snapshot_date                          &lt;chr&gt; "2023-08-21"</code></pre>
 </div>
 </div>
 </section>
-<section id="further-reading" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">2.4</span> Further reading</h2>
+<section id="disconnecting" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Disconnecting</h1>
+<p>Once we have finished our analysis we can close our connection to the database behind our cdm reference like so.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is equivalent to closing the connection directly like we saw in the previous chapter.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(<span class="fu">attr</span>(cdm, <span class="st">"dbcon"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="further-reading" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Further reading</h1>
 <ul>
 <li><a href="https://darwin-eu.github.io/CDMConnector">CDMConnector package</a></li>
 </ul>

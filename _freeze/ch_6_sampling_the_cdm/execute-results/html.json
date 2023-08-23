@@ -1,0 +1,14 @@
+{
+  "hash": "284dc853ca8325ee30e57aa886ef56ef",
+  "result": {
+    "markdown": "# Sampling the cdm\n\n\n## Subset of CDM tables\nOur cdm reference will include all of the OMOP CDM tables that could be found in our database. We may though only want a subset of these tables, in which case we can explicity specify those of interest:\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# cdm_1 <- cdm_from_con(db) %>% \n#   cdm_select_tbl(\"person\",\"observation_period\")\n# cdm_1\n```\n:::\n\n\nWe can also select a group of tables, for example selecting only the vocabulary tables like so:\n\n::: {.cell}\n\n```{.r .cell-code}\n# cdm_2 <- cdm  %>% \n#   cdm_select_tbl(tbl_group(\"vocab\"))\n# cdm\n```\n:::\n\n\n\n\n## Sample records in a table\n\n## Random sample of the cdm\n\n## Cohort-based subset of the cdm\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
