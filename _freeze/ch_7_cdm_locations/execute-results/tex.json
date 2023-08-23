@@ -1,0 +1,20 @@
+{
+  "hash": "a04a039402b2d15d3c2a94fcc9d8b8f7",
+  "result": {
+    "markdown": "# Bringing data into memory\n\nInto R with collect - either a table or the entire cdm reference\n\nStow - local duck db and/ or arrow ....\n\n\n\n::: {.cell}\n\n:::\n",
+    "supporting": [
+      "ch_7_cdm_locations_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {
+      "knitr": [
+        "{\"type\":\"list\",\"attributes\":{},\"value\":[]}"
+      ]
+    },
+    "preserve": null,
+    "postProcess": false
+  }
+}

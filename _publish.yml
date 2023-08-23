@@ -2,3 +2,5 @@
   quarto-pub:
     - id: d3c01263-7008-4e15-ba0e-53c82dcaf0bb
       url: 'https://quartopub.com/sites/e-burn/tidy-r-programming-with-the-omop-common-data-model'
+    - id: 8fd8b3c6-ad62-463d-b4e2-e1d8a7dbaeed
+      url: 'https://quartopub.com/sites/dpa-pde-oxford/an-introduction-to-tidy-r-programming-with-the-omop-common-data-model'
