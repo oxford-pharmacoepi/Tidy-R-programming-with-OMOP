@@ -1,6 +1,6 @@
 # R programming with databases: applications with the OMOP CDM
 
-<https://darwin-eu.quarto.pub/rprogrammingwithdatabases/>
+<https://dpa-pde-oxford.quarto.pub/an-introduction-to-tidy-r-programming-with-the-omop-common-data-model/>
 
 ## Updating the website
 
