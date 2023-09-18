@@ -1,0 +1,63 @@
+## Working with cohorts
+
+## Cohort intersections
+
+PatientProfiles::addCohortIntersect()
+
+## Intersection between two cohorts
+
+## Set up
+```{r, warning=FALSE, message=FALSE}
+library(CDMConnector)
+library(dplyr)
+library(PatientProfiles)
+        
+db <- DBI::dbConnect(duckdb::duckdb(), eunomia_dir())
+
+cdm <- cdm_from_con(
+  con = db,
+  cdm_schema = "main",
+  write_schema = "main"
+)
+
+cdm <- cdm %>% 
+  generate_concept_cohort_set(concept_set = list("gi_bleed" = 192671), 
+                            limit = "all", 
+                            end = 30,
+                            name = "gi_bleed",
+                            overwrite = TRUE) %>% 
+  generate_concept_cohort_set(concept_set = list("acetaminophen" = c(1125315,
+                                                              1127078,
+                                                              1127433,
+                                                              40229134,
+                                                              40231925,
+                                                              40162522,
+                                                              19133768)), 
+                              limit = "all", 
+                            end = "event_end_date",
+                            name = "acetaminophen",
+                            overwrite = TRUE)
+```
+
+
+### Flag
+```{r, warning=FALSE, message=FALSE}
+cdm$gi_bleed <- cdm$gi_bleed %>% 
+  addCohortIntersectFlag(targetCohortTable = "acetaminophen",
+                         window = list(c(-Inf, -1), c(0,0), c(1, Inf)))
+
+cdm$gi_bleed %>% 
+  summarise(acetaminophen_prior = sum(acetaminophen_minf_to_m1), 
+            acetaminophen_index = sum(acetaminophen_0_to_0),
+            acetaminophen_post = sum(acetaminophen_1_to_inf)) %>% 
+  collect()
+  
+```
+
+
+
+### Count
+
+### Date and times
+
+## Intersection between a cohort and tables with patient data

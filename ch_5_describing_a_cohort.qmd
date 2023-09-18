@@ -1,5 +1,0 @@
-# Describing a cohort
-
-## PatientProfiles
-
-## 

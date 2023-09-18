@@ -1,3 +1,22 @@
 # Preface {.unnumbered}
 
-The source code for the book can be found at this [Github repository](https://github.com/oxford-pharmacoepi/RProgrammingWithDatabases "TidyRProgrammingWithDatabases") Please open an issue there if you have a question or suggestion. Pull requests with suggested changes and additions are also most welcome.
+## Is this book for me?
+
+We've written this book for anyone interested in a working with databases mapped to the OMOP Common Data Model (CDM) in a tidyverse inspired approach. That is, human centered, consistent, composable, and inclusive (see <https://design.tidyverse.org/unifying.html> for more details on these principles).
+
+New to the OMOP CDM? We'd recommend you pare this book with [The Book of OHDSI](https://ohdsi.github.io/TheBookOfOhdsi/)
+
+New to R? We recommend you compliment the book with [R for data science](https://r4ds.had.co.nz/)
+
+## Citation
+
+TO ADD
+
+## License
+
+```{=html}
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"/></a> <br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+```
+## Code
+
+The source code for the book can be found at this [Github repository](https://github.com/oxford-pharmacoepi/RProgrammingWithDatabases "TidyRProgrammingWithDatabases")

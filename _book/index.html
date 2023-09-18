@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Edward Burn, Adam Black, Berta Raventós, Yuchen Guo, Mike Du, Kim López Güell, Martí Català Sabaté">
-<meta name="dcterms.date" content="2023-08-23">
+<meta name="dcterms.date" content="2023-09-18">
 
 <title>An introduction to tidy R programming with the OMOP common data model</title>
 <style>
@@ -111,22 +111,17 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_4_building_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a>
+  <a href="./ch_4_adding_features.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_5_describing_a_cohort.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Describing a cohort</span></a>
+  <a href="./ch_5_creating_cohorts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_6_sampling_the_cdm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling the cdm</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ch_7_cdm_locations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Bringing data into memory</span></a>
+  <a href="./ch_6_working_with_cohorts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Working with cohorts</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -143,7 +138,13 @@ ul.task-list{list-style: none;}
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
+  <ul class="collapse">
+  <li><a href="#is-this-book-for-me" id="toc-is-this-book-for-me" class="nav-link" data-scroll-target="#is-this-book-for-me">Is this book for me?</a></li>
+  <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
+  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -169,7 +170,7 @@ ul.task-list{list-style: none;}
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 23, 2023</p>
+      <p class="date">September 18, 2023</p>
     </div>
   </div>
     
@@ -180,9 +181,26 @@ ul.task-list{list-style: none;}
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>The source code for the book can be found at this <a href="https://github.com/edward-burn/RProgrammingWithDatabases" title="TidyRProgrammingWithDatabases">Github repository</a> Please open an issue there if you have a question or suggestion. Pull requests with suggested changes and additions are also most welcome.</p>
+<section id="is-this-book-for-me" class="level2">
+<h2 class="anchored" data-anchor-id="is-this-book-for-me">Is this book for me?</h2>
+<p>We’ve written this book for anyone interested in a working with databases mapped to the OMOP Common Data Model (CDM) in a tidyverse inspired approach. That is, human centered, consistent, composable, and inclusive (see <a href="https://design.tidyverse.org/unifying.html" class="uri">https://design.tidyverse.org/unifying.html</a> for more details on these principles).</p>
+<p>New to the OMOP CDM? We’d recommend you pare this book with <a href="https://ohdsi.github.io/TheBookOfOhdsi/">The Book of OHDSI</a></p>
+<p>New to R? We recommend you compliment the book with <a href="https://r4ds.had.co.nz/">R for data science</a></p>
+</section>
+<section id="citation" class="level2">
+<h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<p>TO ADD</p>
+</section>
+<section id="license" class="level2">
+<h2 class="anchored" data-anchor-id="license">License</h2>
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"></a> <br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+</section>
+<section id="code" class="level2">
+<h2 class="anchored" data-anchor-id="code">Code</h2>
+<p>The source code for the book can be found at this <a href="https://github.com/oxford-pharmacoepi/RProgrammingWithDatabases" title="TidyRProgrammingWithDatabases">Github repository</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

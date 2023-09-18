@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>An introduction to tidy R programming with the OMOP common data model - 4&nbsp; Identifying patient characteristics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./ch_5_creating_cohorts.html" rel="next">
+<link href="./ch_3_exploring_the_cdm.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">An introduction to tidy R programming with the OMOP common data model</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_1_getting_started.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_2_cdm_reference.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Creating a reference to the OMOP common data model</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_3_exploring_the_cdm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Exploring the CDM</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_4_adding_features.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_5_creating_cohorts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_6_working_with_cohorts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Working with cohorts</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#adding-specific-demographics" id="toc-adding-specific-demographics" class="nav-link active" data-scroll-target="#adding-specific-demographics"> <span class="header-section-number">4.1</span> Adding specific demographics</a></li>
+  <li><a href="#adding-multiple-demographics-simultaneously" id="toc-adding-multiple-demographics-simultaneously" class="nav-link" data-scroll-target="#adding-multiple-demographics-simultaneously"> <span class="header-section-number">4.2</span> Adding multiple demographics simultaneously</a></li>
+  <li><a href="#creating-categories" id="toc-creating-categories" class="nav-link" data-scroll-target="#creating-categories"> <span class="header-section-number">4.3</span> Creating categories</a></li>
+  <li><a href="#adding-custom-variables" id="toc-adding-custom-variables" class="nav-link" data-scroll-target="#adding-custom-variables"> <span class="header-section-number">4.4</span> Adding custom variables</a></li>
+  <li><a href="#large-scale-characterisation" id="toc-large-scale-characterisation" class="nav-link" data-scroll-target="#large-scale-characterisation"> <span class="header-section-number">4.5</span> Large scale characterisation</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>For this chapter, we’ll again use our example COVID-19 dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dbplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>db<span class="ot">&lt;-</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(),</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">dbdir =</span> <span class="fu">eunomiaDir</span>(<span class="at">datasetName =</span> <span class="st">"synthea-covid19-10k"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(db,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cdm_schema =</span> <span class="st">"main"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (ie a characteristic that does not change as time passes and a person ages) or time-varying. In various datasets, however, characteristics that could conceptually be considered as time-varying are encoded as time-invariant. One example for the latter is that in some cases an individual may be associated with a particular socioeconomic status or nationality that for the purposes of the data is treated as time-invariant.</p>
+<section id="adding-specific-demographics" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="adding-specific-demographics"><span class="header-section-number">4.1</span> Adding specific demographics</h2>
+<p>The <code>PatientProfiles</code> package makes it easy for us to add demographic information to tables in the OMOP CDM. Say we are interested in individuals age and sex at time of diagnosis with COVID-19, we can add these variables to the table like so. Note that because age is time-varying, we have to specify the variable with the date for which we want to calculate age relative to.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="ot">&lt;-</span> cdm<span class="sc">$</span>condition_occurrence <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addSex</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addAge</span>(<span class="at">indexDate =</span> <span class="st">"condition_start_date"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: ??
+Columns: 18
+Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+$ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
+$ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
+$ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
+$ condition_start_date          &lt;date&gt; 1986-09-08, 2021-06-23, 2021-04-07, 202…
+$ condition_start_datetime      &lt;dttm&gt; 1986-09-08, 2021-06-23, 2021-04-07, 202…
+$ condition_end_date            &lt;date&gt; 1986-09-08, 2021-06-23, 2021-04-07, 202…
+$ condition_end_datetime        &lt;dttm&gt; 1986-09-08, 2021-06-23, 2021-04-07, 202…
+$ condition_type_concept_id     &lt;int&gt; 38000175, 38000175, 38000175, 38000175, …
+$ condition_status_concept_id   &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ stop_reason                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ provider_id                   &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ visit_occurrence_id           &lt;int&gt; 19, 55, 67, 79, 79, 79, 79, 168, 171, 19…
+$ visit_detail_id               &lt;int&gt; 1000019, 1000055, 1000067, 1000079, 1000…
+$ condition_source_value        &lt;chr&gt; "230690007", "410429000", "230690007", "…
+$ condition_source_concept_id   &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
+$ condition_status_source_value &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ sex                           &lt;chr&gt; "Female", "Male", "Male", "Male", "Male"…
+$ age                           &lt;dbl&gt; 57, 25, 97, 2, 2, 2, 2, 75, 77, 57, 76, …</code></pre>
+</div>
+</div>
+<p>We now have two variables added containing values for age and sex.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: ??
+Columns: 18
+Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+$ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
+$ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
+$ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
+$ condition_start_date          &lt;date&gt; 1986-09-08, 2021-06-23, 2021-04-07, 202…
+$ condition_start_datetime      &lt;dttm&gt; 1986-09-08, 2021-06-23, 2021-04-07, 202…
+$ condition_end_date            &lt;date&gt; 1986-09-08, 2021-06-23, 2021-04-07, 202…
+$ condition_end_datetime        &lt;dttm&gt; 1986-09-08, 2021-06-23, 2021-04-07, 202…
+$ condition_type_concept_id     &lt;int&gt; 38000175, 38000175, 38000175, 38000175, …
+$ condition_status_concept_id   &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ stop_reason                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ provider_id                   &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ visit_occurrence_id           &lt;int&gt; 19, 55, 67, 79, 79, 79, 79, 168, 171, 19…
+$ visit_detail_id               &lt;int&gt; 1000019, 1000055, 1000067, 1000079, 1000…
+$ condition_source_value        &lt;chr&gt; "230690007", "410429000", "230690007", "…
+$ condition_source_concept_id   &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
+$ condition_status_source_value &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ sex                           &lt;chr&gt; "Female", "Male", "Male", "Male", "Male"…
+$ age                           &lt;dbl&gt; 57, 25, 97, 2, 2, 2, 2, 75, 77, 57, 76, …</code></pre>
+</div>
+</div>
+<p>And with these now added it is straightforward to calculate mean age at condition start date by sex.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_age =</span> <span class="fu">mean</span>(age, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">.by =</span> <span class="st">"sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   SQL [2 x 2]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+  sex    mean_age
+  &lt;chr&gt;     &lt;dbl&gt;
+1 Female     50.8
+2 Male       56.5</code></pre>
+</div>
+</div>
+</section>
+<section id="adding-multiple-demographics-simultaneously" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="adding-multiple-demographics-simultaneously"><span class="header-section-number">4.2</span> Adding multiple demographics simultaneously</h2>
+<p>We’ve now seen individual functions from <code>PatientProfiles</code> to add age and sex, and the package has others to add other characteristics like days of prior history in the database (<code>PatientProfiles::addPriorObservation()</code>). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time (that is more time efficient that getting them one by one).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>drug_exposure <span class="ot">&lt;-</span> cdm<span class="sc">$</span>drug_exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addDemographics</span>(<span class="at">indexDate =</span> <span class="st">"drug_exposure_start_date"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>drug_exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: ??
+Columns: 27
+Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+$ drug_exposure_id             &lt;int&gt; 245761, 245762, 245763, 245764, 245765, 2…
+$ person_id                    &lt;int&gt; 7764, 7764, 7764, 7764, 7764, 7764, 7764,…
+$ drug_concept_id              &lt;int&gt; 40213227, 40213201, 40213198, 40213154, 4…
+$ drug_exposure_start_date     &lt;date&gt; 2015-02-08, 2010-01-10, 2010-01-10, 2017…
+$ drug_exposure_start_datetime &lt;dttm&gt; 2015-02-08 22:40:04, 2010-01-10 22:40:04…
+$ drug_exposure_end_date       &lt;date&gt; 2015-02-08, 2010-01-10, 2010-01-10, 2017…
+$ drug_exposure_end_datetime   &lt;dttm&gt; 2015-02-08 22:40:04, 2010-01-10 22:40:04…
+$ verbatim_end_date            &lt;date&gt; 2015-02-08, 2010-01-10, 2010-01-10, 2017…
+$ drug_type_concept_id         &lt;int&gt; 32869, 32869, 32869, 32869, 32869, 32869,…
+$ stop_reason                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ refills                      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ quantity                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ days_supply                  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ sig                          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ route_concept_id             &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ lot_number                   &lt;chr&gt; "0", "0", "0", "0", "0", "0", "0", "0", "…
+$ provider_id                  &lt;int&gt; 14656, 14656, 14656, 14656, 14656, 14656,…
+$ visit_occurrence_id          &lt;int&gt; 80896, 80891, 80891, 80892, 80895, 80896,…
+$ visit_detail_id              &lt;int&gt; 1080896, 1080891, 1080891, 1080892, 10808…
+$ drug_source_value            &lt;chr&gt; "113", "33", "133", "140", "140", "140", …
+$ drug_source_concept_id       &lt;int&gt; 40213227, 40213201, 40213198, 40213154, 4…
+$ route_source_value           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ dose_unit_source_value       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ age                          &lt;dbl&gt; 71, 66, 66, 73, 72, 71, 69, 67, 70, 68, 6…
+$ sex                          &lt;chr&gt; "Male", "Male", "Male", "Male", "Male", "…
+$ prior_observation            &lt;dbl&gt; 2597, 742, 742, 3339, 2968, 2597, 1855, 1…
+$ future_observation           &lt;dbl&gt; 896, 2751, 2751, 154, 525, 896, 1638, 238…</code></pre>
+</div>
+</div>
+<p>With these characteristics now all added, we can now calculate mean age, prior observation (how many days have passed since the individual’s most recent observation start date), and future observation (how many days until the individual’s nearest observation end date) at drug exposure start date by sex.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>drug_exposure <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_age =</span> <span class="fu">mean</span>(age, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_prior_observation =</span> <span class="fu">mean</span>(prior_observation, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_future_observation =</span> <span class="fu">mean</span>(future_observation, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="st">"sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   SQL [2 x 4]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+  sex    mean_age mean_prior_observation mean_future_observation
+  &lt;chr&gt;     &lt;dbl&gt;                  &lt;dbl&gt;                   &lt;dbl&gt;
+1 Male       43.0                  2455.                   1768.
+2 Female     39.4                  2096.                   1661.</code></pre>
+</div>
+</div>
+</section>
+<section id="creating-categories" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="creating-categories"><span class="header-section-number">4.3</span> Creating categories</h2>
+<p>When we add age, either via addAge or addDemographics, we can also add another variable containing age groups. These age groups are specified in a list of vectors, each of which contain the lower and upper bounds.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>visit_occurrence <span class="ot">&lt;-</span> cdm<span class="sc">$</span>visit_occurrence <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addAge</span>(<span class="at">indexDate =</span> <span class="st">"visit_start_date"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ageGroup =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">17</span>), <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">64</span>),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">150</span>)))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>visit_occurrence <span class="sc">%&gt;%</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">150</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(age_group) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> age_group, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ch_4_adding_features_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><code>PatientProfiles</code> also provides a more general function for adding categories. Can you guess it’s name? That’s right, we have <code>PatientProfiles::addCategories()</code> for this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addPriorObservation</span>(<span class="at">indexDate =</span> <span class="st">"condition_start_date"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCategories</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable =</span> <span class="st">"prior_observation"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">categories =</span> <span class="fu">list</span>(<span class="st">"prior_observation_group"</span> <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">364</span>), <span class="fu">c</span>(<span class="dv">365</span>, <span class="dv">999999</span>) <span class="co"># Inf not currently supported as an upper bound </span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   table&lt;dbplyr_007&gt; [?? x 20]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+   condition_occurrence_id person_id condition_concept_id condition_start_date
+                     &lt;int&gt;     &lt;int&gt;                &lt;int&gt; &lt;date&gt;              
+ 1                       1         2               381316 1986-09-08          
+ 2                       2         6               321042 2021-06-23          
+ 3                       3         7               381316 2021-04-07          
+ 4                       4         8             37311061 2021-01-08          
+ 5                       5         8               437663 2021-01-08          
+ 6                       6         8              4089228 2021-01-08          
+ 7                       7         8               254761 2021-01-08          
+ 8                       8        16               381316 2020-02-11          
+ 9                       9        16               313217 2021-10-05          
+10                      10        18               317576 1993-08-08          
+# ℹ more rows
+# ℹ 16 more variables: condition_start_datetime &lt;dttm&gt;,
+#   condition_end_date &lt;date&gt;, condition_end_datetime &lt;dttm&gt;,
+#   condition_type_concept_id &lt;int&gt;, condition_status_concept_id &lt;int&gt;,
+#   stop_reason &lt;chr&gt;, provider_id &lt;int&gt;, visit_occurrence_id &lt;int&gt;,
+#   visit_detail_id &lt;int&gt;, condition_source_value &lt;chr&gt;,
+#   condition_source_concept_id &lt;int&gt;, condition_status_source_value &lt;chr&gt;, …</code></pre>
+</div>
+</div>
+</section>
+<section id="adding-custom-variables" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="adding-custom-variables"><span class="header-section-number">4.4</span> Adding custom variables</h2>
+<p>While <code>PatientProfiles</code> provides a range of functions that can help add characteristics of interest, you may want to add other, custom features. Obviously we can’t cover here all possible custom characteristics you may wish to add. However, custom features do generally come in two forms.</p>
+<p>The first is where we want to add a new variable derived from other variables in our table. Here we’ll be using <code>dplyr::mutate()</code>. For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals’ observation period start date.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year =</span> <span class="fu">year</span>(observation_period_start_date))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: ??
+Columns: 6
+Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+$ observation_period_id         &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
+$ person_id                     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
+$ observation_period_start_date &lt;date&gt; 2014-05-09, 1977-04-11, 2014-04-19, 201…
+$ observation_period_end_date   &lt;date&gt; 2023-05-12, 1986-09-15, 2023-04-22, 202…
+$ period_type_concept_id        &lt;int&gt; 44814724, 44814724, 44814724, 44814724, …
+$ observation_period_start_year &lt;dbl&gt; 2014, 1977, 2014, 2014, 2013, 2013, 2013…</code></pre>
+</div>
+</div>
+<p>The second, normally more complex task, is adding a new variable that involves joining to some other table. This table may well have been created by some intermediate query that we wrote to derive the variable of interest. For example, lets say we want to add each number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). Here we’ll also create this as a new table containing just the information we’re interested in and compute to a temporary table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>condition_summary <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>condition_occurrence <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(person_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">by=</span><span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>, <span class="st">"condition_occurrence_records"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">if_else</span>(</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(condition_occurrence_records), </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, condition_occurrence_records)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">computeQuery</span>()</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>condition_summary <span class="sc">%&gt;%</span> </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: ??
+Columns: 2
+Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+$ person_id                    &lt;int&gt; 2, 6, 7, 8, 16, 18, 25, 36, 40, 44, 47, 5…
+$ condition_occurrence_records &lt;dbl&gt; 1, 1, 1, 4, 2, 2, 1, 4, 1, 2, 5, 1, 3, 2,…</code></pre>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Taking care with joins
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When adding variables through joins we need to pay particular attention to the dimensions of the resulting table. While sometimes we may want to have additional rows added as well as new columns, this is often not desired. If we, for example, have a table with one row per person then a left join to a table with multiple rows per person will result in a table with f we, for example, have a table with one row per person then a left join to a table with multiple rows per person (unless those people with more than record are only in the second table).</p>
+<p>Examples where to be careful include when joining to the observation period table, as individuals can have multiple observation periods, and when working with cohorts (Which are the focus of the next chapter), as individuals can also enter the same study cohort multiple times.</p>
+<p>Just to underline how problematic joins can become if we don’t take care, here we join the condition occurrence table and the drug exposure table both of which have multiple records per person. Remember this is just with our small synthetic data, so when working with real patient data which is oftentimes much, much larger this would be extremely problematic (and would unlikely be needed to answer any research question). In other words, don’t try this at home!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   SQL [1 x 1]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+      n
+  &lt;dbl&gt;
+1  9967</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>drug_exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   SQL [1 x 1]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+       n
+   &lt;dbl&gt;
+1 337509</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(person_id, condition_start_date) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>drug_exposure <span class="sc">%&gt;%</span> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(person_id, drug_exposure_start_date), </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="st">"person_id"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   SQL [1 x 1]
+# Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\Rtmpaw4mjt\file2184120f6dba.duckdb]
+       n
+   &lt;dbl&gt;
+1 410683</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="large-scale-characterisation" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="large-scale-characterisation"><span class="header-section-number">4.5</span> Large scale characterisation</h2>
+<p>TO ADD</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./ch_3_exploring_the_cdm.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Exploring the CDM</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./ch_5_creating_cohorts.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

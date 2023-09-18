@@ -9,15 +9,14 @@ book:
   author: "Edward Burn, Adam Black, Berta Raventós, Yuchen Guo, Mike Du, Kim López Güell, Martí Català Sabaté"
   date: today
   chapters:
-    - index.qmd
-    - ch_1_getting_started.qmd
-    - ch_2_cdm_reference.qmd
-    - ch_3_exploring_the_cdm.qmd
-    - ch_4_building_a_cohort.qmd
-    - ch_5_describing_a_cohort.qmd
-    - ch_6_sampling_the_cdm.qmd
-    - ch_7_cdm_locations.qmd
-    - references.qmd
+  - index.qmd
+  - ch_1_getting_started.qmd
+  - ch_2_cdm_reference.qmd
+  - ch_3_exploring_the_cdm.qmd
+  - ch_4_adding_features.qmd
+  - ch_5_creating_cohorts.qmd
+  - ch_6_working_with_cohorts.qmd
+  - references.qmd
 
 bibliography: references.bib
 
