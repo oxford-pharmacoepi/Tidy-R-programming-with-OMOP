@@ -226,7 +226,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "An introduction to tidy R programming with the OMOP common data model",
+    "title": "Tidy R programming with the OMOP common data model",
     "section": "",
     "text": "We’ve written this book for anyone interested in a working with databases mapped to the OMOP Common Data Model (CDM) in a tidyverse inspired approach. That is, human centered, consistent, composable, and inclusive (see https://design.tidyverse.org/unifying.html for more details on these principles).\nNew to the OMOP CDM? We’d recommend you pare this book with The Book of OHDSI\nNew to R? We recommend you compliment the book with R for data science\n\n\n\nTO ADD\n\n\n\n This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.\n\n\n\nThe source code for the book can be found at this Github repository"
   }
