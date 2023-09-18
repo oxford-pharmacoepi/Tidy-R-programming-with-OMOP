@@ -1,4 +1,4 @@
-# R programming with databases: applications with the OMOP CDM
+# Tidy R programming with the OMOP common data model
 
 ## 📕 Read the book
 <https://dpa-pde-oxford.quarto.pub/an-introduction-to-tidy-r-programming-with-the-omop-common-data-model/>
