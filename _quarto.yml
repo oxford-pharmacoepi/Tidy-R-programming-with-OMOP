@@ -16,6 +16,7 @@ book:
   - ch_4_adding_features.qmd
   - ch_5_creating_cohorts.qmd
   - ch_6_working_with_cohorts.qmd
+  - ch_7_summarising_cohorts.qmd
   - references.qmd
 
 bibliography: references.bib

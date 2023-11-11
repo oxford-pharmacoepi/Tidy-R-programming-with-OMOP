@@ -77,7 +77,7 @@ head(penguins_db, 5)
 The magic here is provided by the `dbplyr` which takes the R code and converts it into SQL, which in this case looks like
 
 ```{r}
-head(penguins_db, 1) %>% 
+head(penguins_db, 5) %>% 
   show_query()
 ```
 
@@ -122,6 +122,7 @@ penguins_db %>%
   show_query()
 ```
 
+::: {.callout-tip collapse="true"}
 ## Different SQL for different database management systems
 
 One important benefit of using this approach is that the SQL generated will be specific to that of the database management system in use.
@@ -179,6 +180,7 @@ penguins %>%
   ) %>%
   show_query()
 ```
+:::
 
 ## Example analysis
 
@@ -254,7 +256,11 @@ penguins %>%
   theme(legend.position = "none")
 ```
 
-As well as having an example of working with data in database from R, you also have an example of [Simpson´s paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox)! And now we've reached the end of this example, we can close our connection to the database.
+As well as having an example of working with data in database from R, you also have an example of [Simpson´s paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox)!
+
+## Disconnecting from the database
+
+And now we've reached the end of this example, we can close our connection to the database.
 
 ```{r}
 dbDisconnect(db)

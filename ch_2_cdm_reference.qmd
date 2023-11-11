@@ -2,7 +2,7 @@
 
 ## Connecting to a database from R using DBI
 
-Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. As an example, lets say we want to work with a local duckdb from R. In this case the we can use the duckdb R package as the driver, connecting to a database with the OMOP CDM for a synthetic population of 200,000 people.
+Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. As an example, lets say we want to work with an in-process [duckdb](https://duckdb.org/) database from R. In this case the we can use the duckdb R package as the driver, connecting to a database with the OMOP CDM for a synthetic population of 200,000 people.
 
 ```{r, message=FALSE}
 library(DBI)
@@ -27,7 +27,7 @@ db <- DBI::dbConnect(RPostgres::Postgres(),
 
 ## Creating a reference to the OMOP common data model
 
-As seen in the previous chapter, once a connection to the database has been created we could then create references to the various tables in the database and build queries using in a familiar dplyr style. However, as we the structure of the OMOP CDM is already known, we can avoid the overhead of creating individual references to the OMOP CDM tables by using the `CDMConnector` package. `CDMConnector` will do the work for us and quickly create a joint reference for all the tables in the OMOP CDM.
+As seen in the previous chapter, once a connection to the database has been created we could then create references to the various tables in the database and build queries using in a familiar dplyr style. However, as the structure of the OMOP CDM is already known, we can avoid the overhead of creating individual references to the OMOP CDM tables by using the `CDMConnector` package. `CDMConnector` will do the work for us and quickly create a joint reference for all OMOP CDM database tables.
 
 If you don't already have it installed, the first step would be to install `CDMConnector` from CRAN.
 
@@ -84,7 +84,9 @@ cdm <- cdm_from_con(db,
 
 ::: {.callout-tip collapse="true"}
 ## Setting a write prefix
+
 We can set a prefix that to use when permanent tables are created the write schema. This can be useful when we're sharing our write schema with others and want to avoid table name conflicts.
+
 ```{r, echo = TRUE, eval = FALSE}
 cdm <- cdm_from_con(db,
   cdm_schema = "main",
@@ -93,7 +95,8 @@ cdm <- cdm_from_con(db,
 :::
 
 ## CDM name
-Our cdm reference will be associated with a name. By default this name will be taken from the cdm source name field from the cdm source table. We can though set this to a different name when creating our cdm reference. This cdm name attribute of our reference is particularly useful in the context of network studies to keep track of which results are associated with which database. 
+
+Our cdm reference will be associated with a name. By default this name will be taken from the cdm source name field from the cdm source table. We can though set this to a different name when creating our cdm reference. This cdm name attribute of our reference is particularly useful in the context of network studies to keep track of which results are associated with which database.
 
 ```{r, echo = TRUE}
 cdm <- cdm_from_con(db,
@@ -133,6 +136,7 @@ cdmDisconnect(cdm)
 ```
 
 This is equivalent to closing the connection directly like we saw in the previous chapter.
+
 ```{r, eval=FALSE}
 dbDisconnect(attr(cdm, "dbcon"))
 ```

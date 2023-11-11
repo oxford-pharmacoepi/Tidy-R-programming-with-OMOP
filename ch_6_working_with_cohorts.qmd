@@ -7,6 +7,7 @@ PatientProfiles::addCohortIntersect()
 ## Intersection between two cohorts
 
 ## Set up
+
 ```{r, warning=FALSE, message=FALSE}
 library(CDMConnector)
 library(dplyr)
@@ -39,8 +40,8 @@ cdm <- cdm %>%
                             overwrite = TRUE)
 ```
 
-
 ### Flag
+
 ```{r, warning=FALSE, message=FALSE}
 cdm$gi_bleed <- cdm$gi_bleed %>% 
   addCohortIntersectFlag(targetCohortTable = "acetaminophen",
@@ -53,8 +54,6 @@ cdm$gi_bleed %>%
   collect()
   
 ```
-
-
 
 ### Count
 

@@ -1,0 +1,9 @@
+# Summarising cohorts
+
+## Summarising patient demographics
+PatientProfiles::summariseCharacteristics .....
+
+## Large scale characterisation
+PatientProfiles::summariseLargeScaleCharacteristics .....
+
+TO ADD

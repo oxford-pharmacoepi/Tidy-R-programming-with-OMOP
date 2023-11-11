@@ -33,7 +33,7 @@ cdm <- cdm_from_con(
 
 ## Creating a base cohort
 
-We can create a set of base cohorts using a code lists or concept set  
+We can create a set of base cohorts using a code lists or concept set
 
 ### General concept based cohort
 
@@ -174,7 +174,6 @@ cdm$gi_bleed <- cdm$gi_bleed %>%
 ## Creating multiple derived cohorts
 
 TO BE DONE
-
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Say we want a 3 gi bleed cohorts for 3 different age bands

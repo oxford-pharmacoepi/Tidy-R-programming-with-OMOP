@@ -19,11 +19,17 @@ cdm <- cdm_from_con(db,
                     cdm_schema = "main")
 ```
 
-As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (ie a characteristic that does not change as time passes and a person ages) or time-varying. In various datasets, however, characteristics that could conceptually be considered as time-varying are encoded as time-invariant. One example for the latter is that in some cases an individual may be associated with a particular socioeconomic status or nationality that for the purposes of the data is treated as time-invariant.
+As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (ie a characteristic that does not change as time passes and a person ages) or time-varying.[^ch_4_adding_features-1]
+
+[^ch_4_adding_features-1]: In some datasets characteristics that could conceptually be considered as time-varying are encoded as time-invariant. One example for the latter is that in some cases an individual may be associated with a particular socioeconomic status or nationality that for the purposes of the data is treated as time-invariant.
 
 ## Adding specific demographics
 
-The `PatientProfiles` package makes it easy for us to add demographic information to tables in the OMOP CDM. Say we are interested in individuals age and sex at time of diagnosis with COVID-19, we can add these variables to the table like so. Note that because age is time-varying, we have to specify the variable with the date for which we want to calculate age relative to.
+The `PatientProfiles` package makes it easy for us to add demographic information to tables in the OMOP CDM. Like the `CDMConnector` package we've seen previously, the fact that the structure of the OMOP CDM is known allows the `PatientProfiles` package to abstract away some common data manipulations required to do research with patient-level data.[^ch_4_adding_features-2]
+
+[^ch_4_adding_features-2]: Although these manipulations can on the face of it seem quite simple, their implementation across different database platforms with different data granularity (for example whether day of birth has been filled in for all patients or not) presents challenges that the `PatientProfiles` package solves for us.
+
+Let's say we are interested in individuals age and sex at time of diagnosis with COVID-19. We can add these variables to the table like so (noting that because age is time-varying, we have to specify the variable with the date for which we want to calculate age relative to).
 
 ```{r}
 cdm$condition_occurrence <- cdm$condition_occurrence %>% 
@@ -41,16 +47,30 @@ cdm$condition_occurrence %>%
   glimpse()
 ```
 
-And with these now added it is straightforward to calculate mean age at condition start date by sex.
+And with these now added it is straightforward to calculate mean age at condition start date by sex or even plot the distribution of age at diagnosis by sex.
 
 ```{r}
 cdm$condition_occurrence %>%
   summarise(mean_age = mean(age, na.rm=TRUE), .by = "sex")
 ```
 
+```{r}
+cdm$condition_occurrence %>%
+  select("person_id", "age", "sex") %>% 
+  collect()  %>%
+  ggplot(aes(fill = sex)) +
+  facet_grid(sex ~ .) +
+  geom_histogram(aes(age), colour = "black", binwidth = 5) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+```
+
 ## Adding multiple demographics simultaneously
 
-We've now seen individual functions from `PatientProfiles` to add age and sex, and the package has others to add other characteristics like days of prior history in the database (`PatientProfiles::addPriorObservation()`). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time (that is more time efficient that getting them one by one).
+We've now seen individual functions from `PatientProfiles` to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named `PatientProfiles::addPriorObservation()`). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.[^ch_4_adding_features-3]
+
+[^ch_4_adding_features-3]: This function also provides a more time efficient method that getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables and so can be identified simultaneously.
 
 ```{r}
 cdm$drug_exposure <- cdm$drug_exposure %>% 
@@ -105,9 +125,9 @@ cdm$condition_occurrence %>%
 
 ## Adding custom variables
 
-While `PatientProfiles` provides a range of functions that can help add characteristics of interest, you may want to add other, custom features. Obviously we can't cover here all possible custom characteristics you may wish to add. However, custom features do generally come in two forms.
+While `PatientProfiles` provides a range of functions that can help add characteristics of interest, you may also want to add other, custom features . Obviously we can't cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.
 
-The first is where we want to add a new variable derived from other variables in our table. Here we'll be using `dplyr::mutate()`. For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals' observation period start date.
+In the first case where we want to add a new variable derived from other variables in our table we'll typically be using `dplyr::mutate()`. For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals' observation period start date. This is rather straightforward.
 
 ```{r}
 cdm$observation_period <- cdm$observation_period %>% 
@@ -117,7 +137,7 @@ cdm$observation_period %>%
   glimpse()
 ```
 
-The second, normally more complex task, is adding a new variable that involves joining to some other table. This table may well have been created by some intermediate query that we wrote to derive the variable of interest. For example, lets say we want to add each number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). Here we'll also create this as a new table containing just the information we're interested in and compute to a temporary table.
+The second case is normally more complex task where adding a new variable involves joining to some other table. This table may well have been created by some intermediate query that we wrote to derive the variable of interest. For example, lets say we want to add each number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). Here we'll also create this as a new table containing just the information we're interested in and compute to a temporary table.
 
 ```{r}
 condition_summary <- cdm$person %>% 
@@ -135,12 +155,26 @@ condition_summary %>%
   glimpse()
 ```
 
+We can see what goes on behind the scenes by viewing the associated SQL.
+```{r}
+cdm$person %>% 
+  left_join(cdm$condition_occurrence %>% 
+  group_by(person_id) %>% 
+  count(name = "condition_occurrence_records"),
+  by="person_id") %>% 
+  select("person_id", "condition_occurrence_records") %>% 
+  mutate(condition_occurrence_records = if_else(
+    is.na(condition_occurrence_records), 
+    0, condition_occurrence_records)) %>% 
+  show_query
+```
+
 ::: {.callout-tip collapse="true"}
 ## Taking care with joins
 
-When adding variables through joins we need to pay particular attention to the dimensions of the resulting table. While sometimes we may want to have additional rows added as well as new columns, this is often not desired. If we, for example, have a table with one row per person then a left join to a table with multiple rows per person will result in a table with f we, for example, have a table with one row per person then a left join to a table with multiple rows per person (unless those people with more than record are only in the second table).
+When adding variables through joins we need to pay particular attention to the dimensions of the resulting table. While sometimes we may want to have additional rows added as well as new columns, this is often not desired. If we, for example, have a table with one row per person then a left join to a table with multiple rows per person can then result in a table with multiple rows per person.
 
-Examples where to be careful include when joining to the observation period table, as individuals can have multiple observation periods, and when working with cohorts (Which are the focus of the next chapter), as individuals can also enter the same study cohort multiple times.
+Examples where to be careful include when joining to the observation period table, as individuals can have multiple observation periods, and when working with cohorts (Which are the focus of the next chapter) as individuals can also enter the same study cohort multiple times.
 
 Just to underline how problematic joins can become if we don't take care, here we join the condition occurrence table and the drug exposure table both of which have multiple records per person. Remember this is just with our small synthetic data, so when working with real patient data which is oftentimes much, much larger this would be extremely problematic (and would unlikely be needed to answer any research question). In other words, don't try this at home!
 
@@ -159,6 +193,4 @@ cdm$condition_occurrence %>%
 ```
 :::
 
-## Large scale characterisation
 
-TO ADD

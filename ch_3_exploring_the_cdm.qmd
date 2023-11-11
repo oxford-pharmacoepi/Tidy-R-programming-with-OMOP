@@ -14,8 +14,7 @@ library(ggplot2)
 ```{r}
 db<-dbConnect(duckdb::duckdb(), 
               dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
-cdm <- cdm_from_con(db, 
-                    cdm_schema = "main")
+cdm <- cdm_from_con(db, cdm_schema = "main")
 ```
 
 ## Counting people
@@ -98,7 +97,7 @@ cdm$person %>%
   show_query()
 ```
 
-In this case the SQL is not much more complicated than before. However, you can imagine that without forcing computation, the SQL associated with a series of data manipulations could quickly become unmanageable. So although we don't want to overuse computation of intermediate queries, it is often a necessity when writing analysis scripts.
+In this case the SQL is not much more complicated than before. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Although we don't want to overuse computation of intermediate queries, it is often a necessity when writing study analysis scripts.
 
 An advantage of computing a query, is that we can then use the result for multiple subsequent queries. For example, say we want a count of condition occurrence and drug exposure records for those born before 1970. We could get these counts independently:
 
@@ -138,7 +137,7 @@ cdm$person_pre_1970 %>%
   tally()
 ```
 
-Here we've been using `computeQuery()` from the `CDMConnector` package. This function is an extension of the `compute()` function from `dplyr`, with `computeQuery()` providing greater consistency across its supported database management systems.
+Here we've been using `computeQuery()` from the `CDMConnector` package. This function is an extension of the `compute()` function from `dplyr`, with `computeQuery()` providing greater consistency across the database management systems supported by the `CDMConnector` package.
 
 ```{r, echo = TRUE}
 cdm$person %>% 
@@ -149,7 +148,7 @@ cdm$person %>%
 
 ## Counting records
 
-What's the number of condition occurrence records per person in the database? We can find out like so
+What's the number of condition occurrence records per person in the database? We can find this out like so
 
 ```{r, echo = TRUE}
 cdm$person %>% 
