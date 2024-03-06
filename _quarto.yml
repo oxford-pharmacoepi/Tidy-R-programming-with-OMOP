@@ -17,6 +17,9 @@ book:
   - ch_5_creating_cohorts.qmd
   - ch_6_working_with_cohorts.qmd
   - ch_7_summarising_cohorts.qmd
+  - ch_8_comparing_cohorts.qmd
+  - ch_9_organising_study_code.qmd
+  - ch_10_efficient_study_code.qmd
   - references.qmd
 
 bibliography: references.bib

@@ -16,7 +16,8 @@ library(ggplot2)
 db<-dbConnect(duckdb::duckdb(),
               dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
 cdm <- cdm_from_con(db,
-                    cdm_schema = "main")
+                    cdm_schema = "main", 
+                    write_schema = "main")
 ```
 
 As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (ie a characteristic that does not change as time passes and a person ages) or time-varying.[^ch_4_adding_features-1]
@@ -51,7 +52,8 @@ And with these now added it is straightforward to calculate mean age at conditio
 
 ```{r}
 cdm$condition_occurrence %>%
-  summarise(mean_age = mean(age, na.rm=TRUE), .by = "sex")
+  summarise(mean_age = mean(age, na.rm=TRUE), .by = "sex") %>% 
+  collect()
 ```
 
 ```{r}
@@ -87,7 +89,8 @@ cdm$drug_exposure %>%
   summarise(mean_age = mean(age, na.rm=TRUE),
             mean_prior_observation = mean(prior_observation, na.rm=TRUE),
             mean_future_observation = mean(future_observation, na.rm=TRUE),
-            .by = "sex")
+            .by = "sex") %>% 
+  collect()
 ```
 
 ## Creating categories
@@ -118,7 +121,7 @@ cdm$condition_occurrence %>%
   addCategories(
     variable = "prior_observation",
     categories = list("prior_observation_group" = list(
-      c(0, 364), c(365, 999999) # Inf not currently supported as an upper bound 
+      c(0, 364), c(365, Inf)  
     ))
   )
 ```
@@ -149,7 +152,7 @@ condition_summary <- cdm$person %>%
   mutate(condition_occurrence_records = if_else(
     is.na(condition_occurrence_records), 
     0, condition_occurrence_records)) %>% 
-  computeQuery()
+  compute()
 
 condition_summary %>% 
   glimpse()
@@ -166,7 +169,7 @@ cdm$person %>%
   mutate(condition_occurrence_records = if_else(
     is.na(condition_occurrence_records), 
     0, condition_occurrence_records)) %>% 
-  show_query
+  show_query()
 ```
 
 ::: {.callout-tip collapse="true"}
@@ -174,7 +177,7 @@ cdm$person %>%
 
 When adding variables through joins we need to pay particular attention to the dimensions of the resulting table. While sometimes we may want to have additional rows added as well as new columns, this is often not desired. If we, for example, have a table with one row per person then a left join to a table with multiple rows per person can then result in a table with multiple rows per person.
 
-Examples where to be careful include when joining to the observation period table, as individuals can have multiple observation periods, and when working with cohorts (Which are the focus of the next chapter) as individuals can also enter the same study cohort multiple times.
+Examples where to be careful include when joining to the observation period table, as individuals can have multiple observation periods, and when working with cohorts (which are the focus of the next chapter) as individuals can also enter the same study cohort multiple times.
 
 Just to underline how problematic joins can become if we don't take care, here we join the condition occurrence table and the drug exposure table both of which have multiple records per person. Remember this is just with our small synthetic data, so when working with real patient data which is oftentimes much, much larger this would be extremely problematic (and would unlikely be needed to answer any research question). In other words, don't try this at home!
 

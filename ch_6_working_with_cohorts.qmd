@@ -35,7 +35,7 @@ cdm <- cdm %>%
                                                               40162522,
                                                               19133768)), 
                               limit = "all", 
-                            end = "event_end_date",
+                            # end = "event_end_date",
                             name = "acetaminophen",
                             overwrite = TRUE)
 ```

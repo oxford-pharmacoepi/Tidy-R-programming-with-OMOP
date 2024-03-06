@@ -1,0 +1,20 @@
+{
+  "hash": "0b9b8186c0c73a0c137166edf2ea8345",
+  "result": {
+    "markdown": "## Working with cohorts\n\n## Cohort intersections\n\nPatientProfiles::addCohortIntersect()\n\n## Intersection between two cohorts\n\n## Set up\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(CDMConnector)\nlibrary(dplyr)\nlibrary(PatientProfiles)\n        \ndb <- DBI::dbConnect(duckdb::duckdb(), eunomia_dir())\n\ncdm <- cdm_from_con(\n  con = db,\n  cdm_schema = \"main\",\n  write_schema = \"main\"\n)\n\ncdm <- cdm %>% \n  generate_concept_cohort_set(concept_set = list(\"gi_bleed\" = 192671), \n                            limit = \"all\", \n                            end = 30,\n                            name = \"gi_bleed\",\n                            overwrite = TRUE) %>% \n  generate_concept_cohort_set(concept_set = list(\"acetaminophen\" = c(1125315,\n                                                              1127078,\n                                                              1127433,\n                                                              40229134,\n                                                              40231925,\n                                                              40162522,\n                                                              19133768)), \n                              limit = \"all\", \n                            # end = \"event_end_date\",\n                            name = \"acetaminophen\",\n                            overwrite = TRUE)\n```\n:::\n\n\n\n### Flag\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\ncdm$gi_bleed <- cdm$gi_bleed %>% \n  addCohortIntersectFlag(targetCohortTable = \"acetaminophen\",\n                         window = list(c(-Inf, -1), c(0,0), c(1, Inf)))\n\ncdm$gi_bleed %>% \n  summarise(acetaminophen_prior = sum(acetaminophen_minf_to_m1), \n            acetaminophen_index = sum(acetaminophen_0_to_0),\n            acetaminophen_post = sum(acetaminophen_1_to_inf)) %>% \n  collect()\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n# A tibble: 1 x 3\n  acetaminophen_prior acetaminophen_index acetaminophen_post\n                <dbl>               <dbl>              <dbl>\n1                 467                 467                476\n```\n:::\n:::\n\n\n\n### Count\n\n### Date and times\n\n## Intersection between a cohort and tables with patient data\n",
+    "supporting": [
+      "ch_6_working_with_cohorts_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {
+      "knitr": [
+        "{\"type\":\"list\",\"attributes\":{},\"value\":[]}"
+      ]
+    },
+    "preserve": null,
+    "postProcess": false
+  }
+}

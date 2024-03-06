@@ -65,9 +65,9 @@ cdm <- generateDenominatorCohortSet(cdm = cdm,
 Meanwhile, if we are interested in defining a drug cohort we can use the We can use `DrugUtilisation` package, where we have additional parameters related to defining cohorts for drug utilisation studies. Below, for example, we create a cohort of acetaminophen users where we combine any combine any two exposures with the less than 7 days between them into the same cohort record.
 
 ```{r, warning=FALSE, message=FALSE}
-cdm <- generateDrugUtilisationCohortSet(cdm, 
+cdm <- generateDrugUtilisationCohortSet(cdm = cdm,
                                  name = "acetaminophen", 
-                                 conceptSetList = list("acetaminophen" = 
+                                 conceptSet = list("acetaminophen" = 
                                                          c(1125315,
                                                               1127078,
                                                               1127433,
@@ -119,7 +119,7 @@ These decisions for cohort logic will often reflect the way the cohort is being 
 The set of cohorts we create will be associated with various attributes. The cohort set attribute contains information on the cohorts that we've generated.
 
 ```{r, warning=FALSE, message=FALSE}
-cohortSet(cdm$gi_bleed) %>% 
+settings(cdm$gi_bleed) %>% 
   glimpse()
 ```
 
@@ -133,7 +133,7 @@ cohortCount(cdm$gi_bleed) %>%
 And we can also see attrition related to the cohort. We'll see below how any addition inclusion criteria that we apply can be recorded using this attrition attribute.
 
 ```{r, warning=FALSE, message=FALSE}
-cohortAttrition(cdm$gi_bleed) %>% 
+attrition(cdm$gi_bleed) %>% 
   glimpse()
 ```
 
@@ -144,17 +144,19 @@ cohortAttrition(cdm$gi_bleed) %>%
 Say for our study we want to include people with a GI bleed who were aged 40 or over at the time. We can use the add variables with these characteristics as seen in chapter 4 and then filter accordingly. The function `CDMConnector::record_cohort_attrition()` will then update our cohort attributes as we can see below.
 
 ```{r, warning=FALSE, message=FALSE}
-cdm$gi_bleed <- cdm$gi_bleed %>% 
-  addDemographics(indexDate = "cohort_start_date") %>% 
-  filter(age >= 40) %>% 
-  record_cohort_attrition("Age 18 or older") %>% 
-  filter(sex == "Male") %>% 
+cdm$gi_bleed <- cdm$gi_bleed %>%
+  addDemographics(indexDate = "cohort_start_date") %>%
+  filter(age >= 40) %>%
+  compute(temporary = FALSE, name = "gi_bleed") %>% 
+  record_cohort_attrition(reason = "Age 18 or older") %>%
+  filter(sex == "Male") %>%
+  compute(temporary = FALSE, name = "gi_bleed") %>% 
   record_cohort_attrition("Male")
 ```
 
 ```{r, warning=FALSE, message=FALSE}
 cohortCount(cdm$gi_bleed)
-cohortAttrition(cdm$gi_bleed)
+attrition(cdm$gi_bleed)
 ```
 
 ### Applying cohort-based inclusion criteria
@@ -168,39 +170,45 @@ cdm$gi_bleed <- cdm$gi_bleed %>%
                          window =c(-Inf, -1), 
                          nameStyle = "acetaminophen_excl") %>% 
   filter(acetaminophen_excl == 1) %>% 
+  compute(temporary = FALSE, name = "gi_bleed") %>% 
   record_cohort_attrition("Prior use of acetaminophen")
+```
+
+```{r, warning=FALSE, message=FALSE}
+cohortCount(cdm$gi_bleed)
+attrition(cdm$gi_bleed)
 ```
 
 ## Creating multiple derived cohorts
 
 TO BE DONE
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE, echo=FALSE, eval = FALSE}
 # Say we want a 3 gi bleed cohorts for 3 different age bands
-
-cdm <- generate_concept_cohort_set(cdm, 
-                            concept_set = list("gi_bleed" = 192671), 
-                            limit = "all", 
-                            end = 30,
-                            name = "gi_bleed",
-                            overwrite = TRUE)
-cdm$gi_bleed <- cdm$gi_bleed %>% 
-  addDemographics(indexDate = "cohort_start_date")
-
-# Not currently possible but would like something like the below to work
-# where union also takes care of updating the ids of cohorts 
-# so we don't have any duplicates
-
-
-# cdm$gi_bleed_strata <- union_all(
-# cdm$gi_bleed %>% 
-#   filter(age >= 40) %>% 
-#   record_cohort_attrition("Age 18 or older"), 
-# cdm$gi_bleed %>% 
-#   filter(age <= 40) %>% 
-#   record_cohort_attrition("Age 18 or older"))
 # 
-# cohortCount(cdm$gi_bleed_strata) 
+# cdm <- generate_concept_cohort_set(cdm, 
+#                             concept_set = list("gi_bleed" = 192671), 
+#                             limit = "all", 
+#                             end = 30,
+#                             name = "gi_bleed",
+#                             overwrite = TRUE)
+# cdm$gi_bleed <- cdm$gi_bleed %>% 
+#   addDemographics(indexDate = "cohort_start_date")
+# 
+# # Not currently possible but would like something like the below to work
+# # where union also takes care of updating the ids of cohorts 
+# # so we don't have any duplicates
+# 
+# 
+# # cdm$gi_bleed_strata <- union_all(
+# # cdm$gi_bleed %>% 
+# #   filter(age >= 40) %>% 
+# #   record_cohort_attrition("Age 18 or older"), 
+# # cdm$gi_bleed %>% 
+# #   filter(age <= 40) %>% 
+# #   record_cohort_attrition("Age 18 or older"))
+# # 
+# # cohortCount(cdm$gi_bleed_strata) 
 
 
 

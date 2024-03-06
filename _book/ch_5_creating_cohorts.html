@@ -193,6 +193,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ch_8_comparing_cohorts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_9_organising_study_code.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Organising study code</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_10_efficient_study_code.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Efficient study code</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -283,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 4
-Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpUdub4J\file389037f3214c.duckdb]
+Database: DuckDB 0.8.1 [eburn@Windows 10 x64:R 4.2.1/C:\Users\eburn\AppData\Local\Temp\RtmpO4Gzu5\file59d06ae44905.duckdb]
 $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
 $ subject_id           &lt;int&gt; 260, 549, 787, 795, 962, 1076, 1099, 1112, 1158, …
 $ cohort_start_date    &lt;date&gt; 2010-04-04, 1987-12-28, 2017-04-02, 1982-09-03, …
@@ -305,9 +320,9 @@ $ cohort_end_date      &lt;date&gt; 2010-05-04, 1988-01-27, 2017-05-02, 1982-10-
 <h3 data-number="5.3.3" class="anchored" data-anchor-id="drug-specific-cohorts"><span class="header-section-number">5.3.3</span> Drug-specific cohorts</h3>
 <p>Meanwhile, if we are interested in defining a drug cohort we can use the We can use <code>DrugUtilisation</code> package, where we have additional parameters related to defining cohorts for drug utilisation studies. Below, for example, we create a cohort of acetaminophen users where we combine any combine any two exposures with the less than 7 days between them into the same cohort record.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">generateDrugUtilisationCohortSet</span>(cdm, </span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">generateDrugUtilisationCohortSet</span>(<span class="at">cdm =</span> cdm,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">name =</span> <span class="st">"acetaminophen"</span>, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">conceptSetList =</span> <span class="fu">list</span>(<span class="st">"acetaminophen"</span> <span class="ot">=</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">conceptSet =</span> <span class="fu">list</span>(<span class="st">"acetaminophen"</span> <span class="ot">=</span> </span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                                         <span class="fu">c</span>(<span class="dv">1125315</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                                                              <span class="dv">1127078</span>,</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                                              <span class="dv">1127433</span>,</span>
@@ -342,13 +357,13 @@ condition: Getting concepts to include
 condition domain: Adding descendants
 ✔ 1 candidate concept identified
 
-Time taken: 0 minutes and 1 seconds</code></pre>
+Time taken: 0 minutes and 0 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 6
-  concept_id concept_name    domain_id concept_class_id vocabulary_id found_from
-       &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt;     
-1     192671 Gastrointestin… condition Clinical Finding SNOMED        From init…</code></pre>
+  concept_id found_from    concept_name domain_id vocabulary_id standard_concept
+       &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
+1     192671 From initial… Gastrointes… Condition SNOMED        standard        </code></pre>
 </div>
 </div>
 <p>We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of it’s descendants.</p>
@@ -390,7 +405,7 @@ Applying the appropriate logic when creating a cohort
 <h2 data-number="5.4" class="anchored" data-anchor-id="cohort-attributes"><span class="header-section-number">5.4</span> Cohort attributes</h2>
 <p>The set of cohorts we create will be associated with various attributes. The cohort set attribute contains information on the cohorts that we’ve generated.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortSet</span>(cdm<span class="sc">$</span>gi_bleed) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>gi_bleed) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1
@@ -411,24 +426,24 @@ $ end                  &lt;dbl&gt; 30</code></pre>
 <pre><code>Rows: 1
 Columns: 3
 $ cohort_definition_id &lt;int&gt; 1
-$ number_records       &lt;dbl&gt; 479
-$ number_subjects      &lt;dbl&gt; 479</code></pre>
+$ number_records       &lt;int&gt; 479
+$ number_subjects      &lt;int&gt; 479</code></pre>
 </div>
 </div>
 <p>And we can also see attrition related to the cohort. We’ll see below how any addition inclusion criteria that we apply can be recorded using this attrition attribute.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortAttrition</span>(cdm<span class="sc">$</span>gi_bleed) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>gi_bleed) <span class="sc">%&gt;%</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1
 Columns: 7
 $ cohort_definition_id &lt;int&gt; 1
-$ number_records       &lt;dbl&gt; 479
-$ number_subjects      &lt;dbl&gt; 479
-$ reason_id            &lt;dbl&gt; 1
-$ reason               &lt;chr&gt; "Qualifying initial records"
-$ excluded_records     &lt;dbl&gt; 0
-$ excluded_subjects    &lt;dbl&gt; 0</code></pre>
+$ number_records       &lt;int&gt; 479
+$ number_subjects      &lt;int&gt; 479
+$ reason_id            &lt;int&gt; 1
+$ reason               &lt;chr&gt; "Initial qualifying events"
+$ excluded_records     &lt;int&gt; 0
+$ excluded_subjects    &lt;int&gt; 0</code></pre>
 </div>
 </div>
 </section>
@@ -438,30 +453,32 @@ $ excluded_subjects    &lt;dbl&gt; 0</code></pre>
 <h3 data-number="5.5.1" class="anchored" data-anchor-id="applying-demographic-inclusion-criteria"><span class="header-section-number">5.5.1</span> Applying demographic inclusion criteria</h3>
 <p>Say for our study we want to include people with a GI bleed who were aged 40 or over at the time. We can use the add variables with these characteristics as seen in chapter 4 and then filter accordingly. The function <code>CDMConnector::record_cohort_attrition()</code> will then update our cohort attributes as we can see below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addDemographics</span>(<span class="at">indexDate =</span> <span class="st">"cohort_start_date"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">40</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">record_cohort_attrition</span>(<span class="st">"Age 18 or older"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"Male"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">record_cohort_attrition</span>(<span class="st">"Male"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addDemographics</span>(<span class="at">indexDate =</span> <span class="st">"cohort_start_date"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">40</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">temporary =</span> <span class="cn">FALSE</span>, <span class="at">name =</span> <span class="st">"gi_bleed"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">record_cohort_attrition</span>(<span class="at">reason =</span> <span class="st">"Age 18 or older"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"Male"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">temporary =</span> <span class="cn">FALSE</span>, <span class="at">name =</span> <span class="st">"gi_bleed"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">record_cohort_attrition</span>(<span class="st">"Male"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>gi_bleed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   cohort_definition_id number_records number_subjects
-                 &lt;int&gt;          &lt;dbl&gt;           &lt;dbl&gt;
+                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;
 1                    1             94              94</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortAttrition</span>(cdm<span class="sc">$</span>gi_bleed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>gi_bleed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 7
   cohort_definition_id number_records number_subjects reason_id reason          
-                 &lt;int&gt;          &lt;dbl&gt;           &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;           
-1                    1            479             479         1 Qualifying init…
+                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;           
+1                    1            479             479         1 Initial qualify…
 2                    1            183             183         2 Age 18 or older 
 3                    1             94              94         3 Male            
-# ℹ 2 more variables: excluded_records &lt;dbl&gt;, excluded_subjects &lt;dbl&gt;</code></pre>
+# ℹ 2 more variables: excluded_records &lt;int&gt;, excluded_subjects &lt;int&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -475,7 +492,28 @@ $ excluded_subjects    &lt;dbl&gt; 0</code></pre>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">window =</span><span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), </span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">nameStyle =</span> <span class="st">"acetaminophen_excl"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(acetaminophen_excl <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">record_cohort_attrition</span>(<span class="st">"Prior use of acetaminophen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">temporary =</span> <span class="cn">FALSE</span>, <span class="at">name =</span> <span class="st">"gi_bleed"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">record_cohort_attrition</span>(<span class="st">"Prior use of acetaminophen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>gi_bleed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  cohort_definition_id number_records number_subjects
+                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;
+1                    1             93              93</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>gi_bleed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 7
+  cohort_definition_id number_records number_subjects reason_id reason          
+                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;           
+1                    1            479             479         1 Initial qualify…
+2                    1            183             183         2 Age 18 or older 
+3                    1             94              94         3 Male            
+4                    1             93              93         4 Prior use of ac…
+# ℹ 2 more variables: excluded_records &lt;int&gt;, excluded_subjects &lt;int&gt;</code></pre>
+</div>
 </div>
 </section>
 </section>

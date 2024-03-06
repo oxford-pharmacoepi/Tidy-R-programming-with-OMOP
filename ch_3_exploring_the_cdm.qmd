@@ -14,7 +14,7 @@ library(ggplot2)
 ```{r}
 db<-dbConnect(duckdb::duckdb(), 
               dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
-cdm <- cdm_from_con(db, cdm_schema = "main")
+cdm <- cdm_from_con(db, cdm_schema = "main", write_schema = "main")
 ```
 
 ## Counting people
@@ -45,7 +45,7 @@ The observation period table contains records indicating spans of time over whic
 first_observation_period <- cdm$observation_period %>%
     group_by(person_id) %>% 
     filter(row_number() == 1) %>% 
-    computeQuery()
+    compute()
 
 cdm$person %>% 
   left_join(first_observation_period,
@@ -62,7 +62,7 @@ cdm$person %>%
 ::: {.callout-tip collapse="true"}
 ## Computing intermediate queries
 
-The computeQuery() function will force the computation of a query. In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.
+The compute() function will force the computation of a query. In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.
 
 ```{r, echo = TRUE}
 cdm$observation_period %>%
@@ -122,7 +122,7 @@ But we could have instead first subsetted the person table and then used the res
 ```{r, echo = TRUE}
 cdm$person_pre_1970 <- cdm$person %>% 
   filter(year_of_birth < "1970") %>% 
-  computeQuery()
+  compute()
 
 cdm$person_pre_1970 %>% 
   select("person_id") %>% 
@@ -137,13 +137,6 @@ cdm$person_pre_1970 %>%
   tally()
 ```
 
-Here we've been using `computeQuery()` from the `CDMConnector` package. This function is an extension of the `compute()` function from `dplyr`, with `computeQuery()` providing greater consistency across the database management systems supported by the `CDMConnector` package.
-
-```{r, echo = TRUE}
-cdm$person %>% 
-  tally() %>% 
-  computeQuery()
-```
 :::
 
 ## Counting records
@@ -211,7 +204,7 @@ More information on the vocabulary tables (as well as other tables in the OMOP C
 
 ## Working with dates
 
-Dates are supported somewhat inconsistently by dbplyr but, as with `computeQuery()`, CDMConnector also provides some date functions that are tested to work across supported databases. We can use the `datediff()` function for example to calculate the difference between two dates. We can use this below to get the number of years observation periods last for.
+Dates are supported somewhat inconsistently by dbplyr. CDMConnector therefore provides some date functions that are tested to work across supported databases. We can use the `datediff()` function for example to calculate the difference between two dates. We can use this below to get the number of years observation periods last for.
 
 ```{r, echo = TRUE}
 cdm$observation_period %>%
