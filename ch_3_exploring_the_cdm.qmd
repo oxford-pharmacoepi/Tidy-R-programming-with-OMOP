@@ -1,6 +1,6 @@
 ## Exploring the CDM
 
-For this chapter, lets continue using our example COVID-19 dataset.
+For this chapter, lets use an example COVID-19 dataset.
 
 ```{r, warning=FALSE, message=FALSE}
 library(DBI)
@@ -136,7 +136,6 @@ cdm$person_pre_1970 %>%
             by="person_id") %>% 
   tally()
 ```
-
 :::
 
 ## Counting records

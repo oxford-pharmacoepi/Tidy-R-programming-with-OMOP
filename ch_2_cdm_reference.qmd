@@ -52,7 +52,7 @@ downloadEunomiaData(
 )
 ```
 
-After connecting to the database containing the OMOP CDM, we use `CDMConnector` to create our cdm reference. 
+After connecting to the database containing the OMOP CDM, we use `CDMConnector` to create our cdm reference.
 
 ```{r, echo = TRUE}
 db <- dbConnect(duckdb::duckdb(), 

@@ -16,11 +16,10 @@ The set of people we identify are cohorts, and the OMOP CDM has a specific struc
 
 ```{r, warning=FALSE, message=FALSE}
 library(CDMConnector)
-library(dplyr)
-library(PatientProfiles)
 library(CodelistGenerator)
-library(IncidencePrevalence)
-library(DrugUtilisation)
+library(CohortConstructor)
+library(CohortCharacteristics)
+library(dplyr)
         
 db <- DBI::dbConnect(duckdb::duckdb(), eunomia_dir())
 
@@ -38,44 +37,21 @@ We can create a set of base cohorts using a code lists or concept set
 ### General concept based cohort
 
 ```{r, warning=FALSE, message=FALSE}
-cdm <- generate_concept_cohort_set(cdm, 
-                            concept_set = list("gi_bleed" = 192671), 
-                            limit = "all", 
-                            end = 30,
-                            name = "gi_bleed",
-                            overwrite = TRUE)
-cdm$gi_bleed %>% 
-  glimpse()
+cdm$gi_bleed <- conceptCohort(cdm = cdm, 
+                     conceptSet = list("gi_bleed" = 192671), 
+                     name = "gi_bleed")
+cdm$gi_bleed
 ```
 
-### Characteristic cohorts
-
-We can use IncidencePrevalence ....
-
-Here for example we'll generate a cohort of people aged between 18 and 50. Individuals will enter the cohort once they are in database and satisfy the age requirement.
+### Demographic cohorts
 
 ```{r, warning=FALSE, message=FALSE}
-cdm <- generateDenominatorCohortSet(cdm = cdm, 
-                             name = "age_cohorts", 
-                             ageGroup = list(c(18, 50)))
-```
-
-### Drug-specific cohorts
-
-Meanwhile, if we are interested in defining a drug cohort we can use the We can use `DrugUtilisation` package, where we have additional parameters related to defining cohorts for drug utilisation studies. Below, for example, we create a cohort of acetaminophen users where we combine any combine any two exposures with the less than 7 days between them into the same cohort record.
-
-```{r, warning=FALSE, message=FALSE}
-cdm <- generateDrugUtilisationCohortSet(cdm = cdm,
-                                 name = "acetaminophen", 
-                                 conceptSet = list("acetaminophen" = 
-                                                         c(1125315,
-                                                              1127078,
-                                                              1127433,
-                                                              40229134,
-                                                              40231925,
-                                                              40162522,
-                                                              19133768)), 
-                                 gapEra = 7)
+cdm$age_cohorts <- demographicsCohort(cdm = cdm, 
+                                      ageRange = list(c(0, 17),
+                                                     c(18, 64),
+                                                     c(65, Inf)), 
+                                      name = "age_cohorts")
+cdm$age_cohorts
 ```
 
 ::: {.callout-tip collapse="true"}
@@ -100,18 +76,6 @@ CodelistGenerator::getDrugIngredientCodes(cdm = cdm,
 ```
 
 Note that the data we're using just has a subset of the full OMOP CDM vocabularies. In practice, these searches would return many more codes. And in the case of the former in particular, clinical expertise would then be required to decide which of the codes were in line with the clinical idea at hand.
-:::
-
-::: {.callout-tip collapse="true"}
-### Applying the appropriate logic when creating a cohort
-
-As well as including appropriate concepts, we also face various other choices when defining our cohort. Decisions are required as to whether to include only the first event or the all events for an individual. We'll also need to make decisions cohort end dates, which could range from the same day as cohort entry to the end of an individual's observation period. For a drug utilisation cohort we then have even more decisions, such whether to combine cohorts with less than some specified days gap between one ending and the next starting.
-
-These decisions for cohort logic will often reflect the way the cohort is being used in answering the study question. Like with including the right concepts, careful consideration will need to be taken when deciding on these parameters.
-
-```{r}
-# To add
-```
 :::
 
 ## Cohort attributes
@@ -139,24 +103,32 @@ attrition(cdm$gi_bleed) %>%
 
 ## Applying inclusion criteria
 
+### Restrict to study period
+
+```{r, warning=FALSE, message=FALSE}
+cdm$gi_bleed <- cdm$gi_bleed %>%
+   requireInDateRange(dateRange = c(as.Date("1990-01-01"), NA))
+```
+
+### Only include first cohort entry per person
+
+```{r, warning=FALSE, message=FALSE}
+cdm$gi_bleed <- cdm$gi_bleed %>% 
+     requireIsFirstEntry() 
+```
+
 ### Applying demographic inclusion criteria
 
 Say for our study we want to include people with a GI bleed who were aged 40 or over at the time. We can use the add variables with these characteristics as seen in chapter 4 and then filter accordingly. The function `CDMConnector::record_cohort_attrition()` will then update our cohort attributes as we can see below.
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$gi_bleed <- cdm$gi_bleed %>%
-  addDemographics(indexDate = "cohort_start_date") %>%
-  filter(age >= 40) %>%
-  compute(temporary = FALSE, name = "gi_bleed") %>% 
-  record_cohort_attrition(reason = "Age 18 or older") %>%
-  filter(sex == "Male") %>%
-  compute(temporary = FALSE, name = "gi_bleed") %>% 
-  record_cohort_attrition("Male")
+   requireDemographics(ageRange = c(18, 64), sex = "Male")
 ```
 
 ```{r, warning=FALSE, message=FALSE}
 cohortCount(cdm$gi_bleed)
-attrition(cdm$gi_bleed)
+settings(cdm$gi_bleed)
 ```
 
 ### Applying cohort-based inclusion criteria
@@ -164,14 +136,27 @@ attrition(cdm$gi_bleed)
 As well as requirements about specific demographics, we may also want to use another cohort for inclusion criteria. Let's say we want to exclude anyone with rheumatoid arthritis diagnosed before their GI bleed. We can first generate this cohort and then apply this additional exclusion criteria like so.
 
 ```{r, warning=FALSE, message=FALSE}
+cdm$acetaminophen <- conceptCohort(
+  cdm = cdm,
+  list("acetaminophen" = c(
+    1125315,
+    1127078,
+    1127433,
+    40229134,
+    40231925,
+    40162522,
+    19133768
+  )), 
+name = "acetaminophen"
+)
+cdm$acetaminophen
+```
+
+```{r, warning=FALSE, message=FALSE}
 cdm$gi_bleed <- cdm$gi_bleed %>% 
-  addCohortIntersectFlag(targetCohortTable = "acetaminophen", 
+  requireCohortIntersect(targetCohortTable = "acetaminophen", 
                          indexDate = "cohort_start_date", 
-                         window =c(-Inf, -1), 
-                         nameStyle = "acetaminophen_excl") %>% 
-  filter(acetaminophen_excl == 1) %>% 
-  compute(temporary = FALSE, name = "gi_bleed") %>% 
-  record_cohort_attrition("Prior use of acetaminophen")
+                         window = c(-Inf, -1)) 
 ```
 
 ```{r, warning=FALSE, message=FALSE}
@@ -179,37 +164,10 @@ cohortCount(cdm$gi_bleed)
 attrition(cdm$gi_bleed)
 ```
 
-## Creating multiple derived cohorts
-
-TO BE DONE
-
-```{r, warning=FALSE, message=FALSE, echo=FALSE, eval = FALSE}
-# Say we want a 3 gi bleed cohorts for 3 different age bands
-# 
-# cdm <- generate_concept_cohort_set(cdm, 
-#                             concept_set = list("gi_bleed" = 192671), 
-#                             limit = "all", 
-#                             end = 30,
-#                             name = "gi_bleed",
-#                             overwrite = TRUE)
-# cdm$gi_bleed <- cdm$gi_bleed %>% 
-#   addDemographics(indexDate = "cohort_start_date")
-# 
-# # Not currently possible but would like something like the below to work
-# # where union also takes care of updating the ids of cohorts 
-# # so we don't have any duplicates
-# 
-# 
-# # cdm$gi_bleed_strata <- union_all(
-# # cdm$gi_bleed %>% 
-# #   filter(age >= 40) %>% 
-# #   record_cohort_attrition("Age 18 or older"), 
-# # cdm$gi_bleed %>% 
-# #   filter(age <= 40) %>% 
-# #   record_cohort_attrition("Age 18 or older"))
-# # 
-# # cohortCount(cdm$gi_bleed_strata) 
-
-
-
+# Visualising cohort attrition
+```{r, warning=FALSE, message=FALSE}
+gi_bleed_attrition <- summariseCohortAttrition(cdm$gi_bleed)
+plotCohortAttrition(gi_bleed_attrition)
 ```
+
+
