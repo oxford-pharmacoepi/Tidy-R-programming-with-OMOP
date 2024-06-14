@@ -203,14 +203,31 @@ More information on the vocabulary tables (as well as other tables in the OMOP C
 
 ## Working with dates
 
-Dates are supported somewhat inconsistently by dbplyr. CDMConnector therefore provides some date functions that are tested to work across supported databases. We can use the `datediff()` function for example to calculate the difference between two dates. We can use this below to get the number of years observation periods last for.
+When working with dates, the best supported functions come from the [clock](https://clock.r-lib.org/) package. In particular, the following three functions can allow us to do a lot of the date manipulations we might be interested in:
+
+-   clock::add_days to add days to a date
+
+-   clock::add_years to add years to a date
+
+-   clock::date_count_between to get the difference between two dates
+
+For example
 
 ```{r, echo = TRUE}
-cdm$observation_period %>%
-  dplyr::mutate(observation_years = 
-                  !!CDMConnector::datediff("observation_period_start_date", 
-                             "observation_period_end_date", 
-                             interval = "year"))  %>% 
+library(clock)
+library(ggplot2)
+
+cdm$observation_period |> 
+  mutate(observation_period_start_plus_30_days = add_days(observation_period_start_date,
+                                                   30L),
+         observation_period_start_date_plus_10_years = add_years(observation_period_start_date,
+                                                   10L)) |> 
+  glimpse()
+  
+cdm$observation_period |> 
+  dplyr::mutate(observation_days = date_count_between("observation_period_start_date", 
+                             "observation_period_end_date", "day"))  |> 
+  dplyr::mutate(observation_years = observation_days/ 365.25) |> 
   collect() %>% 
   ggplot() +
   geom_histogram(aes(observation_years), 
@@ -241,30 +258,28 @@ Although piping queries has little impact on performance when using R with data 
 For example, a single mutate function above would generate the below SQL.
 
 ```{r, echo = TRUE}
-cdm$observation_period %>%
-  mutate(observation_days = !!datediff("observation_period_start_date", 
-                             "observation_period_end_date", 
-                             interval = "day"),
-        observation_years = !!datediff("observation_period_start_date", 
-                             "observation_period_end_date", 
-                             interval = "year")) %>% 
+cdm$observation_period |> 
+  mutate(observation_period_start_plus_30_days = add_days(observation_period_start_date,
+                                                   30L),
+         observation_period_start_date_plus_10_years = add_years(observation_period_start_date,
+                                                   10L)) |> 
   select("observation_period_id", "person_id", 
-         "observation_days","observation_years") %>% 
+         "observation_period_start_plus_30_days",
+         "observation_period_start_date_plus_10_years") %>% 
   show_query()
 ```
 
 Whereas the SQL will be different if using multiple mutate calls (now using a sub-query).
 
 ```{r, echo = TRUE}
-cdm$observation_period %>%
-  mutate(observation_days = !!datediff("observation_period_start_date", 
-                             "observation_period_end_date", 
-                             interval = "day")) %>% 
-  mutate(observation_years = !!datediff("observation_period_start_date", 
-                             "observation_period_end_date", 
-                             interval = "year")) %>% 
+cdm$observation_period |> 
+  mutate(observation_period_start_plus_30_days = add_days(observation_period_start_date,
+                                                   30L)) |> 
+  mutate(observation_period_start_date_plus_10_years = add_years(observation_period_start_date,
+                                                   10L)) |> 
   select("observation_period_id", "person_id", 
-         "observation_days","observation_years") %>% 
+         "observation_period_start_plus_30_days",
+         "observation_period_start_date_plus_10_years") %>% 
   show_query()
 ```
 :::
