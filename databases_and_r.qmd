@@ -16,10 +16,10 @@ cdm <- CDMConnector::cdm_from_con(db,
 
 ### select()
 ```{r, echo = TRUE}
-cdm$person %>%
+cdm$person |>
   select("person_id", "gender_concept_id") 
-cdm$person %>%
-  select("person_id", "gender_concept_id") %>% 
+cdm$person |>
+  select("person_id", "gender_concept_id") |> 
   show_query()
 ```
 
@@ -27,56 +27,56 @@ cdm$person %>%
 ### mutate()
 
 ```{r, echo = TRUE}
-cdm$person %>%
+cdm$person |>
   mutate(new_variable=1) 
-cdm$person %>%
-  mutate(new_variable=1) %>%
+cdm$person |>
+  mutate(new_variable=1) |>
   show_query()
 ```
 
 ### if_else()
 ```{r, echo = TRUE}
-cdm$person %>%
+cdm$person |>
   mutate(new_variable=if_else(gender_concept_id=="8532", "Male", "Female")) 
 
-cdm$person %>%
-  mutate(new_variable=if_else(gender_concept_id=="8532", "Male", "Female")) %>%
+cdm$person |>
+  mutate(new_variable=if_else(gender_concept_id=="8532", "Male", "Female")) |>
   show_query()
 ```
 
 ### paste0
 ```{r, echo = TRUE}
-cdm$person %>%
+cdm$person |>
   mutate(date_of_birth = paste0("year_of_birth", "-",
                                 "month_of_birth", "-",
                                 "day_of_birth"))
 
-cdm$person %>%
+cdm$person |>
   mutate(date_of_birth = paste0("year_of_birth", "-",
                                 "month_of_birth", "-",
-                                "day_of_birth")) %>%
+                                "day_of_birth")) |>
   show_query()
 ```
 
 ### distinct()
 ```{r, echo = TRUE}
-cdm$person %>%
-  select("gender_concept_id") %>%
+cdm$person |>
+  select("gender_concept_id") |>
   distinct() 
 
-cdm$person %>%
-  select("gender_concept_id") %>%
-  distinct() %>%
+cdm$person |>
+  select("gender_concept_id") |>
+  distinct() |>
   show_query()
 ```
 
 ### rename()
 ```{r, echo = TRUE}
-cdm$person %>%
+cdm$person |>
   rename("sex_concept_id" = "gender_concept_id")
 
-cdm$person %>%
-  rename("sex_concept_id" = "gender_concept_id") %>%
+cdm$person |>
+  rename("sex_concept_id" = "gender_concept_id") |>
   show_query()
 ```
 

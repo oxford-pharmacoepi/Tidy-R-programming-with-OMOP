@@ -1,23 +1,23 @@
-# Creating a reference to the OMOP common data model
+# Creating a reference to data in the OMOP CDM
 
 ## Connecting to a database from R using DBI
 
-Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. As an example, lets say we want to work with an in-process [duckdb](https://duckdb.org/) database from R. In this case the we can use the duckdb R package as the driver, connecting to a database with the OMOP CDM for a synthetic population of 200,000 people.
+Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. We saw in Chapter 1 an example where we created a new, empty, in-process [duckdb](https://duckdb.org/) database which we then added database. But we could have instead connected to an existing duckdb database. This could, for example, look like
 
 ```{r, message=FALSE, warning=FALSE}
 library(DBI)
 library(here)
+library(dplyr)
 ```
 
 ```{r, eval = FALSE}
-db<-dbConnect(duckdb::duckdb(), 
-              dbdir= Sys.getenv("DUCKDB"))
+db <- dbConnect(duckdb::duckdb(), 
+              dbdir = here("my_duckdb_database.ducdkb"))
 ```
 
-If we instead wanted to connect to other database management systems, these connections would be supported by the associated back-end packages. For example a connection to a Postgres database would look something like:
+For other database management systems, creating connections would be supported by the associated back-end packages. For example a connection to a Postgres database would look something like:
 
 ```{r, eval=FALSE}
-# Postgres
 db <- DBI::dbConnect(RPostgres::Postgres(),
                       dbname = Sys.getenv("CDM5_POSTGRESQL_DBNAME"),
                       host = Sys.getenv("CDM5_POSTGRESQL_HOST"),
@@ -27,24 +27,10 @@ db <- DBI::dbConnect(RPostgres::Postgres(),
 
 ## Creating a reference to the OMOP common data model
 
-As seen in the previous chapter, once a connection to the database has been created we could then create references to the various tables in the database and build queries using in a familiar dplyr style. However, as the structure of the OMOP CDM is already known, we can avoid the overhead of creating individual references to the OMOP CDM tables by using the `CDMConnector` package. `CDMConnector` will do the work for us and quickly create a joint reference for all OMOP CDM database tables.
-
-If you don't already have it installed, the first step would be to install `CDMConnector` from CRAN.
-
-```{r, eval=FALSE}
-install.packages("CDMConnector")
-```
-
-For this example, we'll use an example dataset (*synthea-covid19-10k*) provided by `CDMConnector`. First let's load packages and then download the example data.
+As seen in the previous chapter, once a connection to the database has been created we can then create references to the various tables in the database and build queries using in a familiar dplyr style. To show this, let's download an example dataset (*synthea-covid19-10k*) provided by `CDMConnector`. 
 
 ```{r, echo = TRUE, warning=FALSE, message=FALSE}
-library(DBI)
-library(CDMConnector)
-library(here)
-```
-
-```{r, echo = TRUE, warning=FALSE, message=FALSE}
-downloadEunomiaData(
+CDMConnector::downloadEunomiaData(
   datasetName = "synthea-covid19-10k",
   cdmVersion = "5.3",
   pathToData = here(),
@@ -52,11 +38,21 @@ downloadEunomiaData(
 )
 ```
 
-After connecting to the database containing the OMOP CDM, we use `CDMConnector` to create our cdm reference.
+Now we have this downloaded, we can create a connection to a duckdb database containing the data in a similar way to how we've done before.
 
 ```{r, echo = TRUE}
 db <- dbConnect(duckdb::duckdb(), 
-              dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
+              dbdir = CDMConnector::eunomiaDir(datasetName = "synthea-covid19-10k"))
+
+db |> tbl("person")
+
+db |> tbl("observation_period")
+```
+
+As the structure of the OMOP CDM is already known, we can avoid the overhead of creating individual references to the OMOP CDM tables by using the `CDMConnector` package. `CDMConnector` will do the work for us and quickly create a joint reference for all OMOP CDM database tables in one go.
+
+```{r, echo = TRUE}
+library(CDMConnector)
 cdm <- cdm_from_con(con = db, 
                     cdm_schema = "main", 
                     write_schema = "main", 
@@ -67,7 +63,7 @@ cdm
 Once we have created the our reference to the overall OMOP CDM, we can reference specific tables using the "\$" operator.
 
 ```{r, echo = TRUE}
-cdm$observation_period
+cdm$person
 ```
 
 Alternatively, you could also access a specific table reference like so
@@ -87,12 +83,12 @@ cdm <- cdm_from_con(db,
 ::: {.callout-tip collapse="true"}
 ## Setting a write prefix
 
-We can set a prefix that to use when permanent tables are created the write schema. This can be useful when we're sharing our write schema with others and want to avoid table name conflicts.
+We can set a prefix that will be used whenever permanent tables are created the write schema. This can be useful when we're sharing our write schema with others and want to avoid table name conflicts and easily drop tables created as part of a particular study.
 
 ```{r, echo = TRUE, eval = FALSE}
 cdm <- cdm_from_con(db,
   cdm_schema = "main",
-  write_schema = c(schema="main", prefix = "example_"))
+  write_schema = c(schema="main", prefix = "my_study_"))
 ```
 :::
 
@@ -114,7 +110,7 @@ cdm <- cdm_from_con(db,
 cdm_name(cdm)
 ```
 
-# Database snapshot
+# Taking a snapshot of your OMOP CDM
 
 After creating our cdm reference we can get a summary of the metadata for the OMOP CDM data using the `snapshot()` function from `CDMConnector`.
 
@@ -126,9 +122,9 @@ library(dplyr)
 cdm_snapshot <- cdm_from_con(con = db, 
                              cdm_name = "my_cdm",
                              cdm_schema = "main", 
-                             write_schema = "main") %>% 
+                             write_schema = "main") |> 
   snapshot()
-cdm_snapshot %>% 
+cdm_snapshot |> 
   glimpse()
 ```
 
@@ -138,12 +134,6 @@ Once we have finished our analysis we can close our connection to the database b
 
 ```{r}
 cdmDisconnect(cdm) 
-```
-
-This is equivalent to closing the connection directly like we saw in the previous chapter.
-
-```{r, eval=FALSE}
-dbDisconnect(attr(cdm, "dbcon"))
 ```
 
 # Further reading

@@ -21,12 +21,12 @@ cdm <- cdm_from_con(
   write_schema = "main"
 )
 
-cdm <- cdm %>% 
+cdm <- cdm |> 
   generate_concept_cohort_set(concept_set = list("gi_bleed" = 192671), 
                             limit = "all", 
                             end = 30,
                             name = "gi_bleed",
-                            overwrite = TRUE) %>% 
+                            overwrite = TRUE) |> 
   generate_concept_cohort_set(concept_set = list("acetaminophen" = c(1125315,
                                                               1127078,
                                                               1127433,
@@ -43,14 +43,14 @@ cdm <- cdm %>%
 ### Flag
 
 ```{r, warning=FALSE, message=FALSE}
-cdm$gi_bleed <- cdm$gi_bleed %>% 
+cdm$gi_bleed <- cdm$gi_bleed |> 
   addCohortIntersectFlag(targetCohortTable = "acetaminophen",
                          window = list(c(-Inf, -1), c(0,0), c(1, Inf)))
 
-cdm$gi_bleed %>% 
+cdm$gi_bleed |> 
   summarise(acetaminophen_prior = sum(acetaminophen_minf_to_m1), 
             acetaminophen_index = sum(acetaminophen_0_to_0),
-            acetaminophen_post = sum(acetaminophen_1_to_inf)) %>% 
+            acetaminophen_post = sum(acetaminophen_1_to_inf)) |> 
   collect()
   
 ```
@@ -60,3 +60,8 @@ cdm$gi_bleed %>%
 ### Date and times
 
 ## Intersection between a cohort and tables with patient data
+
+
+# Further reading
+
+-   ...

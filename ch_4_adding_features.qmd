@@ -30,36 +30,36 @@ The `PatientProfiles` package makes it easy for us to add demographic informatio
 
 [^ch_4_adding_features-2]: Although these manipulations can on the face of it seem quite simple, their implementation across different database platforms with different data granularity (for example whether day of birth has been filled in for all patients or not) presents challenges that the `PatientProfiles` package solves for us.
 
-Let's say we are interested in individuals age and sex at time of diagnosis with COVID-19. We can add these variables to the table like so (noting that because age is time-varying, we have to specify the variable with the date for which we want to calculate age relative to).
+Let's say we are interested in individuals' age and sex at time of diagnosis with COVID-19. We can add these variables to the table like so (noting that because age is time-varying, we have to specify the variable with the date for which we want to calculate age relative to).
 
 ```{r}
-cdm$condition_occurrence <- cdm$condition_occurrence %>% 
-  addSex() %>% 
+cdm$condition_occurrence <- cdm$condition_occurrence |> 
+  addSex() |> 
   addAge(indexDate = "condition_start_date")
 
-cdm$condition_occurrence %>% 
+cdm$condition_occurrence |> 
   glimpse()
 ```
 
 We now have two variables added containing values for age and sex.
 
 ```{r}
-cdm$condition_occurrence %>% 
+cdm$condition_occurrence |> 
   glimpse()
 ```
 
 And with these now added it is straightforward to calculate mean age at condition start date by sex or even plot the distribution of age at diagnosis by sex.
 
 ```{r}
-cdm$condition_occurrence %>%
-  summarise(mean_age = mean(age, na.rm=TRUE), .by = "sex") %>% 
+cdm$condition_occurrence |>
+  summarise(mean_age = mean(age, na.rm=TRUE), .by = "sex") |> 
   collect()
 ```
 
 ```{r}
-cdm$condition_occurrence %>%
-  select("person_id", "age", "sex") %>% 
-  collect()  %>%
+cdm$condition_occurrence |>
+  select("person_id", "age", "sex") |> 
+  collect()  |>
   ggplot(aes(fill = sex)) +
   facet_grid(sex ~ .) +
   geom_histogram(aes(age), colour = "black", binwidth = 5) +
@@ -75,21 +75,21 @@ We've now seen individual functions from `PatientProfiles` to add age and sex, a
 [^ch_4_adding_features-3]: This function also provides a more time efficient method that getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables and so can be identified simultaneously.
 
 ```{r}
-cdm$drug_exposure <- cdm$drug_exposure %>% 
+cdm$drug_exposure <- cdm$drug_exposure |> 
   addDemographics(indexDate = "drug_exposure_start_date")
 
-cdm$drug_exposure %>% 
+cdm$drug_exposure |> 
   glimpse()
 ```
 
 With these characteristics now all added, we can now calculate mean age, prior observation (how many days have passed since the individual's most recent observation start date), and future observation (how many days until the individual's nearest observation end date) at drug exposure start date by sex.
 
 ```{r}
-cdm$drug_exposure %>%
+cdm$drug_exposure |>
   summarise(mean_age = mean(age, na.rm=TRUE),
             mean_prior_observation = mean(prior_observation, na.rm=TRUE),
             mean_future_observation = mean(future_observation, na.rm=TRUE),
-            .by = "sex") %>% 
+            .by = "sex") |> 
   collect()
 ```
 
@@ -98,16 +98,18 @@ cdm$drug_exposure %>%
 When we add age, either via addAge or addDemographics, we can also add another variable containing age groups. These age groups are specified in a list of vectors, each of which contain the lower and upper bounds.
 
 ```{r}
-cdm$visit_occurrence <- cdm$visit_occurrence %>%
+cdm$visit_occurrence <- cdm$visit_occurrence |>
   addAge(indexDate = "visit_start_date",
     ageGroup = list(c(0,17), c(18, 64),
-                    c(65, 150)))
+                    c(65, Inf)))
 
-cdm$visit_occurrence %>% 
-  filter(age >= 0 & age <= 150) %>% 
-  group_by(age_group) %>% 
-  tally() %>% 
-  collect() %>% 
+cdm$visit_occurrence |> 
+  # data quality issues with our synthetic data means we have 
+  # some negative ages so will drop these
+  filter(age >= 0) |> 
+  group_by(age_group) |> 
+  tally() |> 
+  collect() |> 
   ggplot() + 
   geom_col(aes(x = age_group, y = n)) + 
   theme_bw()
@@ -116,59 +118,63 @@ cdm$visit_occurrence %>%
 `PatientProfiles` also provides a more general function for adding categories. Can you guess it's name? That's right, we have `PatientProfiles::addCategories()` for this.
 
 ```{r}
-cdm$condition_occurrence %>%
-  addPriorObservation(indexDate = "condition_start_date") %>%
+cdm$condition_occurrence |>
+  addPriorObservation(indexDate = "condition_start_date") |>
   addCategories(
     variable = "prior_observation",
     categories = list("prior_observation_group" = list(
       c(0, 364), c(365, Inf)  
     ))
-  )
+  ) |> 
+  glimpse()
 ```
 
 ## Adding custom variables
 
-While `PatientProfiles` provides a range of functions that can help add characteristics of interest, you may also want to add other, custom features . Obviously we can't cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.
+While `PatientProfiles` provides a range of functions that can help add characteristics of interest, you may also want to add other features . Obviously we can't cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.
 
 In the first case where we want to add a new variable derived from other variables in our table we'll typically be using `dplyr::mutate()`. For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals' observation period start date. This is rather straightforward.
 
 ```{r}
-cdm$observation_period <- cdm$observation_period %>% 
-  mutate(observation_period_start_year = year(observation_period_start_date))
+cdm$observation_period <- cdm$observation_period |> 
+  mutate(observation_period_start_year = get_year(observation_period_start_date))
 
-cdm$observation_period %>% 
+cdm$observation_period |> 
   glimpse()
 ```
 
-The second case is normally more complex task where adding a new variable involves joining to some other table. This table may well have been created by some intermediate query that we wrote to derive the variable of interest. For example, lets say we want to add each number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). Here we'll also create this as a new table containing just the information we're interested in and compute to a temporary table.
+The second case is normally a more complex task where adding a new variable involves joining to some other table. This table may well have been created by some intermediate query that we wrote to derive the variable of interest. For example, lets say we want to add each number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). For this we will need to do a join between the person and condition occurrence tables (as some people might not have any records in the condition occurrence table). Here we'll save the create a table containing just the information we're interested in and compute to a temporary table.
 
 ```{r}
-condition_summary <- cdm$person %>% 
-  left_join(cdm$condition_occurrence %>% 
-  group_by(person_id) %>% 
+condition_summary <- cdm$person |> 
+  select("person_id") |> 
+  left_join(cdm$condition_occurrence |> 
+  group_by(person_id) |> 
   count(name = "condition_occurrence_records"),
-  by="person_id") %>% 
-  select("person_id", "condition_occurrence_records") %>% 
+  by="person_id") |> 
+  select("person_id", "condition_occurrence_records") |> 
   mutate(condition_occurrence_records = if_else(
     is.na(condition_occurrence_records), 
-    0, condition_occurrence_records)) %>% 
+    0, condition_occurrence_records)) |> 
   compute()
 
-condition_summary %>% 
+condition_summary |> 
   glimpse()
 ```
 
 We can see what goes on behind the scenes by viewing the associated SQL.
+
 ```{r}
-cdm$person %>% 
-  left_join(cdm$condition_occurrence %>% 
-  group_by(person_id) %>% 
+cdm$person |> 
+  select("person_id") |> 
+  left_join(cdm$condition_occurrence |> 
+  group_by(person_id) |> 
   count(name = "condition_occurrence_records"),
-  by="person_id") %>% 
-  select("person_id", "condition_occurrence_records") %>% 
+  by="person_id") |> 
+  select("person_id", "condition_occurrence_records") |> 
   mutate(condition_occurrence_records = if_else(
     is.na(condition_occurrence_records), 
-    0, condition_occurrence_records)) %>% 
+    0, condition_occurrence_records)) |> 
   show_query()
 ```
 
@@ -182,18 +188,20 @@ Examples where to be careful include when joining to the observation period tabl
 Just to underline how problematic joins can become if we don't take care, here we join the condition occurrence table and the drug exposure table both of which have multiple records per person. Remember this is just with our small synthetic data, so when working with real patient data which is oftentimes much, much larger this would be extremely problematic (and would unlikely be needed to answer any research question). In other words, don't try this at home!
 
 ```{r}
-cdm$condition_occurrence %>% 
+cdm$condition_occurrence |> 
   tally()
-cdm$drug_exposure %>% 
+cdm$drug_exposure |> 
   tally()
-cdm$condition_occurrence %>% 
-  select(person_id, condition_start_date) %>% 
-  left_join(cdm$drug_exposure %>% 
+cdm$condition_occurrence |> 
+  select(person_id, condition_start_date) |> 
+  left_join(cdm$drug_exposure |> 
   select(person_id, drug_exposure_start_date), 
-  by = "person_id") %>% 
+  by = "person_id") |> 
   tally()
 
 ```
 :::
 
+# Further reading
 
+-   ...
