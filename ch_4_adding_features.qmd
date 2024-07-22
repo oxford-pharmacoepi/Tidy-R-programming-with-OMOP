@@ -13,7 +13,7 @@ library(ggplot2)
 ```
 
 ```{r}
-db<-dbConnect(duckdb::duckdb(),
+db <- dbConnect(duckdb::duckdb(),
               dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
 cdm <- cdm_from_con(db,
                     cdm_schema = "main", 
@@ -39,6 +39,12 @@ cdm$condition_occurrence <- cdm$condition_occurrence |>
 
 cdm$condition_occurrence |> 
   glimpse()
+```
+
+```{r}
+cdm$condition_occurrence |> 
+  addSexQuery() |> 
+  dplyr::show_query()
 ```
 
 We now have two variables added containing values for age and sex.
@@ -93,6 +99,35 @@ cdm$drug_exposure |>
   collect()
 ```
 
+
+::: {.callout-tip collapse="true"}
+## Returning a query from `PatientProfiles` rather than the result
+
+In the above examples the functions from PatientProfiles will execute queries with the results written to a table in the database (either temporary if no name is provided or a permanent table if one is given). We might though instead want to to instead just get the underlying query back so that we have more control over how and when the query will be executed.
+
+```{r, echo = TRUE}
+cdm$visit_occurrence |> 
+  addSex() |> 
+  filter(sex == "Male") |> 
+  dplyr::show_query()
+```
+
+
+```{r, echo = TRUE}
+cdm$visit_occurrence |> 
+  addSex(name = "my_new_table") |> 
+  filter(sex == "Male") |> 
+  dplyr::show_query()
+```
+
+```{r, echo = TRUE}
+cdm$visit_occurrence |> 
+  addSexQuery() |> 
+  filter(sex == "Male") |> 
+  dplyr::show_query()
+```
+:::
+
 ## Creating categories
 
 When we add age, either via addAge or addDemographics, we can also add another variable containing age groups. These age groups are specified in a list of vectors, each of which contain the lower and upper bounds.
@@ -128,6 +163,7 @@ cdm$condition_occurrence |>
   ) |> 
   glimpse()
 ```
+
 
 ## Adding custom variables
 
@@ -204,4 +240,4 @@ cdm$condition_occurrence |>
 
 # Further reading
 
--   ...
+-   [PatientProfiles package](https://darwin-eu-dev.github.io/PatientProfiles/)

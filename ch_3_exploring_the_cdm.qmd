@@ -1,6 +1,6 @@
 ## Exploring the OMOP CDM
 
-For this chapter, lets use an example COVID-19 dataset.
+For this chapter, lets again use the synthetic COVID-19 dataset.
 
 ```{r, warning=FALSE, message=FALSE}
 library(DBI)
@@ -9,6 +9,7 @@ library(dplyr)
 library(here)
 library(CDMConnector)
 library(ggplot2)
+library(clock)
 ```
 
 ```{r}
@@ -50,7 +51,7 @@ first_observation_period <- cdm$observation_period |>
 cdm$person |> 
   left_join(first_observation_period,
             by = "person_id") |> 
-  mutate(observation_period_start_year=year(observation_period_start_date)) |> 
+  mutate(observation_period_start_year = get_year(observation_period_start_date)) |> 
   group_by(observation_period_start_year) |> 
   count() |> 
   collect() |> 
@@ -181,7 +182,7 @@ cdm$condition_occurrence |>
 ::: {.callout-tip collapse="true"}
 ## Vocabulary tables
 
-Above we've got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associate with the concept, along with other information such as it's domain and vocabulary id.
+Above we've got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associated with the concept, along with other information such as it's domain and vocabulary id.
 
 ```{r, echo = TRUE}
 cdm$concept |> 

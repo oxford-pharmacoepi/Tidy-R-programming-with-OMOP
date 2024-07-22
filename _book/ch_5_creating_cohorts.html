@@ -102,14 +102,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-
-<script src="site_libs/viz-1.8.2/viz.js"></script>
-
-<link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-
-<script src="site_libs/grViz-binding-1.0.11/grViz.js"></script>
-
 
 
 </head>
@@ -220,20 +212,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#what-is-a-cohort" id="toc-what-is-a-cohort" class="nav-link active" data-scroll-target="#what-is-a-cohort"><span class="header-section-number">5.1</span> What is a cohort?</a></li>
   <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="header-section-number">5.2</span> Set up</a></li>
-  <li><a href="#creating-a-base-cohort" id="toc-creating-a-base-cohort" class="nav-link" data-scroll-target="#creating-a-base-cohort"><span class="header-section-number">5.3</span> Creating a base cohort</a>
+  <li><a href="#general-concept-based-cohort" id="toc-general-concept-based-cohort" class="nav-link" data-scroll-target="#general-concept-based-cohort"><span class="header-section-number">5.3</span> General concept based cohort</a></li>
+  <li><a href="#applying-inclusion-criteria" id="toc-applying-inclusion-criteria" class="nav-link" data-scroll-target="#applying-inclusion-criteria"><span class="header-section-number">5.4</span> Applying inclusion criteria</a>
   <ul class="collapse">
-  <li><a href="#general-concept-based-cohort" id="toc-general-concept-based-cohort" class="nav-link" data-scroll-target="#general-concept-based-cohort"><span class="header-section-number">5.3.1</span> General concept based cohort</a></li>
-  <li><a href="#demographic-cohorts" id="toc-demographic-cohorts" class="nav-link" data-scroll-target="#demographic-cohorts"><span class="header-section-number">5.3.2</span> Demographic cohorts</a></li>
+  <li><a href="#only-include-first-cohort-entry-per-person" id="toc-only-include-first-cohort-entry-per-person" class="nav-link" data-scroll-target="#only-include-first-cohort-entry-per-person"><span class="header-section-number">5.4.1</span> Only include first cohort entry per person</a></li>
+  <li><a href="#restrict-to-study-period" id="toc-restrict-to-study-period" class="nav-link" data-scroll-target="#restrict-to-study-period"><span class="header-section-number">5.4.2</span> Restrict to study period</a></li>
+  <li><a href="#applying-demographic-inclusion-criteria" id="toc-applying-demographic-inclusion-criteria" class="nav-link" data-scroll-target="#applying-demographic-inclusion-criteria"><span class="header-section-number">5.4.3</span> Applying demographic inclusion criteria</a></li>
+  <li><a href="#applying-cohort-based-inclusion-criteria" id="toc-applying-cohort-based-inclusion-criteria" class="nav-link" data-scroll-target="#applying-cohort-based-inclusion-criteria"><span class="header-section-number">5.4.4</span> Applying cohort-based inclusion criteria</a></li>
   </ul></li>
-  <li><a href="#cohort-attributes" id="toc-cohort-attributes" class="nav-link" data-scroll-target="#cohort-attributes"><span class="header-section-number">5.4</span> Cohort attributes</a></li>
-  <li><a href="#applying-inclusion-criteria" id="toc-applying-inclusion-criteria" class="nav-link" data-scroll-target="#applying-inclusion-criteria"><span class="header-section-number">5.5</span> Applying inclusion criteria</a>
-  <ul class="collapse">
-  <li><a href="#restrict-to-study-period" id="toc-restrict-to-study-period" class="nav-link" data-scroll-target="#restrict-to-study-period"><span class="header-section-number">5.5.1</span> Restrict to study period</a></li>
-  <li><a href="#only-include-first-cohort-entry-per-person" id="toc-only-include-first-cohort-entry-per-person" class="nav-link" data-scroll-target="#only-include-first-cohort-entry-per-person"><span class="header-section-number">5.5.2</span> Only include first cohort entry per person</a></li>
-  <li><a href="#applying-demographic-inclusion-criteria" id="toc-applying-demographic-inclusion-criteria" class="nav-link" data-scroll-target="#applying-demographic-inclusion-criteria"><span class="header-section-number">5.5.3</span> Applying demographic inclusion criteria</a></li>
-  <li><a href="#applying-cohort-based-inclusion-criteria" id="toc-applying-cohort-based-inclusion-criteria" class="nav-link" data-scroll-target="#applying-cohort-based-inclusion-criteria"><span class="header-section-number">5.5.4</span> Applying cohort-based inclusion criteria</a></li>
-  </ul></li>
-  <li><a href="#visualising-cohort-attrition" id="toc-visualising-cohort-attrition" class="nav-link" data-scroll-target="#visualising-cohort-attrition"><span class="header-section-number">6</span> Visualising cohort attrition</a></li>
+  <li><a href="#cohort-attributes" id="toc-cohort-attributes" class="nav-link" data-scroll-target="#cohort-attributes"><span class="header-section-number">5.5</span> Cohort attributes</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">6</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
@@ -262,10 +250,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="what-is-a-cohort" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="what-is-a-cohort"><span class="header-section-number">5.1</span> What is a cohort?</h2>
 <p>When performing research with the OMOP common data model we often want to identify groups of individuals who share some set of characteristics. The criteria for including individuals can range from the seemingly simple (e.g.&nbsp;people diagnosed with asthma) to the much more complicated (e.g.&nbsp;adults diagnosed with asthma who had a year of prior observation time in the database prior to their diagnosis, had no prior history of chronic obstructive pulmonary disease, and no history of use of short-acting beta-antagonists).</p>
-<p>The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields: 1) cohort definition id (a unique identifier for each cohort), 2) subject id (a foreign key to the subject in the cohort - typically referring to records in the person table), 3) cohort start date, and 4) cohort end date. Individuals can enter a cohort multiple times, but the time in which they are in the cohort cannot overlap.</p>
+<p>The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields: 1) cohort definition id (a unique identifier for each cohort), 2) subject id (a foreign key to the subject in the cohort - typically referring to records in the person table), 3) cohort start date, and 4) cohort end date. Individuals can enter a cohort multiple times, but the time periods in which they are in the cohort cannot overlap. Individuals will only be considered in a cohort when they have have an ongoing observation period.</p>
+<p>It is beyond the scope of this book to describe all the different ways cohorts could be created, however in this chapter we provide a summary of some of the key building blocks for cohort creation. Cohort-building pipelines can be created following these principles to create a wide range of study cohorts.</p>
 </section>
 <section id="set-up" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="set-up"><span class="header-section-number">5.2</span> Set up</h2>
+<p>We’ll use our synthetic dataset for demonstrating how cohorts can be constructed.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CodelistGenerator)</span>
@@ -273,68 +263,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CohortCharacteristics)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="fu">eunomia_dir</span>())</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">con =</span> db,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm_schema =</span> <span class="st">"main"</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">write_schema =</span> <span class="st">"main"</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">dbdir =</span> <span class="fu">eunomiaDir</span>(<span class="at">datasetName =</span> <span class="st">"synthea-covid19-10k"</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdm_from_con</span>(db,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cdm_schema =</span> <span class="st">"main"</span>, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">write_schema =</span> <span class="st">"main"</span>, </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cdm_name =</span> <span class="st">"Synthetic COVID-19 dataset"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="creating-a-base-cohort" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="creating-a-base-cohort"><span class="header-section-number">5.3</span> Creating a base cohort</h2>
-<p>We can create a set of base cohorts using a code lists or concept set</p>
-<section id="general-concept-based-cohort" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="general-concept-based-cohort"><span class="header-section-number">5.3.1</span> General concept based cohort</h3>
+<section id="general-concept-based-cohort" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="general-concept-based-cohort"><span class="header-section-number">5.3</span> General concept based cohort</h2>
+<p>Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the <code>CohortConstructor</code> package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code 37311061.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(<span class="at">cdm =</span> cdm, </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">conceptSet =</span> <span class="fu">list</span>(<span class="st">"gi_bleed"</span> <span class="ot">=</span> <span class="dv">192671</span>), </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name =</span> <span class="st">"gi_bleed"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(<span class="at">cdm =</span> cdm, </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">conceptSet =</span> <span class="fu">list</span>(<span class="st">"covid"</span> <span class="ot">=</span> <span class="dv">37311061</span>), </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name =</span> <span class="st">"covid"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   table&lt;main.gi_bleed&gt; [?? x 4]
-# Database: DuckDB v1.0.0 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGi5nHI\file485c26057603.duckdb]
+<pre><code># Source:   table&lt;main.covid&gt; [?? x 4]
+# Database: DuckDB v1.0.0 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmpkd7jJS\file2c58541d1585.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        582 2005-04-04        2005-04-04     
- 2                    1        202 1982-05-16        1982-05-16     
- 3                    1       1571 1998-08-27        1998-08-27     
- 4                    1       2906 1965-07-06        1965-07-06     
- 5                    1       3436 2003-05-03        2003-05-03     
- 6                    1       3961 2011-11-24        2011-11-24     
- 7                    1        160 2006-02-19        2006-02-19     
- 8                    1        693 1995-09-01        1995-09-01     
- 9                    1       1464 2002-11-01        2002-11-01     
-10                    1       3483 1989-01-07        1989-01-07     
-# ℹ more rows</code></pre>
-</div>
-</div>
-</section>
-<section id="demographic-cohorts" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="demographic-cohorts"><span class="header-section-number">5.3.2</span> Demographic cohorts</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>age_cohorts <span class="ot">&lt;-</span> <span class="fu">demographicsCohort</span>(<span class="at">cdm =</span> cdm, </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">ageRange =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">17</span>),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                                     <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">64</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                                     <span class="fu">c</span>(<span class="dv">65</span>, <span class="cn">Inf</span>)), </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">name =</span> <span class="st">"age_cohorts"</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>age_cohorts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># Source:   SQL [?? x 4]
-# Database: DuckDB v1.0.0 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGi5nHI\file485c26057603.duckdb]
-   cohort_definition_id subject_id cohort_start_date cohort_end_date
-                  &lt;dbl&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    3         42 1974-11-02        2019-03-13     
- 2                    3          2 1985-06-01        2008-03-25     
- 3                    3         11 2018-02-03        2019-05-07     
- 4                    3         32 2008-10-27        2014-12-24     
- 5                    3         17 2015-12-11        2019-01-07     
- 6                    3          3 1981-01-03        2018-10-29     
- 7                    3         94 2017-03-28        2018-12-28     
- 8                    3         72 2012-07-14        2018-11-12     
- 9                    3         69 2008-10-27        2019-02-06     
-10                    3        116 1991-11-07        2006-07-16     
+ 1                    1       2533 2020-11-24        2020-12-05     
+ 2                    1       2516 2021-01-03        2021-01-20     
+ 3                    1       3593 2020-12-30        2021-01-30     
+ 4                    1       5688 2021-05-19        2021-06-13     
+ 5                    1       5796 2020-11-04        2020-11-23     
+ 6                    1       6267 2020-11-30        2021-01-01     
+ 7                    1       7018 2020-12-15        2021-01-20     
+ 8                    1      10237 2021-01-29        2021-03-05     
+ 9                    1       3299 2020-06-09        2020-07-14     
+10                    1       1935 2021-09-03        2021-10-09     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -351,32 +310,42 @@ Finding appropriate codes
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In the defining the cohorts above we have needed to provide concept IDs to define our cohort. But, where do these come from?</p>
-<p>We can search for codes of interest using the <code>CodelistGenerator</code> package. This can be done using a text search with the function <code>CodelistGenerator::getCandidateCodes()</code>. For example, we can find the GI code we use above like so:</p>
+<p>We can search for codes of interest using the <code>CodelistGenerator</code> package. This can be done using a text search with the function <code>CodelistGenerator::getCandidateCodes()</code>. For example, we can have found the code we used above (and many others) like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getCandidateCodes</span>(<span class="at">cdm =</span> cdm, </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">keywords =</span> <span class="st">"Gastrointestinal hemorrhage"</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">domains =</span> <span class="st">"condition"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">includeDescendants =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getCandidateCodes</span>(<span class="at">cdm =</span> cdm, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">keywords =</span> <span class="fu">c</span>(<span class="st">"coronavirus"</span>,<span class="st">"covid"</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">domains =</span> <span class="st">"condition"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">includeDescendants =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Limiting to domains of interest
 Getting concepts to include
 Adding descendants
 Search completed. Finishing up.
-✔ 1 candidate concept identified
+✔ 37 candidate concepts identified
 
-Time taken: 0 minutes and 0 seconds</code></pre>
+Time taken: 0 minutes and 2 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 6
-  concept_id found_from    concept_name domain_id vocabulary_id standard_concept
-       &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
-1     192671 From initial… Gastrointes… Condition SNOMED        S               </code></pre>
+<pre><code># A tibble: 37 × 6
+   concept_id found_from   concept_name domain_id vocabulary_id standard_concept
+        &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
+ 1     439676 From initia… Coronavirus… Condition SNOMED        S               
+ 2    3655973 From initia… At increase… Condition SNOMED        S               
+ 3    3656668 From initia… Conjunctivi… Condition SNOMED        S               
+ 4   37310254 From initia… Otitis medi… Condition SNOMED        S               
+ 5   37310284 From initia… Encephalopa… Condition SNOMED        S               
+ 6     703445 From initia… Low risk ca… Condition SNOMED        S               
+ 7     756039 From initia… Respiratory… Condition OMOP Extensi… S               
+ 8    3656669 From initia… Dyspnea cau… Condition SNOMED        S               
+ 9   37311061 From initia… COVID-19     Condition SNOMED        S               
+10   37016927 From initia… Pneumonia c… Condition SNOMED        S               
+# ℹ 27 more rows</code></pre>
 </div>
 </div>
 <p>We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of it’s descendants.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>CodelistGenerator<span class="sc">::</span><span class="fu">getDrugIngredientCodes</span>(<span class="at">cdm =</span> cdm, </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">name =</span> <span class="st">"acetaminophen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>CodelistGenerator<span class="sc">::</span><span class="fu">getDrugIngredientCodes</span>(<span class="at">cdm =</span> cdm, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">name =</span> <span class="st">"acetaminophen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -385,176 +354,802 @@ Time taken: 0 minutes and 0 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-- acetaminophen (7 codes)</code></pre>
+- 161_acetaminophen (25747 codes)</code></pre>
 </div>
 </div>
-<p>Note that the data we’re using just has a subset of the full OMOP CDM vocabularies. In practice, these searches would return many more codes. And in the case of the former in particular, clinical expertise would then be required to decide which of the codes were in line with the clinical idea at hand.</p>
+<p>Note that in practice clinical expertise is vital in the identification of appropriate codes so as to decide which the codes are in line with the clinical idea at hand.</p>
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="cohort-attributes" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="cohort-attributes"><span class="header-section-number">5.4</span> Cohort attributes</h2>
-<p>The set of cohorts we create will be associated with various attributes. The cohort set attribute contains information on the cohorts that we’ve generated.</p>
+<p>We can see that as well as having the cohort entries above, our cohort table is associated with several attributes.</p>
+<p>First, we can see the settings associated with cohort.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>gi_bleed) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1
 Columns: 2
 $ cohort_definition_id &lt;int&gt; 1
-$ cohort_name          &lt;chr&gt; "gi_bleed"</code></pre>
+$ cohort_name          &lt;chr&gt; "covid"</code></pre>
 </div>
 </div>
-<p>Another attribute contains counts of the cohorts we’ve created.</p>
+<p>Second, we can get counts of the cohort.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>gi_bleed) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1
 Columns: 3
 $ cohort_definition_id &lt;int&gt; 1
-$ number_records       &lt;int&gt; 479
-$ number_subjects      &lt;int&gt; 479</code></pre>
+$ number_records       &lt;int&gt; 964
+$ number_subjects      &lt;int&gt; 964</code></pre>
 </div>
 </div>
-<p>And we can also see attrition related to the cohort. We’ll see below how any addition inclusion criteria that we apply can be recorded using this attrition attribute.</p>
+<p>And last we can see attrition related to the cohort.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>gi_bleed) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1
 Columns: 7
 $ cohort_definition_id &lt;int&gt; 1
-$ number_records       &lt;int&gt; 479
-$ number_subjects      &lt;int&gt; 479
+$ number_records       &lt;int&gt; 964
+$ number_subjects      &lt;int&gt; 964
 $ reason_id            &lt;int&gt; 1
 $ reason               &lt;chr&gt; "Initial qualifying events"
 $ excluded_records     &lt;int&gt; 0
 $ excluded_subjects    &lt;int&gt; 0</code></pre>
 </div>
 </div>
+<p>As we will see below these attributes of the cohorts become particularly useful as we apply further restrictions on our cohort.</p>
 </section>
-<section id="applying-inclusion-criteria" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="applying-inclusion-criteria"><span class="header-section-number">5.5</span> Applying inclusion criteria</h2>
-<section id="restrict-to-study-period" class="level3" data-number="5.5.1">
-<h3 data-number="5.5.1" class="anchored" data-anchor-id="restrict-to-study-period"><span class="header-section-number">5.5.1</span> Restrict to study period</h3>
+<section id="applying-inclusion-criteria" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="applying-inclusion-criteria"><span class="header-section-number">5.4</span> Applying inclusion criteria</h2>
+<section id="only-include-first-cohort-entry-per-person" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="only-include-first-cohort-entry-per-person"><span class="header-section-number">5.4.1</span> Only include first cohort entry per person</h3>
+<p>Let’s say we first want to restrict to first entry.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireInDateRange</span>(<span class="at">dateRange =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"1990-01-01"</span>), <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">requireIsFirstEntry</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="only-include-first-cohort-entry-per-person" class="level3" data-number="5.5.2">
-<h3 data-number="5.5.2" class="anchored" data-anchor-id="only-include-first-cohort-entry-per-person"><span class="header-section-number">5.5.2</span> Only include first cohort entry per person</h3>
+<section id="restrict-to-study-period" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="restrict-to-study-period"><span class="header-section-number">5.4.2</span> Restrict to study period</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">requireIsFirstEntry</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireInDateRange</span>(<span class="at">dateRange =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>), <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="applying-demographic-inclusion-criteria" class="level3" data-number="5.5.3">
-<h3 data-number="5.5.3" class="anchored" data-anchor-id="applying-demographic-inclusion-criteria"><span class="header-section-number">5.5.3</span> Applying demographic inclusion criteria</h3>
+<section id="applying-demographic-inclusion-criteria" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="applying-demographic-inclusion-criteria"><span class="header-section-number">5.4.3</span> Applying demographic inclusion criteria</h3>
 <p>Say for our study we want to include people with a GI bleed who were aged 40 or over at the time. We can use the add variables with these characteristics as seen in chapter 4 and then filter accordingly. The function <code>CDMConnector::record_cohort_attrition()</code> will then update our cohort attributes as we can see below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireDemographics</span>(<span class="at">ageRange =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">64</span>), <span class="at">sex =</span> <span class="st">"Male"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>gi_bleed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-  cohort_definition_id number_records number_subjects
-                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;
-1                    1            177             177</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>gi_bleed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 6
-  cohort_definition_id cohort_name age_range sex   min_prior_observation
-                 &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;                 &lt;dbl&gt;
-1                    1 gi_bleed    18_64     Male                      0
-# ℹ 1 more variable: min_future_observation &lt;dbl&gt;</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireDemographics</span>(<span class="at">ageRange =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">64</span>), <span class="at">sex =</span> <span class="st">"Male"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="applying-cohort-based-inclusion-criteria" class="level3" data-number="5.5.4">
-<h3 data-number="5.5.4" class="anchored" data-anchor-id="applying-cohort-based-inclusion-criteria"><span class="header-section-number">5.5.4</span> Applying cohort-based inclusion criteria</h3>
-<p>As well as requirements about specific demographics, we may also want to use another cohort for inclusion criteria. Let’s say we want to exclude anyone with rheumatoid arthritis diagnosed before their GI bleed. We can first generate this cohort and then apply this additional exclusion criteria like so.</p>
+<section id="applying-cohort-based-inclusion-criteria" class="level3" data-number="5.4.4">
+<h3 data-number="5.4.4" class="anchored" data-anchor-id="applying-cohort-based-inclusion-criteria"><span class="header-section-number">5.4.4</span> Applying cohort-based inclusion criteria</h3>
+<p>As well as requirements about specific demographics, we may also want to use another cohort for inclusion criteria. Let’s say we want to exclude anyone with a history of cardiac conditions before their Covid-19 cohort entry.</p>
+<p>We can first generate this new cohort table with records of cardiac conditions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>acetaminophen <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"acetaminophen"</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1125315</span>,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1127078</span>,</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1127433</span>,</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">40229134</span>,</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">40231925</span>,</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">40162522</span>,</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">19133768</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  )), </span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="at">name =</span> <span class="st">"acetaminophen"</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>acetaminophen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"myocaridal_infarction"</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">317576</span>, <span class="dv">313217</span>, <span class="dv">321042</span>, <span class="dv">4329847</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  )), </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="at">name =</span> <span class="st">"cardiac"</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   table&lt;main.acetaminophen&gt; [?? x 4]
-# Database: DuckDB v1.0.0 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGi5nHI\file485c26057603.duckdb]
+<pre><code># Source:   table&lt;main.cardiac&gt; [?? x 4]
+# Database: DuckDB v1.0.0 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmpkd7jJS\file2c58541d1585.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        624 1961-11-07        1961-11-14     
- 2                    1        665 2011-08-23        2011-09-06     
- 3                    1       2013 1956-10-13        1956-10-27     
- 4                    1       2189 2004-04-08        2004-04-22     
- 5                    1       2218 1980-12-08        1980-12-22     
- 6                    1       3236 1940-04-17        1940-05-01     
- 7                    1         32 2003-07-09        2003-07-23     
- 8                    1        479 1957-04-13        1957-04-27     
- 9                    1       1053 1989-01-21        1989-02-18     
-10                    1       1861 2015-05-05        2015-05-19     
+ 1                    1       1357 2011-08-28        2011-08-28     
+ 2                    1       5562 1974-08-22        1974-08-22     
+ 3                    1       6278 1997-01-31        1997-01-31     
+ 4                    1       8880 2020-02-17        2020-02-17     
+ 5                    1         74 2009-09-04        2009-09-04     
+ 6                    1       3430 2004-03-22        2004-03-22     
+ 7                    1       3465 2015-08-22        2015-08-22     
+ 8                    1       6854 1956-10-31        1956-10-31     
+ 9                    1       7593 2014-04-10        2014-04-10     
+10                    1      10259 1973-11-25        1973-11-25     
 # ℹ more rows</code></pre>
 </div>
 </div>
+<p>And now we can apply the inclusion criteria that individuals have zero intersections with the table in the time prior to their Covid-19 cohort entry.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">requireCohortIntersect</span>(<span class="at">targetCohortTable =</span> <span class="st">"acetaminophen"</span>, </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">indexDate =</span> <span class="st">"cohort_start_date"</span>, </span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">window =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">requireCohortIntersect</span>(<span class="at">targetCohortTable =</span> <span class="st">"cardiac"</span>, </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">indexDate =</span> <span class="st">"cohort_start_date"</span>, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">window =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">intersections =</span> <span class="dv">0</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>gi_bleed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-  cohort_definition_id number_records number_subjects
-                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;
-1                    1            175             175</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>gi_bleed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 × 7
-  cohort_definition_id number_records number_subjects reason_id reason          
-                 &lt;int&gt;          &lt;int&gt;           &lt;int&gt;     &lt;int&gt; &lt;chr&gt;           
-1                    1            479             479         1 Initial qualify…
-2                    1            349             349         2 cohort_start_da…
-3                    1            349             349         3 Restricted to f…
-4                    1            349             349         4 Age requirement…
-5                    1            177             177         5 Sex requirement…
-6                    1            177             177         6 Prior observati…
-7                    1            177             177         7 Future observat…
-8                    1            175             175         8 In cohort aceta…
-# ℹ 2 more variables: excluded_records &lt;int&gt;, excluded_subjects &lt;int&gt;</code></pre>
-</div>
-</div>
+<p>Note if we had wanted to have required that individuals did have a history of a cardiac condition we would instead have set <code>intersections = c(1, Inf)</code> above.</p>
 </section>
 </section>
-<section id="visualising-cohort-attrition" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Visualising cohort attrition</h1>
+<section id="cohort-attributes" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="cohort-attributes"><span class="header-section-number">5.5</span> Cohort attributes</h2>
+<p>We can see that the attributes of the cohort were updated as we applied the inclusion criteria.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>gi_bleed_attrition <span class="ot">&lt;-</span> <span class="fu">summariseCohortAttrition</span>(cdm<span class="sc">$</span>gi_bleed)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCohortAttrition</span>(gi_bleed_attrition)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1
+Columns: 6
+$ cohort_definition_id   &lt;int&gt; 1
+$ cohort_name            &lt;chr&gt; "covid"
+$ age_range              &lt;chr&gt; "18_64"
+$ sex                    &lt;chr&gt; "Male"
+$ min_prior_observation  &lt;dbl&gt; 0
+$ min_future_observation &lt;dbl&gt; 0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1
+Columns: 3
+$ cohort_definition_id &lt;int&gt; 1
+$ number_records       &lt;int&gt; 158
+$ number_subjects      &lt;int&gt; 158</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 8
+Columns: 7
+$ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1
+$ number_records       &lt;int&gt; 964, 964, 793, 363, 171, 171, 171, 158
+$ number_subjects      &lt;int&gt; 964, 964, 793, 363, 171, 171, 171, 158
+$ reason_id            &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8
+$ reason               &lt;chr&gt; "Initial qualifying events", "Restricted to first…
+$ excluded_records     &lt;int&gt; 0, 0, 171, 430, 192, 0, 0, 13
+$ excluded_subjects    &lt;int&gt; 0, 0, 171, 430, 192, 0, 0, 13</code></pre>
+</div>
+</div>
+<p>For attrition, we can use <code>CohortConstructor::summariseCohortAttrition()</code> and then <code>CohortConstructor::tableCohortAttrition()</code> to better view the impact of applying the additional inclusion criteria.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>attrition_summary <span class="ot">&lt;-</span> <span class="fu">summariseCohortAttrition</span>(cdm<span class="sc">$</span>covid)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tableCohortAttrition</span>(attrition_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-422a40bf40760339bd77" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-422a40bf40760339bd77">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Initial events\nN subjects = 479\nN records = 479\", shape = \"box\", penwidth = \"2\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.6\", width = \"1.28\", pos = \"1,8.1!\"] \n  \"2\" [label = \"N subjects = 349\nN records = 349\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,6.8!\"] \n  \"3\" [label = \"N subjects = 349\nN records = 349\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,5.6!\"] \n  \"4\" [label = \"N subjects = 349\nN records = 349\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,4.4!\"] \n  \"5\" [label = \"N subjects = 177\nN records = 177\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,3.2!\"] \n  \"6\" [label = \"N subjects = 177\nN records = 177\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,2!\"] \n  \"7\" [label = \"N subjects = 177\nN records = 177\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,0.8!\"] \n  \"8\" [label = \"Final events\nN subjects = 175\nN records = 175\", shape = \"box\", penwidth = \"2\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.6\", width = \"1.28\", pos = \"1,-0.7!\"] \n  \"9\" [label = \"N subjects = 130\nN records = 130\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,7.4!\"] \n  \"10\" [label = \"cohort_start_date after\n1990-01-01\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.4\", width = \"2.25\", pos = \"1,7.4!\"] \n  \"11\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,6.2!\"] \n  \"12\" [label = \"Restricted to first\nentry\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.4\", width = \"2.25\", pos = \"1,6.2!\"] \n  \"13\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,5!\"] \n  \"14\" [label = \"Age requirement: 18 to\n64\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.4\", width = \"2.25\", pos = \"1,5!\"] \n  \"15\" [label = \"N subjects = 172\nN records = 172\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,3.8!\"] \n  \"16\" [label = \"Sex requirement:\nMale\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.4\", width = \"2.25\", pos = \"1,3.8!\"] \n  \"17\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,2.6!\"] \n  \"18\" [label = \"Prior observation requirement: 0\ndays\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.4\", width = \"2.25\", pos = \"1,2.6!\"] \n  \"19\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,1.4!\"] \n  \"20\" [label = \"Future observation requirement: 0\ndays\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.4\", width = \"2.25\", pos = \"1,1.4!\"] \n  \"21\" [label = \"N subjects = 2\nN records = 2\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,0.0999999999999999!\"] \n  \"22\" [label = \"In cohort acetaminophen between -Inf\n& -1 days relative to cohort_start_date\nbetween 1 and Inf times\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.6\", width = \"2.25\", pos = \"1,0.0999999999999999!\"] \n\"1\"->\"2\" [color = \"black\"] \n\"2\"->\"3\" [color = \"black\"] \n\"3\"->\"4\" [color = \"black\"] \n\"4\"->\"5\" [color = \"black\"] \n\"5\"->\"6\" [color = \"black\"] \n\"6\"->\"7\" [color = \"black\"] \n\"7\"->\"8\" [color = \"black\"] \n\"10\"->\"9\" [color = \"black\"] \n\"12\"->\"11\" [color = \"black\"] \n\"14\"->\"13\" [color = \"black\"] \n\"16\"->\"15\" [color = \"black\"] \n\"18\"->\"17\" [color = \"black\"] \n\"20\"->\"19\" [color = \"black\"] \n\"22\"->\"21\" [color = \"black\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div>
+<div id="kvuxonjrwx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kvuxonjrwx table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#kvuxonjrwx thead, #kvuxonjrwx tbody, #kvuxonjrwx tfoot, #kvuxonjrwx tr, #kvuxonjrwx td, #kvuxonjrwx th {
+  border-style: none;
+}
+
+#kvuxonjrwx p {
+  margin: 0;
+  padding: 0;
+}
+
+#kvuxonjrwx .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#kvuxonjrwx .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#kvuxonjrwx .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#kvuxonjrwx .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#kvuxonjrwx .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#kvuxonjrwx .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#kvuxonjrwx .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#kvuxonjrwx .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#kvuxonjrwx .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#kvuxonjrwx .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#kvuxonjrwx .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kvuxonjrwx .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#kvuxonjrwx .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#kvuxonjrwx .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#kvuxonjrwx .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kvuxonjrwx .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#kvuxonjrwx .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#kvuxonjrwx .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#kvuxonjrwx .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kvuxonjrwx .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#kvuxonjrwx .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kvuxonjrwx .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#kvuxonjrwx .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kvuxonjrwx .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kvuxonjrwx .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kvuxonjrwx .gt_left {
+  text-align: left;
+}
+
+#kvuxonjrwx .gt_center {
+  text-align: center;
+}
+
+#kvuxonjrwx .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kvuxonjrwx .gt_font_normal {
+  font-weight: normal;
+}
+
+#kvuxonjrwx .gt_font_bold {
+  font-weight: bold;
+}
+
+#kvuxonjrwx .gt_font_italic {
+  font-style: italic;
+}
+
+#kvuxonjrwx .gt_super {
+  font-size: 65%;
+}
+
+#kvuxonjrwx .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#kvuxonjrwx .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#kvuxonjrwx .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#kvuxonjrwx .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#kvuxonjrwx .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#kvuxonjrwx .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#kvuxonjrwx .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings gt_spanner_row">
+<th class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" style="text-align: center; background-color: #D9D9D9; font-weight: bold;" scope="col"></th>
+<th colspan="4" id="CDM name" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" style="text-align: center; background-color: #D9D9D9; font-weight: bold;" scope="colgroup"><span class="gt_column_spanner">CDM name</span></th>
+</tr>
+<tr class="odd gt_col_headings gt_spanner_row">
+<th class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" style="text-align: center; background-color: #E1E1E1; font-weight: bold;" scope="col"></th>
+<th colspan="4" id="Synthetic COVID-19 dataset" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" style="text-align: center; background-color: #E1E1E1; font-weight: bold;" scope="colgroup"><span class="gt_column_spanner">Synthetic COVID-19 dataset</span></th>
+</tr>
+<tr class="header gt_col_headings gt_spanner_row">
+<th rowspan="2" id="Reason" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold;" scope="col">Reason</th>
+<th colspan="4" id="Variable" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" style="text-align: center; background-color: #D9D9D9; font-weight: bold;" scope="colgroup"><span class="gt_column_spanner">Variable</span></th>
+</tr>
+<tr class="odd gt_col_headings">
+<th id="Number records" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="text-align: center; background-color: #E1E1E1; font-weight: bold;" scope="col">Number records</th>
+<th id="Number subjects" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="text-align: center; background-color: #E1E1E1; font-weight: bold;" scope="col">Number subjects</th>
+<th id="Excluded records" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="text-align: center; background-color: #E1E1E1; font-weight: bold;" scope="col">Excluded records</th>
+<th id="Excluded subjects" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" style="text-align: center; background-color: #E1E1E1; font-weight: bold;" scope="col">Excluded subjects</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd gt_group_heading_row">
+<td colspan="5" id="covid" class="gt_group_heading" data-quarto-table-cell-role="th" style="background-color: #E9E9E9; font-weight: bold" scope="colgroup">covid</td>
+</tr>
+<tr class="even gt_row_group_first">
+<td class="gt_row gt_left" headers="covid  Reason" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">Initial qualifying events</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">964</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number subjects" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">964</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">0</td>
+<td class="gt_row gt_right" style="text-align: right;" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded subjects">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="covid  Reason" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">Restricted to first entry</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">964</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number subjects" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">964</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">0</td>
+<td class="gt_row gt_right" style="text-align: right;" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded subjects">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="covid  Reason" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">cohort_start_date after 2020-09-01</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">793</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number subjects" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">793</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">171</td>
+<td class="gt_row gt_right" style="text-align: right;" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded subjects">171</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="covid  Reason" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">Age requirement: 18 to 64</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">363</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number subjects" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">363</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">430</td>
+<td class="gt_row gt_right" style="text-align: right;" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded subjects">430</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="covid  Reason" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">Sex requirement: Male</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">171</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number subjects" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">171</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">192</td>
+<td class="gt_row gt_right" style="text-align: right;" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded subjects">192</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="covid  Reason" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">Prior observation requirement: 0 days</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">171</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number subjects" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">171</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">0</td>
+<td class="gt_row gt_right" style="text-align: right;" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded subjects">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="covid  Reason" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">Future observation requirement: 0 days</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">171</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number subjects" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">171</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">0</td>
+<td class="gt_row gt_right" style="text-align: right;" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded subjects">0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="covid  Reason" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">Not in cohort myocaridal_infarction between -Inf &amp; -1 days relative to cohort_start_date</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">158</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Number subjects" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">158</td>
+<td class="gt_row gt_right" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded records" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">13</td>
+<td class="gt_row gt_right" style="text-align: right;" headers="covid  [header_name]CDM name
+[header_level]Synthetic COVID-19 dataset
+[header_name]Variable
+[header_level]Excluded subjects">13</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
+</div>
+</div>
+</section>
+<section id="further-reading" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Further reading</h1>
+<ul>
+<li>…</li>
+</ul>
 
 
 </section>

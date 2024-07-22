@@ -10,9 +10,13 @@ editor_options:
 
 When performing research with the OMOP common data model we often want to identify groups of individuals who share some set of characteristics. The criteria for including individuals can range from the seemingly simple (e.g. people diagnosed with asthma) to the much more complicated (e.g. adults diagnosed with asthma who had a year of prior observation time in the database prior to their diagnosis, had no prior history of chronic obstructive pulmonary disease, and no history of use of short-acting beta-antagonists).
 
-The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields: 1) cohort definition id (a unique identifier for each cohort), 2) subject id (a foreign key to the subject in the cohort - typically referring to records in the person table), 3) cohort start date, and 4) cohort end date. Individuals can enter a cohort multiple times, but the time in which they are in the cohort cannot overlap.
+The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields: 1) cohort definition id (a unique identifier for each cohort), 2) subject id (a foreign key to the subject in the cohort - typically referring to records in the person table), 3) cohort start date, and 4) cohort end date. Individuals can enter a cohort multiple times, but the time periods in which they are in the cohort cannot overlap. Individuals will only be considered in a cohort when they have have an ongoing observation period.
+
+It is beyond the scope of this book to describe all the different ways cohorts could be created, however in this chapter we provide a summary of some of the key building blocks for cohort creation. Cohort-building pipelines can be created following these principles to create a wide range of study cohorts. 
 
 ## Set up
+
+We'll use our synthetic dataset for demonstrating how cohorts can be constructed.
 
 ```{r, warning=FALSE, message=FALSE}
 library(CDMConnector)
@@ -21,37 +25,22 @@ library(CohortConstructor)
 library(CohortCharacteristics)
 library(dplyr)
         
-db <- DBI::dbConnect(duckdb::duckdb(), eunomia_dir())
-
-cdm <- cdm_from_con(
-  con = db,
-  cdm_schema = "main",
-  write_schema = "main"
-)
+db <- DBI::dbConnect(duckdb::duckdb(),
+              dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
+cdm <- cdm_from_con(db,
+                    cdm_schema = "main", 
+                    write_schema = "main", 
+                    cdm_name = "Synthetic COVID-19 dataset")
 ```
 
-## Creating a base cohort
-
-We can create a set of base cohorts using a code lists or concept set
-
-### General concept based cohort
+## General concept based cohort
+Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the `CohortConstructor` package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code 37311061.
 
 ```{r, warning=FALSE, message=FALSE}
-cdm$gi_bleed <- conceptCohort(cdm = cdm, 
-                     conceptSet = list("gi_bleed" = 192671), 
-                     name = "gi_bleed")
-cdm$gi_bleed
-```
-
-### Demographic cohorts
-
-```{r, warning=FALSE, message=FALSE}
-cdm$age_cohorts <- demographicsCohort(cdm = cdm, 
-                                      ageRange = list(c(0, 17),
-                                                     c(18, 64),
-                                                     c(65, Inf)), 
-                                      name = "age_cohorts")
-cdm$age_cohorts
+cdm$covid <- conceptCohort(cdm = cdm, 
+                     conceptSet = list("covid" = 37311061), 
+                     name = "covid")
+cdm$covid
 ```
 
 ::: {.callout-tip collapse="true"}
@@ -59,11 +48,11 @@ cdm$age_cohorts
 
 In the defining the cohorts above we have needed to provide concept IDs to define our cohort. But, where do these come from?
 
-We can search for codes of interest using the `CodelistGenerator` package. This can be done using a text search with the function `CodelistGenerator::getCandidateCodes()`. For example, we can find the GI code we use above like so:
+We can search for codes of interest using the `CodelistGenerator` package. This can be done using a text search with the function `CodelistGenerator::getCandidateCodes()`. For example, we can have found the code we used above (and many others) like so:
 
 ```{r}
 getCandidateCodes(cdm = cdm, 
-                  keywords = "Gastrointestinal hemorrhage",
+                  keywords = c("coronavirus","covid"),
                   domains = "condition",
                   includeDescendants = TRUE)
 ```
@@ -75,46 +64,50 @@ CodelistGenerator::getDrugIngredientCodes(cdm = cdm,
                                           name = "acetaminophen")
 ```
 
-Note that the data we're using just has a subset of the full OMOP CDM vocabularies. In practice, these searches would return many more codes. And in the case of the former in particular, clinical expertise would then be required to decide which of the codes were in line with the clinical idea at hand.
+Note that in practice clinical expertise is vital in the identification of appropriate codes so as to decide which the codes are in line with the clinical idea at hand.
 :::
 
-## Cohort attributes
+We can see that as well as having the cohort entries above, our cohort table is associated with several attributes. 
 
-The set of cohorts we create will be associated with various attributes. The cohort set attribute contains information on the cohorts that we've generated.
+First, we can see the settings associated with cohort.
 
 ```{r, warning=FALSE, message=FALSE}
-settings(cdm$gi_bleed) |> 
+settings(cdm$covid) |> 
   glimpse()
 ```
 
-Another attribute contains counts of the cohorts we've created.
+Second, we can get counts of the cohort.
 
 ```{r, warning=FALSE, message=FALSE}
-cohortCount(cdm$gi_bleed) |> 
+cohortCount(cdm$covid) |> 
   glimpse()
 ```
 
-And we can also see attrition related to the cohort. We'll see below how any addition inclusion criteria that we apply can be recorded using this attrition attribute.
+And last we can see attrition related to the cohort.
 
 ```{r, warning=FALSE, message=FALSE}
-attrition(cdm$gi_bleed) |> 
+attrition(cdm$covid) |> 
   glimpse()
 ```
+
+As we will see below these attributes of the cohorts become particularly useful as we apply further restrictions on our cohort.
 
 ## Applying inclusion criteria
+
+### Only include first cohort entry per person
+
+Let's say we first want to restrict to first entry.
+
+```{r, warning=FALSE, message=FALSE}
+cdm$covid <- cdm$covid |> 
+     requireIsFirstEntry() 
+```
 
 ### Restrict to study period
 
 ```{r, warning=FALSE, message=FALSE}
-cdm$gi_bleed <- cdm$gi_bleed |>
-   requireInDateRange(dateRange = c(as.Date("1990-01-01"), NA))
-```
-
-### Only include first cohort entry per person
-
-```{r, warning=FALSE, message=FALSE}
-cdm$gi_bleed <- cdm$gi_bleed |> 
-     requireIsFirstEntry() 
+cdm$covid <- cdm$covid |>
+   requireInDateRange(dateRange = c(as.Date("2020-09-01"), NA))
 ```
 
 ### Applying demographic inclusion criteria
@@ -122,55 +115,64 @@ cdm$gi_bleed <- cdm$gi_bleed |>
 Say for our study we want to include people with a GI bleed who were aged 40 or over at the time. We can use the add variables with these characteristics as seen in chapter 4 and then filter accordingly. The function `CDMConnector::record_cohort_attrition()` will then update our cohort attributes as we can see below.
 
 ```{r, warning=FALSE, message=FALSE}
-cdm$gi_bleed <- cdm$gi_bleed |>
+cdm$covid <- cdm$covid |>
    requireDemographics(ageRange = c(18, 64), sex = "Male")
 ```
 
-```{r, warning=FALSE, message=FALSE}
-cohortCount(cdm$gi_bleed)
-settings(cdm$gi_bleed)
-```
 
 ### Applying cohort-based inclusion criteria
 
-As well as requirements about specific demographics, we may also want to use another cohort for inclusion criteria. Let's say we want to exclude anyone with rheumatoid arthritis diagnosed before their GI bleed. We can first generate this cohort and then apply this additional exclusion criteria like so.
+As well as requirements about specific demographics, we may also want to use another cohort for inclusion criteria. Let's say we want to exclude anyone with a history of cardiac conditions  before their Covid-19 cohort entry. 
+
+We can first generate this new cohort table with records of cardiac conditions.
 
 ```{r, warning=FALSE, message=FALSE}
-cdm$acetaminophen <- conceptCohort(
+cdm$cardiac <- conceptCohort(
   cdm = cdm,
-  list("acetaminophen" = c(
-    1125315,
-    1127078,
-    1127433,
-    40229134,
-    40231925,
-    40162522,
-    19133768
+  list("myocaridal_infarction" = c(
+    317576, 313217, 321042, 4329847
   )), 
-name = "acetaminophen"
+name = "cardiac"
 )
-cdm$acetaminophen
+cdm$cardiac
 ```
 
+And now we can apply the inclusion criteria that individuals have zero intersections with the table in the time prior to their Covid-19 cohort entry. 
 ```{r, warning=FALSE, message=FALSE}
-cdm$gi_bleed <- cdm$gi_bleed |> 
-  requireCohortIntersect(targetCohortTable = "acetaminophen", 
+cdm$covid <- cdm$covid |> 
+  requireCohortIntersect(targetCohortTable = "cardiac", 
                          indexDate = "cohort_start_date", 
-                         window = c(-Inf, -1)) 
+                         window = c(-Inf, -1), 
+                         intersections = 0) 
+```
+
+Note if we had wanted to have required that individuals did have a history of a cardiac condition we would instead have set `intersections = c(1, Inf)` above.
+
+## Cohort attributes
+
+We can see that the attributes of the cohort were updated as we applied the inclusion criteria.
+
+```{r, warning=FALSE, message=FALSE}
+settings(cdm$covid) |> 
+  glimpse()
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-cohortCount(cdm$gi_bleed)
-attrition(cdm$gi_bleed)
+cohortCount(cdm$covid) |> 
+  glimpse()
 ```
-
-# Visualising cohort attrition
 
 ```{r, warning=FALSE, message=FALSE}
-gi_bleed_attrition <- summariseCohortAttrition(cdm$gi_bleed)
-plotCohortAttrition(gi_bleed_attrition)
+attrition(cdm$covid) |> 
+  glimpse()
 ```
 
+For attrition, we can use `CohortConstructor::summariseCohortAttrition()` and then `CohortConstructor::tableCohortAttrition()` to better view the impact of applying the additional inclusion criteria.
+
+```{r, warning=FALSE, message=FALSE}
+attrition_summary <- summariseCohortAttrition(cdm$covid)
+tableCohortAttrition(attrition_summary)
+```
 
 # Further reading
 
