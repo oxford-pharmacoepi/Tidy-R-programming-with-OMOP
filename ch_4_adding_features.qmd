@@ -99,7 +99,6 @@ cdm$drug_exposure |>
   collect()
 ```
 
-
 ::: {.callout-tip collapse="true"}
 ## Returning a query from `PatientProfiles` rather than the result
 
@@ -111,7 +110,6 @@ cdm$visit_occurrence |>
   filter(sex == "Male") |> 
   dplyr::show_query()
 ```
-
 
 ```{r, echo = TRUE}
 cdm$visit_occurrence |> 
@@ -163,7 +161,6 @@ cdm$condition_occurrence |>
   ) |> 
   glimpse()
 ```
-
 
 ## Adding custom variables
 

@@ -29,12 +29,15 @@ db <- DBI::dbConnect(RPostgres::Postgres(),
 
 As seen in the previous chapter, once a connection to the database has been created we can then create references to the various tables in the database and build queries using in a familiar dplyr style. To show this, let's download an example dataset (*synthea-covid19-10k*) provided by `CDMConnector`. 
 
+```{r, echo = FALSE, message=FALSE}
+Sys.setenv(EUNOMIA_DATA_FOLDER = here::here())
+CDMConnector::downloadEunomiaData()
+```
+
+
 ```{r, echo = TRUE, warning=FALSE, message=FALSE}
 CDMConnector::downloadEunomiaData(
-  datasetName = "synthea-covid19-10k",
-  cdmVersion = "5.3",
-  pathToData = here(),
-  overwrite = FALSE
+  datasetName = "synthea-covid19-10k", cdmVersion = "5.3"
 )
 ```
 
