@@ -27,15 +27,10 @@ db <- DBI::dbConnect(RPostgres::Postgres(),
 
 ## Referencing tables from the OMOP common data model
 
-As seen in the previous chapter, once a connection to the database has been created we can then create references to the various tables in the database and build queries using in a familiar dplyr style. To show this, let's download an example dataset (*synthea-covid19-10k*) provided by `CDMConnector`. 
+As seen in the previous chapter, once a connection to the database has been created we can then create references to the various tables in the database and build queries using in a familiar dplyr style. To show this, let's download an example dataset (*synthea-covid19-10k*) provided by `CDMConnector`.
 
 ```{r, echo = FALSE, message=FALSE}
 Sys.setenv(EUNOMIA_DATA_FOLDER = here::here())
-CDMConnector::downloadEunomiaData()
-```
-
-
-```{r, echo = TRUE, warning=FALSE, message=FALSE}
 CDMConnector::downloadEunomiaData(
   datasetName = "synthea-covid19-10k", cdmVersion = "5.3"
 )
@@ -52,7 +47,8 @@ db |> tbl("person")
 db |> tbl("observation_period")
 ```
 
-We could also perform similar queries to those seen in chapter 1, but this time working with the patient-level, rather than penguin-level, data. 
+We could also perform similar queries to those seen in chapter 1, but this time working with the patient-level, rather than penguin-level, data.
+
 ```{r, echo = TRUE}
 db |> 
   tbl("person") |> 
@@ -62,7 +58,7 @@ db |>
 
 ## Creating a reference to the OMOP common data model
 
-As the structure of the OMOP CDM is already known, we can avoid the overhead of creating individual references to the OMOP CDM tables like above by instead using the `CDMConnector` package. `CDMConnector` will do the work for us and quickly create a joint reference for all OMOP CDM database tables in one go. As well as specifying the schema where our OMOP CDM tables, we also specify a write schema where any database tables we create during our analysis will be stored (often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access). 
+As the structure of the OMOP CDM is already known, we can avoid the overhead of creating individual references to the OMOP CDM tables like above by instead using the `CDMConnector` package. `CDMConnector` will do the work for us and quickly create a joint reference for all OMOP CDM database tables in one go. As well as specifying the schema where our OMOP CDM tables, we also specify a write schema where any database tables we create during our analysis will be stored (often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access).
 
 ```{r, echo = TRUE}
 library(CDMConnector)
@@ -75,6 +71,7 @@ cdm
 
 ::: {.callout-tip collapse="true"}
 ## Setting a write prefix
+
 We can also specify a write prefix and this will be used whenever permanent tables are created the write schema. This can be useful when we're sharing our write schema with others and want to avoid table name conflicts and easily drop tables created as part of a particular study.
 
 ```{r, echo = TRUE, eval = FALSE}
@@ -84,7 +81,7 @@ cdm <- cdm_from_con(db,
 ```
 :::
 
-We can see that we now have an object that contains references to all the OMOP CDM tables. We can reference specific tables using the "\$" or "[[ ... ]]" operators.
+We can see that we now have an object that contains references to all the OMOP CDM tables. We can reference specific tables using the "\$" or "\[\[ ... \]\]" operators.
 
 ```{r, echo = TRUE}
 cdm$person
@@ -113,17 +110,23 @@ cdm_name(cdm)
 ```
 
 ### CDM version
+
 We can also easily check the OMOP CDM version that is being used
+
 ```{r, echo = TRUE}
 omopgenerics::cdmVersion(cdm)
 ```
 
 ### CDM Source
+
 From the cdm reference we can also extract information about the data source. We can see that we're using a duckdb database.
+
 ```{r, echo = TRUE}
 omopgenerics::cdmSource(cdm)
 ```
+
 Although typically we won't need to use them for writing study code, we can also access lower-level information on the source such as the database connection.
+
 ```{r, echo = TRUE}
 source_details <- omopgenerics::cdmSourceType(cdm)
 attr(omopgenerics::cdmSource(cdm), "dbcon")
