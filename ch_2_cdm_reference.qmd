@@ -39,12 +39,15 @@ CDMConnector::downloadEunomiaData(
 Now we have this downloaded, we can create a connection to a duckdb database containing the data in a similar way to how we've done before.
 
 ```{r, echo = TRUE}
-db <- dbConnect(duckdb::duckdb(), 
-              dbdir = CDMConnector::eunomiaDir(datasetName = "synthea-covid19-10k"))
+db <- dbConnect(
+  duckdb::duckdb(), 
+  dbdir = CDMConnector::eunomiaDir(datasetName = "synthea-covid19-10k"))
 
-db |> tbl("person")
+db |> 
+  tbl("person")
 
-db |> tbl("observation_period")
+db |> 
+  tbl("observation_period")
 ```
 
 We could also perform similar queries to those seen in chapter 1, but this time working with the patient-level, rather than penguin-level, data.
