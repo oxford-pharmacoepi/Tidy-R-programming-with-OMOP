@@ -2,7 +2,6 @@
 .Rhistory
 /_site/
 /_freeze/
-/_book/
 /.quarto/
 .Rproj.user
 *.zip
