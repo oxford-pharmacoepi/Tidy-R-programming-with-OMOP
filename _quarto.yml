@@ -33,6 +33,3 @@ format:
     theme: cosmo
 
 editor: visual
-
-execute:
-  freeze: true
