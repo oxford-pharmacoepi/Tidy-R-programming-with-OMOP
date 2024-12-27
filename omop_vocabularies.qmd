@@ -1,1 +1,3 @@
 # Working with the OMOP CDM vocabularies {#sec-omop_vocabularies}
+
+## Concept
