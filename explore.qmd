@@ -1,0 +1,13 @@
+---
+title: "Getting to know the OMOP CDM"
+---
+
+The OMOP CDM standardises the format and content of health care data.
+
+-   In @sec-cdm_reference we will see how we will see how to create a reference in R to each of these OMOP CDM tables. Because we already know the structure of our data, creating this reference to the various tables will be our first step in our analysis scripts.
+
+-  The OMOP CDM is a person-centric model, and the person and observation period tables are two key tables for any analysis. In @sec-omop_person_obs_period we will see more on how these tables can be used as the starting point for identifying your study participants. 
+
+- The OMOP CDM standarises the content of health care data via the OMOP CDM vocabulary tables, which provides a set of standard concepts to represent different clinical events. The vocabulary tables are described in @sec-omop_vocabularies, with these tables playing a fundamental role when we identify the clinical events of interest for our study.
+
+- Clinical records associated with individuals are spread across various OMOP CDM tables, covering various domains. In @sec-omop_clinical_tables we will see how these tables represent events and link back to the person and vocabulary tables. 

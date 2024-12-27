@@ -6,16 +6,25 @@ book:
   author: "Edward Burn, Adam Black, Berta Raventós, Yuchen Guo, Mike Du, Kim López-Güell, Núria Mercadé-Besora, Martí Català"
   date: today
   chapters:
-  - index.qmd
-  - ch_1_getting_started.qmd
-  - ch_2_cdm_reference.qmd
-  - ch_3_exploring_the_cdm.qmd
-  - ch_4_adding_features.qmd
-  - ch_5_creating_cohorts.qmd
-  - ch_6_working_with_cohorts.qmd
-  - ch_7_summarising_cohorts.qmd
-  - ch_8_comparing_cohorts.qmd
-  - references.qmd
+    - index.qmd
+    - getting_started.qmd
+    - part: explore.qmd
+      chapters: 
+        - cdm_reference.qmd
+        - omop_person_obs_period.qmd
+        - omop_vocabularies.qmd
+        - omop_clinical_tables.qmd
+    - part: data_analysis.qmd
+      chapters: 
+        - exploring_the_cdm.qmd
+        - creating_cohorts.qmd
+        - adding_features.qmd
+        - working_with_cohorts.qmd
+        - summarising_cohorts.qmd
+        - comparing_cohorts.qmd
+    - part: end_matter.qmd
+      chapters: 
+        - references.qmd
 
 bibliography: references.bib
 

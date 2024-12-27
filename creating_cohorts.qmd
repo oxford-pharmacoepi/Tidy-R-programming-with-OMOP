@@ -27,10 +27,7 @@ library(dplyr)
         
 db <- DBI::dbConnect(duckdb::duckdb(),
               dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
-cdm <- cdm_from_con(db,
-                    cdm_schema = "main", 
-                    write_schema = "main", 
-                    cdm_name = "Synthetic COVID-19 dataset")
+cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
 ```
 
 ## General concept based cohort
@@ -171,7 +168,7 @@ For attrition, we can use `CohortConstructor::summariseCohortAttrition()` and th
 
 ```{r, warning=FALSE, message=FALSE}
 attrition_summary <- summariseCohortAttrition(cdm$covid)
-tableCohortAttrition(attrition_summary)
+plotCohortAttrition(attrition_summary)
 ```
 
 # Further reading

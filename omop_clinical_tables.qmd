@@ -1,0 +1,2 @@
+# Working with the OMOP CDM clinical tables {#sec-omop_clinical_tables}
+

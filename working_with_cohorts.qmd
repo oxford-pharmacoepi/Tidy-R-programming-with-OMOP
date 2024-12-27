@@ -17,11 +17,7 @@ library(PatientProfiles)
 CDMConnector::downloadEunomiaData(datasetName = "GiBleed")        
 db <- DBI::dbConnect(duckdb::duckdb(), eunomia_dir())
 
-cdm <- cdm_from_con(
-  con = db,
-  cdm_schema = "main",
-  write_schema = "main"
-)
+cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
 
 cdm <- cdm |> 
   generate_concept_cohort_set(concept_set = list("gi_bleed" = 192671), 

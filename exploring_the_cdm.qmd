@@ -1,6 +1,6 @@
 ## Exploring the OMOP CDM
 
-For this chapter, lets again use the synthetic COVID-19 dataset.
+For this chapter, lets again use the synthetic Covid-19 dataset.
 
 ```{r, warning=FALSE, message=FALSE}
 library(DBI)
@@ -15,7 +15,11 @@ library(clock)
 ```{r}
 db<-dbConnect(duckdb::duckdb(), 
               dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
-cdm <- cdm_from_con(db, cdm_schema = "main", write_schema = "main")
+cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
+```
+
+```{r, echo = TRUE}
+cdm
 ```
 
 ## Counting people
@@ -24,8 +28,7 @@ The OMOP CDM is person-centric, with the person table containing records to uniq
 
 ```{r, echo = TRUE}
 cdm$person |> 
-  count() |> 
-  pull()
+  count()
 ```
 
 The person table also contains some demographic information, including a gender concept for each person. We can get a count grouped by this variable, but as this uses a concept we'll also need to join to the concept table to get the corresponding concept name for each concept id.
@@ -160,7 +163,7 @@ cdm$person |>
   theme_bw()
 ```
 
-How about we were interested in getting record counts for some specific concepts related to COVID-19 symptoms?
+How about we were interested in getting record counts for some specific concepts related to Covid-19  symptoms?
 
 ```{r, echo = TRUE}
 cdm$condition_occurrence |> 
@@ -280,7 +283,7 @@ cdm$person |>
 As we've seen before, we can also quickly get results for various groupings or restrictions
 
 ```{r, echo = TRUE}
-cdm$person |> 
+grouped_summary <- cdm$person |> 
    group_by(gender_concept_id) |> 
    summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
             q25_year_of_birth = quantile(year_of_birth, 0.25, na.rm=TRUE),
@@ -289,7 +292,9 @@ cdm$person |>
             max_year_of_birth = max(year_of_birth, na.rm=TRUE)) |> 
   left_join(cdm$concept, 
             by=c("gender_concept_id" = "concept_id")) |> 
-   collect() |> 
+   collect() 
+
+grouped_summary |> 
   ggplot(aes(x = concept_name, group = concept_name,
              fill = concept_name)) +
   geom_boxplot(aes(

@@ -6,7 +6,7 @@
 
 *Artwork by \@allison_horst*
 
-Before we start thinking about working with health care data spread across a database using the OMOP common data model, let's first do a quick data analysis from R using a simpler dataset held in a database. For this we'll use data from [palmerpenguins package](https://allisonhorst.github.io/palmerpenguins/), which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
+Before we start thinking about working with health care data spread across a database using the OMOP common data model, let's first do a quick data analysis from R using a simpler dataset held in a database to quickly understand the general approach. For this we'll use data from [palmerpenguins package](https://allisonhorst.github.io/palmerpenguins/), which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
 
 ## Getting set up
 
@@ -46,7 +46,7 @@ head(penguins, 5)
 
 ## Inserting data into a database
 
-Let's put our penguins data into a duckdb database. We create the duckdb database, add the penguins data, and then create a reference to the table containing the data.
+Let's put our penguins data into a [duckdb database](https://duckdb.org/). We create the database, add the penguins data, and then create a reference to the table containing the data.
 
 ```{r}
 db <- dbConnect(duckdb::duckdb(), dbdir = ":memory:")
@@ -66,15 +66,15 @@ And now that the data is in a database we could use SQL to get the first rows th
 dbGetQuery(db, "SELECT * FROM penguins LIMIT 5")
 ```
 
-But we could also use the same R code as before
+## Translation from R to SQL
+
+Instead of using SQL, we could instead use the same R code as before. Now it will query the data held in a database.
 
 ```{r}
 head(penguins_db, 5)
 ```
 
-## Translation from R to SQL
-
-The magic here is provided by the `dbplyr` which takes the R code and converts it into SQL, which in this case looks like
+The magic here is provided by the `dbplyr` which takes the R code and converts it into SQL, which in this case looks like the SQL we could have written instead.
 
 ```{r}
 head(penguins_db, 5) |> 
@@ -103,7 +103,7 @@ penguins_db |>
   )
 ```
 
-The benefit of using dbplyr now becomes quite clear if we take a look at the corresponding SQL that is generated for us
+The benefit of using dbplyr now becomes quite clear if we take a look at the corresponding SQL that is generated for us.
 
 ```{r, warning=FALSE}
 penguins_db |>
@@ -122,10 +122,12 @@ penguins_db |>
   show_query()
 ```
 
+Now instead of having to write this somewhat complex SQL we can use the friendlier dplyr syntax that may well be more familiar if coming from an R programming background.
+
 ::: {.callout-tip collapse="true"}
 ## Different SQL for different database management systems
 
-While using the SQL programming language allows us to process information in a relational database, there are a range of SQL dialects used with different database management systems. One important benefit of using the above approach of translating R code to SQL via dbplyr is that the SQL generated will be in the appropriate dialect for the database management system being used. Here for example we can see how the same R code will generate different SQL for PosgreSQL compared to SQL Server.
+While using the SQL programming language allows us to process information in a relational database, there are a range of SQL dialects used with different database management systems. One particular benefit of using the above approach of translating R code to SQL via dbplyr is that the SQL generated will be in the appropriate dialect for the database management system being used. Here for example we can see how the same R code will generate different SQL for PosgreSQL compared to SQL Server.
 
 ```{r, warning=FALSE}
 
@@ -180,7 +182,7 @@ penguins_db |>
   summarise(mean_body_mass_g = round(mean(body_mass_g, na.rm = TRUE), 1))
 ```
 
-We can then also make a histogram for each of the species.
+We could also make a histogram of values for each of the species.
 
 ```{r, warning=FALSE, message=FALSE}
 penguins_db |>
@@ -242,7 +244,7 @@ dbDisconnect(db)
 
 ## Further reading
 
--   [R for Data Science (Chapter 13: Relational data)](https://r4ds.had.co.nz/relational-data.html)
+-   [R for Data Science (Chapter 13: Relational data)](https://r4ds.hadley.nz/databases)
 
 -   [Writing SQL with dbplyr](https://dbplyr.tidyverse.org/articles/sql.html)
 

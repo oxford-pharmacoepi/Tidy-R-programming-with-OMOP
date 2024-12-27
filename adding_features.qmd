@@ -15,9 +15,7 @@ library(ggplot2)
 ```{r}
 db <- dbConnect(duckdb::duckdb(),
               dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
-cdm <- cdm_from_con(db,
-                    cdm_schema = "main", 
-                    write_schema = "main")
+cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
 ```
 
 As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (ie a characteristic that does not change as time passes and a person ages) or time-varying.[^ch_4_adding_features-1]
