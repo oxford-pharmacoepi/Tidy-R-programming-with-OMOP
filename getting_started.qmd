@@ -51,7 +51,6 @@ Let's put our penguins data into a [duckdb database](https://duckdb.org/). We cr
 ```{r}
 db <- dbConnect(duckdb::duckdb(), dbdir = ":memory:")
 dbWriteTable(db, "penguins", penguins)
-penguins_db <- tbl(db, "penguins")
 ```
 
 We can see that our database now has one table
@@ -66,9 +65,41 @@ And now that the data is in a database we could use SQL to get the first rows th
 dbGetQuery(db, "SELECT * FROM penguins LIMIT 5")
 ```
 
+::: {.callout-tip collapse="true"}
+## Connecting to databases from R
+
+Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. Above we we created a new, empty, in-process [duckdb](https://duckdb.org/) database which we then added database. But we could have instead connected to an existing duckdb database. This could, for example, look like
+
+```{r, eval = FALSE}
+db <- dbConnect(duckdb::duckdb(), 
+              dbdir = here("my_duckdb_database.ducdkb"))
+```
+
+In this book for simplicity we will be working with in-process duckdb databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections are supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like:
+
+```{r, eval=FALSE}
+db <- DBI::dbConnect(RPostgres::Postgres(),
+                      dbname = Sys.getenv("CDM5_POSTGRESQL_DBNAME"),
+                      host = Sys.getenv("CDM5_POSTGRESQL_HOST"),
+                      user = Sys.getenv("CDM5_POSTGRESQL_USER"),
+                      password = Sys.getenv("CDM5_POSTGRESQL_PASSWORD"))
+```
+
+
+
+
+:::
+
 ## Translation from R to SQL
 
-Instead of using SQL, we could instead use the same R code as before. Now it will query the data held in a database.
+Instead of using SQL, we could instead use the same R code as before. Now it will query the data held in a database. To do this, first we create a reference to the table in the database.
+
+```{r}
+penguins_db <- tbl(db, "penguins")
+penguins_db
+```
+
+Once we have this reference, we can then use it with familiar looking R code.
 
 ```{r}
 head(penguins_db, 5)

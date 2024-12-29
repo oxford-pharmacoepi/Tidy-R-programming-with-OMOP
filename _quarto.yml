@@ -22,9 +22,6 @@ book:
         - working_with_cohorts.qmd
         - summarising_cohorts.qmd
         - comparing_cohorts.qmd
-    - part: end_matter.qmd
-      chapters: 
-        - references.qmd
 
 bibliography: references.bib
 

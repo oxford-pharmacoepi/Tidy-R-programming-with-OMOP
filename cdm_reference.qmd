@@ -1,36 +1,21 @@
-# Creating a reference to data in the OMOP CDM {#sec-cdm_reference}
+# Creating a cdm reference {#sec-cdm_reference}
 
-An entity-relationship diagram for version 5.4 of the OMOP CDM is shown below.
+## The OMOP CDM layout
+
+The OMOP CDM standardises the structure of health care data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure. An entity-relationship diagram for version 5.4 of the OMOP CDM is shown below.
 ![](images/erd.jpg){.lightbox}
 
-## Connecting to a database from R using DBI
+These tables are going to be described in more detail in the following chapters. But before that, we can first see how to work with our OMOP CDM data from R.
 
-Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. We saw in Chapter 1 an example where we created a new, empty, in-process [duckdb](https://duckdb.org/) database which we then added database. But we could have instead connected to an existing duckdb database. This could, for example, look like
+## Referencing tables from the OMOP common data model
+
+As seen in the previous chapter, once a connection to the database has been created we can then create references to the various tables in the database and build queries using in a familiar dplyr style. To show this, let's download an example dataset (*synthea-covid19-10k*) provided by `CDMConnector`.
 
 ```{r, message=FALSE, warning=FALSE}
 library(DBI)
 library(here)
 library(dplyr)
 ```
-
-```{r, eval = FALSE}
-db <- dbConnect(duckdb::duckdb(), 
-              dbdir = here("my_duckdb_database.ducdkb"))
-```
-
-For other database management systems, creating connections would be supported by the associated back-end packages. For example a connection to a Postgres database would look something like:
-
-```{r, eval=FALSE}
-db <- DBI::dbConnect(RPostgres::Postgres(),
-                      dbname = Sys.getenv("CDM5_POSTGRESQL_DBNAME"),
-                      host = Sys.getenv("CDM5_POSTGRESQL_HOST"),
-                      user = Sys.getenv("CDM5_POSTGRESQL_USER"),
-                      password = Sys.getenv("CDM5_POSTGRESQL_PASSWORD"))
-```
-
-## Referencing tables from the OMOP common data model
-
-As seen in the previous chapter, once a connection to the database has been created we can then create references to the various tables in the database and build queries using in a familiar dplyr style. To show this, let's download an example dataset (*synthea-covid19-10k*) provided by `CDMConnector`.
 
 ```{r, echo = FALSE, message=FALSE}
 Sys.setenv(EUNOMIA_DATA_FOLDER = here::here())
@@ -98,6 +83,57 @@ We can see that we now have an object that contains references to all the OMOP C
 cdm$person
 
 cdm[["observation_period"]]
+```
+
+## Mutability of the cdm reference
+
+An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected. 
+
+For example, let's say we want to perform a study with only people born in 1970. For this we could filter our person table to only people born in this year.
+
+```{r, echo = TRUE}
+cdm$person <- cdm$person |> 
+  filter(year_of_birth == 1970)
+
+cdm$person
+```
+
+From now on, when we work with our cdm reference this restriction will continue to have been applied.  
+
+```{r, echo = TRUE}
+cdm$person |> 
+    tally()
+```
+
+The original OMOP CDM data itself however will remain unaffected. And we can see if we create our reference again that the underlying data is unchanged.
+
+```{r, echo = TRUE}
+cdm <- cdmFromCon(con = db,
+                  cdmSchema = "main", 
+                  writeSchema = "main", 
+                  cdmName = "Synthea Covid-19 data")
+cdm$person |> 
+    tally()
+```
+
+The mutability of our cdm reference is a useful feature for studies as it means we can easily tweak our OMOP CDM data if needed. Meanwhile, leaving the underlying data unchanged is essential so that other study code can run against the data unaffected by any of our changes.
+
+One thing we can't do though is alter the structure of OMOP CDM tables. For example this code would cause an error as the person table must have the column person_id.
+```{r, eval=FALSE}
+cdm$person <- cdm$person |> 
+    rename("new_id" = "person_id")
+```
+
+In such a case we would have to call the table something esle.
+```{r, eval=FALSE}
+cdm$person_new <- cdm$person |> 
+    rename("new_id" = "person_id") |> 
+    compute()
+```
+
+Now we would have this new table as an additional table in our cdm reference, knowing it was not in the format of one of the core OMOP CDM tables.
+```{r, echo = TRUE}
+cdm
 ```
 
 ## CDM attributes

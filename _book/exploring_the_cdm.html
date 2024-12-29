@@ -164,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cdm_reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Creating a reference to data in the OMOP CDM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -230,23 +230,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./comparing_cohorts.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./end_matter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">End matter</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -347,7 +330,7 @@ attribute_definition</code></pre>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp2nwfLy\file3d5c187a222a.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp4q809O\file543813013272.duckdb]
       n
   &lt;dbl&gt;
 1 10754</code></pre>
@@ -455,8 +438,8 @@ FROM (
       observation_period_end_date,
       period_type_concept_id
     FROM main.person
-    LEFT JOIN og_001_1735313393
-      ON (person.person_id = og_001_1735313393.person_id)
+    LEFT JOIN og_001_1735469966
+      ON (person.person_id = og_001_1735469966.person_id)
   ) q01
 ) q01
 GROUP BY observation_period_start_year</code></pre>
@@ -520,7 +503,7 @@ GROUP BY observation_period_start_year</code></pre>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp2nwfLy\file3d5c187a222a.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp4q809O\file543813013272.duckdb]
       n
   &lt;dbl&gt;
 1  9305</code></pre>
@@ -533,7 +516,7 @@ GROUP BY observation_period_start_year</code></pre>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp2nwfLy\file3d5c187a222a.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp4q809O\file543813013272.duckdb]
        n
    &lt;dbl&gt;
 1 165681</code></pre>
@@ -552,7 +535,7 @@ GROUP BY observation_period_start_year</code></pre>
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp2nwfLy\file3d5c187a222a.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp4q809O\file543813013272.duckdb]
       n
   &lt;dbl&gt;
 1  9305</code></pre>
@@ -564,7 +547,7 @@ GROUP BY observation_period_start_year</code></pre>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp2nwfLy\file3d5c187a222a.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp4q809O\file543813013272.duckdb]
        n
    &lt;dbl&gt;
 1 165681</code></pre>
@@ -642,7 +625,7 @@ Vocabulary tables
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 10
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp2nwfLy\file3d5c187a222a.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp4q809O\file543813013272.duckdb]
 $ concept_id       &lt;int&gt; 45756805, 45756804, 45756803, 45756802, 45756801, 457…
 $ concept_name     &lt;chr&gt; "Pediatric Cardiology", "Pediatric Anesthesiology", "…
 $ domain_id        &lt;chr&gt; "Provider", "Provider", "Provider", "Provider", "Prov…
@@ -662,7 +645,7 @@ $ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp2nwfLy\file3d5c187a222a.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp4q809O\file543813013272.duckdb]
 $ concept_id_1     &lt;int&gt; 35804314, 35804314, 35804314, 35804327, 35804327, 358…
 $ concept_id_2     &lt;int&gt; 912065, 42542145, 42542145, 35803584, 42542145, 42542…
 $ relationship_id  &lt;chr&gt; "Has modality", "Has accepted use", "Is current in", …
@@ -675,7 +658,7 @@ $ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 4
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp2nwfLy\file3d5c187a222a.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp4q809O\file543813013272.duckdb]
 $ ancestor_concept_id      &lt;int&gt; 375415, 727760, 735979, 438112, 529411, 14196…
 $ descendant_concept_id    &lt;int&gt; 4335743, 2056453, 41070383, 36566114, 4326940…
 $ min_levels_of_separation &lt;int&gt; 4, 1, 3, 2, 3, 3, 4, 3, 2, 5, 1, 3, 4, 2, 2, …
@@ -703,7 +686,7 @@ $ max_levels_of_separation &lt;int&gt; 4, 1, 5, 3, 3, 6, 12, 3, 2, 10, 1, 3, 4, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 7
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp2nwfLy\file3d5c187a222a.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp4q809O\file543813013272.duckdb]
 $ observation_period_id                       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9,…
 $ person_id                                   &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9,…
 $ observation_period_start_date               &lt;date&gt; 2014-05-09, 1977-04-11, 2…
@@ -808,7 +791,7 @@ FROM (
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp2nwfLy\file3d5c187a222a.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp4q809O\file543813013272.duckdb]
 $ min_year_of_birth    &lt;int&gt; 1923
 $ q05_year_of_birth    &lt;dbl&gt; 1927
 $ mean_year_of_birth   &lt;dbl&gt; 1971
