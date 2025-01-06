@@ -663,16 +663,16 @@ FROM (
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
    dest  distance carrier tailnum delay was_delayed seats size 
    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;       &lt;int&gt; &lt;int&gt; &lt;chr&gt;
- 1 BQN       1576 B6      N804JB    -18           0   200 Large
- 2 MCO        944 B6      N593JB     -8           0   200 Large
- 3 PBI       1028 B6      N793JB     -2           0   200 Large
- 4 BOS        187 B6      N708JB     -4           0   200 Large
- 5 ATL        760 DL      N3739P     -8           0   189 Large
- 6 SJU       1598 B6      N794JB    -21           0   200 Large
- 7 PHX       2153 US      N535UW      0           0   379 Large
- 8 BOS        187 B6      N805JB    -10           0   200 Large
- 9 LAS       2248 B6      N558JB     -6           0   200 Large
-10 SLC       1990 DL      N3763D     -9           0   189 Large
+ 1 BTV        266 B6      N197JB    -10           0    20 Small
+ 2 BTV        266 B6      N298JB    118           1    20 Small
+ 3 LAX       2475 B6      N768JB    -11           0   200 Large
+ 4 FLL       1069 B6      N807JB     14           0   200 Large
+ 5 PWM        273 B6      N307JB     65           1    20 Small
+ 6 SJU       1598 DL      N3757D    -25           0   189 Large
+ 7 MCO        944 DL      N932DL      3           0   142 Large
+ 8 MCO        944 DL      N930DL    200           1   142 Large
+ 9 LAX       2475 AA      N324AA    -19           0   255 Large
+10 BOS        187 9E      N604LR    -11           0    95 Small
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -765,23 +765,23 @@ GROUP BY size</code></pre>
 <span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(was_delayed <span class="sc">~</span> size <span class="sc">+</span> distance, <span class="at">data =</span> delayed_flights) <span class="sc">|&gt;</span> </span>
 <span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="yzzayewsfs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yzzayewsfs table {
+<div id="fogclgbkgp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fogclgbkgp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yzzayewsfs thead, #yzzayewsfs tbody, #yzzayewsfs tfoot, #yzzayewsfs tr, #yzzayewsfs td, #yzzayewsfs th {
+#fogclgbkgp thead, #fogclgbkgp tbody, #fogclgbkgp tfoot, #fogclgbkgp tr, #fogclgbkgp td, #fogclgbkgp th {
   border-style: none;
 }
 
-#yzzayewsfs p {
+#fogclgbkgp p {
   margin: 0;
   padding: 0;
 }
 
-#yzzayewsfs .gt_table {
+#fogclgbkgp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -807,12 +807,12 @@ GROUP BY size</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_caption {
+#fogclgbkgp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yzzayewsfs .gt_title {
+#fogclgbkgp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -824,7 +824,7 @@ GROUP BY size</code></pre>
   border-bottom-width: 0;
 }
 
-#yzzayewsfs .gt_subtitle {
+#fogclgbkgp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -836,7 +836,7 @@ GROUP BY size</code></pre>
   border-top-width: 0;
 }
 
-#yzzayewsfs .gt_heading {
+#fogclgbkgp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -848,13 +848,13 @@ GROUP BY size</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_bottom_border {
+#fogclgbkgp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_col_headings {
+#fogclgbkgp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -869,7 +869,7 @@ GROUP BY size</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_col_heading {
+#fogclgbkgp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -889,7 +889,7 @@ GROUP BY size</code></pre>
   overflow-x: hidden;
 }
 
-#yzzayewsfs .gt_column_spanner_outer {
+#fogclgbkgp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -901,15 +901,15 @@ GROUP BY size</code></pre>
   padding-right: 4px;
 }
 
-#yzzayewsfs .gt_column_spanner_outer:first-child {
+#fogclgbkgp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yzzayewsfs .gt_column_spanner_outer:last-child {
+#fogclgbkgp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yzzayewsfs .gt_column_spanner {
+#fogclgbkgp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -921,11 +921,11 @@ GROUP BY size</code></pre>
   width: 100%;
 }
 
-#yzzayewsfs .gt_spanner_row {
+#fogclgbkgp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yzzayewsfs .gt_group_heading {
+#fogclgbkgp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -951,7 +951,7 @@ GROUP BY size</code></pre>
   text-align: left;
 }
 
-#yzzayewsfs .gt_empty_group_heading {
+#fogclgbkgp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -966,15 +966,15 @@ GROUP BY size</code></pre>
   vertical-align: middle;
 }
 
-#yzzayewsfs .gt_from_md > :first-child {
+#fogclgbkgp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yzzayewsfs .gt_from_md > :last-child {
+#fogclgbkgp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yzzayewsfs .gt_row {
+#fogclgbkgp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -993,7 +993,7 @@ GROUP BY size</code></pre>
   overflow-x: hidden;
 }
 
-#yzzayewsfs .gt_stub {
+#fogclgbkgp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1006,7 +1006,7 @@ GROUP BY size</code></pre>
   padding-right: 5px;
 }
 
-#yzzayewsfs .gt_stub_row_group {
+#fogclgbkgp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1020,15 +1020,15 @@ GROUP BY size</code></pre>
   vertical-align: top;
 }
 
-#yzzayewsfs .gt_row_group_first td {
+#fogclgbkgp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yzzayewsfs .gt_row_group_first th {
+#fogclgbkgp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yzzayewsfs .gt_summary_row {
+#fogclgbkgp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1038,16 +1038,16 @@ GROUP BY size</code></pre>
   padding-right: 5px;
 }
 
-#yzzayewsfs .gt_first_summary_row {
+#fogclgbkgp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_first_summary_row.thick {
+#fogclgbkgp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yzzayewsfs .gt_last_summary_row {
+#fogclgbkgp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1057,7 +1057,7 @@ GROUP BY size</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_grand_summary_row {
+#fogclgbkgp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1067,7 +1067,7 @@ GROUP BY size</code></pre>
   padding-right: 5px;
 }
 
-#yzzayewsfs .gt_first_grand_summary_row {
+#fogclgbkgp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1077,7 +1077,7 @@ GROUP BY size</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_last_grand_summary_row_top {
+#fogclgbkgp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1087,11 +1087,11 @@ GROUP BY size</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_striped {
+#fogclgbkgp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yzzayewsfs .gt_table_body {
+#fogclgbkgp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1100,7 +1100,7 @@ GROUP BY size</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_footnotes {
+#fogclgbkgp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1114,7 +1114,7 @@ GROUP BY size</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_footnote {
+#fogclgbkgp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1123,7 +1123,7 @@ GROUP BY size</code></pre>
   padding-right: 5px;
 }
 
-#yzzayewsfs .gt_sourcenotes {
+#fogclgbkgp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1137,7 +1137,7 @@ GROUP BY size</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yzzayewsfs .gt_sourcenote {
+#fogclgbkgp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1145,72 +1145,72 @@ GROUP BY size</code></pre>
   padding-right: 5px;
 }
 
-#yzzayewsfs .gt_left {
+#fogclgbkgp .gt_left {
   text-align: left;
 }
 
-#yzzayewsfs .gt_center {
+#fogclgbkgp .gt_center {
   text-align: center;
 }
 
-#yzzayewsfs .gt_right {
+#fogclgbkgp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yzzayewsfs .gt_font_normal {
+#fogclgbkgp .gt_font_normal {
   font-weight: normal;
 }
 
-#yzzayewsfs .gt_font_bold {
+#fogclgbkgp .gt_font_bold {
   font-weight: bold;
 }
 
-#yzzayewsfs .gt_font_italic {
+#fogclgbkgp .gt_font_italic {
   font-style: italic;
 }
 
-#yzzayewsfs .gt_super {
+#fogclgbkgp .gt_super {
   font-size: 65%;
 }
 
-#yzzayewsfs .gt_footnote_marks {
+#fogclgbkgp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yzzayewsfs .gt_asterisk {
+#fogclgbkgp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yzzayewsfs .gt_indent_1 {
+#fogclgbkgp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yzzayewsfs .gt_indent_2 {
+#fogclgbkgp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yzzayewsfs .gt_indent_3 {
+#fogclgbkgp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yzzayewsfs .gt_indent_4 {
+#fogclgbkgp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yzzayewsfs .gt_indent_5 {
+#fogclgbkgp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yzzayewsfs .katex-display {
+#fogclgbkgp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yzzayewsfs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fogclgbkgp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
