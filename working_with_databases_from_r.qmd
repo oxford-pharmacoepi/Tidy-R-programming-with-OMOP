@@ -1,4 +1,4 @@
-# Getting started
+# Working with databases from R
 
 ## A first data analysis in R with a database
 
@@ -84,10 +84,6 @@ db <- DBI::dbConnect(RPostgres::Postgres(),
                       user = Sys.getenv("CDM5_POSTGRESQL_USER"),
                       password = Sys.getenv("CDM5_POSTGRESQL_PASSWORD"))
 ```
-
-
-
-
 :::
 
 ## Translation from R to SQL

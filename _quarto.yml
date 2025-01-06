@@ -7,7 +7,11 @@ book:
   date: today
   chapters:
     - index.qmd
-    - getting_started.qmd
+    - part: intro.qmd
+      chapters: 
+        - working_with_databases_from_r.qmd
+        - tidyverse_verbs.qmd
+        - tidyverse_expressions.qmd
     - part: explore.qmd
       chapters: 
         - cdm_reference.qmd

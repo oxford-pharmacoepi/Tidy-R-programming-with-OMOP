@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Adding cohorts to the CDM – Tidy R programming with the OMOP common data model</title>
+<title>9&nbsp; Adding cohorts to the CDM – Tidy R programming with the OMOP common data model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,6 +102,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
 <script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 
 <script src="site_libs/viz-1.8.2/viz.js"></script>
@@ -123,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_analysis.html">Data analysis</a></li><li class="breadcrumb-item"><a href="./creating_cohorts.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_analysis.html">Data analysis</a></li><li class="breadcrumb-item"><a href="./creating_cohorts.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -154,16 +156,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started</span></span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./explore.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting to know the OMOP CDM</span></a>
+            <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Getting started</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -171,26 +167,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./working_with_databases_from_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Working with databases from R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tidyverse_verbs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Functions for analytic pipelines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tidyverse_expressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Supported expressions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./explore.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Getting to know the OMOP CDM</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cdm_reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./omop_person_obs_period.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Person</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Person and observation period tables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./omop_vocabularies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Working with the OMOP CDM vocabularies</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Vocabulary tables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./omop_clinical_tables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Working with the OMOP CDM clinical tables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Clinical tables</span></span></a>
   </div>
 </li>
       </ul>
@@ -199,45 +224,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./data_analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploring_the_cdm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./creating_cohorts.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./adding_features.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./working_with_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summarising_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Summarising cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Summarising cohorts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comparing_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></span></a>
   </div>
 </li>
       </ul>
@@ -252,27 +277,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-a-cohort" id="toc-what-is-a-cohort" class="nav-link active" data-scroll-target="#what-is-a-cohort"><span class="header-section-number">7.1</span> What is a cohort?</a></li>
-  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="header-section-number">7.2</span> Set up</a></li>
-  <li><a href="#general-concept-based-cohort" id="toc-general-concept-based-cohort" class="nav-link" data-scroll-target="#general-concept-based-cohort"><span class="header-section-number">7.3</span> General concept based cohort</a></li>
-  <li><a href="#applying-inclusion-criteria" id="toc-applying-inclusion-criteria" class="nav-link" data-scroll-target="#applying-inclusion-criteria"><span class="header-section-number">7.4</span> Applying inclusion criteria</a>
+  <li><a href="#what-is-a-cohort" id="toc-what-is-a-cohort" class="nav-link active" data-scroll-target="#what-is-a-cohort"><span class="header-section-number">9.1</span> What is a cohort?</a></li>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="header-section-number">9.2</span> Set up</a></li>
+  <li><a href="#general-concept-based-cohort" id="toc-general-concept-based-cohort" class="nav-link" data-scroll-target="#general-concept-based-cohort"><span class="header-section-number">9.3</span> General concept based cohort</a></li>
+  <li><a href="#applying-inclusion-criteria" id="toc-applying-inclusion-criteria" class="nav-link" data-scroll-target="#applying-inclusion-criteria"><span class="header-section-number">9.4</span> Applying inclusion criteria</a>
   <ul class="collapse">
-  <li><a href="#only-include-first-cohort-entry-per-person" id="toc-only-include-first-cohort-entry-per-person" class="nav-link" data-scroll-target="#only-include-first-cohort-entry-per-person"><span class="header-section-number">7.4.1</span> Only include first cohort entry per person</a></li>
-  <li><a href="#restrict-to-study-period" id="toc-restrict-to-study-period" class="nav-link" data-scroll-target="#restrict-to-study-period"><span class="header-section-number">7.4.2</span> Restrict to study period</a></li>
-  <li><a href="#applying-demographic-inclusion-criteria" id="toc-applying-demographic-inclusion-criteria" class="nav-link" data-scroll-target="#applying-demographic-inclusion-criteria"><span class="header-section-number">7.4.3</span> Applying demographic inclusion criteria</a></li>
-  <li><a href="#applying-cohort-based-inclusion-criteria" id="toc-applying-cohort-based-inclusion-criteria" class="nav-link" data-scroll-target="#applying-cohort-based-inclusion-criteria"><span class="header-section-number">7.4.4</span> Applying cohort-based inclusion criteria</a></li>
+  <li><a href="#only-include-first-cohort-entry-per-person" id="toc-only-include-first-cohort-entry-per-person" class="nav-link" data-scroll-target="#only-include-first-cohort-entry-per-person"><span class="header-section-number">9.4.1</span> Only include first cohort entry per person</a></li>
+  <li><a href="#restrict-to-study-period" id="toc-restrict-to-study-period" class="nav-link" data-scroll-target="#restrict-to-study-period"><span class="header-section-number">9.4.2</span> Restrict to study period</a></li>
+  <li><a href="#applying-demographic-inclusion-criteria" id="toc-applying-demographic-inclusion-criteria" class="nav-link" data-scroll-target="#applying-demographic-inclusion-criteria"><span class="header-section-number">9.4.3</span> Applying demographic inclusion criteria</a></li>
+  <li><a href="#applying-cohort-based-inclusion-criteria" id="toc-applying-cohort-based-inclusion-criteria" class="nav-link" data-scroll-target="#applying-cohort-based-inclusion-criteria"><span class="header-section-number">9.4.4</span> Applying cohort-based inclusion criteria</a></li>
   </ul></li>
-  <li><a href="#cohort-attributes" id="toc-cohort-attributes" class="nav-link" data-scroll-target="#cohort-attributes"><span class="header-section-number">7.5</span> Cohort attributes</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">8</span> Further reading</a></li>
+  <li><a href="#cohort-attributes" id="toc-cohort-attributes" class="nav-link" data-scroll-target="#cohort-attributes"><span class="header-section-number">9.5</span> Cohort attributes</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">10</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_analysis.html">Data analysis</a></li><li class="breadcrumb-item"><a href="./creating_cohorts.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_analysis.html">Data analysis</a></li><li class="breadcrumb-item"><a href="./creating_cohorts.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></h1>
 </div>
 
 
@@ -289,14 +314,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="what-is-a-cohort" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="what-is-a-cohort"><span class="header-section-number">7.1</span> What is a cohort?</h2>
+<section id="what-is-a-cohort" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="what-is-a-cohort"><span class="header-section-number">9.1</span> What is a cohort?</h2>
 <p>When performing research with the OMOP common data model we often want to identify groups of individuals who share some set of characteristics. The criteria for including individuals can range from the seemingly simple (e.g.&nbsp;people diagnosed with asthma) to the much more complicated (e.g.&nbsp;adults diagnosed with asthma who had a year of prior observation time in the database prior to their diagnosis, had no prior history of chronic obstructive pulmonary disease, and no history of use of short-acting beta-antagonists).</p>
 <p>The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields: 1) cohort definition id (a unique identifier for each cohort), 2) subject id (a foreign key to the subject in the cohort - typically referring to records in the person table), 3) cohort start date, and 4) cohort end date. Individuals can enter a cohort multiple times, but the time periods in which they are in the cohort cannot overlap. Individuals will only be considered in a cohort when they have have an ongoing observation period.</p>
 <p>It is beyond the scope of this book to describe all the different ways cohorts could be created, however in this chapter we provide a summary of some of the key building blocks for cohort creation. Cohort-building pipelines can be created following these principles to create a wide range of study cohorts.</p>
 </section>
-<section id="set-up" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="set-up"><span class="header-section-number">7.2</span> Set up</h2>
+<section id="set-up" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="set-up"><span class="header-section-number">9.2</span> Set up</h2>
 <p>We’ll use our synthetic dataset for demonstrating how cohorts can be constructed.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span>
@@ -310,8 +335,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db, <span class="at">cdmSchema =</span> <span class="st">"main"</span>, <span class="at">writeSchema =</span> <span class="st">"main"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="general-concept-based-cohort" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="general-concept-based-cohort"><span class="header-section-number">7.3</span> General concept based cohort</h2>
+<section id="general-concept-based-cohort" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="general-concept-based-cohort"><span class="header-section-number">9.3</span> General concept based cohort</h2>
 <p>Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the <code>CohortConstructor</code> package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code 37311061.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(<span class="at">cdm =</span> cdm, </span>
@@ -320,19 +345,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;main.covid&gt; [?? x 4]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpU7nZ0p\file35b44124ede.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpMR9NQh\file808c61e67723.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       7136 2020-12-09        2020-12-22     
- 2                    1      10510 2020-08-24        2020-09-20     
- 3                    1       2192 2020-10-12        2020-11-09     
- 4                    1       5845 2020-12-15        2021-01-20     
- 5                    1       8870 2020-09-05        2020-10-03     
- 6                    1       7416 2020-04-28        2020-05-26     
- 7                    1       2663 2021-03-21        2021-04-21     
- 8                    1       8601 2020-12-29        2021-01-31     
- 9                    1        553 2020-09-01        2020-09-29     
-10                    1       3163 2021-03-08        2021-03-18     
+ 1                    1       2049 2020-12-26        2021-01-09     
+ 2                    1      10172 2021-03-25        2021-04-13     
+ 3                    1      10143 2020-10-04        2020-10-20     
+ 4                    1       7752 2020-11-15        2020-12-20     
+ 5                    1      10369 2021-01-10        2021-02-13     
+ 6                    1       3433 2021-03-20        2021-04-06     
+ 7                    1       5281 2021-09-01        2021-09-24     
+ 8                    1       6397 2021-03-15        2021-04-06     
+ 9                    1       7735 2020-09-21        2020-10-19     
+10                    1       2267 2021-02-22        2021-03-24     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -362,22 +387,22 @@ Adding descendants
 Search completed. Finishing up.
 ✔ 37 candidate concepts identified
 
-Time taken: 0 minutes and 1 seconds</code></pre>
+Time taken: 0 minutes and 2 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 37 × 6
    concept_id found_from   concept_name domain_id vocabulary_id standard_concept
         &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
- 1    3655973 From initia… At increase… Condition SNOMED        S               
- 2     439676 From initia… Coronavirus… Condition SNOMED        S               
- 3    3656668 From initia… Conjunctivi… Condition SNOMED        S               
- 4   37310254 From initia… Otitis medi… Condition SNOMED        S               
- 5   37310284 From initia… Encephalopa… Condition SNOMED        S               
- 6     703445 From initia… Low risk ca… Condition SNOMED        S               
- 7   40479642 From initia… Pneumonia d… Condition SNOMED        S               
- 8    3655977 From initia… Rhabdomyoly… Condition SNOMED        S               
- 9   37310283 From initia… Gastroenter… Condition SNOMED        S               
-10    3655975 From initia… Sepsis due … Condition SNOMED        S               
+ 1    3661885 From initia… Fever cause… Condition SNOMED        S               
+ 2    3655975 From initia… Sepsis due … Condition SNOMED        S               
+ 3   40479642 From initia… Pneumonia d… Condition SNOMED        S               
+ 4   37310283 From initia… Gastroenter… Condition SNOMED        S               
+ 5    3655977 From initia… Rhabdomyoly… Condition SNOMED        S               
+ 6    3661631 From initia… Lymphocytop… Condition SNOMED        S               
+ 7    3661632 From initia… Thrombocyto… Condition SNOMED        S               
+ 8    3655976 From initia… Acute hypox… Condition SNOMED        S               
+ 9    3661406 From initia… Acute respi… Condition SNOMED        S               
+10    3656668 From initia… Conjunctivi… Condition SNOMED        S               
 # ℹ 27 more rows</code></pre>
 </div>
 </div>
@@ -444,33 +469,33 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 </div>
 <p>As we will see below these attributes of the cohorts become particularly useful as we apply further restrictions on our cohort.</p>
 </section>
-<section id="applying-inclusion-criteria" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="applying-inclusion-criteria"><span class="header-section-number">7.4</span> Applying inclusion criteria</h2>
-<section id="only-include-first-cohort-entry-per-person" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="only-include-first-cohort-entry-per-person"><span class="header-section-number">7.4.1</span> Only include first cohort entry per person</h3>
+<section id="applying-inclusion-criteria" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="applying-inclusion-criteria"><span class="header-section-number">9.4</span> Applying inclusion criteria</h2>
+<section id="only-include-first-cohort-entry-per-person" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="only-include-first-cohort-entry-per-person"><span class="header-section-number">9.4.1</span> Only include first cohort entry per person</h3>
 <p>Let’s say we first want to restrict to first entry.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">requireIsFirstEntry</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="restrict-to-study-period" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="restrict-to-study-period"><span class="header-section-number">7.4.2</span> Restrict to study period</h3>
+<section id="restrict-to-study-period" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="restrict-to-study-period"><span class="header-section-number">9.4.2</span> Restrict to study period</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireInDateRange</span>(<span class="at">dateRange =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>), <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="applying-demographic-inclusion-criteria" class="level3" data-number="7.4.3">
-<h3 data-number="7.4.3" class="anchored" data-anchor-id="applying-demographic-inclusion-criteria"><span class="header-section-number">7.4.3</span> Applying demographic inclusion criteria</h3>
+<section id="applying-demographic-inclusion-criteria" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="applying-demographic-inclusion-criteria"><span class="header-section-number">9.4.3</span> Applying demographic inclusion criteria</h3>
 <p>Say for our study we want to include people with a GI bleed who were aged 40 or over at the time. We can use the add variables with these characteristics as seen in chapter 4 and then filter accordingly. The function <code>CDMConnector::record_cohort_attrition()</code> will then update our cohort attributes as we can see below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireDemographics</span>(<span class="at">ageRange =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">64</span>), <span class="at">sex =</span> <span class="st">"Male"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="applying-cohort-based-inclusion-criteria" class="level3" data-number="7.4.4">
-<h3 data-number="7.4.4" class="anchored" data-anchor-id="applying-cohort-based-inclusion-criteria"><span class="header-section-number">7.4.4</span> Applying cohort-based inclusion criteria</h3>
+<section id="applying-cohort-based-inclusion-criteria" class="level3" data-number="9.4.4">
+<h3 data-number="9.4.4" class="anchored" data-anchor-id="applying-cohort-based-inclusion-criteria"><span class="header-section-number">9.4.4</span> Applying cohort-based inclusion criteria</h3>
 <p>As well as requirements about specific demographics, we may also want to use another cohort for inclusion criteria. Let’s say we want to exclude anyone with a history of cardiac conditions before their Covid-19 cohort entry.</p>
 <p>We can first generate this new cohort table with records of cardiac conditions.</p>
 <div class="cell">
@@ -484,19 +509,19 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;main.cardiac&gt; [?? x 4]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpU7nZ0p\file35b44124ede.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpMR9NQh\file808c61e67723.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       2190 1995-03-12        1995-03-12     
- 2                    1       3402 2021-09-12        2021-09-12     
- 3                    1       6192 2021-06-06        2021-06-06     
- 4                    1       8278 2006-09-17        2006-09-17     
- 5                    1       6493 2006-08-18        2006-08-18     
- 6                    1       6842 2013-07-04        2013-07-04     
- 7                    1       9417 2017-01-29        2017-01-29     
- 8                    1       9565 1997-03-25        1997-03-25     
- 9                    1        100 2018-04-26        2018-04-26     
-10                    1       1803 1999-12-08        1999-12-08     
+ 1                    1       4673 2013-10-11        2013-10-11     
+ 2                    1       5127 2013-12-02        2013-12-02     
+ 3                    1       2906 1994-03-02        1994-03-02     
+ 4                    1       4075 2020-02-03        2020-02-03     
+ 5                    1       5598 2018-04-19        2018-04-19     
+ 6                    1       2920 1975-08-18        1975-08-18     
+ 7                    1       7101 2010-03-20        2010-03-20     
+ 8                    1       9930 2021-10-16        2021-10-16     
+ 9                    1       2749 1971-05-22        1971-05-22     
+10                    1       5363 1995-08-28        1995-08-28     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -511,8 +536,8 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 <p>Note if we had wanted to have required that individuals did have a history of a cardiac condition we would instead have set <code>intersections = c(1, Inf)</code> above.</p>
 </section>
 </section>
-<section id="cohort-attributes" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="cohort-attributes"><span class="header-section-number">7.5</span> Cohort attributes</h2>
+<section id="cohort-attributes" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="cohort-attributes"><span class="header-section-number">9.5</span> Cohort attributes</h2>
 <p>We can see that the attributes of the cohort were updated as we applied the inclusion criteria.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
@@ -561,13 +586,13 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13</code>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>attrition_summary <span class="ot">&lt;-</span> <span class="fu">summariseCohortAttrition</span>(cdm<span class="sc">$</span>covid)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCohortAttrition</span>(attrition_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-2bb230c4f11cc448ae73" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-2bb230c4f11cc448ae73">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Initial events\nN subjects = 964\nN records = 964\", shape = \"box\", penwidth = \"2\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.6\", width = \"1.28\", pos = \"1,11.1!\"] \n  \"2\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,10!\"] \n  \"3\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,9!\"] \n  \"4\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,8!\"] \n  \"5\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,7!\"] \n  \"6\" [label = \"N subjects = 793\nN records = 793\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,6!\"] \n  \"7\" [label = \"N subjects = 363\nN records = 363\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,5!\"] \n  \"8\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,4!\"] \n  \"9\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,3!\"] \n  \"10\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,2!\"] \n  \"11\" [label = \"Final events\nN subjects = 158\nN records = 158\", shape = \"box\", penwidth = \"2\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.6\", width = \"1.28\", pos = \"1,0.5!\"] \n  \"12\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,10.5!\"] \n  \"13\" [label = \"Record start <= record end\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,10.5!\"] \n  \"14\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,9.5!\"] \n  \"15\" [label = \"Record in observation\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,9.5!\"] \n  \"16\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,8.5!\"] \n  \"17\" [label = \"Merge overlapping records\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,8.5!\"] \n  \"18\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,7.5!\"] \n  \"19\" [label = \"Restricted to first entry\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,7.5!\"] \n  \"20\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,6.5!\"] \n  \"21\" [label = \"cohort_start_date after 2020-09-01\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,6.5!\"] \n  \"22\" [label = \"N subjects = 430\nN records = 430\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,5.5!\"] \n  \"23\" [label = \"Age requirement: 18 to 64\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,5.5!\"] \n  \"24\" [label = \"N subjects = 192\nN records = 192\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,4.5!\"] \n  \"25\" [label = \"Sex requirement: Male\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,4.5!\"] \n  \"26\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,3.5!\"] \n  \"27\" [label = \"Prior observation requirement: 0 days\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,3.5!\"] \n  \"28\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,2.5!\"] \n  \"29\" [label = \"Future observation requirement: 0 days\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,2.5!\"] \n  \"30\" [label = \"N subjects = 13\nN records = 13\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,1.3!\"] \n  \"31\" [label = \"Not in cohort myocaridal_infarction\nbetween -Inf & -1\ndays relative to cohort_start_date\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.6\", width = \"2.25\", pos = \"1,1.3!\"] \n\"1\"->\"2\" [color = \"black\"] \n\"2\"->\"3\" [color = \"black\"] \n\"3\"->\"4\" [color = \"black\"] \n\"4\"->\"5\" [color = \"black\"] \n\"5\"->\"6\" [color = \"black\"] \n\"6\"->\"7\" [color = \"black\"] \n\"7\"->\"8\" [color = \"black\"] \n\"8\"->\"9\" [color = \"black\"] \n\"9\"->\"10\" [color = \"black\"] \n\"10\"->\"11\" [color = \"black\"] \n\"13\"->\"12\" [color = \"black\"] \n\"15\"->\"14\" [color = \"black\"] \n\"17\"->\"16\" [color = \"black\"] \n\"19\"->\"18\" [color = \"black\"] \n\"21\"->\"20\" [color = \"black\"] \n\"23\"->\"22\" [color = \"black\"] \n\"25\"->\"24\" [color = \"black\"] \n\"27\"->\"26\" [color = \"black\"] \n\"29\"->\"28\" [color = \"black\"] \n\"31\"->\"30\" [color = \"black\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-36b91d924aeac235d0e7" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-36b91d924aeac235d0e7">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Initial events\nN subjects = 964\nN records = 964\", shape = \"box\", penwidth = \"2\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.6\", width = \"1.28\", pos = \"1,11.1!\"] \n  \"2\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,10!\"] \n  \"3\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,9!\"] \n  \"4\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,8!\"] \n  \"5\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,7!\"] \n  \"6\" [label = \"N subjects = 793\nN records = 793\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,6!\"] \n  \"7\" [label = \"N subjects = 363\nN records = 363\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,5!\"] \n  \"8\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,4!\"] \n  \"9\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,3!\"] \n  \"10\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", penwidth = \"1\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.4\", width = \"1.28\", pos = \"1,2!\"] \n  \"11\" [label = \"Final events\nN subjects = 158\nN records = 158\", shape = \"box\", penwidth = \"2\", color = \"black\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"11\", fontcolor = \"black\", height = \"0.6\", width = \"1.28\", pos = \"1,0.5!\"] \n  \"12\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,10.5!\"] \n  \"13\" [label = \"Record start <= record end\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,10.5!\"] \n  \"14\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,9.5!\"] \n  \"15\" [label = \"Record in observation\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,9.5!\"] \n  \"16\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,8.5!\"] \n  \"17\" [label = \"Merge overlapping records\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,8.5!\"] \n  \"18\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,7.5!\"] \n  \"19\" [label = \"Restricted to first entry\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,7.5!\"] \n  \"20\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,6.5!\"] \n  \"21\" [label = \"cohort_start_date after 2020-09-01\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,6.5!\"] \n  \"22\" [label = \"N subjects = 430\nN records = 430\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,5.5!\"] \n  \"23\" [label = \"Age requirement: 18 to 64\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,5.5!\"] \n  \"24\" [label = \"N subjects = 192\nN records = 192\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,4.5!\"] \n  \"25\" [label = \"Sex requirement: Male\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,4.5!\"] \n  \"26\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,3.5!\"] \n  \"27\" [label = \"Prior observation requirement: 0 days\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,3.5!\"] \n  \"28\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,2.5!\"] \n  \"29\" [label = \"Future observation requirement: 0 days\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.2\", width = \"2.25\", pos = \"1,2.5!\"] \n  \"30\" [label = \"N subjects = 13\nN records = 13\", shape = \"box\", color = \"black\", fillcolor = \"#C0C0C0\", fontname = \"Calibri\", fontsize = \"9\", fontcolor = \"black\", height = \"0.4\", width = \"1.2\", pos = \"3,1.3!\"] \n  \"31\" [label = \"Not in cohort myocaridal_infarction\nbetween -Inf & -1\ndays relative to cohort_start_date\", shape = \"box\", color = \"black\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"10\", fontcolor = \"back\", height = \"0.6\", width = \"2.25\", pos = \"1,1.3!\"] \n\"1\"->\"2\" [color = \"black\"] \n\"2\"->\"3\" [color = \"black\"] \n\"3\"->\"4\" [color = \"black\"] \n\"4\"->\"5\" [color = \"black\"] \n\"5\"->\"6\" [color = \"black\"] \n\"6\"->\"7\" [color = \"black\"] \n\"7\"->\"8\" [color = \"black\"] \n\"8\"->\"9\" [color = \"black\"] \n\"9\"->\"10\" [color = \"black\"] \n\"10\"->\"11\" [color = \"black\"] \n\"13\"->\"12\" [color = \"black\"] \n\"15\"->\"14\" [color = \"black\"] \n\"17\"->\"16\" [color = \"black\"] \n\"19\"->\"18\" [color = \"black\"] \n\"21\"->\"20\" [color = \"black\"] \n\"23\"->\"22\" [color = \"black\"] \n\"25\"->\"24\" [color = \"black\"] \n\"27\"->\"26\" [color = \"black\"] \n\"29\"->\"28\" [color = \"black\"] \n\"31\"->\"30\" [color = \"black\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
-<section id="further-reading" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Further reading</h1>
+<section id="further-reading" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Further reading</h1>
 <ul>
 <li>…</li>
 </ul>
@@ -996,12 +1021,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./exploring_the_cdm.html" class="pagination-link" aria-label="Exploring the OMOP CDM">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./adding_features.html" class="pagination-link" aria-label="Identifying patient characteristics">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
