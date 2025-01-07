@@ -2,7 +2,7 @@
 
 ## 📕 Read the book
 
-<https://dpa-pde-oxford.quarto.pub/an-introduction-to-tidy-r-programming-with-the-omop-common-data-model/>
+<https://oxford-pharmacoepi.github.io/Tidy-R-programming-with-OMOP>
 
 ## :star: Reader questions and clarifications
 
