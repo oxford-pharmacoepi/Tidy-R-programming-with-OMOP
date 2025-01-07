@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Exploring the OMOP CDM – Tidy R programming with the OMOP common data model</title>
+<title>9&nbsp; Exploring the OMOP CDM – Tidy R programming with the OMOP common data model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_analysis.html">Data analysis</a></li><li class="breadcrumb-item"><a href="./exploring_the_cdm.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_analysis.html">Data analysis</a></li><li class="breadcrumb-item"><a href="./exploring_the_cdm.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -149,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started</span></a>
+ <span class="menu-text">Getting started with working databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -158,19 +158,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./working_with_databases_from_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Working with databases from R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first analysis using data in a database</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./tidyverse_verbs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Functions for analytic pipelines</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./tidyverse_expressions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Supported expressions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Supported expressions for database queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_data_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Database references in R</span></span></a>
   </div>
 </li>
       </ul>
@@ -187,25 +193,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cdm_reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./omop_person_obs_period.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Person and observation period tables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Person and observation period tables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./omop_vocabularies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Vocabulary tables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Vocabulary tables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./omop_clinical_tables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Clinical tables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clinical tables</span></span></a>
   </div>
 </li>
       </ul>
@@ -222,37 +228,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploring_the_cdm.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./creating_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./adding_features.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./working_with_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summarising_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Summarising cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Summarising cohorts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comparing_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></span></a>
   </div>
 </li>
       </ul>
@@ -267,20 +273,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#counting-people" id="toc-counting-people" class="nav-link active" data-scroll-target="#counting-people"><span class="header-section-number">8.1</span> Counting people</a></li>
-  <li><a href="#counting-records" id="toc-counting-records" class="nav-link" data-scroll-target="#counting-records"><span class="header-section-number">8.2</span> Counting records</a></li>
-  <li><a href="#working-with-dates" id="toc-working-with-dates" class="nav-link" data-scroll-target="#working-with-dates"><span class="header-section-number">8.3</span> Working with dates</a></li>
-  <li><a href="#statistical-summaries" id="toc-statistical-summaries" class="nav-link" data-scroll-target="#statistical-summaries"><span class="header-section-number">8.4</span> Statistical summaries</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">9</span> Further reading</a></li>
+  <li><a href="#counting-people" id="toc-counting-people" class="nav-link active" data-scroll-target="#counting-people"><span class="header-section-number">9.1</span> Counting people</a></li>
+  <li><a href="#counting-records" id="toc-counting-records" class="nav-link" data-scroll-target="#counting-records"><span class="header-section-number">9.2</span> Counting records</a></li>
+  <li><a href="#working-with-dates" id="toc-working-with-dates" class="nav-link" data-scroll-target="#working-with-dates"><span class="header-section-number">9.3</span> Working with dates</a></li>
+  <li><a href="#statistical-summaries" id="toc-statistical-summaries" class="nav-link" data-scroll-target="#statistical-summaries"><span class="header-section-number">9.4</span> Statistical summaries</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">10</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_analysis.html">Data analysis</a></li><li class="breadcrumb-item"><a href="./exploring_the_cdm.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data_analysis.html">Data analysis</a></li><li class="breadcrumb-item"><a href="./exploring_the_cdm.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></h1>
 </div>
 
 
@@ -345,15 +351,15 @@ attribute_definition</code></pre>
 <pre><code>• other tables: -</code></pre>
 </div>
 </div>
-<section id="counting-people" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="counting-people"><span class="header-section-number">8.1</span> Counting people</h2>
+<section id="counting-people" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="counting-people"><span class="header-section-number">9.1</span> Counting people</h2>
 <p>The OMOP CDM is person-centric, with the person table containing records to uniquely identify each person in the database. As each row refers to a unique person, we can quickly get a count of the number of individuals in the database like so</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsVpCqr\file6a7045c17ece.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpETj2RL\file7c885fc021a6.duckdb]
       n
   &lt;dbl&gt;
 1 10754</code></pre>
@@ -461,8 +467,8 @@ FROM (
       observation_period_end_date,
       period_type_concept_id
     FROM main.person
-    LEFT JOIN og_001_1736175099
-      ON (person.person_id = og_001_1736175099.person_id)
+    LEFT JOIN og_001_1736244102
+      ON (person.person_id = og_001_1736244102.person_id)
   ) q01
 ) q01
 GROUP BY observation_period_start_year</code></pre>
@@ -526,7 +532,7 @@ GROUP BY observation_period_start_year</code></pre>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsVpCqr\file6a7045c17ece.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpETj2RL\file7c885fc021a6.duckdb]
       n
   &lt;dbl&gt;
 1  9305</code></pre>
@@ -539,7 +545,7 @@ GROUP BY observation_period_start_year</code></pre>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsVpCqr\file6a7045c17ece.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpETj2RL\file7c885fc021a6.duckdb]
        n
    &lt;dbl&gt;
 1 165681</code></pre>
@@ -558,7 +564,7 @@ GROUP BY observation_period_start_year</code></pre>
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsVpCqr\file6a7045c17ece.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpETj2RL\file7c885fc021a6.duckdb]
       n
   &lt;dbl&gt;
 1  9305</code></pre>
@@ -570,7 +576,7 @@ GROUP BY observation_period_start_year</code></pre>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsVpCqr\file6a7045c17ece.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpETj2RL\file7c885fc021a6.duckdb]
        n
    &lt;dbl&gt;
 1 165681</code></pre>
@@ -580,8 +586,8 @@ GROUP BY observation_period_start_year</code></pre>
 </div>
 </div>
 </section>
-<section id="counting-records" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="counting-records"><span class="header-section-number">8.2</span> Counting records</h2>
+<section id="counting-records" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="counting-records"><span class="header-section-number">9.2</span> Counting records</h2>
 <p>What’s the number of condition occurrence records per person in the database? We can find this out like so</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
@@ -648,7 +654,7 @@ Vocabulary tables
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 10
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsVpCqr\file6a7045c17ece.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpETj2RL\file7c885fc021a6.duckdb]
 $ concept_id       &lt;int&gt; 45756805, 45756804, 45756803, 45756802, 45756801, 457…
 $ concept_name     &lt;chr&gt; "Pediatric Cardiology", "Pediatric Anesthesiology", "…
 $ domain_id        &lt;chr&gt; "Provider", "Provider", "Provider", "Provider", "Prov…
@@ -668,7 +674,7 @@ $ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsVpCqr\file6a7045c17ece.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpETj2RL\file7c885fc021a6.duckdb]
 $ concept_id_1     &lt;int&gt; 35804314, 35804314, 35804314, 35804327, 35804327, 358…
 $ concept_id_2     &lt;int&gt; 912065, 42542145, 42542145, 35803584, 42542145, 42542…
 $ relationship_id  &lt;chr&gt; "Has modality", "Has accepted use", "Is current in", …
@@ -681,7 +687,7 @@ $ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 4
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsVpCqr\file6a7045c17ece.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpETj2RL\file7c885fc021a6.duckdb]
 $ ancestor_concept_id      &lt;int&gt; 375415, 727760, 735979, 438112, 529411, 14196…
 $ descendant_concept_id    &lt;int&gt; 4335743, 2056453, 41070383, 36566114, 4326940…
 $ min_levels_of_separation &lt;int&gt; 4, 1, 3, 2, 3, 3, 4, 3, 2, 5, 1, 3, 4, 2, 2, …
@@ -693,8 +699,8 @@ $ max_levels_of_separation &lt;int&gt; 4, 1, 5, 3, 3, 6, 12, 3, 2, 10, 1, 3, 4, 
 </div>
 </div>
 </section>
-<section id="working-with-dates" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="working-with-dates"><span class="header-section-number">8.3</span> Working with dates</h2>
+<section id="working-with-dates" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="working-with-dates"><span class="header-section-number">9.3</span> Working with dates</h2>
 <p>When working with dates, the best supported functions come from the <a href="https://clock.r-lib.org/">clock</a> package. In particular, a lot of the date manipulations we might be interested in can be achieved through the use of add_days (to add days to or subtract days from a date), add_years (same as add_days by with years as the timescale), and date_count_between (to get the difference between two dates). For example let’s see how these can be applied to date fields in the observation period table.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clock)</span>
@@ -709,7 +715,7 @@ $ max_levels_of_separation &lt;int&gt; 4, 1, 5, 3, 3, 6, 12, 3, 2, 10, 1, 3, 4, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 7
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsVpCqr\file6a7045c17ece.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpETj2RL\file7c885fc021a6.duckdb]
 $ observation_period_id                       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9,…
 $ person_id                                   &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9,…
 $ observation_period_start_date               &lt;date&gt; 2014-05-09, 1977-04-11, 2…
@@ -799,8 +805,8 @@ FROM (
 </div>
 </div>
 </section>
-<section id="statistical-summaries" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="statistical-summaries"><span class="header-section-number">8.4</span> Statistical summaries</h2>
+<section id="statistical-summaries" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="statistical-summaries"><span class="header-section-number">9.4</span> Statistical summaries</h2>
 <p>We can also use summarise for various other calculations</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
@@ -814,7 +820,7 @@ FROM (
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsVpCqr\file6a7045c17ece.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpETj2RL\file7c885fc021a6.duckdb]
 $ min_year_of_birth    &lt;int&gt; 1923
 $ q05_year_of_birth    &lt;dbl&gt; 1927
 $ mean_year_of_birth   &lt;dbl&gt; 1971
@@ -858,8 +864,8 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
 </div>
 </div>
 </section>
-<section id="further-reading" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Further reading</h1>
+<section id="further-reading" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Further reading</h1>
 <ul>
 <li>…</li>
 </ul>
@@ -1293,7 +1299,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./creating_cohorts.html" class="pagination-link" aria-label="Adding cohorts to the CDM">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
