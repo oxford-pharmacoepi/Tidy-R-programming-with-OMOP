@@ -1,1 +1,2 @@
-# Getting started
+# Getting started with working databases from R
+

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Creating a cdm reference – Tidy R programming with the OMOP common data model</title>
+<title>5&nbsp; Creating a cdm reference – Tidy R programming with the OMOP common data model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./explore.html">Getting to know the OMOP CDM</a></li><li class="breadcrumb-item"><a href="./cdm_reference.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./explore.html">Getting to know the OMOP CDM</a></li><li class="breadcrumb-item"><a href="./cdm_reference.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -152,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started</span></a>
+ <span class="menu-text">Getting started with working databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -161,19 +161,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./working_with_databases_from_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Working with databases from R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first analysis using data in a database</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./tidyverse_verbs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Functions for analytic pipelines</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./tidyverse_expressions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Supported expressions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Supported expressions for database queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_data_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Database references in R</span></span></a>
   </div>
 </li>
       </ul>
@@ -190,25 +196,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cdm_reference.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./omop_person_obs_period.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Person and observation period tables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Person and observation period tables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./omop_vocabularies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Vocabulary tables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Vocabulary tables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./omop_clinical_tables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Clinical tables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clinical tables</span></span></a>
   </div>
 </li>
       </ul>
@@ -225,37 +231,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploring_the_cdm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./creating_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./adding_features.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./working_with_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summarising_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Summarising cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Summarising cohorts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comparing_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></span></a>
   </div>
 </li>
       </ul>
@@ -270,27 +276,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-omop-cdm-layout" id="toc-the-omop-cdm-layout" class="nav-link active" data-scroll-target="#the-omop-cdm-layout"><span class="header-section-number">4.1</span> The OMOP CDM layout</a></li>
-  <li><a href="#referencing-tables-from-the-omop-common-data-model" id="toc-referencing-tables-from-the-omop-common-data-model" class="nav-link" data-scroll-target="#referencing-tables-from-the-omop-common-data-model"><span class="header-section-number">4.2</span> Referencing tables from the OMOP common data model</a></li>
-  <li><a href="#creating-a-reference-to-the-omop-common-data-model" id="toc-creating-a-reference-to-the-omop-common-data-model" class="nav-link" data-scroll-target="#creating-a-reference-to-the-omop-common-data-model"><span class="header-section-number">4.3</span> Creating a reference to the OMOP common data model</a></li>
-  <li><a href="#mutability-of-the-cdm-reference" id="toc-mutability-of-the-cdm-reference" class="nav-link" data-scroll-target="#mutability-of-the-cdm-reference"><span class="header-section-number">4.4</span> Mutability of the cdm reference</a></li>
-  <li><a href="#cdm-attributes" id="toc-cdm-attributes" class="nav-link" data-scroll-target="#cdm-attributes"><span class="header-section-number">4.5</span> CDM attributes</a>
+  <li><a href="#the-omop-cdm-layout" id="toc-the-omop-cdm-layout" class="nav-link active" data-scroll-target="#the-omop-cdm-layout"><span class="header-section-number">5.1</span> The OMOP CDM layout</a></li>
+  <li><a href="#referencing-tables-from-the-omop-common-data-model" id="toc-referencing-tables-from-the-omop-common-data-model" class="nav-link" data-scroll-target="#referencing-tables-from-the-omop-common-data-model"><span class="header-section-number">5.2</span> Referencing tables from the OMOP common data model</a></li>
+  <li><a href="#creating-a-reference-to-the-omop-common-data-model" id="toc-creating-a-reference-to-the-omop-common-data-model" class="nav-link" data-scroll-target="#creating-a-reference-to-the-omop-common-data-model"><span class="header-section-number">5.3</span> Creating a reference to the OMOP common data model</a></li>
+  <li><a href="#mutability-of-the-cdm-reference" id="toc-mutability-of-the-cdm-reference" class="nav-link" data-scroll-target="#mutability-of-the-cdm-reference"><span class="header-section-number">5.4</span> Mutability of the cdm reference</a></li>
+  <li><a href="#cdm-attributes" id="toc-cdm-attributes" class="nav-link" data-scroll-target="#cdm-attributes"><span class="header-section-number">5.5</span> CDM attributes</a>
   <ul class="collapse">
-  <li><a href="#cdm-name" id="toc-cdm-name" class="nav-link" data-scroll-target="#cdm-name"><span class="header-section-number">4.5.1</span> CDM name</a></li>
-  <li><a href="#cdm-version" id="toc-cdm-version" class="nav-link" data-scroll-target="#cdm-version"><span class="header-section-number">4.5.2</span> CDM version</a></li>
-  <li><a href="#cdm-source" id="toc-cdm-source" class="nav-link" data-scroll-target="#cdm-source"><span class="header-section-number">4.5.3</span> CDM Source</a></li>
+  <li><a href="#cdm-name" id="toc-cdm-name" class="nav-link" data-scroll-target="#cdm-name"><span class="header-section-number">5.5.1</span> CDM name</a></li>
+  <li><a href="#cdm-version" id="toc-cdm-version" class="nav-link" data-scroll-target="#cdm-version"><span class="header-section-number">5.5.2</span> CDM version</a></li>
+  <li><a href="#cdm-source" id="toc-cdm-source" class="nav-link" data-scroll-target="#cdm-source"><span class="header-section-number">5.5.3</span> CDM Source</a></li>
   </ul></li>
-  <li><a href="#disconnecting" id="toc-disconnecting" class="nav-link" data-scroll-target="#disconnecting"><span class="header-section-number">5</span> Disconnecting</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">6</span> Further reading</a></li>
+  <li><a href="#disconnecting" id="toc-disconnecting" class="nav-link" data-scroll-target="#disconnecting"><span class="header-section-number">6</span> Disconnecting</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">7</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./explore.html">Getting to know the OMOP CDM</a></li><li class="breadcrumb-item"><a href="./cdm_reference.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./explore.html">Getting to know the OMOP CDM</a></li><li class="breadcrumb-item"><a href="./cdm_reference.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cdm_reference" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></h1>
+<h1 class="title"><span id="sec-cdm_reference" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></h1>
 </div>
 
 
@@ -307,13 +313,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="the-omop-cdm-layout" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="the-omop-cdm-layout"><span class="header-section-number">4.1</span> The OMOP CDM layout</h2>
+<section id="the-omop-cdm-layout" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="the-omop-cdm-layout"><span class="header-section-number">5.1</span> The OMOP CDM layout</h2>
 <p>The OMOP CDM standardises the structure of health care data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure. An entity-relationship diagram for version 5.4 of the OMOP CDM is shown below. <a href="images/erd.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/erd.jpg" class="img-fluid"></a></p>
 <p>These tables are going to be described in more detail in the following chapters. But before that, we can first see how to work with our OMOP CDM data from R.</p>
 </section>
-<section id="referencing-tables-from-the-omop-common-data-model" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="referencing-tables-from-the-omop-common-data-model"><span class="header-section-number">4.2</span> Referencing tables from the OMOP common data model</h2>
+<section id="referencing-tables-from-the-omop-common-data-model" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="referencing-tables-from-the-omop-common-data-model"><span class="header-section-number">5.2</span> Referencing tables from the OMOP common data model</h2>
 <p>As seen in the previous chapter, once a connection to the database has been created we can then create references to the various tables in the database and build queries using in a familiar dplyr style. To show this, let’s download an example dataset (<em>synthea-covid19-10k</em>) provided by <code>CDMConnector</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
@@ -330,7 +336,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">"person"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;person&gt; [?? x 18]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGmTcrD\file9b9c2e786dbe.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp0Q1yIl\filea07417a23371.duckdb]
    person_id gender_concept_id year_of_birth month_of_birth day_of_birth
        &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
  1         1              8532          1970              4           24
@@ -355,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl</span>(<span class="st">"observation_period"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;observation_period&gt; [?? x 5]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGmTcrD\file9b9c2e786dbe.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp0Q1yIl\filea07417a23371.duckdb]
    observation_period_id person_id observation_period_s…¹ observation_period_e…²
                    &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
  1                     1         1 2014-05-09             2023-05-12            
@@ -382,7 +388,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 2]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGmTcrD\file9b9c2e786dbe.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp0Q1yIl\filea07417a23371.duckdb]
 # Groups:   year_of_birth
    year_of_birth     n
            &lt;int&gt; &lt;dbl&gt;
@@ -400,8 +406,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="creating-a-reference-to-the-omop-common-data-model" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="creating-a-reference-to-the-omop-common-data-model"><span class="header-section-number">4.3</span> Creating a reference to the OMOP common data model</h2>
+<section id="creating-a-reference-to-the-omop-common-data-model" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="creating-a-reference-to-the-omop-common-data-model"><span class="header-section-number">5.3</span> Creating a reference to the OMOP common data model</h2>
 <p>As the structure of the OMOP CDM is already known, we can avoid the overhead of creating individual references to the OMOP CDM tables like above by instead creating a joint reference for all OMOP CDM database tables in one go.</p>
 <p>The R object representing OMOP CDM data is defined by the <code>omopgenerics</code> package), with the the <code>CDMConnector</code> package providing a means of connecting to a OMOP CDM data held in a database. As well as specifying the schema containing our OMOP CDM tables, we also specify a write schema where any database tables we create during our analysis will be stored (often our OMOP CDM tables will be in a schema that we only have read-access to and we’ll have another schema where we can have write-access where we intermediate tables are created for a given a study).</p>
 <div class="cell">
@@ -492,7 +498,7 @@ Setting a write prefix
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;main.person&gt; [?? x 18]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGmTcrD\file9b9c2e786dbe.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp0Q1yIl\filea07417a23371.duckdb]
    person_id gender_concept_id year_of_birth month_of_birth day_of_birth
        &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
  1         1              8532          1970              4           24
@@ -516,7 +522,7 @@ Setting a write prefix
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cdm[[<span class="st">"observation_period"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;main.observation_period&gt; [?? x 5]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGmTcrD\file9b9c2e786dbe.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp0Q1yIl\filea07417a23371.duckdb]
    observation_period_id person_id observation_period_s…¹ observation_period_e…²
                    &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
  1                     1         1 2014-05-09             2023-05-12            
@@ -536,8 +542,8 @@ Setting a write prefix
 </div>
 </div>
 </section>
-<section id="mutability-of-the-cdm-reference" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="mutability-of-the-cdm-reference"><span class="header-section-number">4.4</span> Mutability of the cdm reference</h2>
+<section id="mutability-of-the-cdm-reference" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="mutability-of-the-cdm-reference"><span class="header-section-number">5.4</span> Mutability of the cdm reference</h2>
 <p>An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected.</p>
 <p>For example, let’s say we want to perform a study with only people born in 1970. For this we could filter our person table to only people born in this year.</p>
 <div class="cell">
@@ -547,7 +553,7 @@ Setting a write prefix
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 18]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGmTcrD\file9b9c2e786dbe.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp0Q1yIl\filea07417a23371.duckdb]
    person_id gender_concept_id year_of_birth month_of_birth day_of_birth
        &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
  1         1              8532          1970              4           24
@@ -575,7 +581,7 @@ Setting a write prefix
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGmTcrD\file9b9c2e786dbe.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp0Q1yIl\filea07417a23371.duckdb]
       n
   &lt;dbl&gt;
 1    78</code></pre>
@@ -591,7 +597,7 @@ Setting a write prefix
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGmTcrD\file9b9c2e786dbe.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp0Q1yIl\filea07417a23371.duckdb]
       n
   &lt;dbl&gt;
 1 10754</code></pre>
@@ -639,10 +645,10 @@ attribute_definition</code></pre>
 </div>
 </div>
 </section>
-<section id="cdm-attributes" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="cdm-attributes"><span class="header-section-number">4.5</span> CDM attributes</h2>
-<section id="cdm-name" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="cdm-name"><span class="header-section-number">4.5.1</span> CDM name</h3>
+<section id="cdm-attributes" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="cdm-attributes"><span class="header-section-number">5.5</span> CDM attributes</h2>
+<section id="cdm-name" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="cdm-name"><span class="header-section-number">5.5.1</span> CDM name</h3>
 <p>Our cdm reference will be associated with a name. By default this name will be taken from the cdm source name field from the cdm source table. We can though set this to a different name when creating our cdm reference. This cdm name attribute of our reference is particularly useful in the context of network studies to keep track of which results are associated with which database.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db,</span>
@@ -651,7 +657,7 @@ attribute_definition</code></pre>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cdm_source</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;main.cdm_source&gt; [?? x 10]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpGmTcrD\file9b9c2e786dbe.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\Rtmp0Q1yIl\filea07417a23371.duckdb]
   cdm_source_name cdm_source_abbreviation cdm_holder source_description    
   &lt;chr&gt;           &lt;chr&gt;                   &lt;chr&gt;      &lt;chr&gt;                 
 1 Synthea         Synthea                 ""         Synthea Synthetic Data
@@ -673,8 +679,8 @@ attribute_definition</code></pre>
 </div>
 </div>
 </section>
-<section id="cdm-version" class="level3" data-number="4.5.2">
-<h3 data-number="4.5.2" class="anchored" data-anchor-id="cdm-version"><span class="header-section-number">4.5.2</span> CDM version</h3>
+<section id="cdm-version" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="cdm-version"><span class="header-section-number">5.5.2</span> CDM version</h3>
 <p>We can also easily check the OMOP CDM version that is being used</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -683,26 +689,26 @@ attribute_definition</code></pre>
 </div>
 </div>
 </section>
-<section id="cdm-source" class="level3" data-number="4.5.3">
-<h3 data-number="4.5.3" class="anchored" data-anchor-id="cdm-source"><span class="header-section-number">4.5.3</span> CDM Source</h3>
+<section id="cdm-source" class="level3" data-number="5.5.3">
+<h3 data-number="5.5.3" class="anchored" data-anchor-id="cdm-source"><span class="header-section-number">5.5.3</span> CDM Source</h3>
 <p>Although typically we won’t need to use them for writing study code, we can also access lower-level information on the source, such as the database connection.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(<span class="fu">cdmSource</span>(cdm), <span class="st">"dbcon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>&lt;duckdb_connection 5f920 driver=&lt;duckdb_driver dbdir='C:\Users\eburn\AppData\Local\Temp\RtmpGmTcrD\file9b9c2e786dbe.duckdb' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
+<pre><code>&lt;duckdb_connection ce7c0 driver=&lt;duckdb_driver dbdir='C:\Users\eburn\AppData\Local\Temp\Rtmp0Q1yIl\filea07417a23371.duckdb' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
 </div>
 </div>
 </section>
 </section>
-<section id="disconnecting" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Disconnecting</h1>
+<section id="disconnecting" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Disconnecting</h1>
 <p>Once we have finished our analysis we can close our connection to the database behind our cdm reference like so.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="further-reading" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Further reading</h1>
+<section id="further-reading" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Further reading</h1>
 <ul>
 <li><a href="https://darwin-eu.github.io/omopgenerics">omopgenerics package</a></li>
 <li><a href="https://darwin-eu.github.io/CDMConnector">CDMConnector package</a></li>
@@ -1137,7 +1143,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./omop_person_obs_period.html" class="pagination-link" aria-label="Person and observation period tables">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Person and observation period tables</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Person and observation period tables</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

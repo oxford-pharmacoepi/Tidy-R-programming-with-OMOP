@@ -1,4 +1,4 @@
-# Functions for analytic pipelines {#sec-dbplyr_verbs}
+# Core verbs for analytic pipelines utilising a database {#sec-dbplyr_verbs}
 
 We saw in the previous chapter that we can use familiar dplyr verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (which we'll see later will be true when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the `nycflights13` data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.
 
@@ -37,19 +37,19 @@ airlines_db |> glimpse()
 For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing the data we need for an analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from dplyr, but a couple also from the tidyr package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.
 
 ::: callout-important
-Remember until we use `compute()` or `collect()` (or printing the first few rows of the result), all we're doing is translating R code into SQL.
+Remember, until we use `compute()` or `collect()` (or printing the first few rows of the result) all we're doing is translating R code into SQL.
 :::
 
-| Purpose                  | Functions                                                | Desription                                                                                                                                                                                                        |
-|-----------------|--------------------------------------|-----------------|
-| Mutating                 | filter, arrange, distinct                                | These functions are used for selecting and reordering rows in a dataset. For example, `filter` subsets rows based on conditions, `arrange` sorts rows, and `distinct` removes duplicate rows.                     |
-| Column Transformation    | mutate, select, relocate, rename                         | These functions are used to create new columns or change existing ones. `mutate` adds or modifies columns, `select` chooses specific columns, and `relocate` changes column order.                                |
-| Aggregation              | count tally, summarise                                   | These functions are used for summarizing data, such as computing counts, sums, or other statistics for each group in the data                                                                                     |
-| Grouping and ungrouping  | group_by, ungroup                                        | These functions are used to group data by one or more variables and to remove grouping. `group_by` allows operations like aggregation by groups, and `ungroup` removes the grouping.                              |
-| Data merging and joining | inner_join, left_join, right_join, anti_join, cross_join | These functions are used to combine data from different tables based on common columns. For example, `inner_join` returns only the rows with matching keys, and `left_join` retains all rows from the left table. |
-| Data reshaping           | pivot_wider, pivot_wider                                 | These functions are used to reshape data between wide and long formats. `pivot_wider` turns long data into wide, and `pivot_longer` does the opposite.                                                            |
-| Data union               | union_all                                                | This function combines two datasets, keeping all rows from both, and removing duplicates.                                                                                                                         |
-| Randomly selects rows    | slice_sample                                             | We can use this to take a random subset of our data by specifying the number or proportion of rows to sample.                                                                                                     |
+| Purpose                  | Functions                                                                                                                                                                                                                                                                                                                                           | Desription                                                                               |
+|------------------|-------------------------------------|------------------|
+| Mutating                 | [filter](https://dplyr.tidyverse.org/reference/filter.html), [arrange](https://dplyr.tidyverse.org/reference/arrange.html), [distinct](https://dplyr.tidyverse.org/reference/distinct.html)                                                                                                                                                         | These functions are used for selecting and reordering rows in a dataset.                 |
+| Column Transformation    | [mutate](https://dplyr.tidyverse.org/reference/mutate.html), [select](https://dplyr.tidyverse.org/reference/select.html), [relocate](https://dplyr.tidyverse.org/reference/relocate.html), [rename](https://dplyr.tidyverse.org/reference/rename.html)                                                                                              | These functions are used to create new columns or change existing ones.                  |
+| Aggregation              | [count](https://dplyr.tidyverse.org/reference/count.html), [tally](https://dplyr.tidyverse.org/reference/tally.html), [summarise](https://dplyr.tidyverse.org/reference/summarise.html)                                                                                                                                                             | These functions are used for summarising data.                                           |
+| Grouping and ungrouping  | [group_by](https://dplyr.tidyverse.org/reference/group_by.html), [ungroup](https://dplyr.tidyverse.org/reference/ungroup.html)                                                                                                                                                                                                                      | These functions are used to group data by one or more variables and to remove grouping.  |
+| Data merging and joining | [inner_join](https://dplyr.tidyverse.org/reference/inner_join.html), [left_join](https://dplyr.tidyverse.org/reference/left_join.html), [right_join](https://dplyr.tidyverse.org/reference/right_join.html), [anti_join](https://dplyr.tidyverse.org/reference/anti_join.html), [cross_join](https://dplyr.tidyverse.org/reference/cross_join.html) | These functions are used to combine data from different tables based on common columns.  |
+| Data reshaping           | [pivot_wider](https://tidyr.tidyverse.org/reference/pivot_wider.html), [pivot_longer](https://tidyr.tidyverse.org/reference/pivot_longer.html)                                                                                                                                                                                                      | These functions are used to reshape data between wide and long formats.                  |
+| Data union               | [union_all](https://dplyr.tidyverse.org/reference/setops.html)                                                                                                                                                                                                                                                                                      | This function combines two tables.                                                       |
+| Randomly selects rows    | [slice_sample](https://dplyr.tidyverse.org/reference/slice.html)                                                                                                                                                                                                                                                                                    | We can use this to take a random subset a table.                                         |
 
 ::: {.callout-tip collapse="true"}
 ## Behind the scenes
@@ -91,7 +91,7 @@ s3_dispatch(flights_db |> head(1) |> collect() |>
 
 ## Getting to an analytic dataset
 
-To see a little more on how we can use the above functions, let's say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay (which we arbitrarily define as arriving more than 30 minutes after they were expected).
+To see a little more on how we can use the above functions, let's say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.
 
 For this we'll first use the `filter()` and `select()` dplyr verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.
 
@@ -99,13 +99,11 @@ For this we'll first use the `filter()` and `select()` dplyr verbs to get the da
 delayed_flights_db <- flights_db |> 
   filter(!is.na(arr_delay),
         origin == "JFK") |> 
-  mutate(was_delayed = if_else(arr_delay > 30, 1L, 0L)) |> 
   select(dest, 
          distance, 
          carrier, 
          tailnum, 
-         "delay" = "arr_delay",
-          was_delayed)
+         "delay" = "arr_delay")
 ```
 
 ::: {.callout-note collapse="true"}
@@ -130,9 +128,7 @@ delayed_flights_db <- delayed_flights_db |>
   inner_join(planes_db |> 
               select(tailnum, 
                      seats),
-            by = join_by(tailnum)) |> 
-  mutate(size = case_when(seats > 100 ~ "Large", 
-                          seats <= 100 ~ "Small"))
+            by = join_by(tailnum))
 ```
 
 It is important to note that our first query was not executed, as we didn't use either `compute()` or `collect()`, so we'll now have added our join to the original query.
@@ -152,45 +148,19 @@ And when executed, our results will look like the following
 delayed_flights_db
 ```
 
-With this, we can now get the median delay (along with the count of records) grouped by size. We can see in fact that most flights arrived early (had a negative delay)
-
-```{r, message=FALSE, warning=FALSE}
-delay_summary_grouped_db <- delayed_flights_db |> 
-  summarise(n = n(),
-            min = min(delay, na.rm = TRUE),
-            q05 = quantile(delay, 0.05, na.rm = TRUE),
-            q25 = quantile(delay, 0.25, na.rm = TRUE), 
-            median_delay = median(delay, na.rm = TRUE),
-            q75 = quantile(delay, 0.75, na.rm = TRUE), 
-            q95 = quantile(delay, 0.95, na.rm = TRUE), 
-            max = max(delay, na.rm = TRUE),
-            .by = c("size")) 
-```
-
-::: {.callout-note collapse="true"}
-## Show query
-
-```{r, message=FALSE, warning=FALSE, echo=FALSE}
-delay_summary_grouped_db |> 
-  show_query()
-```
-:::
-
-```{r, message=FALSE, warning=FALSE}
-delay_summary_grouped_db
-```
-
-All this we done in the database via translated SQL. But say we wanted to do additional analysis in R, we could collect our analytic dataset and go from there. For example, say we wanted to fit a logistic regression with was_delayed as our dependent variable and size and distance as the explanatory variables. We would collect our data and then continue on from that point in R working with our collected data.
+Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we could collect our analytic dataset and go from there. For example, say we wanted to fit a logistic regression with was_delayed as our dependent variable (which we arbitrarily define as arriving more than 30 minutes after they were expected) and size as the explanatory variable (which we arbitrarily define as small if less that 100 seats or large if 100 seats or more). 
 
 ```{r, message=FALSE, warning=FALSE}
 library(parsnip)
 library(gtsummary)
 delayed_flights <- delayed_flights_db |> 
   collect() |> 
-  mutate(was_delayed = as.factor(was_delayed))
+  mutate(was_delayed = as.factor(if_else(delay > 30, 1L, 0L)),
+         size = case_when(seats > 100 ~ "Large", 
+                          seats <= 100 ~ "Small"))
 
 logistic_reg() |> 
   set_engine("glm") |> 
-  fit(was_delayed ~ size + distance, data = delayed_flights) |> 
+  fit(was_delayed ~ size, data = delayed_flights) |> 
   tbl_regression()
 ```

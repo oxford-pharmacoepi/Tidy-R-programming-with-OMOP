@@ -12,6 +12,7 @@ book:
         - working_with_databases_from_r.qmd
         - tidyverse_verbs.qmd
         - tidyverse_expressions.qmd
+        - r_data_models.qmd
     - part: explore.qmd
       chapters: 
         - cdm_reference.qmd

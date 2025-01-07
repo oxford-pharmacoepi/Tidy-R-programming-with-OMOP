@@ -1,6 +1,4 @@
-# Working with databases from R
-
-## A first data analysis in R with a database
+# A first analysis using data in a database
 
 ![](images/lter_penguins.png){width="250"}
 
