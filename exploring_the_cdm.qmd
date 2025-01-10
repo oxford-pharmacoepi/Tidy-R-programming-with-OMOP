@@ -12,7 +12,7 @@ library(ggplot2)
 library(clock)
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 db<-dbConnect(duckdb::duckdb(), 
               dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
 cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
@@ -43,6 +43,31 @@ cdm$person |>
   collect()
 ```
 
+::: {.callout-tip collapse="true"}
+## Vocabulary tables
+
+Above we've got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associated with the concept, along with other information such as it's domain and vocabulary id.
+
+```{r, echo = TRUE}
+cdm$concept |> 
+  glimpse()
+```
+
+Other vocabulary tables capture other information about concepts, such as the direct relationships between concepts (the concept relationship table) and hierarchical relationships between (the concept ancestor table).
+
+```{r, echo = TRUE}
+cdm$concept_relationship |> 
+  glimpse()
+
+cdm$concept_ancestor |> 
+  glimpse()
+```
+
+More information on the vocabulary tables (as well as other tables in the OMOP CDM version 5.3) can be found at <https://ohdsi.github.io/CommonDataModel/cdm53.html#Vocabulary_Tables>.
+::: 
+
+## Summarising observation periods
+
 The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:
 
 ```{r, echo = TRUE}
@@ -66,7 +91,7 @@ cdm$person |>
 ::: {.callout-tip collapse="true"}
 ## Computing intermediate queries
 
-The compute() function will force the computation of a query (by default to a temporary table in the database). In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.
+The `compute()` function will force the computation of a query (by default to a temporary table in the database). In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.
 
 ```{r, echo = TRUE}
 cdm$observation_period |>
@@ -142,88 +167,17 @@ cdm$person_pre_1970 |>
 ```
 :::
 
-## Counting records
 
-What's the number of condition occurrence records per person in the database? We can find this out like so
-
-```{r, echo = TRUE}
-cdm$person |> 
-  left_join(cdm$condition_occurrence |> 
-  group_by(person_id) |> 
-  count(name = "condition_occurrence_records"),
-  by="person_id") |> 
-  mutate(condition_occurrence_records = if_else(
-    is.na(condition_occurrence_records), 0,
-    condition_occurrence_records)) |> 
-  group_by(condition_occurrence_records) |>
-  count() |> 
-  collect() |> 
-  ggplot() +
-  geom_col(aes(condition_occurrence_records, n)) +
-  theme_bw()
-```
-
-How about we were interested in getting record counts for some specific concepts related to Covid-19  symptoms?
-
-```{r, echo = TRUE}
-cdm$condition_occurrence |> 
-  filter(condition_concept_id %in% c(437663,437390,31967,
-                                     4289517,4223659, 312437,
-                                     434490,254761,77074)) |> 
-  group_by(condition_concept_id) |> 
-  count() |> 
-  left_join(cdm$concept,
-            by=c("condition_concept_id" = "concept_id")) |> 
-  collect() |> 
-  ggplot() +
-  geom_col(aes(concept_name, n)) +
-  theme_bw()+
-  xlab("")
-
-```
-
-::: {.callout-tip collapse="true"}
-## Vocabulary tables
-
-Above we've got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associated with the concept, along with other information such as it's domain and vocabulary id.
-
-```{r, echo = TRUE}
-cdm$concept |> 
-  glimpse()
-```
-
-Other vocabulary tables capture other information about concepts, such as the direct relationships between concepts (the concept relationship table) and hierarchical relationships between (the concept ancestor table).
-
-```{r, echo = TRUE}
-cdm$concept_relationship |> 
-  glimpse()
-
-cdm$concept_ancestor |> 
-  glimpse()
-```
-
-More information on the vocabulary tables (as well as other tables in the OMOP CDM version 5.3) can be found at <https://ohdsi.github.io/CommonDataModel/cdm53.html#Vocabulary_Tables>.
-:::
-
-## Working with dates
-
-When working with dates, the best supported functions come from the [clock](https://clock.r-lib.org/) package. In particular, a lot of the date manipulations we might be interested in can be achieved through the use of add_days (to add days to or subtract days from a date), add_years (same as add_days by with years as the timescale), and date_count_between (to get the difference between two dates). For example let's see how these can be applied to date fields in the observation period table.
 
 ```{r, echo = TRUE, message=FALSE}
 library(clock)
 library(ggplot2)
 
 cdm$observation_period |> 
-  mutate(observation_period_start_plus_30_days = 
-           add_days(observation_period_start_date, 30L),
-         observation_period_start_date_plus_10_years = 
-           add_years(observation_period_start_date, 10L)) |> 
-  glimpse()
-  
-cdm$observation_period |> 
-  dplyr::mutate(observation_days = date_count_between("observation_period_start_date", 
+  mutate(observation_days = date_count_between("observation_period_start_date", 
                              "observation_period_end_date", "day"))  |> 
   dplyr::mutate(observation_years = observation_days/ 365.25) |> 
+  select("observation_years") |> 
   collect() |> 
   ggplot() +
   geom_histogram(aes(observation_years), 
@@ -265,7 +219,46 @@ cdm$observation_period |>
 ```
 :::
 
-## Statistical summaries
+
+## Summarising clinical records
+
+What's the number of condition occurrence records per person in the database? We can find this out like so
+
+```{r, echo = TRUE}
+cdm$person |> 
+  left_join(cdm$condition_occurrence |> 
+  group_by(person_id) |> 
+  count(name = "condition_occurrence_records"),
+  by="person_id") |> 
+  mutate(condition_occurrence_records = if_else(
+    is.na(condition_occurrence_records), 0,
+    condition_occurrence_records)) |> 
+  group_by(condition_occurrence_records) |>
+  count() |> 
+  collect() |> 
+  ggplot() +
+  geom_col(aes(condition_occurrence_records, n)) +
+  theme_bw()
+```
+
+How about we were interested in getting record counts for some specific concepts related to Covid-19 symptoms?
+
+```{r, echo = TRUE}
+cdm$condition_occurrence |> 
+  filter(condition_concept_id %in% c(437663,437390,31967,
+                                     4289517,4223659, 312437,
+                                     434490,254761,77074)) |> 
+  group_by(condition_concept_id) |> 
+  count() |> 
+  left_join(cdm$concept,
+            by=c("condition_concept_id" = "concept_id")) |> 
+  collect() |> 
+  ggplot() +
+  geom_col(aes(concept_name, n)) +
+  theme_bw()+
+  xlab("")
+
+```
 
 We can also use summarise for various other calculations
 
@@ -310,8 +303,40 @@ grouped_summary |>
 
 ```
 
+What's the number of condition occurrence records per person in the database? We can find this out like so
 
+```{r, echo = TRUE}
+cdm$person |> 
+  left_join(cdm$condition_occurrence |> 
+  group_by(person_id) |> 
+  count(name = "condition_occurrence_records"),
+  by="person_id") |> 
+  mutate(condition_occurrence_records = if_else(
+    is.na(condition_occurrence_records), 0,
+    condition_occurrence_records)) |> 
+  group_by(condition_occurrence_records) |>
+  count() |> 
+  collect() |> 
+  ggplot() +
+  geom_col(aes(condition_occurrence_records, n)) +
+  theme_bw()
+```
 
-# Further reading
+How about we were interested in getting record counts for some specific concepts related to Covid-19 symptoms?
 
--   ...
+```{r, echo = TRUE}
+cdm$condition_occurrence |> 
+  filter(condition_concept_id %in% c(437663,437390,31967,
+                                     4289517,4223659, 312437,
+                                     434490,254761,77074)) |> 
+  group_by(condition_concept_id) |> 
+  count() |> 
+  left_join(cdm$concept,
+            by=c("condition_concept_id" = "concept_id")) |> 
+  collect() |> 
+  ggplot() +
+  geom_col(aes(concept_name, n)) +
+  theme_bw()+
+  xlab("")
+
+```

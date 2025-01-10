@@ -1,5 +1,0 @@
-# Database references in R {#sec-database_references_in_r}
-
-In the previous chapters we've seen that after connecting to a database we can create references
-
-Introduce dm with lahman data ....

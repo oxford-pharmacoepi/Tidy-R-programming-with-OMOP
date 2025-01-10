@@ -2,8 +2,7 @@
 
 ## The OMOP CDM layout
 
-The OMOP CDM standardises the structure of health care data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure. An entity-relationship diagram for version 5.4 of the OMOP CDM is shown below.
-![](images/erd.jpg){.lightbox}
+The OMOP CDM standardises the structure of health care data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure. An entity-relationship diagram for version 5.4 of the OMOP CDM is shown below. ![](images/erd.jpg){.lightbox}
 
 These tables are going to be described in more detail in the following chapters. But before that, we can first see how to work with our OMOP CDM data from R.
 
@@ -17,7 +16,7 @@ library(here)
 library(dplyr)
 ```
 
-```{r, echo = FALSE, message=FALSE}
+```{r, message=FALSE, warning=FALSE, echo = FALSE}
 Sys.setenv(EUNOMIA_DATA_FOLDER = here::here())
 CDMConnector::downloadEunomiaData(
   datasetName = "synthea-covid19-10k", cdmVersion = "5.3"
@@ -53,7 +52,7 @@ As the structure of the OMOP CDM is already known, we can avoid the overhead of 
 
 The R object representing OMOP CDM data is defined by the `omopgenerics` package), with the the `CDMConnector` package providing a means of connecting to a OMOP CDM data held in a database. As well as specifying the schema containing our OMOP CDM tables, we also specify a write schema where any database tables we create during our analysis will be stored (often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access where we intermediate tables are created for a given a study).
 
-```{r, echo = TRUE}
+```{r, message=FALSE, warning=FALSE, echo = TRUE}
 library(omopgenerics)
 library(CDMConnector)
 cdm <- cdmFromCon(con = db,
@@ -87,7 +86,7 @@ cdm[["observation_period"]]
 
 ## Mutability of the cdm reference
 
-An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected. 
+An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected.
 
 For example, let's say we want to perform a study with only people born in 1970. For this we could filter our person table to only people born in this year.
 
@@ -98,7 +97,7 @@ cdm$person <- cdm$person |>
 cdm$person
 ```
 
-From now on, when we work with our cdm reference this restriction will continue to have been applied.  
+From now on, when we work with our cdm reference this restriction will continue to have been applied.
 
 ```{r, echo = TRUE}
 cdm$person |> 
@@ -119,12 +118,14 @@ cdm$person |>
 The mutability of our cdm reference is a useful feature for studies as it means we can easily tweak our OMOP CDM data if needed. Meanwhile, leaving the underlying data unchanged is essential so that other study code can run against the data unaffected by any of our changes.
 
 One thing we can't do though is alter the structure of OMOP CDM tables. For example this code would cause an error as the person table must have the column person_id.
+
 ```{r, eval=FALSE}
 cdm$person <- cdm$person |> 
     rename("new_id" = "person_id")
 ```
 
 In such a case we would have to call the table something esle.
+
 ```{r, eval=FALSE}
 cdm$person_new <- cdm$person |> 
     rename("new_id" = "person_id") |> 
@@ -132,6 +133,7 @@ cdm$person_new <- cdm$person |>
 ```
 
 Now we would have this new table as an additional table in our cdm reference, knowing it was not in the format of one of the core OMOP CDM tables.
+
 ```{r, echo = TRUE}
 cdm
 ```

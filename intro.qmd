@@ -1,2 +1,9 @@
 # Getting started with working databases from R
 
+In this first half of the book we will see how we can work with databases from R in general. In the following chapters we'll see that when working with data held in a relational database we can leverage various open-source R packages to help us perform tidyverse-style data analyses.
+
+-   In @sec-databases_and_r we will perform a simple data analysis from start to finish using a table in a database.
+-   In @sec-dbplyr_verbs we will see in more detail how familiar dplyr functions can be used to combine data spread across different tables in a database into an analytic dataset which we can then bring into R for further analysis.
+-   In @sec-tidyverse_expressions we will see how we can perfom more complex data manipulation via translation of R code into SQL specific to the database management system being used.
+-   In @sec-dbplyr_packages we will see how we can build data pipelines by creating a data model in R to represent the relational database we're working with and creating functions and methods to work with it.
+

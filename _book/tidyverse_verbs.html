@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Core verbs for analytic pipelines utilising a database – Tidy R programming with the OMOP common data model</title>
+<title>2&nbsp; Core verbs for analytic pipelines utilising a database – Tidy R programming with databases: applications with the OMOP common data model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -130,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Tidy R programming with the OMOP common data model</a> 
+      <a href="./">Tidy R programming with databases: applications with the OMOP common data model</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -175,8 +175,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r_data_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Database references in R</span></span></a>
+  <a href="./dbplyr_packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building data pipelines</span></span></a>
   </div>
 </li>
       </ul>
@@ -184,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./explore.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting to know the OMOP CDM</span></a>
+ <span class="menu-text">Working with the OMOP CDM</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -198,67 +198,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./omop_person_obs_period.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Person and observation period tables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./omop_vocabularies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Vocabulary tables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./omop_clinical_tables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clinical tables</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./data_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./exploring_the_cdm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./creating_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./adding_features.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./working_with_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summarising_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Summarising cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Summarising cohorts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comparing_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></span></a>
   </div>
 </li>
       </ul>
@@ -423,19 +394,29 @@ Important
 <tr class="header">
 <th>Purpose</th>
 <th>Functions</th>
-<th>Desription</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Mutating</td>
-<td><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a>, <a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a>, <a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></td>
-<td>These functions are used for selecting and reordering rows in a dataset.</td>
+<td>Selecting rows</td>
+<td><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a>, <a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></td>
+<td>To select rows in a table.</td>
 </tr>
 <tr class="even">
+<td>Ordering rows</td>
+<td><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></td>
+<td>To order rows in a table.</td>
+</tr>
+<tr class="odd">
 <td>Column Transformation</td>
 <td><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a>, <a href="https://dplyr.tidyverse.org/reference/select.html">select</a>, <a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a>, <a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></td>
-<td>These functions are used to create new columns or change existing ones.</td>
+<td>To create new columns or change existing ones.</td>
+</tr>
+<tr class="even">
+<td>Grouping and ungrouping</td>
+<td><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a>, <a href="https://dplyr.tidyverse.org/reference/ungroup.html">ungroup</a></td>
+<td>To group data by one or more variables and to remove grouping.</td>
 </tr>
 <tr class="odd">
 <td>Aggregation</td>
@@ -443,26 +424,21 @@ Important
 <td>These functions are used for summarising data.</td>
 </tr>
 <tr class="even">
-<td>Grouping and ungrouping</td>
-<td><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a>, <a href="https://dplyr.tidyverse.org/reference/ungroup.html">ungroup</a></td>
-<td>These functions are used to group data by one or more variables and to remove grouping.</td>
-</tr>
-<tr class="odd">
 <td>Data merging and joining</td>
 <td><a href="https://dplyr.tidyverse.org/reference/inner_join.html">inner_join</a>, <a href="https://dplyr.tidyverse.org/reference/left_join.html">left_join</a>, <a href="https://dplyr.tidyverse.org/reference/right_join.html">right_join</a>, <a href="https://dplyr.tidyverse.org/reference/anti_join.html">anti_join</a>, <a href="https://dplyr.tidyverse.org/reference/cross_join.html">cross_join</a></td>
 <td>These functions are used to combine data from different tables based on common columns.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Data reshaping</td>
 <td><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a>, <a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></td>
 <td>These functions are used to reshape data between wide and long formats.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Data union</td>
 <td><a href="https://dplyr.tidyverse.org/reference/setops.html">union_all</a></td>
 <td>This function combines two tables.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Randomly selects rows</td>
 <td><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></td>
 <td>We can use this to take a random subset a table.</td>
@@ -598,7 +574,7 @@ WHERE (NOT((arr_delay IS NULL))) AND (origin = 'JFK')</code></pre>
 # ℹ more rows</code></pre>
 </div>
 </div>
-<p>Now we’ll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics will be kept. Just for the sake of making a simple example, we’ll categorise planes as large or small, with small planes defined as having 100 or less seats.</p>
+<p>Now we’ll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics will be kept.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes_db <span class="sc">|&gt;</span> </span>
@@ -606,7 +582,7 @@ WHERE (NOT((arr_delay IS NULL))) AND (origin = 'JFK')</code></pre>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                     seats),</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">join_by</span>(tailnum))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>It is important to note that our first query was not executed, as we didn’t use either <code>compute()</code> or <code>collect()</code>, so we’ll now have added our join to the original query.</p>
+<p>Note that our first query was not executed, as we didn’t use either <code>compute()</code> or <code>collect()</code>, so we’ll now have added our join to the original query.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -656,518 +632,22 @@ INNER JOIN planes
 # ℹ more rows</code></pre>
 </div>
 </div>
-<p>Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we could collect our analytic dataset and go from there. For example, say we wanted to fit a logistic regression with was_delayed as our dependent variable (which we arbitrarily define as arriving more than 30 minutes after they were expected) and size as the explanatory variable (which we arbitrarily define as small if less that 100 seats or large if 100 seats or more).</p>
+<p>Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform statistical analyses not possible to run in a database).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parsnip)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">was_delayed =</span> <span class="fu">as.factor</span>(<span class="fu">if_else</span>(delay <span class="sc">&gt;</span> <span class="dv">30</span>, <span class="dv">1</span>L, <span class="dv">0</span>L)),</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">size =</span> <span class="fu">case_when</span>(seats <span class="sc">&gt;</span> <span class="dv">100</span> <span class="sc">~</span> <span class="st">"Large"</span>, </span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>                          seats <span class="sc">&lt;=</span> <span class="dv">100</span> <span class="sc">~</span> <span class="st">"Small"</span>))</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="fu">logistic_reg</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(was_delayed <span class="sc">~</span> size, <span class="at">data =</span> delayed_flights) <span class="sc">|&gt;</span> </span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="nlyonglnrc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#nlyonglnrc table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#nlyonglnrc thead, #nlyonglnrc tbody, #nlyonglnrc tfoot, #nlyonglnrc tr, #nlyonglnrc td, #nlyonglnrc th {
-  border-style: none;
-}
-
-#nlyonglnrc p {
-  margin: 0;
-  padding: 0;
-}
-
-#nlyonglnrc .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#nlyonglnrc .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#nlyonglnrc .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#nlyonglnrc .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#nlyonglnrc .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#nlyonglnrc .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#nlyonglnrc .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#nlyonglnrc .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#nlyonglnrc .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#nlyonglnrc .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#nlyonglnrc .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#nlyonglnrc .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#nlyonglnrc .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#nlyonglnrc .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#nlyonglnrc .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#nlyonglnrc .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#nlyonglnrc .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#nlyonglnrc .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#nlyonglnrc .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#nlyonglnrc .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#nlyonglnrc .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#nlyonglnrc .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#nlyonglnrc .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#nlyonglnrc .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#nlyonglnrc .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#nlyonglnrc .gt_left {
-  text-align: left;
-}
-
-#nlyonglnrc .gt_center {
-  text-align: center;
-}
-
-#nlyonglnrc .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#nlyonglnrc .gt_font_normal {
-  font-weight: normal;
-}
-
-#nlyonglnrc .gt_font_bold {
-  font-weight: bold;
-}
-
-#nlyonglnrc .gt_font_italic {
-  font-style: italic;
-}
-
-#nlyonglnrc .gt_super {
-  font-size: 65%;
-}
-
-#nlyonglnrc .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#nlyonglnrc .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#nlyonglnrc .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#nlyonglnrc .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#nlyonglnrc .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#nlyonglnrc .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#nlyonglnrc .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#nlyonglnrc .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#nlyonglnrc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="gt_col_headings header">
-<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
-<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>log(OR)</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-<th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-<th id="p.value" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">size</td>
-<td class="gt_row gt_center" headers="estimate"><br>
-</td>
-<td class="gt_row gt_center" headers="conf.low"><br>
-</td>
-<td class="gt_row gt_center" headers="p.value"><br>
-</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Large</td>
-<td class="gt_row gt_center" headers="estimate">—</td>
-<td class="gt_row gt_center" headers="conf.low">—</td>
-<td class="gt_row gt_center" headers="p.value"><br>
-</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Small</td>
-<td class="gt_row gt_center" headers="estimate">0.37</td>
-<td class="gt_row gt_center" headers="conf.low">0.34, 0.41</td>
-<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
-</tr>
-</tbody><tfoot class="gt_footnotes">
-<tr class="odd">
-<td colspan="4" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> OR = Odds Ratio, CI = Confidence Interval</td>
-</tr>
-</tfoot>
-
-</table>
-
-</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="sc">|&gt;</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 93,298
+Columns: 6
+$ dest     &lt;chr&gt; "LAX", "CLT", "SFO", "ATL", "FLL", "BUF", "RSW", "LAS", "PHX"…
+$ distance &lt;dbl&gt; 2475, 541, 2586, 760, 1069, 301, 1074, 2248, 2153, 1005, 2475…
+$ carrier  &lt;chr&gt; "UA", "US", "UA", "DL", "B6", "B6", "B6", "B6", "US", "B6", "…
+$ tailnum  &lt;chr&gt; "N34137", "N117UW", "N502UA", "N681DA", "N568JB", "N236JB", "…
+$ delay    &lt;dbl&gt; -10, -34, 7, -12, -3, 2, 2, 0, -35, 7, -12, 11, -20, -10, -1,…
+$ seats    &lt;int&gt; 178, 182, 178, 178, 200, 20, 200, 200, 379, 200, 200, 178, 17…</code></pre>
 </div>
 </div>
 

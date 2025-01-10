@@ -1,0 +1,277 @@
+# Building data pipelines {#sec-dbplyr_packages}
+
+In the previous chapters we've seen that after connecting to a database we can create references to the various table we're interested in and write bespoke analytic code. However, if we are working with the same database over and over again we are likely to want to build some tooling for tasks we are often performing.
+
+To see how we can develop a data model with associated methods and functions we'll use the Lahman baseball data. We can see below how the data is stored across various related tables.
+
+![](images/lahman.jpg)
+
+## Defining a data model
+
+```{r, message=FALSE, warning=FALSE, echo = TRUE}
+library(dplyr)
+library(dbplyr)
+library(tidyr)
+library(duckdb)
+library(DBI)
+library(Lahman)
+
+db <- dbConnect(duckdb(), dbdir = ":memory:")
+copy_lahman(db)
+```
+
+Instead of manually creating references to tables of interest as we go, we will write a function to create a single reference to the Lahman data.
+
+```{r, message=FALSE, warning=FALSE, echo = TRUE}
+lahmanFromCon <- function(con) {
+  tables <- c(
+    "AllstarFull", "Appearances", "AwardsManagers", "AwardsPlayers", "AwardsManagers",
+    "AwardsShareManagers", "Batting", "BattingPost", "CollegePlaying", "Fielding",
+    "FieldingOF", "FieldingOFsplit", "FieldingPost", "HallOfFame", "HomeGames",
+    "LahmanData", "Managers", "ManagersHalf", "Parks", "People", "Pitching",
+    "PitchingPost", "Salaries", "Schools", "SeriesPost", "Teams", "TeamsFranchises",
+    "TeamsHalf"
+  )
+  lahmanRef <- purrr::set_names(tables, tables) |> 
+               purrr::map(~ tbl(con, .))
+  class(lahmanRef) <- c("lahman_ref", class(lahmanRef))
+  lahmanRef
+}
+```
+
+With this function we can now easily get references to all our lahman tables in one go using our `lahmanFromCon()` function.
+
+```{r, message=FALSE, warning=FALSE}
+lahman <- lahmanFromCon(db)
+
+lahman$People |>
+  glimpse()
+```
+
+::: {.callout-note collapse="true"}
+## The dm package
+
+In this chapter we are creating a bespoke data model for our database. This approach can be extended using the `dm`, which also provides various helpful functions for creating a data model and working with it.
+
+Similar to above, we can use the `dm` to create a single object to our database tables.
+
+```{r, message=FALSE, warning=FALSE}
+library(dm)
+lahman_dm <- dm(batting = tbl(db, "Batting"), 
+                people = tbl(db, "People"))
+lahman_dm
+```
+
+Using this approach, we can make use of various utility functions. For example here we specify primary and foreign keys and then check that the key constraints are satisfied.
+
+```{r, echo=TRUE}
+lahman_dm <- lahman_dm %>%
+  dm_add_pk(people, playerID) %>%
+  dm_add_fk(batting, playerID, people) 
+
+lahman_dm
+
+dm_examine_constraints(lahman_dm)
+```
+
+For more information on the dm package see <https://dm.cynkra.com/index.html>
+:::
+
+## Creating functions for the data model
+
+We can also now make various functions specific to our Lahman data model to facilitate data analyses. Given we know the structure of the data, we build a set of functions that abstract away some of the complexities of working with data in a database.
+
+Let's start by making a small function to get the teams players have played for. We can see that the code we use follows on from the last couple of chapters.
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+getTeams <- function(lahman, name = "Barry Bonds") {
+  lahman$Batting |>
+    dplyr::inner_join(
+      lahman$People |>
+        dplyr::mutate(full_name = paste0(nameFirst, " ", nameLast)) |>
+        dplyr::filter(full_name %in% name) |>
+        dplyr::select("playerID"),
+      by = join_by(playerID)
+    ) |>
+    dplyr::select(
+      "teamID",
+      "yearID"
+    ) |>
+    dplyr::distinct() |>
+    dplyr::left_join(lahman$Teams,
+      by = dplyr::join_by(teamID, yearID)
+    ) |>
+    dplyr::select("name") |>
+    dplyr::distinct()
+}
+```
+
+Now we can easily get the different teams a player represented. We can see how changing the player name changes the SQL that is getting run behind the scenes.
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+getTeams(lahman, "Babe Ruth") |> pull()
+```
+
+::: {.callout-note collapse="true"}
+## Show query
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+getTeams(lahman, "Babe Ruth") |>
+  show_query()
+```
+:::
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+getTeams(lahman, "Barry Bonds") |> pull()
+```
+
+::: {.callout-note collapse="true"}
+## Show query
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+getTeams(lahman, "Barry Bonds") |>
+  show_query()
+```
+:::
+
+Similarly we could make a function to add the a player's year of birth to a table.
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+addBirthCountry <- function(lahmanTbl){
+  lahmanTbl |> 
+    dplyr::left_join(lahman$People |> 
+              dplyr::select("playerID", "birthCountry"),
+              dplyr::join_by("playerID"))
+}
+```
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+lahman$Batting |>
+  addBirthCountry()
+```
+
+::: {.callout-note collapse="true"}
+## Show query
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+lahman$Batting |>
+  addBirthCountry() |>
+  show_query()
+```
+:::
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+lahman$Pitching |>
+  addBirthCountry()
+```
+
+::: {.callout-note collapse="true"}
+## Show query
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+lahman$Pitching |>
+  addBirthCountry() |>
+  show_query()
+```
+:::
+
+We could then use our `addBirthCountry()` function as part of a larger query to summarise the proportion of players from each country over the time (based on their presence in the batting table).
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+plot_data <- lahman$Batting |>
+  select(playerID, yearID) |> 
+  addBirthCountry() |>
+  filter(yearID > 1960) |> 
+  mutate(birthCountry = case_when(
+    birthCountry == "USA" ~ "USA",
+    birthCountry == "D.R." ~ "Dominican Republic",
+    birthCountry == "Venezuela" ~ "Venezuela",
+    birthCountry == "P.R." ~ "Puerto Rico ",
+    birthCountry == "Cuba" ~ "Cuba",
+    birthCountry == "CAN" ~ "Canada",
+    birthCountry == "Mexico" ~ "Mexico",
+    .default = "Other"
+  )) |> 
+  summarise(n = n(), .by = c("yearID", "birthCountry")) |> 
+  filter(n > 10) |> 
+  group_by(yearID) |>
+  mutate(percentage = n / sum(n) * 100) |> 
+  ungroup() |> 
+  collect()
+```
+
+::: {.callout-note collapse="true"}
+## Show query
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+lahman$Batting |>
+  select(playerID, yearID) |> 
+  addBirthCountry() |>
+  filter(yearID > 1960) |> 
+  mutate(birthCountry = case_when(
+    birthCountry == "USA" ~ "USA",
+    birthCountry == "D.R." ~ "Dominican Republic",
+    birthCountry == "Venezuela" ~ "Venezuela",
+    birthCountry == "P.R." ~ "Puerto Rico ",
+    birthCountry == "Cuba" ~ "Cuba",
+    birthCountry == "CAN" ~ "Canada",
+    birthCountry == "Mexico" ~ "Mexico",
+    .default = "Other"
+  )) |> 
+  summarise(n = n(), .by = c("yearID", "birthCountry")) |> 
+  group_by(yearID) |>
+  mutate(percentage = n / sum(n) * 100) |> 
+  ungroup() |> 
+  show_query()
+```
+:::
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+library(ggplot2)
+plot_data |> 
+  ggplot() +
+  geom_col(aes(yearID, 
+              percentage, 
+              fill = birthCountry), width=1) + 
+  theme_minimal() + 
+  theme(legend.title = element_blank(), 
+        legend.position = "top")
+    
+```
+
+::: {.callout-note collapse="true"}
+## Defining methods for the data model
+
+As part of our `lahmanFromCon()` function our data model object has the class a "lahman_ref". Therefore as well as creating user-facing functions to work with our lahman data model, we can also define methods for the this object.
+
+```{r, message=FALSE, warning=FALSE}
+class(lahman)
+```
+
+With this we can make some specific methods for "lahman_ref". For example we can define a print method.
+
+```{r, message=FALSE, warning=FALSE}
+print.lahman_ref <- function(x, ...) {
+  len <- length(names(x))
+  cli::cli_h1("# Lahman reference - {len} tables")
+  cli::cli_li(paste(
+    "{.strong tables:}",
+    paste(names(x), collapse = ", ")
+  ))
+  invisible(x)
+}
+```
+
+Now we can see a summary of our lahman data model when we print the obect.
+
+```{r, echo = TRUE}
+lahman
+```
+
+And we can see that this print is being done by the method we defined.
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+library(sloop)
+s3_dispatch(print(lahman))
+```
+:::

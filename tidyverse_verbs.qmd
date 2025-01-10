@@ -40,16 +40,17 @@ For almost all analyses we want to go from having our starting data spread out a
 Remember, until we use `compute()` or `collect()` (or printing the first few rows of the result) all we're doing is translating R code into SQL.
 :::
 
-| Purpose                  | Functions                                                                                                                                                                                                                                                                                                                                           | Desription                                                                               |
-|------------------|-------------------------------------|------------------|
-| Mutating                 | [filter](https://dplyr.tidyverse.org/reference/filter.html), [arrange](https://dplyr.tidyverse.org/reference/arrange.html), [distinct](https://dplyr.tidyverse.org/reference/distinct.html)                                                                                                                                                         | These functions are used for selecting and reordering rows in a dataset.                 |
-| Column Transformation    | [mutate](https://dplyr.tidyverse.org/reference/mutate.html), [select](https://dplyr.tidyverse.org/reference/select.html), [relocate](https://dplyr.tidyverse.org/reference/relocate.html), [rename](https://dplyr.tidyverse.org/reference/rename.html)                                                                                              | These functions are used to create new columns or change existing ones.                  |
-| Aggregation              | [count](https://dplyr.tidyverse.org/reference/count.html), [tally](https://dplyr.tidyverse.org/reference/tally.html), [summarise](https://dplyr.tidyverse.org/reference/summarise.html)                                                                                                                                                             | These functions are used for summarising data.                                           |
-| Grouping and ungrouping  | [group_by](https://dplyr.tidyverse.org/reference/group_by.html), [ungroup](https://dplyr.tidyverse.org/reference/ungroup.html)                                                                                                                                                                                                                      | These functions are used to group data by one or more variables and to remove grouping.  |
-| Data merging and joining | [inner_join](https://dplyr.tidyverse.org/reference/inner_join.html), [left_join](https://dplyr.tidyverse.org/reference/left_join.html), [right_join](https://dplyr.tidyverse.org/reference/right_join.html), [anti_join](https://dplyr.tidyverse.org/reference/anti_join.html), [cross_join](https://dplyr.tidyverse.org/reference/cross_join.html) | These functions are used to combine data from different tables based on common columns.  |
-| Data reshaping           | [pivot_wider](https://tidyr.tidyverse.org/reference/pivot_wider.html), [pivot_longer](https://tidyr.tidyverse.org/reference/pivot_longer.html)                                                                                                                                                                                                      | These functions are used to reshape data between wide and long formats.                  |
-| Data union               | [union_all](https://dplyr.tidyverse.org/reference/setops.html)                                                                                                                                                                                                                                                                                      | This function combines two tables.                                                       |
-| Randomly selects rows    | [slice_sample](https://dplyr.tidyverse.org/reference/slice.html)                                                                                                                                                                                                                                                                                    | We can use this to take a random subset a table.                                         |
+| Purpose                  | Functions                                                                                                                                                                                                                                                                                                                                           | Description                                                                             |
+|---------------|------------------------------------------|---------------|
+| Selecting rows           | [filter](https://dplyr.tidyverse.org/reference/filter.html), [distinct](https://dplyr.tidyverse.org/reference/distinct.html)                                                                                                                                                                                                                        | To select rows in a table.                                                              |
+| Ordering rows            | [arrange](https://dplyr.tidyverse.org/reference/arrange.html)                                                                                                                                                                                                                                                                                       | To order rows in a table.                                                               |
+| Column Transformation    | [mutate](https://dplyr.tidyverse.org/reference/mutate.html), [select](https://dplyr.tidyverse.org/reference/select.html), [relocate](https://dplyr.tidyverse.org/reference/relocate.html), [rename](https://dplyr.tidyverse.org/reference/rename.html)                                                                                              | To create new columns or change existing ones.                                          |
+| Grouping and ungrouping  | [group_by](https://dplyr.tidyverse.org/reference/group_by.html), [ungroup](https://dplyr.tidyverse.org/reference/ungroup.html)                                                                                                                                                                                                                      | To group data by one or more variables and to remove grouping.                          |
+| Aggregation              | [count](https://dplyr.tidyverse.org/reference/count.html), [tally](https://dplyr.tidyverse.org/reference/tally.html), [summarise](https://dplyr.tidyverse.org/reference/summarise.html)                                                                                                                                                             | These functions are used for summarising data.                                          |
+| Data merging and joining | [inner_join](https://dplyr.tidyverse.org/reference/inner_join.html), [left_join](https://dplyr.tidyverse.org/reference/left_join.html), [right_join](https://dplyr.tidyverse.org/reference/right_join.html), [anti_join](https://dplyr.tidyverse.org/reference/anti_join.html), [cross_join](https://dplyr.tidyverse.org/reference/cross_join.html) | These functions are used to combine data from different tables based on common columns. |
+| Data reshaping           | [pivot_wider](https://tidyr.tidyverse.org/reference/pivot_wider.html), [pivot_longer](https://tidyr.tidyverse.org/reference/pivot_longer.html)                                                                                                                                                                                                      | These functions are used to reshape data between wide and long formats.                 |
+| Data union               | [union_all](https://dplyr.tidyverse.org/reference/setops.html)                                                                                                                                                                                                                                                                                      | This function combines two tables.                                                      |
+| Randomly selects rows    | [slice_sample](https://dplyr.tidyverse.org/reference/slice.html)                                                                                                                                                                                                                                                                                    | We can use this to take a random subset a table.                                        |
 
 ::: {.callout-tip collapse="true"}
 ## Behind the scenes
@@ -121,7 +122,7 @@ And when executed, our results will look like the following
 delayed_flights_db
 ```
 
-Now we'll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics will be kept. Just for the sake of making a simple example, we'll categorise planes as large or small, with small planes defined as having 100 or less seats.
+Now we'll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics will be kept. 
 
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights_db <- delayed_flights_db |> 
@@ -131,7 +132,7 @@ delayed_flights_db <- delayed_flights_db |>
             by = join_by(tailnum))
 ```
 
-It is important to note that our first query was not executed, as we didn't use either `compute()` or `collect()`, so we'll now have added our join to the original query.
+Note that our first query was not executed, as we didn't use either `compute()` or `collect()`, so we'll now have added our join to the original query.
 
 ::: {.callout-note collapse="true"}
 ## Show query
@@ -148,19 +149,12 @@ And when executed, our results will look like the following
 delayed_flights_db
 ```
 
-Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we could collect our analytic dataset and go from there. For example, say we wanted to fit a logistic regression with was_delayed as our dependent variable (which we arbitrarily define as arriving more than 30 minutes after they were expected) and size as the explanatory variable (which we arbitrarily define as small if less that 100 seats or large if 100 seats or more). 
+Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform statistical analyses not possible to run in a database).
 
 ```{r, message=FALSE, warning=FALSE}
-library(parsnip)
-library(gtsummary)
 delayed_flights <- delayed_flights_db |> 
-  collect() |> 
-  mutate(was_delayed = as.factor(if_else(delay > 30, 1L, 0L)),
-         size = case_when(seats > 100 ~ "Large", 
-                          seats <= 100 ~ "Small"))
+  collect() 
 
-logistic_reg() |> 
-  set_engine("glm") |> 
-  fit(was_delayed ~ size, data = delayed_flights) |> 
-  tbl_regression()
+delayed_flights |> 
+ glimpse()
 ```

@@ -2,7 +2,7 @@ project:
   type: book
 
 book:
-  title: "Tidy R programming with the OMOP common data model"
+  title: "Tidy R programming with databases: applications with the OMOP common data model"
   author: "Edward Burn, Adam Black, Berta Raventós, Yuchen Guo, Mike Du, Kim López-Güell, Núria Mercadé-Besora, Martí Català"
   date: today
   chapters:
@@ -12,16 +12,11 @@ book:
         - working_with_databases_from_r.qmd
         - tidyverse_verbs.qmd
         - tidyverse_expressions.qmd
-        - r_data_models.qmd
+        - dbplyr_packages.qmd
     - part: explore.qmd
       chapters: 
         - cdm_reference.qmd
-        - omop_person_obs_period.qmd
-        - omop_vocabularies.qmd
-        - omop_clinical_tables.qmd
-    - part: data_analysis.qmd
-      chapters: 
-        - exploring_the_cdm.qmd
+        - exploring_the_cdm.qmd     
         - creating_cohorts.qmd
         - adding_features.qmd
         - working_with_cohorts.qmd

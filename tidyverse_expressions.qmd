@@ -1,10 +1,10 @@
 # Supported expressions for database queries {#sec-tidyverse_expressions}
 
-In the previous chapter @sec-dbplyr_verbs we saw that there are a core set of tidyverse functions that can be used with databases to extact data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used. 
+In the previous chapter @sec-dbplyr_verbs we saw that there are a core set of tidyverse functions that can be used with databases to extact data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.
 
 For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these get tanslated to can vary. Moreover, some expessions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.
 
-Let's first load the packages which these expressions come from. In addition to base R types, `bit64` adds support for integer64. The `stringr` package provides functions for working with strings, while `clock` has various functions for working with dates. Many other useful expressions will come from `dplyr` itself. Note we also set an option option so that we will see an error if an expression does not have a ready translation.
+Let's first load the packages which these expressions come from. In addition to base R types, `bit64` adds support for integer64. The `stringr` package provides functions for working with strings, while `clock` has various functions for working with dates. Many other useful expressions will come from `dplyr` itself.
 
 ```{r, warning=FALSE, message=FALSE, error=TRUE}
 library(duckdb)
@@ -19,13 +19,14 @@ options(dplyr.strict_sql = TRUE) # force error if no known translation
 
 ## Data types
 
-Commonly used data types are consistently supported across database backends. We can use the base as.numeric(), as.integer(), as.charater(), as.Date(), and as.POSIXct(). We can also use as.integer64() from the bit64 to coerce to interger64, and the as_date() and as_datetime() from the clock package instead of as.Date() and as.POSIXct(), respectively.
+Commonly used data types are consistently supported across database backends. We can use the base `as.numeric()`, `as.integer()`, `as.charater()`, `as.Date()`, and `as.POSIXct()`. We can also use `as.integer64()` from the `bit64` package to coerce to interger64, and the `as_date()` and `as_datetime()` from the clock package instead of `as.Date()` and `as.POSIXct()`, respectively.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
-::: {.panel-tabset collapse="true"}
 
+::: {.panel-tabset collapse="true"}
 ### duckdb
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(as.numeric(var), 
               con = simulate_duckdb())
@@ -48,6 +49,7 @@ translate_sql(as.logical(var),
 ```
 
 ### Redshift
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(as.numeric(var), 
               con = simulate_redshift())
@@ -70,6 +72,7 @@ translate_sql(as.logical(var),
 ```
 
 ### Postgres
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(as.numeric(var), 
               con = simulate_postgres())
@@ -92,6 +95,7 @@ translate_sql(as.logical(var),
 ```
 
 ### Snowflake
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(as.numeric(var), 
               con = simulate_snowflake())
@@ -114,6 +118,7 @@ translate_sql(as.logical(var),
 ```
 
 ### Spark
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(as.numeric(var), 
               con = simulate_spark_sql())
@@ -136,6 +141,7 @@ translate_sql(as.logical(var),
 ```
 
 ### SQL Server
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(as.numeric(var), 
               con = simulate_mssql())
@@ -156,20 +162,19 @@ translate_sql(as_datetime(var),
 translate_sql(as.logical(var), 
               con = simulate_mssql())
 ```
-
-
 :::
 :::
 
 ## Comparison and logical operators
 
-Base r comparison operators, such as <, <=, ==, >=, >, are also well supported in all database backends. Logical operators, such as & and | can also be used as if the data was in R.
+Base r comparison operators, such as `<`, `<=`, `==`, `>=`, `>`, are also well supported in all database backends. Logical operators, such as `&` and `|` can also be used as if the data was in R.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
-::: {.panel-tabset collapse="true"}
 
+::: {.panel-tabset collapse="true"}
 ### duckdb
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(var_1 == var_2, 
               con = simulate_duckdb())
@@ -193,6 +198,7 @@ translate_sql(var_1 >= 100 | var_1  < 200,
 ```
 
 ### Redshift
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(var_1 == var_2, 
               con = simulate_redshift())
@@ -215,6 +221,7 @@ translate_sql(var_1 >= 100 | var_1  < 200,
 ```
 
 ### Postgres
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(var_1 == var_2, 
               con = simulate_postgres())
@@ -237,6 +244,7 @@ translate_sql(var_1 >= 100 | var_1  < 200,
 ```
 
 ### Snowflake
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(var_1 == var_2, 
               con = simulate_snowflake())
@@ -259,6 +267,7 @@ translate_sql(var_1 >= 100 | var_1  < 200,
 ```
 
 ### Spark
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(var_1 == var_2, 
               con = simulate_spark_sql())
@@ -281,6 +290,7 @@ translate_sql(var_1 >= 100 | var_1  < 200,
 ```
 
 ### SQL Server
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(var_1 == var_2, 
               con = simulate_mssql())
@@ -301,20 +311,19 @@ translate_sql(var_1 >= 100 & var_1  < 200,
 translate_sql(var_1 >= 100 | var_1  < 200, 
               con = simulate_mssql())
 ```
-
-
 :::
 :::
 
 ## Conditional statements
 
-The base ifelse function, along with if_else and case_when from dplyr are transalated for each database backend. As can be seen in the translations, case_when maps to the SQL CASE WHEN statement.
+The base `ifelse` function, along with `if_else` and `case_when` from dplyr are transalated for each database backend. As can be seen in the translations, `case_when` maps to the SQL CASE WHEN statement.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
-::: {.panel-tabset collapse="true"}
 
+::: {.panel-tabset collapse="true"}
 ### duckdb
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(ifelse(var == "a", 1L, 2L), 
               con = simulate_duckdb())
@@ -335,6 +344,7 @@ translate_sql(case_when(var == "a" ~ 1L,
 ```
 
 ### Redshift
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(ifelse(var == "a", 1L, 2L), 
               con = simulate_redshift())
@@ -355,6 +365,7 @@ translate_sql(case_when(var == "a" ~ 1L,
 ```
 
 ### Postgres
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(ifelse(var == "a", 1L, 2L), 
               con = simulate_postgres())
@@ -375,6 +386,7 @@ translate_sql(case_when(var == "a" ~ 1L,
 ```
 
 ### Snowflake
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(ifelse(var == "a", 1L, 2L), 
               con = simulate_snowflake())
@@ -395,6 +407,7 @@ translate_sql(case_when(var == "a" ~ 1L,
 ```
 
 ### Spark
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(ifelse(var == "a", 1L, 2L), 
               con = simulate_spark_sql())
@@ -415,6 +428,7 @@ translate_sql(case_when(var == "a" ~ 1L,
 ```
 
 ### SQL Server
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(ifelse(var == "a", 1L, 2L), 
               con = simulate_mssql())
@@ -433,21 +447,19 @@ translate_sql(case_when(var == "a" ~ 1L,
                         .default = "something else"), 
               con = simulate_mssql())
 ```
-
-
 :::
 :::
 
 ## Working with strings
 
-Compared to the previous sections, there is much more variation in support of functions to work with strings across database management systems. In particular, although various useful stringr functions do have translations it can be seen below that more translations are available for some databases compared to others.
-
+Compared to the previous sections, there is much more variation in support of functions to work with strings across database management systems. In particular, although various useful `stringr` functions do have translations it can be seen below that more translations are available for some databases compared to others.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
-::: {.panel-tabset collapse="true"}
 
+::: {.panel-tabset collapse="true"}
 ### duckdb
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(nchar(var), 
               con = simulate_duckdb())
@@ -494,6 +506,7 @@ translate_sql(str_ends(var, "a"),
 ```
 
 ### Redshift
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(nchar(var), 
               con = simulate_redshift())
@@ -540,6 +553,7 @@ translate_sql(str_ends(var, "a"),
 ```
 
 ### Postgres
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(nchar(var), 
               con = simulate_postgres())
@@ -586,6 +600,7 @@ translate_sql(str_ends(var, "a"),
 ```
 
 ### Snowflake
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(nchar(var), 
               con = simulate_snowflake())
@@ -632,6 +647,7 @@ translate_sql(str_ends(var, "a"),
 ```
 
 ### Spark
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(nchar(var), 
               con = simulate_spark_sql())
@@ -678,6 +694,7 @@ translate_sql(str_ends(var, "a"),
 ```
 
 ### SQL Server
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(nchar(var), 
               con = simulate_mssql())
@@ -722,21 +739,19 @@ translate_sql(str_starts(var, "a"),
 translate_sql(str_ends(var, "a"),
               con = simulate_mssql())
 ```
-
-
 :::
 :::
-
 
 ## Working with dates
 
-Like with strings, support for working with dates is somewhat mixed. In general, we would use functions from the clock package such as get_day(), get_month(), get_year() to extact parts from a date, add_days() to add or subtract days to a date, and date_count_between() to get the number of days between two date variables. 
+Like with strings, support for working with dates is somewhat mixed. In general, we would use functions from the `clock` package such as `get_day()`, `get_month()`, `get_year()` to extact parts from a date, `add_days()` to add or subtract days to a date, and `date_count_between()` to get the number of days between two date variables.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
-::: {.panel-tabset collapse="true"}
 
+::: {.panel-tabset collapse="true"}
 ### duckdb
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(get_day(date_1), 
               con = simulate_duckdb())
@@ -757,6 +772,7 @@ translate_sql(date_count_between(date_1, date_2, "year"),
 ```
 
 ### Redshift
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(get_day(date_1), 
               con = simulate_redshift())
@@ -777,6 +793,7 @@ translate_sql(date_count_between(date_1, date_2, "year"),
 ```
 
 ### Postgres
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(get_day(date_1), 
               con = simulate_postgres())
@@ -797,6 +814,7 @@ translate_sql(date_count_between(date_1, date_2, "year"),
 ```
 
 ### Snowflake
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(get_day(date_1), 
               con = simulate_snowflake())
@@ -817,6 +835,7 @@ translate_sql(date_count_between(date_1, date_2, "year"),
 ```
 
 ### Spark
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(get_day(date_1), 
               con = simulate_spark_sql())
@@ -837,6 +856,7 @@ translate_sql(date_count_between(date_1, date_2, "year"),
 ```
 
 ### SQL Server
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 translate_sql(get_day(date_1), 
               con = simulate_mssql())
@@ -855,20 +875,19 @@ translate_sql(date_count_between(date_1, date_2, "day"),
 translate_sql(date_count_between(date_1, date_2, "year"), 
               con = simulate_mssql())
 ```
-
-
 :::
 :::
 
 ## Data aggregation
 
-Within the context of using summarise(), we can get aggregate across entire columns using functions such as n(), n_distinct(), sum(), min(), max(), mean(), and sd(). As can be seen below, the SQL for these calculations is similar across different database management systems.
+Within the context of using `summarise()`, we can get aggregate across entire columns using functions such as `n()`, `n_distinct()`, `sum()`, `min()`, `max()`, `mean()`, and `sd()`. As can be seen below, the SQL for these calculations is similar across different database management systems.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
-::: {.panel-tabset collapse="true"}
 
+::: {.panel-tabset collapse="true"}
 ### duckdb
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_duckdb()) %>% 
   summarise(
@@ -885,6 +904,7 @@ lazy_frame(x = c(1,2), con = simulate_duckdb()) %>%
 ```
 
 ### postgres
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_postgres()) %>% 
   summarise(
@@ -901,6 +921,7 @@ lazy_frame(x = c(1,2), con = simulate_postgres()) %>%
 ```
 
 ### redshift
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_redshift()) %>% 
   summarise(
@@ -917,6 +938,7 @@ lazy_frame(x = c(1,2), con = simulate_redshift()) %>%
 ```
 
 ### Snowflake
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_snowflake()) %>% 
   summarise(
@@ -933,6 +955,7 @@ lazy_frame(x = c(1,2), con = simulate_snowflake()) %>%
 ```
 
 ### Spark
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_spark_sql()) %>% 
   summarise(
@@ -948,6 +971,7 @@ lazy_frame(x = c(1,2), con = simulate_spark_sql()) %>%
 ```
 
 ### SQL Server
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), a = "a", con = simulate_mssql()) %>% 
   summarise(
@@ -962,26 +986,23 @@ lazy_frame(x = c(1,2), a = "a", con = simulate_mssql()) %>%
   show_query()
 
 ```
-
-
 :::
 :::
-
-
 
 ## Window functions
 
-In the previous section we saw how aggregate functions can be used to perform operations across entire columns. Window functions differ in that they perform calculation across rows that are in some way related to a current row. For these we now use mutate() instead of using summarise(). 
+In the previous section we saw how aggregate functions can be used to perform operations across entire columns. Window functions differ in that they perform calculation across rows that are in some way related to a current row. For these we now use `mutate()` instead of using `summarise()`.
 
-We can use window functions like cumsum() and cummean() to calculate running totals and averages, or lag() and lead() to help compare rows to their preceding or following rows.
+We can use window functions like `cumsum()` and `cummean()` to calculate running totals and averages, or `lag()` and `lead()` to help compare rows to their preceding or following rows.
 
-Given that window functions are compare rows to rows before or after them, we will ofter use arrange() to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using group_by() would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently. 
+Given that window functions are compare rows to rows before or after them, we will ofter use `arrange()` to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using `group_by()` would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
-::: {.panel-tabset collapse="true"}
 
+::: {.panel-tabset collapse="true"}
 ### duckdb
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(10, 20, 30),
            z = c(1, 2, 3),
@@ -1008,6 +1029,7 @@ lazy_frame(x = c(10, 20, 30),
 ```
 
 ### postgres
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(10, 20, 30),
            z = c(1, 2, 3),
@@ -1035,6 +1057,7 @@ lazy_frame(x = c(10, 20, 30),
 ```
 
 ### redshift
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(10, 20, 30),
            z = c(1, 2, 3),
@@ -1060,6 +1083,7 @@ lazy_frame(x = c(10, 20, 30),
 ```
 
 ### Snowflake
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(10, 20, 30),
            z = c(1, 2, 3),
@@ -1086,6 +1110,7 @@ lazy_frame(x = c(10, 20, 30),
 ```
 
 ### Spark
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(10, 20, 30),
            z = c(1, 2, 3),
@@ -1113,6 +1138,7 @@ lazy_frame(x = c(10, 20, 30),
 ```
 
 ### SQL Server
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(10, 20, 30),
            z = c(1, 2, 3),
@@ -1137,21 +1163,21 @@ lazy_frame(x = c(10, 20, 30),
   show_query()
 
 ```
-
 :::
 :::
-
 
 ## Calculating quantiles, including the median
-So far we've seen that we can perform various data manipulations and calculate summary statistics for different database management systems using the same R code. Although the translated SQL has been different, the databases all supported similar approaches to perform these queries. 
 
-A case where this is not the case is when we are interested in summarisng distibutions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead() and lag() above. Unfortunately this means that for some databases quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.
+So far we've seen that we can perform various data manipulations and calculate summary statistics for different database management systems using the same R code. Although the translated SQL has been different, the databases all supported similar approaches to perform these queries.
+
+A case where this is not the case is when we are interested in summarisng distibutions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately this means that for some databases quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
-::: {.panel-tabset collapse="true"}
 
+::: {.panel-tabset collapse="true"}
 ### duckdb
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_duckdb()) %>% 
   summarise(median = median(x, na.rm = TRUE)) |> 
@@ -1164,6 +1190,7 @@ lazy_frame(x = c(1,2), con = simulate_duckdb()) %>%
 ```
 
 ### postgres
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_postgres()) %>% 
   summarise(median = median(x, na.rm = TRUE)) |> 
@@ -1176,6 +1203,7 @@ lazy_frame(x = c(1,2), con = simulate_postgres()) %>%
 ```
 
 ### redshift
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_redshift()) %>% 
   summarise(median = median(x, na.rm = TRUE)) |> 
@@ -1187,6 +1215,7 @@ lazy_frame(x = c(1,2), con = simulate_redshift()) %>%
 ```
 
 ### Snowflake
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_snowflake()) %>% 
   summarise(median = median(x, na.rm = TRUE)) |> 
@@ -1199,6 +1228,7 @@ lazy_frame(x = c(1,2), con = simulate_snowflake()) %>%
 ```
 
 ### Spark
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_spark_sql()) %>% 
   summarise(median = median(x, na.rm = TRUE)) |> 
@@ -1212,6 +1242,7 @@ lazy_frame(x = c(1,2), con = simulate_spark_sql()) %>%
 ```
 
 ### SQL Server
+
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 lazy_frame(x = c(1,2), con = simulate_mssql()) %>% 
   summarise(median = median(x, na.rm = TRUE)) |> 
@@ -1222,7 +1253,5 @@ lazy_frame(x = c(1,2), con = simulate_mssql()) %>%
   show_query()
 
 ```
-
 :::
 :::
-
