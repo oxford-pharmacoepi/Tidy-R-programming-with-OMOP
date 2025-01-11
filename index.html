@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Edward Burn, Adam Black, Berta Raventós, Yuchen Guo, Mike Du, Kim López-Güell, Núria Mercadé-Besora, Martí Català">
-<meta name="dcterms.date" content="2025-01-10">
+<meta name="dcterms.date" content="2025-01-11">
 
 <title>Tidy R programming with databases: applications with the OMOP common data model</title>
 <style>
@@ -143,15 +143,15 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dbplyr_packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building data pipelines</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./explore.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Working with the OMOP CDM</span></a>
+            <a href="./omop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with the OMOP CDM from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -214,6 +214,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
   <ul class="collapse">
   <li><a href="#is-this-book-for-me" id="toc-is-this-book-for-me" class="nav-link" data-scroll-target="#is-this-book-for-me">Is this book for me?</a></li>
+  <li><a href="#how-is-the-book-organised" id="toc-how-is-the-book-organised" class="nav-link" data-scroll-target="#how-is-the-book-organised">How is the book organised?</a></li>
   <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
   <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
@@ -243,7 +244,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 10, 2025</p>
+      <p class="date">January 11, 2025</p>
     </div>
   </div>
   
@@ -259,9 +260,14 @@ ul.task-list li input[type="checkbox"] {
 <h1 class="unnumbered">Preface</h1>
 <section id="is-this-book-for-me" class="level2">
 <h2 class="anchored" data-anchor-id="is-this-book-for-me">Is this book for me?</h2>
-<p>We’ve written this book for anyone interested in a working with databases mapped to the OMOP Common Data Model (CDM) in a tidyverse inspired approach. That is, human centered, consistent, composable, and inclusive (see <a href="https://design.tidyverse.org/unifying.html" class="uri">https://design.tidyverse.org/unifying.html</a> for more details on these principles).</p>
-<p>New to the OMOP CDM? We’d recommend you pare this book with <a href="https://ohdsi.github.io/TheBookOfOhdsi/">The Book of OHDSI</a></p>
+<p>We’ve written this book for anyone interested in a working with databases using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <a href="https://design.tidyverse.org/unifying.html" class="uri">https://design.tidyverse.org/unifying.html</a> for more details on these principles).</p>
 <p>New to R? We recommend you compliment the book with <a href="https://r4ds.had.co.nz/">R for data science</a></p>
+<p>New to databases? We recommend you take a look at some web tutorials on SQL, such as <a href="https://sqlbolt.com/">SQLBolt</a> or <a href="https://www.sqlzoo.net/wiki/SQL_Tutorial">SQLZoo</a></p>
+<p>New to the OMOP CDM? We’d recommend you pare this book with <a href="https://ohdsi.github.io/TheBookOfOhdsi/">The Book of OHDSI</a></p>
+</section>
+<section id="how-is-the-book-organised" class="level2">
+<h2 class="anchored" data-anchor-id="how-is-the-book-organised">How is the book organised?</h2>
+<p>The book is divided into two parts. The first half of the book is focused on the general principles for working with databases from R. In these chapters you will see how you can use familiar tidyverse-style code to build up analytic pipelines that start with data held in a database and end with your analytic results. The second half of the book is focused on working with data in the OMOP Common Data Model (CDM) format, a widely used data format for health care data. In these chapters you will see how to work with this data format using the general principles from the first half of the book along with a set of R packages that have been built for the OMOP CDM.</p>
 </section>
 <section id="citation" class="level2">
 <h2 class="anchored" data-anchor-id="citation">Citation</h2>
