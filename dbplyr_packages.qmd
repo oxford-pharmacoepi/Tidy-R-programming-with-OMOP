@@ -1,4 +1,4 @@
-# Building data pipelines {#sec-dbplyr_packages}
+# Building analytic pipelines for a data model {#sec-dbplyr_packages}
 
 In the previous chapters we've seen that after connecting to a database we can create references to the various table we're interested in and write bespoke analytic code. However, if we are working with the same database over and over again we are likely to want to build some tooling for tasks we are often performing.
 
@@ -51,7 +51,7 @@ lahman$People |>
 ::: {.callout-note collapse="true"}
 ## The dm package
 
-In this chapter we are creating a bespoke data model for our database. This approach can be extended using the `dm`, which also provides various helpful functions for creating a data model and working with it.
+In this chapter we will be creating a bespoke data model for our database. This approach can be further extended using the `dm`, which also provides various helpful functions for creating a data model and working with it.
 
 Similar to above, we can use the `dm` to create a single object to our database tables.
 
@@ -109,7 +109,7 @@ getTeams <- function(lahman, name = "Barry Bonds") {
 Now we can easily get the different teams a player represented. We can see how changing the player name changes the SQL that is getting run behind the scenes.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
-getTeams(lahman, "Babe Ruth") |> pull()
+getTeams(lahman, "Babe Ruth")
 ```
 
 ::: {.callout-note collapse="true"}
@@ -122,7 +122,7 @@ getTeams(lahman, "Babe Ruth") |>
 :::
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
-getTeams(lahman, "Barry Bonds") |> pull()
+getTeams(lahman, "Barry Bonds")
 ```
 
 ::: {.callout-note collapse="true"}
@@ -132,6 +132,22 @@ getTeams(lahman, "Barry Bonds") |> pull()
 getTeams(lahman, "Barry Bonds") |>
   show_query()
 ```
+:::
+
+::: {.callout-tip collapse="true"}
+## Choosing the right time to collect data into R
+
+`collect()` brings data out of the database and into R. When working with large data sets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our `getTeams()` function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case we could also use `pull()` get our result out as a vector rather that a data frame.
+
+```{r, message=FALSE, warning=FALSE}
+getTeams(lahman, "Barry Bonds") |>
+  collect()
+
+getTeams(lahman, "Barry Bonds") |>
+  pull()
+```
+
+In other cases however we may need to collect data so as to perform further analysis steps that are not possible using SQL. This might be the case for plotting or for other analytic steps like fitting statistical models. In such cases we should try to only bring out the data that we need (as we will likely have much less memory available on our local computer than is available for the database).
 :::
 
 Similarly we could make a function to add the a player's year of birth to a table.
@@ -193,7 +209,6 @@ plot_data <- lahman$Batting |>
     .default = "Other"
   )) |> 
   summarise(n = n(), .by = c("yearID", "birthCountry")) |> 
-  filter(n > 10) |> 
   group_by(yearID) |>
   mutate(percentage = n / sum(n) * 100) |> 
   ungroup() |> 
@@ -262,7 +277,7 @@ print.lahman_ref <- function(x, ...) {
 }
 ```
 
-Now we can see a summary of our lahman data model when we print the obect.
+Now we can see a summary of our lahman data model when we print the object.
 
 ```{r, echo = TRUE}
 lahman
@@ -275,3 +290,204 @@ library(sloop)
 s3_dispatch(print(lahman))
 ```
 :::
+
+## Building efficient analytic pipelines
+
+### The risk of "clean" R code
+
+Following on from the above approach, we might think it a good idea to make another function `addBirthYear()`. We can then use it along with our `addBirthCountry()` to get a summarise average salary by birth country and birth year.
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+addBirthYear <- function(lahmanTbl){
+  lahmanTbl |> 
+    left_join(lahman$People |> 
+              select("playerID", "birthYear"),
+              join_by("playerID"))
+}
+
+lahman$Salaries |> 
+  addBirthCountry() |> 
+  addBirthYear() |> 
+  summarise(average_salary = mean(salary), 
+            .by = c("birthCountry", "birthYear"))
+```
+
+Although the R code on the face of it looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets birth country and the other birth year. 
+
+::: {.callout-note collapse="true"}
+## Show query
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+lahman$Salaries |> 
+  addBirthCountry() |> 
+  addBirthYear() |> 
+  summarise(average_salary = mean(salary), 
+            .by = c("birthCountry", "birthYear")) |> 
+  show_query()
+```
+:::
+
+To improve performance, we could instead have a single function to get both of these both birth country and birth year at the same time.
+
+```{r, message = FALSE, warning = FALSE, echo = TRUE}
+addCharacteristics <- function(lahmanTbl){
+  lahmanTbl |> 
+    left_join(lahman$People |> 
+              select("playerID", "birthYear", "birthCountry"),
+              join_by("playerID"))
+}
+
+lahman$Salaries |> 
+  addCharacteristics() |> 
+  summarise(average_salary = mean(salary), 
+            .by = c("birthCountry", "birthYear"))
+```
+
+::: {.callout-note collapse="true"}
+## Show query
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+lahman$Salaries |> 
+  addCharacteristics() |> 
+  summarise(average_salary = mean(salary), 
+            .by = c("birthCountry", "birthYear")) |> 
+  show_query()
+```
+:::
+
+All this is to show that when working with databases we should keep in mind what is going on behind the scenes in terms of SQL actually being executed. 
+
+### Piping and SQL
+
+Although piping functions has little impact on performance when using R with data in memory, when working with a database the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.
+
+For example, a single mutate function creating two new variables would generate the below SQL.
+
+```{r, echo = TRUE}
+lahman$People |> 
+  mutate(birthDatePlus1 = 
+           add_years(birthDate, 1L),
+         birthDatePlus10 = 
+           add_years(birthDate, 10L)) |> 
+  select("playerID", 
+         "birthDatePlus1",
+         "birthDatePlus10") |> 
+  show_query()
+```
+
+Whereas the SQL will be different if these were created using multiple mutate calls (with now one being created in a sub-query).
+
+```{r, echo = TRUE}
+lahman$People |> 
+  mutate(birthDatePlus1 = 
+           add_years(birthDate, 1L)) |> 
+  mutate(birthDatePlus10 = 
+           add_years(birthDate, 10L)) |> 
+  select("playerID", 
+         "birthDatePlus1",
+         "birthDatePlus10") |> 
+  show_query()
+```
+
+### Computing intermediate queries
+
+Let's say we want to summarise home runs in the batting table and stike outs in the pitching table by college players attended and their birth year. We could do this like so:
+
+```{r, echo = TRUE}
+players_with_college <- lahman$People |> 
+  select(playerID, birthYear) |> 
+  inner_join(lahman$CollegePlaying |> 
+              filter(!is.na(schoolID)) |> 
+              select(playerID, schoolID) |> 
+              distinct(),
+            by = join_by(playerID))
+
+lahman$Batting |> 
+  left_join(players_with_college,
+            by = join_by(playerID)) |> 
+  summarise(home_runs = sum(H, na.rm = TRUE), 
+                        .by = c(schoolID, birthYear)) |> 
+  collect()
+
+lahman$Pitching |> 
+  left_join(players_with_college,
+            by = join_by(playerID)) |> 
+  summarise(strike_outs = sum(SO, na.rm = TRUE), 
+                        .by = c(schoolID, birthYear))|> 
+  collect()
+```
+
+Looking at the SQL we can see, however, that there is some duplication. As part of each full query we have run our players_with_college query.
+
+::: {.callout-note collapse="true"}
+## Show query
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+lahman$Batting |> 
+  left_join(players_with_college,
+            by = join_by(playerID)) |> 
+  summarise(home_runs = sum(H, na.rm = TRUE), 
+                        .by = c(schoolID, birthYear)) |> 
+  show_query()
+
+lahman$Pitching |> 
+  left_join(players_with_college,
+            by = join_by(playerID)) |> 
+  summarise(strike_outs = sum(SO, na.rm = TRUE), 
+                        .by = c(schoolID, birthYear)) |> 
+  show_query()
+```
+:::
+
+To avoid this we could instead make use of the `compute()` function to force the computation of this first, intermediate, query to a temporary table in the database.
+
+```{r, echo = TRUE}
+players_with_college <- players_with_college |> 
+  compute()
+```
+
+Now we have a temporary table with the result of our players_with_college query, and we can use this in both of our aggregation queries.
+
+```{r, echo = TRUE}
+players_with_college |> 
+  show_query()
+```
+
+
+```{r, echo = TRUE}
+lahman$Batting |> 
+  left_join(players_with_college,
+            by = join_by(playerID)) |> 
+  summarise(home_runs = sum(H, na.rm = TRUE), 
+                        .by = c(schoolID, birthYear)) |> 
+  collect()
+
+lahman$Pitching |> 
+  left_join(players_with_college,
+            by = join_by(playerID)) |> 
+  summarise(strike_outs = sum(SO, na.rm = TRUE), 
+                        .by = c(schoolID, birthYear))|> 
+  collect()
+```
+
+::: {.callout-note collapse="true"}
+## Show query
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+lahman$Batting |> 
+  left_join(players_with_college,
+            by = join_by(playerID)) |> 
+  summarise(home_runs = sum(H, na.rm = TRUE), 
+                        .by = c(schoolID, birthYear)) |> 
+  show_query()
+
+lahman$Pitching |> 
+  left_join(players_with_college,
+            by = join_by(playerID)) |> 
+  summarise(strike_outs = sum(SO, na.rm = TRUE), 
+                        .by = c(schoolID, birthYear)) |> 
+  show_query()
+```
+:::
+
+In this case the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore although we don't want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.

@@ -1,8 +1,8 @@
 # Supported expressions for database queries {#sec-tidyverse_expressions}
 
-In the previous chapter @sec-dbplyr_verbs we saw that there are a core set of tidyverse functions that can be used with databases to extact data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.
+In the previous chapter @sec-dbplyr_verbs we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.
 
-For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these get tanslated to can vary. Moreover, some expessions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.
+For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.
 
 Let's first load the packages which these expressions come from. In addition to base R types, `bit64` adds support for integer64. The `stringr` package provides functions for working with strings, while `clock` has various functions for working with dates. Many other useful expressions will come from `dplyr` itself.
 
@@ -19,7 +19,7 @@ options(dplyr.strict_sql = TRUE) # force error if no known translation
 
 ## Data types
 
-Commonly used data types are consistently supported across database backends. We can use the base `as.numeric()`, `as.integer()`, `as.charater()`, `as.Date()`, and `as.POSIXct()`. We can also use `as.integer64()` from the `bit64` package to coerce to interger64, and the `as_date()` and `as_datetime()` from the clock package instead of `as.Date()` and `as.POSIXct()`, respectively.
+Commonly used data types are consistently supported across database backends. We can use the base `as.numeric()`, `as.integer()`, `as.charater()`, `as.Date()`, and `as.POSIXct()`. We can also use `as.integer64()` from the `bit64` package to coerce to integer64, and the `as_date()` and `as_datetime()` from the clock package instead of `as.Date()` and `as.POSIXct()`, respectively.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
@@ -316,7 +316,7 @@ translate_sql(var_1 >= 100 | var_1  < 200,
 
 ## Conditional statements
 
-The base `ifelse` function, along with `if_else` and `case_when` from dplyr are transalated for each database backend. As can be seen in the translations, `case_when` maps to the SQL CASE WHEN statement.
+The base `ifelse` function, along with `if_else` and `case_when` from dplyr are translated for each database backend. As can be seen in the translations, `case_when` maps to the SQL CASE WHEN statement.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
@@ -744,7 +744,7 @@ translate_sql(str_ends(var, "a"),
 
 ## Working with dates
 
-Like with strings, support for working with dates is somewhat mixed. In general, we would use functions from the `clock` package such as `get_day()`, `get_month()`, `get_year()` to extact parts from a date, `add_days()` to add or subtract days to a date, and `date_count_between()` to get the number of days between two date variables.
+Like with strings, support for working with dates is somewhat mixed. In general, we would use functions from the `clock` package such as `get_day()`, `get_month()`, `get_year()` to extract parts from a date, `add_days()` to add or subtract days to a date, and `date_count_between()` to get the number of days between two date variables.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
@@ -995,7 +995,7 @@ In the previous section we saw how aggregate functions can be used to perform op
 
 We can use window functions like `cumsum()` and `cummean()` to calculate running totals and averages, or `lag()` and `lead()` to help compare rows to their preceding or following rows.
 
-Given that window functions are compare rows to rows before or after them, we will ofter use `arrange()` to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using `group_by()` would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.
+Given that window functions are compare rows to rows before or after them, we will often use `arrange()` to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using `group_by()` would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
@@ -1170,7 +1170,7 @@ lazy_frame(x = c(10, 20, 30),
 
 So far we've seen that we can perform various data manipulations and calculate summary statistics for different database management systems using the same R code. Although the translated SQL has been different, the databases all supported similar approaches to perform these queries.
 
-A case where this is not the case is when we are interested in summarisng distibutions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately this means that for some databases quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.
+A case where this is not the case is when we are interested in summarising distributions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately this means that for some databases quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL

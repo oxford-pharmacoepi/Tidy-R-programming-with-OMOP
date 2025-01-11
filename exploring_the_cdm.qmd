@@ -64,7 +64,7 @@ cdm$concept_ancestor |>
 ```
 
 More information on the vocabulary tables (as well as other tables in the OMOP CDM version 5.3) can be found at <https://ohdsi.github.io/CommonDataModel/cdm53.html#Vocabulary_Tables>.
-::: 
+:::
 
 ## Summarising observation periods
 
@@ -87,138 +87,6 @@ cdm$person |>
   geom_col(aes(observation_period_start_year, n)) +
   theme_bw()
 ```
-
-::: {.callout-tip collapse="true"}
-## Computing intermediate queries
-
-The `compute()` function will force the computation of a query (by default to a temporary table in the database). In the example above we use it to split up two queries; the first to keep the first observation period record for each individual.
-
-```{r, echo = TRUE}
-cdm$observation_period |>
-    group_by(person_id) |> 
-    filter(row_number() == 1) |> 
-    show_query()
-```
-
-Followed by a second query that left joins the person table with the result from the first (which is now in a temporary table), followed by extracted the year in which peoples first observation period starts and then, finally, a count by year.
-
-```{r, echo = TRUE}
-cdm$person |> 
-  left_join(first_observation_period,
-            by = "person_id") |> 
-  mutate(observation_period_start_year=year(observation_period_start_date)) |> 
-  group_by(observation_period_start_year) |> 
-  count() |> 
-  show_query()
-```
-
-We could, however, have done this without compute, with instead the SQL being done all at once.
-
-```{r, echo = TRUE}
-cdm$person |> 
-  left_join(cdm$observation_period |>
-    group_by(person_id) |> 
-    filter(row_number() == 1),
-            by = "person_id") |> 
-  mutate(observation_period_start_year=year(observation_period_start_date)) |> 
-  group_by(observation_period_start_year) |> 
-  count() |> 
-  show_query()
-```
-
-In this case the SQL is not much more complicated than before. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Although we don't want to overuse computation of intermediate queries, it is often a necessity when writing study analysis scripts.
-
-A particular advantage of computing a query, is that we can then use the result for multiple subsequent queries. For example, say we want a count of condition occurrence and drug exposure records for those born before 1970. We could get these counts independently:
-
-```{r, echo = TRUE}
-cdm$person |> 
-  filter(year_of_birth < "1970") |> 
-  select("person_id") |> 
-  left_join(cdm$condition_occurrence,
-            by="person_id") |> 
-  tally()
-
-cdm$person |> 
-  filter(year_of_birth < "1970") |> 
-  select("person_id") |> 
-  left_join(cdm$drug_exposure,
-            by="person_id") |> 
-  tally()
-```
-
-But we could have instead first subsetted the person table and then used the result for both queries.
-
-```{r, echo = TRUE}
-cdm$person_pre_1970 <- cdm$person |> 
-  filter(year_of_birth < "1970") |> 
-  compute()
-
-cdm$person_pre_1970 |> 
-  select("person_id") |> 
-  left_join(cdm$condition_occurrence,
-            by="person_id") |> 
-  tally()
-
-cdm$person_pre_1970 |> 
-  select("person_id") |> 
-  left_join(cdm$drug_exposure,
-            by="person_id") |> 
-  tally()
-```
-:::
-
-
-
-```{r, echo = TRUE, message=FALSE}
-library(clock)
-library(ggplot2)
-
-cdm$observation_period |> 
-  mutate(observation_days = date_count_between("observation_period_start_date", 
-                             "observation_period_end_date", "day"))  |> 
-  dplyr::mutate(observation_years = observation_days/ 365.25) |> 
-  select("observation_years") |> 
-  collect() |> 
-  ggplot() +
-  geom_histogram(aes(observation_years), 
-                 binwidth=2, colour="grey") +
-  theme_bw()
-```
-
-::: {.callout-tip collapse="true"}
-## Piping and SQL
-
-Although piping queries has little impact on performance when using R with data in memory, when working with a database the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.
-
-For example, a single mutate function above would generate the below SQL.
-
-```{r, echo = TRUE}
-cdm$observation_period |> 
-  mutate(observation_period_start_plus_30_days = 
-                add_days(observation_period_start_date, 30L),
-         observation_period_start_date_plus_10_years = 
-                add_years(observation_period_start_date, 10L)) |> 
-  select("observation_period_id", "person_id", 
-         "observation_period_start_plus_30_days",
-         "observation_period_start_date_plus_10_years") |> 
-  show_query()
-```
-
-Whereas the SQL will be different if using multiple mutate calls (now using a sub-query).
-
-```{r, echo = TRUE}
-cdm$observation_period |> 
-  mutate(observation_period_start_plus_30_days = 
-               add_days(observation_period_start_date, 30L)) |> 
-  mutate(observation_period_start_date_plus_10_years = 
-               add_years(observation_period_start_date, 10L)) |> 
-  select("observation_period_id", "person_id", 
-         "observation_period_start_plus_30_days",
-         "observation_period_start_date_plus_10_years") |> 
-  show_query()
-```
-:::
-
 
 ## Summarising clinical records
 

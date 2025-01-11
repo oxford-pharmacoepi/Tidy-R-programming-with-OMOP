@@ -1,10 +1,10 @@
 ---
-title: "Working with the OMOP CDM"
+title: "Working with the OMOP CDM from R"
 ---
 
-The OMOP CDM standardises the format and content of health care data.
+In this second half of the book we will see how we can work with data in the OMOP CDM format from R.
 
--   In @sec-cdm_reference we will see how we will see how to create a reference in R to each of these OMOP CDM tables. Because we already know the structure of our data, creating this reference to the various tables will be our first step in our analysis scripts.
+-   In @sec-cdm_reference we will see how to create a cdm_reference in R, a data model that contains references to the OMOP CDM tables and provides the foundation for analysis.
 
 -   The OMOP CDM is a person-centric model, and the person and observation period tables are two key tables for any analysis. In @sec-omop_person_obs_period we will see more on how these tables can be used as the starting point for identifying your study participants.
 

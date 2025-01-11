@@ -2,11 +2,17 @@
 
 ## Is this book for me?
 
-We've written this book for anyone interested in a working with databases mapped to the OMOP Common Data Model (CDM) in a tidyverse inspired approach. That is, human centered, consistent, composable, and inclusive (see <https://design.tidyverse.org/unifying.html> for more details on these principles).
+We've written this book for anyone interested in a working with databases using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <https://design.tidyverse.org/unifying.html> for more details on these principles).
+
+New to R? We recommend you compliment the book with [R for data science](https://r4ds.had.co.nz/)
+
+New to databases? We recommend you take a look at some web tutorials on SQL, such as [SQLBolt](https://sqlbolt.com/) or [SQLZoo](https://www.sqlzoo.net/wiki/SQL_Tutorial)
 
 New to the OMOP CDM? We'd recommend you pare this book with [The Book of OHDSI](https://ohdsi.github.io/TheBookOfOhdsi/)
 
-New to R? We recommend you compliment the book with [R for data science](https://r4ds.had.co.nz/)
+## How is the book organised?
+
+The book is divided into two parts. The first half of the book is focused on the general principles for working with databases from R. In these chapters you will see how you can use familiar tidyverse-style code to build up analytic pipelines that start with data held in a database and end with your analytic results. The second half of the book is focused on working with data in the OMOP Common Data Model (CDM) format, a widely used data format for health care data. In these chapters you will see how to work with this data format using the general principles from the first half of the book along with a set of R packages that have been built for the OMOP CDM.
 
 ## Citation
 

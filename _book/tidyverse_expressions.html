@@ -176,15 +176,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dbplyr_packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building data pipelines</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./explore.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Working with the OMOP CDM</span></a>
+            <a href="./omop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with the OMOP CDM from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -277,8 +277,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In the previous chapter <a href="tidyverse_verbs.html" class="quarto-xref"><span>Chapter 2</span></a> we saw that there are a core set of tidyverse functions that can be used with databases to extact data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.</p>
-<p>For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these get tanslated to can vary. Moreover, some expessions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.</p>
+<p>In the previous chapter <a href="tidyverse_verbs.html" class="quarto-xref"><span>Chapter 2</span></a> we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.</p>
+<p>For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.</p>
 <p>Let’s first load the packages which these expressions come from. In addition to base R types, <code>bit64</code> adds support for integer64. The <code>stringr</code> package provides functions for working with strings, while <code>clock</code> has various functions for working with dates. Many other useful expressions will come from <code>dplyr</code> itself.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
@@ -292,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="data-types" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="data-types"><span class="header-section-number">3.1</span> Data types</h2>
-<p>Commonly used data types are consistently supported across database backends. We can use the base <code>as.numeric()</code>, <code>as.integer()</code>, <code>as.charater()</code>, <code>as.Date()</code>, and <code>as.POSIXct()</code>. We can also use <code>as.integer64()</code> from the <code>bit64</code> package to coerce to interger64, and the <code>as_date()</code> and <code>as_datetime()</code> from the clock package instead of <code>as.Date()</code> and <code>as.POSIXct()</code>, respectively.</p>
+<p>Commonly used data types are consistently supported across database backends. We can use the base <code>as.numeric()</code>, <code>as.integer()</code>, <code>as.charater()</code>, <code>as.Date()</code>, and <code>as.POSIXct()</code>. We can also use <code>as.integer64()</code> from the <code>bit64</code> package to coerce to integer64, and the <code>as_date()</code> and <code>as_datetime()</code> from the clock package instead of <code>as.Date()</code> and <code>as.POSIXct()</code>, respectively.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -928,7 +928,7 @@ Show SQL
 </section>
 <section id="conditional-statements" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="conditional-statements"><span class="header-section-number">3.3</span> Conditional statements</h2>
-<p>The base <code>ifelse</code> function, along with <code>if_else</code> and <code>case_when</code> from dplyr are transalated for each database backend. As can be seen in the translations, <code>case_when</code> maps to the SQL CASE WHEN statement.</p>
+<p>The base <code>ifelse</code> function, along with <code>if_else</code> and <code>case_when</code> from dplyr are translated for each database backend. As can be seen in the translations, <code>case_when</code> maps to the SQL CASE WHEN statement.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1925,7 +1925,7 @@ Show SQL
 </section>
 <section id="working-with-dates" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="working-with-dates"><span class="header-section-number">3.5</span> Working with dates</h2>
-<p>Like with strings, support for working with dates is somewhat mixed. In general, we would use functions from the <code>clock</code> package such as <code>get_day()</code>, <code>get_month()</code>, <code>get_year()</code> to extact parts from a date, <code>add_days()</code> to add or subtract days to a date, and <code>date_count_between()</code> to get the number of days between two date variables.</p>
+<p>Like with strings, support for working with dates is somewhat mixed. In general, we would use functions from the <code>clock</code> package such as <code>get_day()</code>, <code>get_month()</code>, <code>get_year()</code> to extract parts from a date, <code>add_days()</code> to add or subtract days to a date, and <code>date_count_between()</code> to get the number of days between two date variables.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2418,7 +2418,7 @@ FROM `df`</code></pre>
 <h2 data-number="3.7" class="anchored" data-anchor-id="window-functions"><span class="header-section-number">3.7</span> Window functions</h2>
 <p>In the previous section we saw how aggregate functions can be used to perform operations across entire columns. Window functions differ in that they perform calculation across rows that are in some way related to a current row. For these we now use <code>mutate()</code> instead of using <code>summarise()</code>.</p>
 <p>We can use window functions like <code>cumsum()</code> and <code>cummean()</code> to calculate running totals and averages, or <code>lag()</code> and <code>lead()</code> to help compare rows to their preceding or following rows.</p>
-<p>Given that window functions are compare rows to rows before or after them, we will ofter use <code>arrange()</code> to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using <code>group_by()</code> would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.</p>
+<p>Given that window functions are compare rows to rows before or after them, we will often use <code>arrange()</code> to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using <code>group_by()</code> would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2719,7 +2719,7 @@ FROM `df`</code></pre>
 <section id="calculating-quantiles-including-the-median" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="calculating-quantiles-including-the-median"><span class="header-section-number">3.8</span> Calculating quantiles, including the median</h2>
 <p>So far we’ve seen that we can perform various data manipulations and calculate summary statistics for different database management systems using the same R code. Although the translated SQL has been different, the databases all supported similar approaches to perform these queries.</p>
-<p>A case where this is not the case is when we are interested in summarisng distibutions of the data and estimating quantiles. For example, let’s take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately this means that for some databases quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.</p>
+<p>A case where this is not the case is when we are interested in summarising distributions of the data and estimating quantiles. For example, let’s take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately this means that for some databases quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -3301,8 +3301,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./dbplyr_packages.html" class="pagination-link" aria-label="Building data pipelines">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building data pipelines</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./dbplyr_packages.html" class="pagination-link" aria-label="Building analytic pipelines for a data model">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

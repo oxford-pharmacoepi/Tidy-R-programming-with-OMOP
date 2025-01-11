@@ -41,7 +41,7 @@ Remember, until we use `compute()` or `collect()` (or printing the first few row
 :::
 
 | Purpose                  | Functions                                                                                                                                                                                                                                                                                                                                           | Description                                                                             |
-|---------------|------------------------------------------|---------------|
+|-----------------|---------------------------------------|-----------------|
 | Selecting rows           | [filter](https://dplyr.tidyverse.org/reference/filter.html), [distinct](https://dplyr.tidyverse.org/reference/distinct.html)                                                                                                                                                                                                                        | To select rows in a table.                                                              |
 | Ordering rows            | [arrange](https://dplyr.tidyverse.org/reference/arrange.html)                                                                                                                                                                                                                                                                                       | To order rows in a table.                                                               |
 | Column Transformation    | [mutate](https://dplyr.tidyverse.org/reference/mutate.html), [select](https://dplyr.tidyverse.org/reference/select.html), [relocate](https://dplyr.tidyverse.org/reference/relocate.html), [rename](https://dplyr.tidyverse.org/reference/rename.html)                                                                                              | To create new columns or change existing ones.                                          |
@@ -122,7 +122,7 @@ And when executed, our results will look like the following
 delayed_flights_db
 ```
 
-Now we'll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics will be kept. 
+Now we'll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics will be kept.
 
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights_db <- delayed_flights_db |> 

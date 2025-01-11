@@ -186,14 +186,6 @@ penguins_db |>
   theme(legend.position = "none")
 ```
 
-::: {.callout-tip collapse="true"}
-## Choosing the right time to collect
-
-`collect()` brings data out of the database and into R. Above we use it to bring the entire penguins data back into R so that we can then use `ggplot()` to make our histogram.
-
-When working with large data sets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side, up until the point we need to bring the data out for further analysis steps that are not possible using SQL. This could be like the case above for plotting, but could also be for other analytic steps like fitting statistical models. In such cases it is important that we only bring out the required data for this task as we will likely have much less memory available on our local computer than is available for the database.
-:::
-
 Now let's look at the relationship between body mass and bill depth.
 
 ```{r, warning=FALSE, message=FALSE}

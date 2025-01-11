@@ -2,77 +2,63 @@
 
 ## The OMOP CDM layout
 
-The OMOP CDM standardises the structure of health care data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure. An entity-relationship diagram for version 5.4 of the OMOP CDM is shown below. ![](images/erd.jpg){.lightbox}
+The OMOP CDM standardises the structure of health care data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure, with version 5.4 of the OMOP CDM shown below. ![](images/erd.jpg){.lightbox}
 
-These tables are going to be described in more detail in the following chapters. But before that, we can first see how to work with our OMOP CDM data from R.
+## Creating a reference to the OMOP common data model
 
-## Referencing tables from the OMOP common data model
+As we saw in @sec-dbplyr_packages, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipleines using the data. Luckily for us we won't have to create functions and methods for this ourselves. Instead we will use the `omopgenerics` package which defines a data model for OMOP CDM data and the `CDMConnector` package which provides functions for connecting to a OMOP CDM data held in a database.
 
-As seen in the previous chapter, once a connection to the database has been created we can then create references to the various tables in the database and build queries using in a familiar dplyr style. To show this, let's download an example dataset (*synthea-covid19-10k*) provided by `CDMConnector`.
+To see how this works we will use the `omock` to create example data in the format of the OMOP CDM, which we then copy to a duckdb database.
 
 ```{r, message=FALSE, warning=FALSE}
 library(DBI)
 library(here)
 library(dplyr)
-```
-
-```{r, message=FALSE, warning=FALSE, echo = FALSE}
-Sys.setenv(EUNOMIA_DATA_FOLDER = here::here())
-CDMConnector::downloadEunomiaData(
-  datasetName = "synthea-covid19-10k", cdmVersion = "5.3"
-)
-```
-
-Now we have this downloaded, we can create a connection to a duckdb database containing the data in a similar way to how we've done before.
-
-```{r, echo = TRUE}
-db <- dbConnect(
-  duckdb::duckdb(), 
-  dbdir = CDMConnector::eunomiaDir(datasetName = "synthea-covid19-10k"))
-
-db |> 
-  tbl("person")
-
-db |> 
-  tbl("observation_period")
-```
-
-We could also perform similar queries to those seen in chapter 1, but this time working with the patient-level, rather than penguin-level, data.
-
-```{r, echo = TRUE}
-db |> 
-  tbl("person") |> 
-  group_by(year_of_birth) |> 
-  count() 
-```
-
-## Creating a reference to the OMOP common data model
-
-As the structure of the OMOP CDM is already known, we can avoid the overhead of creating individual references to the OMOP CDM tables like above by instead creating a joint reference for all OMOP CDM database tables in one go.
-
-The R object representing OMOP CDM data is defined by the `omopgenerics` package), with the the `CDMConnector` package providing a means of connecting to a OMOP CDM data held in a database. As well as specifying the schema containing our OMOP CDM tables, we also specify a write schema where any database tables we create during our analysis will be stored (often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access where we intermediate tables are created for a given a study).
-
-```{r, message=FALSE, warning=FALSE, echo = TRUE}
+library(omock)
 library(omopgenerics)
 library(CDMConnector)
-cdm <- cdmFromCon(con = db,
+
+cdm_local <- omock::mockCdmReference() |>
+    omock::mockPerson(nPerson = 100) |>
+    omock::mockObservationPeriod() |>
+    omock::mockConditionOccurrence() |>
+    omock::mockDrugExposure() |>
+    omock::mockObservation() |>
+    omock::mockMeasurement() |>
+    omock::mockVisitOccurrence() |>
+    omock::mockProcedureOccurrence()
+
+db <- DBI::dbConnect(duckdb::duckdb())
+CDMConnector::copyCdmTo(con = db,
+                        cdm = cdm_local,
+                        schema ="main", 
+                        overwrite = TRUE)
+```
+
+Now we have OMOP CDM data in a database we can use `cdmFromCon()` to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored (often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access where intermediate tables can be created for a given a study).
+
+```{r, message=FALSE, warning=FALSE, echo = TRUE}
+cdm <- cdmFromCon(db, 
                   cdmSchema = "main", 
-                  writeSchema = "main", 
-                  cdmName = "Synthea Covid-19 data")
+                  writeSchema = "main",
+                  cdmName = "example_data")
+```
+
+```{r, message=FALSE, warning=FALSE, echo = TRUE}
 cdm
 ```
 
 ::: {.callout-tip collapse="true"}
 ## Setting a write prefix
 
-We can also specify a write prefix and this will be used whenever permanent tables are created the write schema. This can be useful when we're sharing our write schema with others and want to avoid table name conflicts and easily drop tables created as part of a particular study.
+We can also specify a write prefix and this will be used whenever permanent tables are created in the write schema. This can be useful when we're sharing our write schema with others and want to avoid table name conflicts and easily drop tables created as part of a particular study.
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, message=FALSE, warning=FALSE, echo = TRUE, eval = FALSE}
 cdm <- cdmFromCon(con = db,
                   cdmSchema = "main", 
                   writeSchema = "main", 
                   writePrefix = "my_study_",
-                  cdmName = "Synthea Covid-19 data")
+                  cdmName = "example_data")
 ```
 :::
 
@@ -82,6 +68,67 @@ We can see that we now have an object that contains references to all the OMOP C
 cdm$person
 
 cdm[["observation_period"]]
+```
+
+
+## CDM attributes
+
+### CDM name
+
+Our cdm reference will be associated with a name. By default this name will be taken from the cdm source name field from the cdm source table. 
+
+```{r, message=FALSE, warning=FALSE, echo = TRUE}
+cdm <- cdmFromCon(db,
+  cdmSchema = "main", 
+  writeSchema = "main")
+cdm$cdm_source
+cdmName(cdm)
+cdmName(cdm$person)
+```
+
+However, we can instead set this name when creating our cdm reference.
+
+```{r, message=FALSE, warning=FALSE, echo = TRUE}
+cdm <- cdmFromCon(db,
+  cdmSchema = "main", 
+  writeSchema = "main", 
+  cdmName = "my_cdm")
+cdmName(cdm)
+cdmName(cdm$person)
+```
+
+::: {.callout-tip collapse="true"}
+## Behind the scenes
+
+The cdm reference we have has a class of cdm_reference, while each of the tables have 
+```{r, message=FALSE, warning=FALSE}
+class(cdm)
+class(cdm$person)
+```
+
+We can see that cdmName() is a generic function, which works for both the cdm reference as a whole and individual tables.
+```{r, message=FALSE, warning=FALSE}
+library(sloop)
+s3_dispatch(cdmName(cdm))
+s3_dispatch(cdmName(cdm$person))
+```
+
+:::
+
+### CDM version
+
+We can also easily check the OMOP CDM version that is being used
+
+```{r, echo = TRUE}
+cdmVersion(cdm)
+```
+
+### CDM Source
+
+Although typically we won't need to use them for writing study code, we can also access lower-level information on the source, such as the database connection.
+
+```{r, echo = TRUE}
+attr(cdmSource(cdm), "dbcon")
 ```
 
 ## Mutability of the cdm reference
@@ -106,7 +153,7 @@ cdm$person |>
 
 The original OMOP CDM data itself however will remain unaffected. And we can see if we create our reference again that the underlying data is unchanged.
 
-```{r, echo = TRUE}
+```{r, message=FALSE, warning=FALSE, echo = TRUE}
 cdm <- cdmFromCon(con = db,
                   cdmSchema = "main", 
                   writeSchema = "main", 
@@ -119,12 +166,12 @@ The mutability of our cdm reference is a useful feature for studies as it means 
 
 One thing we can't do though is alter the structure of OMOP CDM tables. For example this code would cause an error as the person table must have the column person_id.
 
-```{r, eval=FALSE}
+```{r, error=TRUE}
 cdm$person <- cdm$person |> 
     rename("new_id" = "person_id")
 ```
 
-In such a case we would have to call the table something esle.
+In such a case we would have to call the table something else.
 
 ```{r, eval=FALSE}
 cdm$person_new <- cdm$person |> 
@@ -136,42 +183,6 @@ Now we would have this new table as an additional table in our cdm reference, kn
 
 ```{r, echo = TRUE}
 cdm
-```
-
-## CDM attributes
-
-### CDM name
-
-Our cdm reference will be associated with a name. By default this name will be taken from the cdm source name field from the cdm source table. We can though set this to a different name when creating our cdm reference. This cdm name attribute of our reference is particularly useful in the context of network studies to keep track of which results are associated with which database.
-
-```{r, echo = TRUE}
-cdm <- cdmFromCon(db,
-  cdmSchema = "main", 
-  writeSchema = "main")
-cdm$cdm_source
-cdmName(cdm)
-
-cdm <- cdmFromCon(db,
-  cdmSchema = "main", 
-  writeSchema = "main", 
-  cdmName = "my_cdm")
-cdmName(cdm)
-```
-
-### CDM version
-
-We can also easily check the OMOP CDM version that is being used
-
-```{r, echo = TRUE}
-cdmVersion(cdm)
-```
-
-### CDM Source
-
-Although typically we won't need to use them for writing study code, we can also access lower-level information on the source, such as the database connection.
-
-```{r, echo = TRUE}
-attr(cdmSource(cdm), "dbcon")
 ```
 
 # Disconnecting

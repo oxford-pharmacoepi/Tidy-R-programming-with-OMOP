@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Working with the OMOP CDM – Tidy R programming with databases: applications with the OMOP common data model</title>
+<title>Working with the OMOP CDM from R – Tidy R programming with databases: applications with the OMOP common data model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./explore.html">Working with the OMOP CDM</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./omop.html">Working with the OMOP CDM from R</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -142,15 +142,15 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dbplyr_packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building data pipelines</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./explore.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Working with the OMOP CDM</span></a>
+            <a href="./omop.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Working with the OMOP CDM from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -213,7 +213,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Working with the OMOP CDM</h1>
+<h1 class="title">Working with the OMOP CDM from R</h1>
 </div>
 
 
@@ -230,9 +230,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The OMOP CDM standardises the format and content of health care data.</p>
+<p>In this second half of the book we will see how we can work with data in the OMOP CDM format from R.</p>
 <ul>
-<li><p>In <a href="cdm_reference.html" class="quarto-xref"><span>5&nbsp; Creating a cdm reference</span></a> we will see how we will see how to create a reference in R to each of these OMOP CDM tables. Because we already know the structure of our data, creating this reference to the various tables will be our first step in our analysis scripts.</p></li>
+<li><p>In <a href="cdm_reference.html" class="quarto-xref"><span>5&nbsp; Creating a cdm reference</span></a> we will see how to create a cdm_reference in R, a data model that contains references to the OMOP CDM tables and provides the foundation for analysis.</p></li>
 <li><p>The OMOP CDM is a person-centric model, and the person and observation period tables are two key tables for any analysis. In <span class="quarto-unresolved-ref">?sec-omop_person_obs_period</span> we will see more on how these tables can be used as the starting point for identifying your study participants.</p></li>
 <li><p>The OMOP CDM standarises the content of health care data via the OMOP CDM vocabulary tables, which provides a set of standard concepts to represent different clinical events. The vocabulary tables are described in <span class="quarto-unresolved-ref">?sec-omop_vocabularies</span>, with these tables playing a fundamental role when we identify the clinical events of interest for our study.</p></li>
 <li><p>Clinical records associated with individuals are spread across various OMOP CDM tables, covering various domains. In <span class="quarto-unresolved-ref">?sec-omop_clinical_tables</span> we will see how these tables represent events and link back to the person and vocabulary tables.</p></li>
@@ -660,8 +660,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./dbplyr_packages.html" class="pagination-link" aria-label="Building data pipelines">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building data pipelines</span></span>
+      <a href="./dbplyr_packages.html" class="pagination-link" aria-label="Building analytic pipelines for a data model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

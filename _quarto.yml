@@ -13,7 +13,7 @@ book:
         - tidyverse_verbs.qmd
         - tidyverse_expressions.qmd
         - dbplyr_packages.qmd
-    - part: explore.qmd
+    - part: omop.qmd
       chapters: 
         - cdm_reference.qmd
         - exploring_the_cdm.qmd     
