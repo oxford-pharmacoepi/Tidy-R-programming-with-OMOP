@@ -1,6 +1,6 @@
 ## Exploring the OMOP CDM
 
-For this chapter, lets again use the synthetic Covid-19 dataset.
+For this chapter, we'll use a synthetic Covid-19 dataset.
 
 ```{r, warning=FALSE, message=FALSE}
 library(DBI)

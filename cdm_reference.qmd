@@ -44,7 +44,7 @@ cdm <- cdmFromCon(db,
                   cdmName = "example_data")
 ```
 
-```{r, message=FALSE, warning=FALSE, echo = TRUE}
+```{r}
 cdm
 ```
 
