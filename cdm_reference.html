@@ -377,16 +377,16 @@ Setting a write prefix
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
    person_id gender_concept_id year_of_birth month_of_birth day_of_birth
        &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
- 1         1              8532          1994             10            2
- 2         2              8532          1964              1           10
- 3         3              8507          1983              6           18
- 4         4              8532          1962              6           14
- 5         5              8507          1969              4            2
- 6         6              8507          2000              3           29
- 7         7              8532          1987             10           26
- 8         8              8507          1990              9            7
- 9         9              8532          1996              3           16
-10        10              8507          1958             10            6
+ 1         1              8507          1996              5           27
+ 2         2              8532          1990             11           22
+ 3         3              8532          1978              6           13
+ 4         4              8532          1961              9           27
+ 5         5              8532          1966              2           23
+ 6         6              8532          1968              6           11
+ 7         7              8532          1959              2           15
+ 8         8              8507          1981             12            8
+ 9         9              8532          1998              8           17
+10        10              8507          1975              5            2
 # ℹ more rows
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
@@ -401,16 +401,16 @@ Setting a write prefix
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
    observation_period_id person_id observation_period_s…¹ observation_period_e…²
                    &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
- 1                     1         1 2016-01-28             2019-03-21            
- 2                     2         2 1978-04-02             2002-05-08            
- 3                     3         3 2014-04-21             2018-03-25            
- 4                     4         4 1982-11-23             1985-08-01            
- 5                     5         5 1978-05-01             2013-05-03            
- 6                     6         6 2015-07-24             2018-11-23            
- 7                     7         7 2014-12-22             2019-11-17            
- 8                     8         8 1996-01-10             2019-06-01            
- 9                     9         9 2003-12-03             2012-06-09            
-10                    10        10 2018-12-11             2019-03-25            
+ 1                     1         1 2004-07-12             2008-05-29            
+ 2                     2         2 2011-06-08             2016-06-12            
+ 3                     3         3 1995-05-10             2007-09-22            
+ 4                     4         4 2011-03-25             2015-02-27            
+ 5                     5         5 1993-03-08             1996-02-26            
+ 6                     6         6 2002-05-15             2017-07-19            
+ 7                     7         7 1984-06-12             1997-08-05            
+ 8                     8         8 1988-08-31             1998-11-18            
+ 9                     9         9 2018-05-31             2018-07-10            
+10                    10        10 1976-12-05             2001-04-07            
 # ℹ more rows
 # ℹ abbreviated names: ¹​observation_period_start_date,
 #   ²​observation_period_end_date
@@ -527,7 +527,7 @@ Behind the scenes
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(<span class="fu">cdmSource</span>(cdm), <span class="st">"dbcon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>&lt;duckdb_connection fdbe0 driver=&lt;duckdb_driver dbdir=':memory:' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
+<pre><code>&lt;duckdb_connection f8700 driver=&lt;duckdb_driver dbdir=':memory:' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -546,7 +546,9 @@ Behind the scenes
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1        87              8507          1970              3            5
+1        55              8532          1970              7           14
+2        61              8507          1970              4           24
+3        74              8532          1970              1            6
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -564,7 +566,7 @@ Behind the scenes
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
       n
   &lt;dbl&gt;
-1     1</code></pre>
+1     3</code></pre>
 </div>
 </div>
 <p>The original OMOP CDM data itself however will remain unaffected. And we can see if we create our reference again that the underlying data is unchanged.</p>
