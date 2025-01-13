@@ -309,7 +309,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 18
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpItzU3r\file5580112859cc.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsBHwQQ\file6cd029b27267.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 3, 8, 9, 12, 18, 19, 20, 21, 23, 24, …
 $ person_id                     &lt;int&gt; 2, 7, 16, 16, 25, 42, 42, 42, 44, 47, 47…
 $ condition_concept_id          &lt;int&gt; 381316, 381316, 381316, 313217, 381316, …
@@ -341,7 +341,7 @@ $ age                           &lt;int&gt; 57, 97, 75, 77, 55, 52, 5, 48, 35, 2
 <pre><code>&lt;SQL&gt;
 SELECT
   condition_occurrence_id,
-  og_002_1736606688.person_id AS person_id,
+  og_002_1736768583.person_id AS person_id,
   condition_concept_id,
   condition_start_date,
   condition_start_datetime,
@@ -358,7 +358,7 @@ SELECT
   condition_status_source_value,
   age,
   RHS.sex AS sex
-FROM og_002_1736606688
+FROM og_002_1736768583
 LEFT JOIN (
   SELECT
     person_id,
@@ -376,13 +376,13 @@ END AS sex
       day_of_birth
     FROM (
       SELECT DISTINCT person_id
-      FROM og_002_1736606688
+      FROM og_002_1736768583
     ) LHS
     INNER JOIN main.person
       ON (LHS.person_id = person.person_id)
   ) q01
 ) RHS
-  ON (og_002_1736606688.person_id = RHS.person_id)</code></pre>
+  ON (og_002_1736768583.person_id = RHS.person_id)</code></pre>
 </div>
 </div>
 <p>We now have two variables added containing values for age and sex.</p>
@@ -392,7 +392,7 @@ END AS sex
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 18
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpItzU3r\file5580112859cc.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsBHwQQ\file6cd029b27267.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 3, 8, 9, 12, 18, 19, 20, 21, 23, 24, …
 $ person_id                     &lt;int&gt; 2, 7, 16, 16, 25, 42, 42, 42, 44, 47, 47…
 $ condition_concept_id          &lt;int&gt; 381316, 381316, 381316, 313217, 381316, …
@@ -422,8 +422,8 @@ $ age                           &lt;int&gt; 57, 97, 75, 77, 55, 52, 5, 48, 35, 2
 <pre><code># A tibble: 2 × 2
   sex    mean_age
   &lt;chr&gt;     &lt;dbl&gt;
-1 Female     50.8
-2 Male       56.5</code></pre>
+1 Male       56.5
+2 Female     50.8</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -456,7 +456,7 @@ $ age                           &lt;int&gt; 57, 97, 75, 77, 55, 52, 5, 48, 35, 2
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 27
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpItzU3r\file5580112859cc.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsBHwQQ\file6cd029b27267.duckdb]
 $ drug_exposure_id             &lt;int&gt; 245761, 245762, 245763, 245765, 245766, 2…
 $ person_id                    &lt;int&gt; 7764, 7764, 7764, 7764, 7764, 7764, 7764,…
 $ drug_concept_id              &lt;int&gt; 40213227, 40213201, 40213198, 40213154, 4…
@@ -522,8 +522,8 @@ Returning a query from <code>PatientProfiles</code> rather than the result
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
-SELECT og_004_1736606693.*
-FROM og_004_1736606693
+SELECT og_004_1736768586.*
+FROM og_004_1736768586
 WHERE (sex = 'Male')</code></pre>
 </div>
 </div>
@@ -623,7 +623,7 @@ WHERE (sex = 'Male')</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 20
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpItzU3r\file5580112859cc.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsBHwQQ\file6cd029b27267.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 3, 8, 9, 12, 18, 19, 20, 21, 23, 24, …
 $ person_id                     &lt;int&gt; 2, 7, 16, 16, 25, 42, 42, 42, 44, 47, 47…
 $ condition_concept_id          &lt;int&gt; 381316, 381316, 381316, 313217, 381316, …
@@ -660,7 +660,7 @@ $ prior_observation_group       &lt;chr&gt; "365 or above", "365 or above", "365
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpItzU3r\file5580112859cc.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsBHwQQ\file6cd029b27267.duckdb]
 $ observation_period_id         &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ observation_period_start_date &lt;date&gt; 2014-05-09, 1977-04-11, 2014-04-19, 201…
@@ -688,7 +688,7 @@ $ observation_period_start_year &lt;dbl&gt; 2014, 1977, 2014, 2014, 2013, 2013, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 2
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpItzU3r\file5580112859cc.duckdb]
+Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsBHwQQ\file6cd029b27267.duckdb]
 $ person_id                    &lt;int&gt; 2, 7, 16, 18, 25, 36, 42, 44, 47, 51, 52,…
 $ condition_occurrence_records &lt;dbl&gt; 1, 1, 2, 2, 1, 4, 3, 2, 5, 1, 3, 2, 1, 4,…</code></pre>
 </div>
@@ -716,7 +716,7 @@ FROM (
   FROM main.person
   LEFT JOIN (
     SELECT person_id, COUNT(*) AS condition_occurrence_records
-    FROM og_002_1736606688
+    FROM og_002_1736768583
     GROUP BY person_id
   ) RHS
     ON (person.person_id = RHS.person_id)
@@ -743,7 +743,7 @@ Taking care with joins
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpItzU3r\file5580112859cc.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsBHwQQ\file6cd029b27267.duckdb]
       n
   &lt;dbl&gt;
 1  9967</code></pre>
@@ -752,7 +752,7 @@ Taking care with joins
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpItzU3r\file5580112859cc.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsBHwQQ\file6cd029b27267.duckdb]
        n
    &lt;dbl&gt;
 1 337509</code></pre>
@@ -765,7 +765,7 @@ Taking care with joins
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpItzU3r\file5580112859cc.duckdb]
+# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/C:\Users\eburn\AppData\Local\Temp\RtmpsBHwQQ\file6cd029b27267.duckdb]
        n
    &lt;dbl&gt;
 1 410683</code></pre>
