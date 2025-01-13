@@ -324,6 +324,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cdm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── # OMOP CDM reference (duckdb) of example_data ───────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• omop tables: person, observation_period, visit_occurrence,
+condition_occurrence, drug_exposure, procedure_occurrence, measurement,
+observation, cdm_source, concept, vocabulary, concept_relationship,
+concept_synonym, concept_ancestor, drug_strength</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• cohort tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• achilles tables: -</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• other tables: -</code></pre>
+</div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -339,33 +360,33 @@ Setting a write prefix
 <div class="callout-body-container callout-body">
 <p>We can also specify a write prefix and this will be used whenever permanent tables are created in the write schema. This can be useful when we’re sharing our write schema with others and want to avoid table name conflicts and easily drop tables created as part of a particular study.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> db,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">writeSchema =</span> <span class="st">"main"</span>, </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">writePrefix =</span> <span class="st">"my_study_"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmName =</span> <span class="st">"example_data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> db,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">writeSchema =</span> <span class="st">"main"</span>, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">writePrefix =</span> <span class="st">"my_study_"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmName =</span> <span class="st">"example_data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>We can see that we now have an object that contains references to all the OMOP CDM tables. We can reference specific tables using the “$” or “[[ … ]]” operators.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;main.person&gt; [?? x 18]
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
    person_id gender_concept_id year_of_birth month_of_birth day_of_birth
        &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
- 1         1              8507          1965             12            1
- 2         2              8507          1987              4           30
- 3         3              8532          1953              8           21
- 4         4              8507          1980             11           10
- 5         5              8507          1967              3           21
- 6         6              8532          1997              3            6
- 7         7              8507          1955              1           11
- 8         8              8507          1962             12           26
- 9         9              8532          1959              3            7
-10        10              8532          1961             10           27
+ 1         1              8532          1994             10            2
+ 2         2              8532          1964              1           10
+ 3         3              8507          1983              6           18
+ 4         4              8532          1962              6           14
+ 5         5              8507          1969              4            2
+ 6         6              8507          2000              3           29
+ 7         7              8532          1987             10           26
+ 8         8              8507          1990              9            7
+ 9         9              8532          1996              3           16
+10        10              8507          1958             10            6
 # ℹ more rows
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
@@ -374,22 +395,22 @@ Setting a write prefix
 #   race_source_concept_id &lt;int&gt;, ethnicity_source_value &lt;chr&gt;,
 #   ethnicity_source_concept_id &lt;int&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cdm[[<span class="st">"observation_period"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cdm[[<span class="st">"observation_period"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;main.observation_period&gt; [?? x 5]
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
    observation_period_id person_id observation_period_s…¹ observation_period_e…²
                    &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
- 1                     1         1 2004-11-15             2014-03-10            
- 2                     2         2 2018-12-18             2019-07-15            
- 3                     3         3 2019-06-10             2019-09-29            
- 4                     4         4 1990-02-01             2004-04-02            
- 5                     5         5 2008-04-01             2008-05-14            
- 6                     6         6 2007-03-25             2015-07-15            
- 7                     7         7 1972-06-16             2019-06-24            
- 8                     8         8 2008-05-03             2014-03-04            
- 9                     9         9 1979-06-16             2018-01-17            
-10                    10        10 1990-02-01             1998-10-30            
+ 1                     1         1 2016-01-28             2019-03-21            
+ 2                     2         2 1978-04-02             2002-05-08            
+ 3                     3         3 2014-04-21             2018-03-25            
+ 4                     4         4 1982-11-23             1985-08-01            
+ 5                     5         5 1978-05-01             2013-05-03            
+ 6                     6         6 2015-07-24             2018-11-23            
+ 7                     7         7 2014-12-22             2019-11-17            
+ 8                     8         8 1996-01-10             2019-06-01            
+ 9                     9         9 2003-12-03             2012-06-09            
+10                    10        10 2018-12-11             2019-03-25            
 # ℹ more rows
 # ℹ abbreviated names: ¹​observation_period_start_date,
 #   ²​observation_period_end_date
@@ -403,10 +424,10 @@ Setting a write prefix
 <h3 data-number="5.3.1" class="anchored" data-anchor-id="cdm-name"><span class="header-section-number">5.3.1</span> CDM name</h3>
 <p>Our cdm reference will be associated with a name. By default this name will be taken from the cdm source name field from the cdm source table.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db,</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">writeSchema =</span> <span class="st">"main"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cdm_source</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">writeSchema =</span> <span class="st">"main"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cdm_source</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;main.cdm_source&gt; [?? x 10]
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
@@ -417,26 +438,26 @@ Setting a write prefix
 #   cdm_etl_reference &lt;lgl&gt;, source_release_date &lt;lgl&gt;, cdm_release_date &lt;lgl&gt;,
 #   cdm_version &lt;dbl&gt;, vocabulary_version &lt;lgl&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "mock"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm<span class="sc">$</span>person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm<span class="sc">$</span>person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "mock"</code></pre>
 </div>
 </div>
 <p>However, we can instead set this name when creating our cdm reference.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">writeSchema =</span> <span class="st">"main"</span>, </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmName =</span> <span class="st">"my_cdm"</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">writeSchema =</span> <span class="st">"main"</span>, </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmName =</span> <span class="st">"my_cdm"</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "my_cdm"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm<span class="sc">$</span>person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm<span class="sc">$</span>person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "my_cdm"</code></pre>
 </div>
@@ -455,11 +476,11 @@ Behind the scenes
 <div class="callout-body-container callout-body">
 <p>The cdm reference we have has a class of cdm_reference, while each of the tables have</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "cdm_reference"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "omop_table"            "cdm_table"             "tbl_duckdb_connection"
 [4] "tbl_dbi"               "tbl_sql"               "tbl_lazy"             
@@ -468,13 +489,13 @@ Behind the scenes
 </div>
 <p>We can see that cdmName() is a generic function, which works for both the cdm reference as a whole and individual tables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sloop)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">cdmName</span>(cdm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sloop)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">cdmName</span>(cdm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   cdmName.cdm_reference
    cdmName.default</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">cdmName</span>(cdm<span class="sc">$</span>person))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">cdmName</span>(cdm<span class="sc">$</span>person))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   cdmName.omop_table
    cdmName.cdm_table
@@ -494,7 +515,7 @@ Behind the scenes
 <h3 data-number="5.3.2" class="anchored" data-anchor-id="cdm-version"><span class="header-section-number">5.3.2</span> CDM version</h3>
 <p>We can also easily check the OMOP CDM version that is being used</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "5.3"</code></pre>
 </div>
@@ -504,9 +525,9 @@ Behind the scenes
 <h3 data-number="5.3.3" class="anchored" data-anchor-id="cdm-source"><span class="header-section-number">5.3.3</span> CDM Source</h3>
 <p>Although typically we won’t need to use them for writing study code, we can also access lower-level information on the source, such as the database connection.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(<span class="fu">cdmSource</span>(cdm), <span class="st">"dbcon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(<span class="fu">cdmSource</span>(cdm), <span class="st">"dbcon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>&lt;duckdb_connection f9b60 driver=&lt;duckdb_driver dbdir=':memory:' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
+<pre><code>&lt;duckdb_connection fdbe0 driver=&lt;duckdb_driver dbdir=':memory:' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -516,18 +537,16 @@ Behind the scenes
 <p>An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected.</p>
 <p>For example, let’s say we want to perform a study with only people born in 1970. For this we could filter our person table to only people born in this year.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year_of_birth <span class="sc">==</span> <span class="dv">1970</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year_of_birth <span class="sc">==</span> <span class="dv">1970</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 18]
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1        63              8507          1970             10           17
-2        76              8532          1970              4           28
-3        84              8507          1970             12           29
+1        87              8507          1970              3            5
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -538,24 +557,24 @@ Behind the scenes
 </div>
 <p>From now on, when we work with our cdm reference this restriction will continue to have been applied.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
       n
   &lt;dbl&gt;
-1     3</code></pre>
+1     1</code></pre>
 </div>
 </div>
 <p>The original OMOP CDM data itself however will remain unaffected. And we can see if we create our reference again that the underlying data is unchanged.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> db,</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">writeSchema =</span> <span class="st">"main"</span>, </span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmName =</span> <span class="st">"Synthea Covid-19 data"</span>)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> db,</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">writeSchema =</span> <span class="st">"main"</span>, </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmName =</span> <span class="st">"Synthea Covid-19 data"</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
@@ -567,8 +586,8 @@ Behind the scenes
 <p>The mutability of our cdm reference is a useful feature for studies as it means we can easily tweak our OMOP CDM data if needed. Meanwhile, leaving the underlying data unchanged is essential so that other study code can run against the data unaffected by any of our changes.</p>
 <p>One thing we can’t do though is alter the structure of OMOP CDM tables. For example this code would cause an error as the person table must have the column person_id.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="st">"new_id"</span> <span class="ot">=</span> <span class="st">"person_id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="st">"new_id"</span> <span class="ot">=</span> <span class="st">"person_id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `newOmopTable()`:
 ! person_id is not present in table person</code></pre>
@@ -576,13 +595,13 @@ Behind the scenes
 </div>
 <p>In such a case we would have to call the table something else.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="st">"new_id"</span> <span class="ot">=</span> <span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">compute</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="st">"new_id"</span> <span class="ot">=</span> <span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">compute</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we would have this new table as an additional table in our cdm reference, knowing it was not in the format of one of the core OMOP CDM tables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>cdm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>cdm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -610,7 +629,7 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 <h1 data-number="6"><span class="header-section-number">6</span> Disconnecting</h1>
 <p>Once we have finished our analysis we can close our connection to the database behind our cdm reference like so.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="further-reading" class="level1" data-number="7">
