@@ -1,8 +1,8 @@
 # Supported expressions for database queries {#sec-tidyverse_expressions}
 
-In the previous chapter @sec-dbplyr_verbs we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.
+In the previous chapter, @sec-dbplyr_verbs, we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.
 
-For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.
+For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these pipelines get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.
 
 Let's first load the packages which these expressions come from. In addition to base R types, `bit64` adds support for integer64. The `stringr` package provides functions for working with strings, while `clock` has various functions for working with dates. Many other useful expressions will come from `dplyr` itself.
 
@@ -19,9 +19,9 @@ options(dplyr.strict_sql = TRUE) # force error if no known translation
 
 ## Data types
 
-Commonly used data types are consistently supported across database backends. We can use the base `as.numeric()`, `as.integer()`, `as.charater()`, `as.Date()`, and `as.POSIXct()`. We can also use `as.integer64()` from the `bit64` package to coerce to integer64, and the `as_date()` and `as_datetime()` from the clock package instead of `as.Date()` and `as.POSIXct()`, respectively.
+Commonly used data types are consistently supported across database backends. We can use the base `as.numeric()`, `as.integer()`, `as.charater()`, `as.Date()`, and `as.POSIXct()`. We can also use `as.integer64()` from the `bit64` package to coerce to integer64, and the `as_date()` and `as_datetime()` from the `clock` package instead of `as.Date()` and `as.POSIXct()`, respectively.
 
-::: {.callout-tip collapse="true"}
+:::: {.callout-tip collapse="true"}
 ### Show SQL
 
 ::: {.panel-tabset collapse="true"}
@@ -163,13 +163,13 @@ translate_sql(as.logical(var),
               con = simulate_mssql())
 ```
 :::
-:::
+::::
 
 ## Comparison and logical operators
 
-Base r comparison operators, such as `<`, `<=`, `==`, `>=`, `>`, are also well supported in all database backends. Logical operators, such as `&` and `|` can also be used as if the data was in R.
+Base R comparison operators, such as `<`, `<=`, `==`, `>=`, `>`, are also well supported in all database backends. Logical operators, such as `&` and `|` can also be used as if the data was in R.
 
-::: {.callout-tip collapse="true"}
+:::: {.callout-tip collapse="true"}
 ### Show SQL
 
 ::: {.panel-tabset collapse="true"}
@@ -312,13 +312,13 @@ translate_sql(var_1 >= 100 | var_1  < 200,
               con = simulate_mssql())
 ```
 :::
-:::
+::::
 
 ## Conditional statements
 
-The base `ifelse` function, along with `if_else` and `case_when` from dplyr are translated for each database backend. As can be seen in the translations, `case_when` maps to the SQL CASE WHEN statement.
+The base `ifelse` function, along with `if_else` and `case_when` from `dplyr` are translated for each database backend. As can be seen in the translations, `case_when` maps to the SQL CASE WHEN statement.
 
-::: {.callout-tip collapse="true"}
+:::: {.callout-tip collapse="true"}
 ### Show SQL
 
 ::: {.panel-tabset collapse="true"}
@@ -448,13 +448,13 @@ translate_sql(case_when(var == "a" ~ 1L,
               con = simulate_mssql())
 ```
 :::
-:::
+::::
 
 ## Working with strings
 
-Compared to the previous sections, there is much more variation in support of functions to work with strings across database management systems. In particular, although various useful `stringr` functions do have translations it can be seen below that more translations are available for some databases compared to others.
+Compared to the previous sections, there is much more variation in support of functions to work with strings across database management systems. In particular, although various useful `stringr` functions do have translations ubiquitously it can be seen below that more translations are available for some databases compared to others.
 
-::: {.callout-tip collapse="true"}
+:::: {.callout-tip collapse="true"}
 ### Show SQL
 
 ::: {.panel-tabset collapse="true"}
@@ -740,13 +740,13 @@ translate_sql(str_ends(var, "a"),
               con = simulate_mssql())
 ```
 :::
-:::
+::::
 
 ## Working with dates
 
 Like with strings, support for working with dates is somewhat mixed. In general, we would use functions from the `clock` package such as `get_day()`, `get_month()`, `get_year()` to extract parts from a date, `add_days()` to add or subtract days to a date, and `date_count_between()` to get the number of days between two date variables.
 
-::: {.callout-tip collapse="true"}
+:::: {.callout-tip collapse="true"}
 ### Show SQL
 
 ::: {.panel-tabset collapse="true"}
@@ -876,13 +876,13 @@ translate_sql(date_count_between(date_1, date_2, "year"),
               con = simulate_mssql())
 ```
 :::
-:::
+::::
 
 ## Data aggregation
 
-Within the context of using `summarise()`, we can get aggregate across entire columns using functions such as `n()`, `n_distinct()`, `sum()`, `min()`, `max()`, `mean()`, and `sd()`. As can be seen below, the SQL for these calculations is similar across different database management systems.
+Within the context of using `summarise()`, we can get aggregated results across entire columns using functions such as `n()`, `n_distinct()`, `sum()`, `min()`, `max()`, `mean()`, and `sd()`. As can be seen below, the SQL for these calculations is similar across different database management systems.
 
-::: {.callout-tip collapse="true"}
+:::: {.callout-tip collapse="true"}
 ### Show SQL
 
 ::: {.panel-tabset collapse="true"}
@@ -987,17 +987,17 @@ lazy_frame(x = c(1,2), a = "a", con = simulate_mssql()) %>%
 
 ```
 :::
-:::
+::::
 
 ## Window functions
 
-In the previous section we saw how aggregate functions can be used to perform operations across entire columns. Window functions differ in that they perform calculation across rows that are in some way related to a current row. For these we now use `mutate()` instead of using `summarise()`.
+In the previous section we saw how aggregate functions can be used to perform operations across entire columns. Window functions differ in that they perform calculations across rows that are in some way related to a current row. For these we now use `mutate()` instead of using `summarise()`.
 
 We can use window functions like `cumsum()` and `cummean()` to calculate running totals and averages, or `lag()` and `lead()` to help compare rows to their preceding or following rows.
 
-Given that window functions are compare rows to rows before or after them, we will often use `arrange()` to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using `group_by()` would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.
+Given that window functions compare rows to rows before or after them, we will often use `arrange()` to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using `group_by()` would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.
 
-::: {.callout-tip collapse="true"}
+:::: {.callout-tip collapse="true"}
 ### Show SQL
 
 ::: {.panel-tabset collapse="true"}
@@ -1164,7 +1164,7 @@ lazy_frame(x = c(10, 20, 30),
 
 ```
 :::
-:::
+::::
 
 ## Calculating quantiles, including the median
 
@@ -1172,7 +1172,7 @@ So far we've seen that we can perform various data manipulations and calculate s
 
 A case where this is not the case is when we are interested in summarising distributions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately this means that for some databases quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.
 
-::: {.callout-tip collapse="true"}
+:::: {.callout-tip collapse="true"}
 ### Show SQL
 
 ::: {.panel-tabset collapse="true"}
@@ -1254,4 +1254,4 @@ lazy_frame(x = c(1,2), con = simulate_mssql()) %>%
 
 ```
 :::
-:::
+::::
