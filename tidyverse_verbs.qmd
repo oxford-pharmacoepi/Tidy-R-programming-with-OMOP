@@ -1,6 +1,6 @@
 # Core verbs for analytic pipelines utilising a database {#sec-dbplyr_verbs}
 
-We saw in the previous chapter that we can use familiar dplyr verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (which we'll see later will be true when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the `nycflights13` data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.
+We saw in the previous chapter that we can use familiar `dplyr` verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we'll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the `nycflights13` data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.
 
 ![](images/relational-01.png)
 
@@ -34,35 +34,35 @@ airlines_db |> glimpse()
 
 ### Tidyverse functions
 
-For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing the data we need for an analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from dplyr, but a couple also from the tidyr package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.
+For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from `dplyr`, but a couple also from the `tidyr` package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.
 
 ::: callout-important
 Remember, until we use `compute()` or `collect()` (or printing the first few rows of the result) all we're doing is translating R code into SQL.
 :::
 
-| Purpose                  | Functions                                                                                                                                                                                                                                                                                                                                           | Description                                                                             |
-|-----------------|---------------------------------------|-----------------|
-| Selecting rows           | [filter](https://dplyr.tidyverse.org/reference/filter.html), [distinct](https://dplyr.tidyverse.org/reference/distinct.html)                                                                                                                                                                                                                        | To select rows in a table.                                                              |
-| Ordering rows            | [arrange](https://dplyr.tidyverse.org/reference/arrange.html)                                                                                                                                                                                                                                                                                       | To order rows in a table.                                                               |
-| Column Transformation    | [mutate](https://dplyr.tidyverse.org/reference/mutate.html), [select](https://dplyr.tidyverse.org/reference/select.html), [relocate](https://dplyr.tidyverse.org/reference/relocate.html), [rename](https://dplyr.tidyverse.org/reference/rename.html)                                                                                              | To create new columns or change existing ones.                                          |
-| Grouping and ungrouping  | [group_by](https://dplyr.tidyverse.org/reference/group_by.html), [ungroup](https://dplyr.tidyverse.org/reference/ungroup.html)                                                                                                                                                                                                                      | To group data by one or more variables and to remove grouping.                          |
-| Aggregation              | [count](https://dplyr.tidyverse.org/reference/count.html), [tally](https://dplyr.tidyverse.org/reference/tally.html), [summarise](https://dplyr.tidyverse.org/reference/summarise.html)                                                                                                                                                             | These functions are used for summarising data.                                          |
+| Purpose | Functions | Description |
+|------------------|-------------------------------------|------------------|
+| Selecting rows | [filter](https://dplyr.tidyverse.org/reference/filter.html), [distinct](https://dplyr.tidyverse.org/reference/distinct.html) | To select rows in a table. |
+| Ordering rows | [arrange](https://dplyr.tidyverse.org/reference/arrange.html) | To order rows in a table. |
+| Column Transformation | [mutate](https://dplyr.tidyverse.org/reference/mutate.html), [select](https://dplyr.tidyverse.org/reference/select.html), [relocate](https://dplyr.tidyverse.org/reference/relocate.html), [rename](https://dplyr.tidyverse.org/reference/rename.html) | To create new columns or change existing ones. |
+| Grouping and ungrouping | [group_by](https://dplyr.tidyverse.org/reference/group_by.html), [ungroup](https://dplyr.tidyverse.org/reference/ungroup.html) | To group data by one or more variables and to remove grouping. |
+| Aggregation | [count](https://dplyr.tidyverse.org/reference/count.html), [tally](https://dplyr.tidyverse.org/reference/tally.html), [summarise](https://dplyr.tidyverse.org/reference/summarise.html) | These functions are used for summarising data. |
 | Data merging and joining | [inner_join](https://dplyr.tidyverse.org/reference/inner_join.html), [left_join](https://dplyr.tidyverse.org/reference/left_join.html), [right_join](https://dplyr.tidyverse.org/reference/right_join.html), [anti_join](https://dplyr.tidyverse.org/reference/anti_join.html), [cross_join](https://dplyr.tidyverse.org/reference/cross_join.html) | These functions are used to combine data from different tables based on common columns. |
-| Data reshaping           | [pivot_wider](https://tidyr.tidyverse.org/reference/pivot_wider.html), [pivot_longer](https://tidyr.tidyverse.org/reference/pivot_longer.html)                                                                                                                                                                                                      | These functions are used to reshape data between wide and long formats.                 |
-| Data union               | [union_all](https://dplyr.tidyverse.org/reference/setops.html)                                                                                                                                                                                                                                                                                      | This function combines two tables.                                                      |
-| Randomly selects rows    | [slice_sample](https://dplyr.tidyverse.org/reference/slice.html)                                                                                                                                                                                                                                                                                    | We can use this to take a random subset a table.                                        |
+| Data reshaping | [pivot_wider](https://tidyr.tidyverse.org/reference/pivot_wider.html), [pivot_longer](https://tidyr.tidyverse.org/reference/pivot_longer.html) | These functions are used to reshape data between wide and long formats. |
+| Data union | [union_all](https://dplyr.tidyverse.org/reference/setops.html) | This function combines two tables. |
+| Randomly selects rows | [slice_sample](https://dplyr.tidyverse.org/reference/slice.html) | We can use this to take a random subset a table. |
 
 ::: {.callout-tip collapse="true"}
 ## Behind the scenes
 
-By using the above functions we can use the same code regardless of whether the data was held in the database or locally in R. This is because the functions used above are generic functions which behave differently depending on the type of input they are given. Let's take `inner_join()` for example. We can see that this function is a S3 generic function (with S3 being the most common object-oriented system used in R).
+By using the above functions we can use the same code regardless of whether the data is held in the database or locally in R. This is because the functions used above are generic functions which behave differently depending on the type of input they are given. Let's take `inner_join()` for example. We can see that this function is a S3 generic function (with S3 being the most common object-oriented system used in R).
 
 ```{r, message=FALSE, warning=FALSE}
 library(sloop)
 ftype(inner_join)
 ```
 
-Among others, the references we create to tables in a database have `tbl_lazy` as a class attribute. Meanwhile, we can see that when collected into r the object changes to have different attributes, one of which being `data.frame`
+Among others, the references we create to tables in a database have `tbl_lazy` as a class attribute. Meanwhile, we can see that when collected into r the object changes to have different attributes, one of which being `data.frame` :
 
 ```{r, message=FALSE, warning=FALSE}
 class(flights_db)
@@ -82,7 +82,7 @@ s3_dispatch(flights_db |>
               inner_join(planes_db))
 ```
 
-But once we bring data into r, the `data.frame` method will be used.
+But once we bring data into R, the `data.frame` method will be used.
 
 ```{r, message=FALSE, warning=FALSE}
 s3_dispatch(flights_db |> head(1) |> collect() |> 
@@ -94,7 +94,7 @@ s3_dispatch(flights_db |> head(1) |> collect() |>
 
 To see a little more on how we can use the above functions, let's say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.
 
-For this we'll first use the `filter()` and `select()` dplyr verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.
+For this we'll first use the `filter()` and `select()` `dplyr` verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.
 
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights_db <- flights_db |> 
@@ -116,13 +116,13 @@ delayed_flights_db |>
 ```
 :::
 
-And when executed, our results will look like the following
+When executed, our results will look like the following:
 
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights_db
 ```
 
-Now we'll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics will be kept.
+Now we'll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics are kept.
 
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights_db <- delayed_flights_db |> 
@@ -143,13 +143,13 @@ delayed_flights_db |>
 ```
 :::
 
-And when executed, our results will look like the following
+And when executed, our results will look like the following:
 
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights_db
 ```
 
-Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform statistical analyses not possible to run in a database).
+Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform locally statistical analyses which might not be possible to run in a database).
 
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights <- delayed_flights_db |> 
