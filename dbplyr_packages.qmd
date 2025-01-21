@@ -1,6 +1,6 @@
 # Building analytic pipelines for a data model {#sec-dbplyr_packages}
 
-In the previous chapters we've seen that after connecting to a database we can create references to the various table we're interested in and write bespoke analytic code. However, if we are working with the same database over and over again we are likely to want to build some tooling for tasks we are often performing.
+In the previous chapters we've seen that after connecting to a database we can create references to the various tables we've interested in it and write bespoke analytic code to query them. However, if we are working with the same database over and over again we are likely to want to build some tooling for tasks we are often performing.
 
 To see how we can develop a data model with associated methods and functions we'll use the Lahman baseball data. We can see below how the data is stored across various related tables.
 
@@ -51,9 +51,9 @@ lahman$People |>
 ::: {.callout-note collapse="true"}
 ## The dm package
 
-In this chapter we will be creating a bespoke data model for our database. This approach can be further extended using the `dm`, which also provides various helpful functions for creating a data model and working with it.
+In this chapter we will be creating a bespoke data model for our database. This approach can be further extended using the `dm` package, which also provides various helpful functions for creating a data model and working with it.
 
-Similar to above, we can use the `dm` to create a single object to our database tables.
+Similar to above, we can use `dm` to create a single object to access our database tables.
 
 ```{r, message=FALSE, warning=FALSE}
 library(dm)
@@ -79,7 +79,7 @@ For more information on the dm package see <https://dm.cynkra.com/index.html>
 
 ## Creating functions for the data model
 
-We can also now make various functions specific to our Lahman data model to facilitate data analyses. Given we know the structure of the data, we build a set of functions that abstract away some of the complexities of working with data in a database.
+We can also now make various functions specific to our Lahman data model to facilitate data analyses. Given we know the structure of the data, we can build a set of functions that abstract away some of the complexities of working with data in a database.
 
 Let's start by making a small function to get the teams players have played for. We can see that the code we use follows on from the last couple of chapters.
 
@@ -137,7 +137,7 @@ getTeams(lahman, "Barry Bonds") |>
 ::: {.callout-tip collapse="true"}
 ## Choosing the right time to collect data into R
 
-`collect()` brings data out of the database and into R. When working with large data sets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our `getTeams()` function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case we could also use `pull()` get our result out as a vector rather that a data frame.
+The function `collect()` brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our `getTeams()` function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case we could also use `pull()` to get our result out as a vector rather that a data frame.
 
 ```{r, message=FALSE, warning=FALSE}
 getTeams(lahman, "Barry Bonds") |>
@@ -191,7 +191,7 @@ lahman$Pitching |>
 ```
 :::
 
-We could then use our `addBirthCountry()` function as part of a larger query to summarise the proportion of players from each country over the time (based on their presence in the batting table).
+We could then use our `addBirthCountry()` function as part of a larger query to summarise the proportion of players from each country over time (based on their presence in the batting table).
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 plot_data <- lahman$Batting |>
@@ -257,13 +257,13 @@ plot_data |>
 ::: {.callout-note collapse="true"}
 ## Defining methods for the data model
 
-As part of our `lahmanFromCon()` function our data model object has the class a "lahman_ref". Therefore as well as creating user-facing functions to work with our lahman data model, we can also define methods for the this object.
+As part of our `lahmanFromCon()` function our data model object has the class "lahman_ref". Therefore as well as creating user-facing functions to work with our lahman data model, we can also define methods for this object.
 
 ```{r, message=FALSE, warning=FALSE}
 class(lahman)
 ```
 
-With this we can make some specific methods for "lahman_ref". For example we can define a print method.
+With this we can make some specific methods for a "lahman_ref" object. For example, we can define a print method like so:
 
 ```{r, message=FALSE, warning=FALSE}
 print.lahman_ref <- function(x, ...) {
@@ -312,7 +312,7 @@ lahman$Salaries |>
             .by = c("birthCountry", "birthYear"))
 ```
 
-Although the R code on the face of it looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets birth country and the other birth year. 
+Although the R code on the face of it looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.
 
 ::: {.callout-note collapse="true"}
 ## Show query
@@ -327,7 +327,7 @@ lahman$Salaries |>
 ```
 :::
 
-To improve performance, we could instead have a single function to get both of these both birth country and birth year at the same time.
+To improve performance, we could instead have a single function to get both of these, birth country and birth year, at the same time.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 addCharacteristics <- function(lahmanTbl){
@@ -355,7 +355,7 @@ lahman$Salaries |>
 ```
 :::
 
-All this is to show that when working with databases we should keep in mind what is going on behind the scenes in terms of SQL actually being executed. 
+Now this query outputs the same result but is simpler than the previous one, thus lowering the computational cost of the analysis. All this is to show that when working with databases we should keep in mind what is going on behind the scenes in terms of the SQL code actually being executed.
 
 ### Piping and SQL
 
@@ -391,7 +391,7 @@ lahman$People |>
 
 ### Computing intermediate queries
 
-Let's say we want to summarise home runs in the batting table and stike outs in the pitching table by college players attended and their birth year. We could do this like so:
+Let's say we want to summarise home runs in the batting table and stike outs in the pitching table by the college players attended and their birth year. We could do this like so:
 
 ```{r, echo = TRUE}
 players_with_college <- lahman$People |> 
@@ -417,7 +417,7 @@ lahman$Pitching |>
   collect()
 ```
 
-Looking at the SQL we can see, however, that there is some duplication. As part of each full query we have run our players_with_college query.
+Looking at the SQL we can see, however, that there is some duplication, because as part of each full query we have run our players_with_college query.
 
 ::: {.callout-note collapse="true"}
 ## Show query
@@ -452,7 +452,6 @@ Now we have a temporary table with the result of our players_with_college query,
 players_with_college |> 
   show_query()
 ```
-
 
 ```{r, echo = TRUE}
 lahman$Batting |> 
