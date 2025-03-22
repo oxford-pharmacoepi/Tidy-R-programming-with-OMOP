@@ -277,8 +277,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In the previous chapter <a href="tidyverse_verbs.html" class="quarto-xref"><span>Chapter 2</span></a> we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.</p>
-<p>For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.</p>
+<p>In the previous chapter, <a href="tidyverse_verbs.html" class="quarto-xref"><span>Chapter 2</span></a>, we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.</p>
+<p>For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these pipelines get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.</p>
 <p>Let’s first load the packages which these expressions come from. In addition to base R types, <code>bit64</code> adds support for integer64. The <code>stringr</code> package provides functions for working with strings, while <code>clock</code> has various functions for working with dates. Many other useful expressions will come from <code>dplyr</code> itself.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
@@ -292,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="data-types" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="data-types"><span class="header-section-number">3.1</span> Data types</h2>
-<p>Commonly used data types are consistently supported across database backends. We can use the base <code>as.numeric()</code>, <code>as.integer()</code>, <code>as.charater()</code>, <code>as.Date()</code>, and <code>as.POSIXct()</code>. We can also use <code>as.integer64()</code> from the <code>bit64</code> package to coerce to integer64, and the <code>as_date()</code> and <code>as_datetime()</code> from the clock package instead of <code>as.Date()</code> and <code>as.POSIXct()</code>, respectively.</p>
+<p>Commonly used data types are consistently supported across database backends. We can use the base <code>as.numeric()</code>, <code>as.integer()</code>, <code>as.charater()</code>, <code>as.Date()</code>, and <code>as.POSIXct()</code>. We can also use <code>as.integer64()</code> from the <code>bit64</code> package to coerce to integer64, and the <code>as_date()</code> and <code>as_datetime()</code> from the <code>clock</code> package instead of <code>as.Date()</code> and <code>as.POSIXct()</code>, respectively.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -610,7 +610,7 @@ Show SQL
 </section>
 <section id="comparison-and-logical-operators" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="comparison-and-logical-operators"><span class="header-section-number">3.2</span> Comparison and logical operators</h2>
-<p>Base r comparison operators, such as <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>&gt;=</code>, <code>&gt;</code>, are also well supported in all database backends. Logical operators, such as <code>&amp;</code> and <code>|</code> can also be used as if the data was in R.</p>
+<p>Base R comparison operators, such as <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>&gt;=</code>, <code>&gt;</code>, are also well supported in all database backends. Logical operators, such as <code>&amp;</code> and <code>|</code> can also be used as if the data was in R.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -928,7 +928,7 @@ Show SQL
 </section>
 <section id="conditional-statements" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="conditional-statements"><span class="header-section-number">3.3</span> Conditional statements</h2>
-<p>The base <code>ifelse</code> function, along with <code>if_else</code> and <code>case_when</code> from dplyr are translated for each database backend. As can be seen in the translations, <code>case_when</code> maps to the SQL CASE WHEN statement.</p>
+<p>The base <code>ifelse</code> function, along with <code>if_else</code> and <code>case_when</code> from <code>dplyr</code> are translated for each database backend. As can be seen in the translations, <code>case_when</code> maps to the SQL CASE WHEN statement.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1216,7 +1216,7 @@ END</code></pre>
 </section>
 <section id="working-with-strings" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="working-with-strings"><span class="header-section-number">3.4</span> Working with strings</h2>
-<p>Compared to the previous sections, there is much more variation in support of functions to work with strings across database management systems. In particular, although various useful <code>stringr</code> functions do have translations it can be seen below that more translations are available for some databases compared to others.</p>
+<p>Compared to the previous sections, there is much more variation in support of functions to work with strings across database management systems. In particular, although various useful <code>stringr</code> functions do have translations ubiquitously it can be seen below that more translations are available for some databases compared to others.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2224,7 +2224,7 @@ Show SQL
 </section>
 <section id="data-aggregation" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="data-aggregation"><span class="header-section-number">3.6</span> Data aggregation</h2>
-<p>Within the context of using <code>summarise()</code>, we can get aggregate across entire columns using functions such as <code>n()</code>, <code>n_distinct()</code>, <code>sum()</code>, <code>min()</code>, <code>max()</code>, <code>mean()</code>, and <code>sd()</code>. As can be seen below, the SQL for these calculations is similar across different database management systems.</p>
+<p>Within the context of using <code>summarise()</code>, we can get aggregated results across entire columns using functions such as <code>n()</code>, <code>n_distinct()</code>, <code>sum()</code>, <code>min()</code>, <code>max()</code>, <code>mean()</code>, and <code>sd()</code>. As can be seen below, the SQL for these calculations is similar across different database management systems.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2416,9 +2416,9 @@ FROM `df`</code></pre>
 </section>
 <section id="window-functions" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="window-functions"><span class="header-section-number">3.7</span> Window functions</h2>
-<p>In the previous section we saw how aggregate functions can be used to perform operations across entire columns. Window functions differ in that they perform calculation across rows that are in some way related to a current row. For these we now use <code>mutate()</code> instead of using <code>summarise()</code>.</p>
+<p>In the previous section we saw how aggregate functions can be used to perform operations across entire columns. Window functions differ in that they perform calculations across rows that are in some way related to a current row. For these we now use <code>mutate()</code> instead of using <code>summarise()</code>.</p>
 <p>We can use window functions like <code>cumsum()</code> and <code>cummean()</code> to calculate running totals and averages, or <code>lag()</code> and <code>lead()</code> to help compare rows to their preceding or following rows.</p>
-<p>Given that window functions are compare rows to rows before or after them, we will often use <code>arrange()</code> to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using <code>group_by()</code> would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.</p>
+<p>Given that window functions compare rows to rows before or after them, we will often use <code>arrange()</code> to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using <code>group_by()</code> would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">

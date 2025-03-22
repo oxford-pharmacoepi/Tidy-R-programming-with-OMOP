@@ -271,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>We saw in the previous chapter that we can use familiar dplyr verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (which we’ll see later will be true when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the <code>nycflights13</code> data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.</p>
+<p>We saw in the previous chapter that we can use familiar <code>dplyr</code> verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we’ll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the <code>nycflights13</code> data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.</p>
 <p><img src="images/relational-01.png" class="img-fluid"></p>
 <p>Let’s load the required libraries, add our data to a duckdb database, and then create references to each of these tables.</p>
 <div class="cell">
@@ -375,7 +375,7 @@ $ name    &lt;chr&gt; "Endeavor Air Inc.", "American Airlines Inc.", "Alaska Air
 </div>
 <section id="tidyverse-functions" class="level3" data-number="2.0.1">
 <h3 data-number="2.0.1" class="anchored" data-anchor-id="tidyverse-functions"><span class="header-section-number">2.0.1</span> Tidyverse functions</h3>
-<p>For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing the data we need for an analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from dplyr, but a couple also from the tidyr package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</p>
+<p>For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from <code>dplyr</code>, but a couple also from the <code>tidyr</code> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -457,7 +457,7 @@ Behind the scenes
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>By using the above functions we can use the same code regardless of whether the data was held in the database or locally in R. This is because the functions used above are generic functions which behave differently depending on the type of input they are given. Let’s take <code>inner_join()</code> for example. We can see that this function is a S3 generic function (with S3 being the most common object-oriented system used in R).</p>
+<p>By using the above functions we can use the same code regardless of whether the data is held in the database or locally in R. This is because the functions used above are generic functions which behave differently depending on the type of input they are given. Let’s take <code>inner_join()</code> for example. We can see that this function is a S3 generic function (with S3 being the most common object-oriented system used in R).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sloop)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ftype</span>(inner_join)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -465,7 +465,7 @@ Behind the scenes
 <pre><code>[1] "S3"      "generic"</code></pre>
 </div>
 </div>
-<p>Among others, the references we create to tables in a database have <code>tbl_lazy</code> as a class attribute. Meanwhile, we can see that when collected into r the object changes to have different attributes, one of which being <code>data.frame</code></p>
+<p>Among others, the references we create to tables in a database have <code>tbl_lazy</code> as a class attribute. Meanwhile, we can see that when collected into r the object changes to have different attributes, one of which being <code>data.frame</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(flights_db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -501,7 +501,7 @@ Behind the scenes
    inner_join.default</code></pre>
 </div>
 </div>
-<p>But once we bring data into r, the <code>data.frame</code> method will be used.</p>
+<p>But once we bring data into R, the <code>data.frame</code> method will be used.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">collect</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">inner_join</span>(planes_db <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">collect</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -519,7 +519,7 @@ Behind the scenes
 <section id="getting-to-an-analytic-dataset" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="getting-to-an-analytic-dataset"><span class="header-section-number">2.1</span> Getting to an analytic dataset</h2>
 <p>To see a little more on how we can use the above functions, let’s say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.</p>
-<p>For this we’ll first use the <code>filter()</code> and <code>select()</code> dplyr verbs to get the data from the flights table. Note, we’ll rename arr_delay to just delay.</p>
+<p>For this we’ll first use the <code>filter()</code> and <code>select()</code> <code>dplyr</code> verbs to get the data from the flights table. Note, we’ll rename arr_delay to just delay.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> flights_db <span class="sc">|&gt;</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arr_delay),</span>
@@ -553,7 +553,7 @@ WHERE (NOT((arr_delay IS NULL))) AND (origin = 'JFK')</code></pre>
 </div>
 </div>
 </div>
-<p>And when executed, our results will look like the following</p>
+<p>When executed, our results will look like the following:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -574,7 +574,7 @@ WHERE (NOT((arr_delay IS NULL))) AND (origin = 'JFK')</code></pre>
 # ℹ more rows</code></pre>
 </div>
 </div>
-<p>Now we’ll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics will be kept.</p>
+<p>Now we’ll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics are kept.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes_db <span class="sc">|&gt;</span> </span>
@@ -611,7 +611,7 @@ INNER JOIN planes
 </div>
 </div>
 </div>
-<p>And when executed, our results will look like the following</p>
+<p>And when executed, our results will look like the following:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -619,20 +619,20 @@ INNER JOIN planes
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
    dest  distance carrier tailnum delay seats
    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt;
- 1 BQN       1576 B6      N804JB    -18   200
- 2 MCO        944 B6      N593JB     -8   200
- 3 PBI       1028 B6      N793JB     -2   200
- 4 BOS        187 B6      N708JB     -4   200
- 5 ATL        760 DL      N3739P     -8   189
- 6 SJU       1598 B6      N794JB    -21   200
- 7 PHX       2153 US      N535UW      0   379
- 8 BOS        187 B6      N805JB    -10   200
- 9 LAS       2248 B6      N558JB     -6   200
-10 SLC       1990 DL      N3763D     -9   189
+ 1 LAX       2475 UA      N34137    -10   178
+ 2 CLT        541 US      N117UW    -34   182
+ 3 SFO       2586 UA      N502UA      7   178
+ 4 ATL        760 DL      N681DA    -12   178
+ 5 FLL       1069 B6      N568JB     -3   200
+ 6 BUF        301 B6      N236JB      2    20
+ 7 RSW       1074 B6      N583JB      2   200
+ 8 LAS       2248 B6      N621JB      0   200
+ 9 PHX       2153 US      N510UW    -35   379
+10 TPA       1005 B6      N606JB      7   200
 # ℹ more rows</code></pre>
 </div>
 </div>
-<p>Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform statistical analyses not possible to run in a database).</p>
+<p>Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform locally statistical analyses which might not be possible to run in a database).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>

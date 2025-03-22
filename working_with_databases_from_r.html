@@ -277,30 +277,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><img src="images/lter_penguins.png" class="img-fluid" width="250"></p>
-<p><em>Artwork by @allison_horst</em></p>
-<p>Before we start thinking about working with health care data spread across a database using the OMOP common data model, let’s first do a quick data analysis from R using a simpler dataset held in a database to quickly understand the general approach. For this we’ll use data from <a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins package</a>, which contains data on penguins collected from the <a href="https://en.wikipedia.org/wiki/Palmer_Station">Palmer Station</a> in Antarctica.</p>
+<p><em>Artwork by <a href="https://x.com/allison_horst">@allison_horst</a></em></p>
+<p>Before we start thinking about working with healthcare data spread across a database using the OMOP common data model, let’s first do a quick data analysis with R using a simpler dataset held in a database to quickly understand the general approach. For this we’ll use data from <a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins package</a>, which contains data on penguins collected from the <a href="https://en.wikipedia.org/wiki/Palmer_Station">Palmer Station</a> in Antarctica.</p>
 <section id="getting-set-up" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="getting-set-up"><span class="header-section-number">1.1</span> Getting set up</h2>
-<p>Assuming that you have R and RStudio already set up, first we need to install a few packages not included in base R if we don´t already have them.</p>
+<p>Assuming that you have R and RStudio already set up, first we need to install a few packages not included in base R if we don’t already have them.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"DBI"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"duckdb"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"palmerpenguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dbplyr"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"DBI"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"duckdb"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"palmerpenguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once installed, we can load them like so.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dbplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="taking-a-peek-at-the-data" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="taking-a-peek-at-the-data"><span class="header-section-number">1.2</span> Taking a peek at the data</h2>
-<p>We can get an overview of the data using the <code>glimpse()</code> command.</p>
+<p>The package <code>palmerpenguins</code> contains two datasets, one of them called <code>penguins</code>, which we will use in this chapter. We can get an overview of the data using the <code>glimpse()</code> command.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -316,7 +318,7 @@ $ sex               &lt;fct&gt; male, female, female, NA, female, male, female, 
 $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…</code></pre>
 </div>
 </div>
-<p>Or we could take a look at the first rows of the data using <code>head()</code></p>
+<p>Or we could take a look at the first rows of the data using <code>head()</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -334,19 +336,19 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </section>
 <section id="inserting-data-into-a-database" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="inserting-data-into-a-database"><span class="header-section-number">1.3</span> Inserting data into a database</h2>
-<p>Let’s put our penguins data into a <a href="https://duckdb.org/">duckdb database</a>. We create the database, add the penguins data, and then create a reference to the table containing the data.</p>
+<p>Let’s put our penguins data into a <a href="https://duckdb.org/">duckdb database</a>. We need to first create the database and then add the penguins data to it.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="at">dbdir =</span> <span class="st">":memory:"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">"penguins"</span>, penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can see that our database now has one table</p>
+<p>We can see that our database now has one table:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbListTables</span>(db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "penguins"</code></pre>
 </div>
 </div>
-<p>And now that the data is in a database we could use SQL to get the first rows that we saw before</p>
+<p>And now that the data is in a database we could use SQL to get the first rows that we saw before.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbGetQuery</span>(db, <span class="st">"SELECT * FROM penguins LIMIT 5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -376,12 +378,12 @@ Connecting to databases from R
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Database connections from R can be made using the <a href="https://dbi.r-dbi.org/">DBI package</a>. The back-end for <code>DBI</code> is facilitated by database specific driver packages. Above we we created a new, empty, in-process <a href="https://duckdb.org/">duckdb</a> database which we then added database. But we could have instead connected to an existing duckdb database. This could, for example, look like</p>
+<p>Database connections from R can be made using the <a href="https://dbi.r-dbi.org/">DBI package</a>. The back-end for <code>DBI</code> is facilitated by database specific driver packages. In the code snipets above we created a new, empty, in-process <a href="https://duckdb.org/">duckdb</a> database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">dbdir =</span> <span class="fu">here</span>(<span class="st">"my_duckdb_database.ducdkb"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this book for simplicity we will mostly be working with in-process duckdb databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections are supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like:</p>
+<p>In this book for simplicity we will mostly be working with in-process duckdb databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(RPostgres<span class="sc">::</span><span class="fu">Postgres</span>(),</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dbname =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CDM5_POSTGRESQL_DBNAME"</span>),</span>
@@ -395,7 +397,7 @@ Connecting to databases from R
 </section>
 <section id="translation-from-r-to-sql" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="translation-from-r-to-sql"><span class="header-section-number">1.4</span> Translation from R to SQL</h2>
-<p>Instead of using SQL, we could instead use the same R code as before. Now it will query the data held in a database. To do this, first we create a reference to the table in the database.</p>
+<p>Instead of using SQL to query our database, we might instead want to use the same R code as before. However, instead of working with the local dataset, now we will need it to query the data held in the database. To do this, first we can create a reference to the table in the database as such:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="ot">&lt;-</span> <span class="fu">tbl</span>(db, <span class="st">"penguins"</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>penguins_db</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -434,7 +436,7 @@ Connecting to databases from R
 # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
 </div>
-<p>The magic here is provided by the <code>dbplyr</code> which takes the R code and converts it into SQL, which in this case looks like the SQL we could have written instead.</p>
+<p>The magic here is provided by the <code>dbplyr</code> package, which takes the R code and converts it into SQL. In this case the query looks like the SQL we wrote directly before.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins_db, <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -448,7 +450,7 @@ LIMIT 5</code></pre>
 </section>
 <section id="example-analysis" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="example-analysis"><span class="header-section-number">1.5</span> Example analysis</h2>
-<p>More complicated SQL can also be generated by using familiar <code>dplyr</code> code. For example, we could get a summary of bill length by species like so</p>
+<p>More complicated SQL can also be generated by using familiar <code>dplyr</code> code. For example, we could get a summary of bill length by species like so:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
@@ -478,7 +480,7 @@ LIMIT 5</code></pre>
 3 Gentoo                   47.5 40.9 to 59.6          </code></pre>
 </div>
 </div>
-<p>The benefit of using dbplyr now becomes quite clear if we take a look at the corresponding SQL that is generated for us.</p>
+<p>The benefit of using <code>dbplyr</code> now becomes quite clear if we take a look at the corresponding SQL that is generated for us:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
@@ -513,8 +515,8 @@ FROM (
 ) q01</code></pre>
 </div>
 </div>
-<p>Instead of having to write this somewhat complex SQL specific to duckdb we can use the friendlier dplyr syntax that may well be more familiar if coming from an R programming background.</p>
-<p>Now suppose we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.</p>
+<p>Instead of having to write this somewhat complex SQL specific to <code>duckdb</code> we can use the friendlier <code>dplyr</code> syntax that may well be more familiar if coming from an R programming background.</p>
+<p>Not having to worry about the SQL translation behind our queries allows us to interrogate the database in a simple way even for more complex questions. For instance, suppose now that we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">missing_body_mass_g =</span> <span class="fu">if_else</span>(</span>
@@ -527,11 +529,11 @@ FROM (
 # Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
   species   missing_body_mass_g     n
   &lt;fct&gt;                   &lt;dbl&gt; &lt;dbl&gt;
-1 Gentoo                      0   123
-2 Chinstrap                   0    68
-3 Adelie                      1     1
-4 Gentoo                      1     1
-5 Adelie                      0   151</code></pre>
+1 Adelie                      1     1
+2 Gentoo                      0   123
+3 Chinstrap                   0    68
+4 Adelie                      0   151
+5 Gentoo                      1     1</code></pre>
 </div>
 </div>
 <p>We can get the mean for each of the species (dropping those two missing records).</p>
@@ -609,11 +611,11 @@ FROM (
 </div>
 </div>
 </div>
-<p>As well as having an example of working with data in database from R, you also have an example of <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox">Simpson´s paradox</a>!</p>
+<p>As well as having an example of working with data in database from R, you also have an example of <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox">Simpson’s paradox</a>!</p>
 </section>
 <section id="disconnecting-from-the-database" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="disconnecting-from-the-database"><span class="header-section-number">1.6</span> Disconnecting from the database</h2>
-<p>And now we’ve reached the end of this example, we can close our connection to the database.</p>
+<p>Now that we’ve reached the end of this example, we can close our connection to the database using the <code>DBI</code> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
