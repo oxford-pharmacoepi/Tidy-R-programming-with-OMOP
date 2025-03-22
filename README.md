@@ -18,4 +18,6 @@
 
     > quarto render
 
--   When changes are merged to main github branch the website with the book will automatically be updated via a github action
+-   Open a pull request with your changes
+
+-   Note, merged changes will only be reflected in the web version when the book is rendered and published locally (i.e. merged changes will not be automatically reflected in the online version of the book until this is done).

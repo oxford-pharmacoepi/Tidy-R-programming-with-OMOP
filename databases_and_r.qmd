@@ -1,6 +1,3 @@
-
-
-
 ```{r}
 library(DBI)
 library(dplyr)
@@ -8,13 +5,13 @@ library(dplyr)
 
 ```{r, echo = FALSE}
 db <- DBI::dbConnect(duckdb::duckdb(), 
-                     dbdir = CDMConnector::eunomia_dir())
-cdm <- CDMConnector::cdm_from_con(db, 
-                                  cdm_schema = "main")
+                     dbdir = CDMConnector::eunomiaDir())
+cdm <- CDMConnector::cdmFromCon(db, 
+                                cdmSchema = "main")
 ```
 
-
 ### select()
+
 ```{r, echo = TRUE}
 cdm$person |>
   select("person_id", "gender_concept_id") 
@@ -22,7 +19,6 @@ cdm$person |>
   select("person_id", "gender_concept_id") |> 
   show_query()
 ```
-
 
 ### mutate()
 
@@ -35,6 +31,7 @@ cdm$person |>
 ```
 
 ### if_else()
+
 ```{r, echo = TRUE}
 cdm$person |>
   mutate(new_variable=if_else(gender_concept_id=="8532", "Male", "Female")) 
@@ -45,6 +42,7 @@ cdm$person |>
 ```
 
 ### paste0
+
 ```{r, echo = TRUE}
 cdm$person |>
   mutate(date_of_birth = paste0("year_of_birth", "-",
@@ -59,6 +57,7 @@ cdm$person |>
 ```
 
 ### distinct()
+
 ```{r, echo = TRUE}
 cdm$person |>
   select("gender_concept_id") |>
@@ -71,6 +70,7 @@ cdm$person |>
 ```
 
 ### rename()
+
 ```{r, echo = TRUE}
 cdm$person |>
   rename("sex_concept_id" = "gender_concept_id")
@@ -79,6 +79,5 @@ cdm$person |>
   rename("sex_concept_id" = "gender_concept_id") |>
   show_query()
 ```
-
 
 ### working with strings
