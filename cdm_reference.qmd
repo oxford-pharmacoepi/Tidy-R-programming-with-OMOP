@@ -1,14 +1,14 @@
-# Creating a cdm reference {#sec-cdm_reference}
+# Creating a CDM reference {#sec-cdm_reference}
 
-## The OMOP CDM layout
+## The OMOP common data model (CDM) layout
 
-The OMOP CDM standardises the structure of health care data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure, with version 5.4 of the OMOP CDM shown below. ![](images/erd.jpg){.lightbox}
+The OMOP CDM standardises the structure of healthcare data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure, with version 5.4 of the OMOP CDM shown below. ![](images/erd.jpg){.lightbox}
 
-## Creating a reference to the OMOP common data model
+## Creating a reference to the OMOP CDM
 
-As we saw in @sec-dbplyr_packages, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipleines using the data. Luckily for us we won't have to create functions and methods for this ourselves. Instead we will use the `omopgenerics` package which defines a data model for OMOP CDM data and the `CDMConnector` package which provides functions for connecting to a OMOP CDM data held in a database.
+As we saw in @sec-dbplyr_packages, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipelines using the data. Luckily for us, we won't have to create functions and methods for this ourselves. Instead, we will use the `omopgenerics` package which defines a data model for OMOP CDM data and the `CDMConnector` package which provides functions for connecting to a OMOP CDM data held in a database.
 
-To see how this works we will use the `omock` to create example data in the format of the OMOP CDM, which we then copy to a duckdb database.
+To see how this works we will use the `omock` package to create example data in the format of the OMOP CDM, which we will then copy to a `duckdb` database.
 
 ```{r, message=FALSE, warning=FALSE}
 library(DBI)
@@ -35,7 +35,7 @@ CDMConnector::copyCdmTo(con = db,
                         overwrite = TRUE)
 ```
 
-Now we have OMOP CDM data in a database we can use `cdmFromCon()` to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored (often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access where intermediate tables can be created for a given a study).
+Now that we have OMOP CDM data in a database, we can use the function `cdmFromCon()` from `CDMConnector` to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access and where intermediate tables can be created for a given study.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
 cdm <- cdmFromCon(db, 
@@ -70,11 +70,13 @@ cdm$person
 cdm[["observation_period"]]
 ```
 
+Note that here we have first created a local version of the cdm with all the tables of interest with `omock`, then copied it to a `duckdb` database, and finally crated a reference to it with `CDMConnector`, so that we can work with the final `cdm` object as we normally would for one created with our own healthcare data. In that case we would directly use `cdmFromCon` with our own database information. Throughout this chapter, however, we will keep working with the mock dataset.
+
 ## CDM attributes
 
 ### CDM name
 
-Our cdm reference will be associated with a name. By default this name will be taken from the cdm source name field from the cdm source table.
+Our cdm reference will be associated with a name. By default this name will be taken from the `cdm_source_name` field from the `cdm_source` table. We will use the function `cdmName` from `omopgenerics` to get it.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
 cdm <- cdmFromCon(db,
@@ -84,7 +86,7 @@ cdm$cdm_source
 cdmName(cdm)
 ```
 
-However, we can instead set this name when creating our cdm reference.
+However, we can instead set this name to whatever else we want when creating our cdm reference.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
 cdm <- cdmFromCon(db,
@@ -94,7 +96,7 @@ cdm <- cdmFromCon(db,
 cdmName(cdm)
 ```
 
-Note, we can also can get our cdm name from any of the tables in our cdm reference.
+Note that we can also get our cdm name from any of the tables in our cdm reference.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
 cdmName(cdm$person)
@@ -103,20 +105,20 @@ cdmName(cdm$person)
 ::: {.callout-tip collapse="true"}
 ## Behind the scenes
 
-The cdm reference itself has a class of a cdm_reference.
+The class of the cdm reference itself is cdm_reference.
 
 ```{r, message=FALSE, warning=FALSE}
 class(cdm)
 class(cdm$person)
 ```
 
-Then each of the tables have a class of a cdm_table. If the table is one of the standard OMOP CDM tables it will also have a class of an "omop_table". This latter class is useful when we want to have different behaviour for these core tables compared to other tables that are added to the cdm reference during the course of running a study.
+Each of the tables has class cdm_table. If the table is one of the standard OMOP CDM tables it will also have class omop_table. This latter class is defined so that we can allow different behaviour for these core tables (person, condition_occurrence, observation_period, etc.) compared to other tables that are added to the cdm reference during the course of running a study.
 
 ```{r, message=FALSE, warning=FALSE}
 class(cdm$person)
 ```
 
-We can see that cdmName() is a generic function, which works for both the cdm reference as a whole and individual tables.
+We can see that `cdmName()` is a generic function, which works for both the cdm reference as a whole and individual tables.
 
 ```{r, message=FALSE, warning=FALSE}
 library(sloop)
@@ -127,7 +129,7 @@ s3_dispatch(cdmName(cdm$person))
 
 ### CDM version
 
-We can also easily check the OMOP CDM version that is being used
+We can also easily check the OMOP CDM version that is being used with the function `cdmVersion` from `omopgenerics` like so:
 
 ```{r, echo = TRUE}
 cdmVersion(cdm)
@@ -135,7 +137,7 @@ cdmVersion(cdm)
 
 ## Including cohort tables in the cdm reference
 
-We'll be seeing how to create cohorts in more detail in a couple of chapters time. For the moment, let's just see that we can include a cohort in our cdm reference. For this we'll use omock to add a cohort to our local cdm and upload that to a duckdb database again.
+We'll be seeing how to create cohorts in more detail in @sec-creating_cohorts. For the moment, let's just outline how we can include a cohort in our cdm reference. For this we'll use `omock` to add a cohort to our local cdm and upload that to a `duckdb` database again.
 
 ```{r, echo = TRUE}
 cdm_local <- cdm_local |> 
@@ -148,7 +150,7 @@ CDMConnector::copyCdmTo(con = db,
 
 ```
 
-Now we can specify this existing cohort table when creating our cdm reference.
+Now we can specify we want to include this existing cohort table to our cdm object when creating our cdm reference.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
 cdm <- cdmFromCon(db, 
@@ -166,7 +168,7 @@ cdm$my_study_cohort |>
 
 ## Including achilles tables in the cdm reference
 
-If we have the results tables from the Achilles R package <https://ohdsi.github.io/Achilles/> in our database, we can also include these in our cdm reference.
+If we have the results tables from the [Achilles R package](https://ohdsi.github.io/Achilles/) in our database, we can also include these in our cdm reference.
 
 Just to show how this can be done let's upload some empty results tables in the Achilles format.
 
@@ -215,7 +217,7 @@ DBI::dbWriteTable(db,
 
 ```
 
-We can now include these achilles table in our cdm reference.
+We can now include these achilles table in our cdm reference as in the previous case.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
 cdm <- cdmFromCon(db, 
@@ -229,7 +231,7 @@ cdm
 
 ## Adding other tables to the cdm reference
 
-Let's say we have some local data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and add to our reference using insertTable().
+Let's say we have some additional local data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using `insertTable` from `omopgenerics`. We will show this with the dataset `cars` in-built in R.
 
 ```{r, echo = TRUE}
 cars |> 
@@ -243,7 +245,7 @@ cdm <- insertTable(cdm = cdm,
                    temporary = FALSE)
 ```
 
-We can see that now we have this extra table has been uploaded to the database behind our cdm reference and added to our reference.
+We can see that now this extra table has been uploaded to the database behind our cdm reference and also added to our reference.
 
 ```{r, echo = TRUE}
 cdm
@@ -253,7 +255,7 @@ cdm
 cdm$cars
 ```
 
-If we already had the table in the database, then we could have instead just assigned it to our existing cdm reference. To see this lets upload the penguins table to our duckdb database.
+If we already had the table in the database we could have instead just assigned it to our existing cdm reference. To see this let's upload the `penguins` table to our `duckdb` database.
 
 ```{r}
 DBI::dbWriteTable(db, 
@@ -261,7 +263,7 @@ DBI::dbWriteTable(db,
                   palmerpenguins::penguins)
 ```
 
-Once we have this table in the database, we can see that we can just assign it to our cdm reference.
+Once we have this table in the database, we can just assign it to our cdm reference.
 
 ```{r}
 cdm$penguins <- tbl(db, "penguins")
@@ -271,7 +273,7 @@ cdm
 
 ## Mutability of the cdm reference
 
-An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected.
+An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected. We will therefore only be transforming the data in our cdm object but the original datasets behind it will remain intact.
 
 For example, let's say we want to perform a study with only people born in 1970. For this we could filter our person table to only people born in this year.
 
@@ -289,7 +291,7 @@ cdm$person |>
     tally()
 ```
 
-The original OMOP CDM data itself however will remain unaffected. And we can see if we create our reference again that the underlying data is unchanged.
+The original OMOP CDM data itself however will remain unaffected. We can see that, indeed, if we create our reference again the underlying data is unchanged.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
 cdm <- cdmFromCon(con = db,
@@ -300,16 +302,16 @@ cdm$person |>
     tally()
 ```
 
-The mutability of our cdm reference is a useful feature for studies as it means we can easily tweak our OMOP CDM data if needed. Meanwhile, leaving the underlying data unchanged is essential so that other study code can run against the data unaffected by any of our changes.
+The mutability of our cdm reference is a useful feature for studies as it means we can easily tweak our OMOP CDM data if needed. Meanwhile, leaving the underlying data unchanged is essential so that other study code can run against the data, unaffected by any of our changes.
 
-One thing we can't do though is alter the structure of OMOP CDM tables. For example this code would cause an error as the person table must have the column person_id.
+One thing we can't do, though, is alter the structure of OMOP CDM tables. For example, the following code would cause an error as the person table must always have the column person_id.
 
 ```{r, error=TRUE}
 cdm$person <- cdm$person |> 
     rename("new_id" = "person_id")
 ```
 
-In such a case we would have to call the table something else.
+In such a case we would have to call the table something else first, and then run the previous code:
 
 ```{r, eval=FALSE}
 cdm$person_new <- cdm$person |> 
@@ -318,15 +320,17 @@ cdm$person_new <- cdm$person |>
             temporary = TRUE)
 ```
 
-Now we would have this new table as an additional table in our cdm reference, knowing it was not in the format of one of the core OMOP CDM tables.
+Now we would be allowed to have this new table as an additional table in our cdm reference, knowing it was not in the format of one of the core OMOP CDM tables.
 
 ```{r, echo = TRUE}
 cdm
 ```
 
+The package `omopgenerics` provides a comprehensive list of the required features of a valid cdm reference. You can read more about it [here](https://darwin-eu-dev.github.io/omopgenerics/articles/cdm_reference.html).
+
 ## Working with temporary and permanent tables
 
-When we create new tables and our cdm reference is in a database we have a choice between using temporary and permanent tables. In most cases we can work with these interchangeably. Below we create one temporary table and one permanent table. We can see that both of these tables have been added to our cdm reference and that we can use them in the same way. 
+When we create new tables and our cdm reference is in a database we have a choice between using temporary or permanent tables. In most cases we can work with these interchangeably. Below we create one temporary table and one permanent table. We can see that both of these tables have been added to our cdm reference and that we can use them in the same way. Note that any new computed table will by default be temporary unless otherwise specified.
 
 ```{r, message=FALSE, warning=FALSE}
 cdm$person_new_temp <- cdm$person |> 
@@ -349,11 +353,13 @@ cdm$person_new_temp
 cdm$person_new_permanent
 ```
 
-One benefit of working with temporary tables is that they will be automatically dropped at the end of the session, whereas the permanent tables will be left over in the database until explicitly dropped. However, one disadvantage of using temporary tables is that we will generally accumulate more and more of them as we go. Whereas with permanent tables we can overwrite them as we go (as in if we're inside a loop that requires a compute we could overwite a intermediate permanent table 100 times rather than creating 100 temporary tables). 
+One benefit of working with temporary tables is that they will be automatically dropped at the end of the session, whereas the permanent tables will be left over in the database until explicitly dropped. This helps maintain the original database structure tidy and free of irrelevant data.
+
+However, one disadvantage of using temporary tables is that we will generally accumulate more and more of them as we go (in a single R session), whereas we can overwrite permanent tables continuously. For example, if our study code contains a loop that requires a compute, we would either overwrite an intermediate permanent table 100 times or create 100 different temporary tables in the process. In the latter case we should be wary of consuming a lot of RAM, which could lead to performance issues or even crashes.
 
 # Disconnecting
 
-Once we have finished our analysis we can close our connection to the database behind our cdm reference like so.
+Once we have finished our analysis we can close our connection to the database behind our cdm reference.
 
 ```{r}
 cdmDisconnect(cdm) 
