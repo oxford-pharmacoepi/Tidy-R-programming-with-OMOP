@@ -25,4 +25,4 @@ TO ADD
 ```
 ## Code
 
-The source code for the book can be found at this [Github repository](https://github.com/oxford-pharmacoepi/RProgrammingWithDatabases "TidyRProgrammingWithDatabases")
+The source code for the book can be found at this [Github repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP)

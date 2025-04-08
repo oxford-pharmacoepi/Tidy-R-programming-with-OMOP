@@ -4,11 +4,11 @@
 
 *Artwork by [\@allison_horst](https://x.com/allison_horst)*
 
-Before we start thinking about working with healthcare data spread across a database using the OMOP common data model, let's first do a quick data analysis with R using a simpler dataset held in a database to quickly understand the general approach. For this we'll use data from [palmerpenguins package](https://allisonhorst.github.io/palmerpenguins/), which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
+Before we start thinking about working with healthcare data spread across a database using the OMOP common data model, let's first do a simpler analysis. In this case we will do a quick data analysis with R using a simpler dataset held in a database to understand the general approach. For this we'll use data from [palmerpenguins package](https://allisonhorst.github.io/palmerpenguins/), which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
 
 ## Getting set up
 
-Assuming that you have R and RStudio already set up, first we need to install a few packages not included in base R if we don't already have them.
+Assuming that you have R and RStudio already set up[1](https://rstudio-education.github.io/hopr/starting.html), first we need to install a few packages not included in base R if we don't already have them.
 
 ```{r, eval=FALSE}
 install.packages("dplyr")
@@ -49,7 +49,7 @@ head(penguins, 5)
 Let's put our penguins data into a [duckdb database](https://duckdb.org/). We need to first create the database and then add the penguins data to it.
 
 ```{r}
-db <- dbConnect(duckdb::duckdb(), dbdir = ":memory:")
+db <- dbConnect(duckdb::duckdb())
 dbWriteTable(db, "penguins", penguins)
 ```
 
