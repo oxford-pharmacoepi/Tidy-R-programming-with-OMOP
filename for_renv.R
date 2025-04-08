@@ -1,3 +1,5 @@
 library(nycflights13)
 library(visOmopResults)
 library(gt)
+library(DiagrammeR)
+library(DiagrammeRsvg)
