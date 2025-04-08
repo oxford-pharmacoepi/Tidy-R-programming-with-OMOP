@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a34d670291f06f286357e447776a572a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cdm_reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a CDM reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -319,14 +319,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 26
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
 $ playerID     &lt;chr&gt; "aardsda01", "aaronha01", "aaronto01", "aasedo01", "abada…
 $ birthYear    &lt;int&gt; 1981, 1934, 1939, 1954, 1972, 1985, 1850, 1877, 1869, 186…
 $ birthMonth   &lt;int&gt; 12, 2, 8, 9, 8, 12, 11, 4, 11, 10, 9, 3, 10, 2, 8, 9, 6, …
 $ birthDay     &lt;int&gt; 27, 5, 5, 8, 25, 17, 4, 15, 11, 14, 20, 16, 22, 16, 17, 1…
+$ birthCity    &lt;chr&gt; "Denver", "Mobile", "Mobile", "Orange", "Palm Beach", "La…
 $ birthCountry &lt;chr&gt; "USA", "USA", "USA", "USA", "USA", "D.R.", "USA", "USA", …
 $ birthState   &lt;chr&gt; "CO", "AL", "AL", "CA", "FL", "La Romana", "PA", "PA", "V…
-$ birthCity    &lt;chr&gt; "Denver", "Mobile", "Mobile", "Orange", "Palm Beach", "La…
 $ deathYear    &lt;int&gt; NA, 2021, 1984, NA, NA, NA, 1905, 1957, 1962, 1926, NA, 1…
 $ deathMonth   &lt;int&gt; NA, 1, 8, NA, NA, NA, 5, 1, 6, 4, NA, 2, 6, NA, NA, NA, N…
 $ deathDay     &lt;int&gt; NA, 22, 16, NA, NA, NA, 17, 6, 11, 27, NA, 13, 11, NA, NA…
@@ -341,9 +341,9 @@ $ height       &lt;int&gt; 75, 72, 75, 75, 73, 74, 72, 71, 71, 68, 74, 71, 70, 7
 $ bats         &lt;fct&gt; R, R, R, R, L, L, R, R, R, L, R, R, R, R, R, L, R, L, L, …
 $ throws       &lt;fct&gt; R, R, R, R, L, L, R, R, R, L, R, R, R, R, L, L, R, L, R, …
 $ debut        &lt;chr&gt; "2004-04-06", "1954-04-13", "1962-04-10", "1977-07-26", "…
+$ bbrefID      &lt;chr&gt; "aardsda01", "aaronha01", "aaronto01", "aasedo01", "abada…
 $ finalGame    &lt;chr&gt; "2015-08-23", "1976-10-03", "1971-09-26", "1990-10-03", "…
 $ retroID      &lt;chr&gt; "aardd001", "aaroh101", "aarot101", "aased001", "abada001…
-$ bbrefID      &lt;chr&gt; "aardsda01", "aaronha01", "aaronto01", "aasedo01", "abada…
 $ deathDate    &lt;date&gt; NA, 2021-01-22, 1984-08-16, NA, NA, NA, 1905-05-17, 1957…
 $ birthDate    &lt;date&gt; 1981-12-27, 1934-02-05, 1939-08-05, 1954-09-08, 1972-08-…</code></pre>
 </div>
@@ -369,7 +369,7 @@ The dm package
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>lahman_dm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Table source ────────────────────────────────────────────────────────────────
-src:  DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+src:  DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
 ── Metadata ────────────────────────────────────────────────────────────────────
 Tables: `batting`, `people`
 Columns: 48
@@ -386,7 +386,7 @@ Foreign keys: 0</code></pre>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>lahman_dm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Table source ────────────────────────────────────────────────────────────────
-src:  DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+src:  DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
 ── Metadata ────────────────────────────────────────────────────────────────────
 Tables: `batting`, `people`
 Columns: 48
@@ -434,12 +434,12 @@ Foreign keys: 1</code></pre>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(lahman, <span class="st">"Babe Ruth"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
   name            
   &lt;chr&gt;           
 1 Boston Braves   
-2 New York Yankees
-3 Boston Red Sox  </code></pre>
+2 Boston Red Sox  
+3 New York Yankees</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -488,7 +488,7 @@ FROM (
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(lahman, <span class="st">"Barry Bonds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
   name                
   &lt;chr&gt;               
 1 San Francisco Giants
@@ -584,19 +584,19 @@ Choosing the right time to collect data into R
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 23]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
    playerID  yearID stint teamID lgID      G    AB     R     H   X2B   X3B    HR
    &lt;chr&gt;      &lt;int&gt; &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
- 1 abercda01   1871     1 TRO    NA        1     4     0     0     0     0     0
- 2 addybo01    1871     1 RC1    NA       25   118    30    32     6     0     0
- 3 allisar01   1871     1 CL1    NA       29   137    28    40     4     5     0
- 4 allisdo01   1871     1 WS3    NA       27   133    28    44    10     2     2
- 5 ansonca01   1871     1 RC1    NA       25   120    29    39    11     3     0
- 6 armstbo01   1871     1 FW1    NA       12    49     9    11     2     1     0
- 7 barkeal01   1871     1 RC1    NA        1     4     0     1     0     0     0
- 8 barnero01   1871     1 BS1    NA       31   157    66    63    10     9     0
- 9 barrebi01   1871     1 FW1    NA        1     5     1     1     1     0     0
-10 barrofr01   1871     1 BS1    NA       18    86    13    13     2     1     0
+ 1 aardsda01   2004     1 SFN    NL       11     0     0     0     0     0     0
+ 2 aardsda01   2006     1 CHN    NL       45     2     0     0     0     0     0
+ 3 aardsda01   2007     1 CHA    AL       25     0     0     0     0     0     0
+ 4 aardsda01   2008     1 BOS    AL       47     1     0     0     0     0     0
+ 5 aardsda01   2009     1 SEA    AL       73     0     0     0     0     0     0
+ 6 aardsda01   2010     1 SEA    AL       53     0     0     0     0     0     0
+ 7 aardsda01   2012     1 NYA    AL        1     0     0     0     0     0     0
+ 8 aardsda01   2013     1 NYN    NL       43     0     0     0     0     0     0
+ 9 aardsda01   2015     1 ATL    NL       33     1     0     0     0     0     0
+10 aaronha01   1954     1 ML1    NL      122   468    58   131    27     6    13
 # ℹ more rows
 # ℹ 11 more variables: RBI &lt;int&gt;, SB &lt;int&gt;, CS &lt;int&gt;, BB &lt;int&gt;, SO &lt;int&gt;,
 #   IBB &lt;int&gt;, HBP &lt;int&gt;, SH &lt;int&gt;, SF &lt;int&gt;, GIDP &lt;int&gt;, birthCountry &lt;chr&gt;</code></pre>
@@ -631,19 +631,19 @@ LEFT JOIN People
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 31]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
    playerID  yearID stint teamID lgID      W     L     G    GS    CG   SHO    SV
    &lt;chr&gt;      &lt;int&gt; &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
- 1 bechtge01   1871     1 PH1    NA        1     2     3     3     2     0     0
- 2 brainas01   1871     1 WS3    NA       12    15    30    30    30     0     0
- 3 fergubo01   1871     1 NY2    NA        0     0     1     0     0     0     0
- 4 fishech01   1871     1 RC1    NA        4    16    24    24    22     1     0
- 5 fleetfr01   1871     1 NY2    NA        0     1     1     1     1     0     0
- 6 flowedi01   1871     1 TRO    NA        0     0     1     0     0     0     0
- 7 mackde01    1871     1 RC1    NA        0     1     3     1     1     0     0
- 8 mathebo01   1871     1 FW1    NA        6    11    19    19    19     1     0
- 9 mcbridi01   1871     1 PH1    NA       18     5    25    25    25     0     0
-10 mcmuljo01   1871     1 TRO    NA       12    15    29    29    28     0     0
+ 1 aardsda01   2004     1 SFN    NL        1     0    11     0     0     0     0
+ 2 aardsda01   2006     1 CHN    NL        3     0    45     0     0     0     0
+ 3 aardsda01   2007     1 CHA    AL        2     1    25     0     0     0     0
+ 4 aardsda01   2008     1 BOS    AL        4     2    47     0     0     0     0
+ 5 aardsda01   2009     1 SEA    AL        3     6    73     0     0     0    38
+ 6 aardsda01   2010     1 SEA    AL        0     6    53     0     0     0    31
+ 7 aardsda01   2012     1 NYA    AL        0     0     1     0     0     0     0
+ 8 aardsda01   2013     1 NYN    NL        2     2    43     0     0     0     0
+ 9 aardsda01   2015     1 ATL    NL        1     1    33     0     0     0     0
+10 aasedo01    1977     1 BOS    AL        6     2    13    13     4     2     0
 # ℹ more rows
 # ℹ 19 more variables: IPouts &lt;int&gt;, H &lt;int&gt;, ER &lt;int&gt;, HR &lt;int&gt;, BB &lt;int&gt;,
 #   SO &lt;int&gt;, BAOpp &lt;dbl&gt;, ERA &lt;dbl&gt;, IBB &lt;int&gt;, WP &lt;int&gt;, HBP &lt;int&gt;, BK &lt;int&gt;,
@@ -844,19 +844,19 @@ Salaries, Schools, SeriesPost, Teams, TeamsFranchises, TeamsHalf</code></pre>
 <span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(<span class="st">"birthCountry"</span>, <span class="st">"birthYear"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 3]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
-   birthCountry   birthYear average_salary
-   &lt;chr&gt;              &lt;int&gt;          &lt;dbl&gt;
- 1 USA                 1953        859391.
- 2 D.R.                1958        866051.
- 3 USA                 1961        811250.
- 4 USA                 1941        679429 
- 5 D.R.                1956       1476264.
- 6 USA                 1943        372500 
- 7 P.R.                1963       1164202.
- 8 United Kingdom      1959        492833.
- 9 Venezuela           1962        320923.
-10 France              1959        221000 
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
+   birthCountry birthYear average_salary
+   &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
+ 1 USA               1960       1030321.
+ 2 USA               1952        498378.
+ 3 USA               1956        986760.
+ 4 USA               1961        811250.
+ 5 USA               1950        625076.
+ 6 Nicaragua         1954       2083440.
+ 7 Panama            1945        875000 
+ 8 CAN               1961       1080292.
+ 9 Venezuela         1948        632500 
+10 Cuba              1942        250000 
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -909,19 +909,19 @@ GROUP BY birthCountry, birthYear</code></pre>
 <span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(<span class="st">"birthCountry"</span>, <span class="st">"birthYear"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 3]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
    birthCountry birthYear average_salary
    &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
- 1 USA               1969       1496593.
- 2 Cuba              1987       4932700.
- 3 D.R.              1984       2924854.
- 4 USA               1973       2142680.
- 5 D.R.              1972       2722415.
- 6 Mexico            1971       2247962.
- 7 USA               1964       1390524.
- 8 USA               1960       1030321.
- 9 USA               1989       1442446.
-10 Venezuela         1991        776469.
+ 1 D.R.              1985       1531438.
+ 2 USA               1966       1761151.
+ 3 Venezuela         1974       4269365.
+ 4 Cuba              1987       4932700.
+ 5 Panama            1981        555833.
+ 6 USA               1978       3133596.
+ 7 CAN               1985        501000 
+ 8 P.R.              1959        297786.
+ 9 USA               1961        811250.
+10 USA               1990        728740.
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -973,8 +973,8 @@ GROUP BY birthCountry, birthYear</code></pre>
 <pre><code>&lt;SQL&gt;
 SELECT
   playerID,
-  DATE_ADD(birthDate, INTERVAL '1 year') AS birthDatePlus1,
-  DATE_ADD(birthDate, INTERVAL '10 year') AS birthDatePlus10
+  DATE_ADD(birthDate, INTERVAL (1) year) AS birthDatePlus1,
+  DATE_ADD(birthDate, INTERVAL (10) year) AS birthDatePlus10
 FROM People</code></pre>
 </div>
 </div>
@@ -994,9 +994,9 @@ FROM People</code></pre>
 SELECT
   playerID,
   birthDatePlus1,
-  DATE_ADD(birthDate, INTERVAL '10 year') AS birthDatePlus10
+  DATE_ADD(birthDate, INTERVAL (10) year) AS birthDatePlus10
 FROM (
-  SELECT People.*, DATE_ADD(birthDate, INTERVAL '1 year') AS birthDatePlus1
+  SELECT People.*, DATE_ADD(birthDate, INTERVAL (1) year) AS birthDatePlus1
   FROM People
 ) q01</code></pre>
 </div>
@@ -1024,16 +1024,16 @@ FROM (
 <pre><code># A tibble: 6,206 × 3
    schoolID   birthYear home_runs
    &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
- 1 &lt;NA&gt;              NA   2822499
- 2 manhattan       1862         3
- 3 yale            1865        15
- 4 nyuroch         1861       248
- 5 princeton       1864         1
- 6 newyorku        1867       101
- 7 michigan        1872         9
- 8 johnshpkns      1871        63
- 9 brown           1872        15
-10 vermont         1873        45
+ 1 gamiddl         1972         2
+ 2 illinoisst      1981         1
+ 3 lehigh          1901         1
+ 4 tamukvill       1978         0
+ 5 chicago         1874         2
+ 6 capalom         1963        15
+ 7 hawaiipac       1971       299
+ 8 bostonuniv      1929       135
+ 9 byu             1961        28
+10 kentucky        1985         1
 # ℹ 6,196 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
@@ -1043,20 +1043,20 @@ FROM (
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">.by =</span> <span class="fu">c</span>(schoolID, birthYear))<span class="sc">|&gt;</span> </span>
 <span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3,659 × 3
+<pre><code># A tibble: 3,662 × 3
    schoolID   birthYear strike_outs
    &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 brown           1859          36
- 2 washcollmd      1874           0
- 3 fordham         1871          38
- 4 wvirginia       1870           4
- 5 stbonny         1877           3
- 6 illinois        1879        1798
- 7 notredame       1877         258
- 8 tennessee       1877          20
- 9 brown           1880         292
-10 knoxil          1884          32
-# ℹ 3,649 more rows</code></pre>
+ 1 illinoisst      1981         205
+ 2 lehigh          1901           1
+ 3 tamukvill       1978         409
+ 4 byu             1961        1030
+ 5 kentucky        1985          91
+ 6 txsjjcn         1983         571
+ 7 stanford        1961           0
+ 8 bethanywv       1922           2
+ 9 tulane          1968          59
+10 nmnmjco         1972         232
+# ℹ 3,652 more rows</code></pre>
 </div>
 </div>
 <p>Looking at the SQL we can see, however, that there is some duplication, because as part of each full query we have run our players_with_college query.</p>
@@ -1129,7 +1129,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
-FROM dbplyr_Ao1o8wBQsO</code></pre>
+FROM dbplyr_NUS1dw5YMN</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1141,18 +1141,18 @@ FROM dbplyr_Ao1o8wBQsO</code></pre>
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6,206 × 3
-   schoolID  birthYear home_runs
-   &lt;chr&gt;         &lt;int&gt;     &lt;dbl&gt;
- 1 holycross      1864         4
- 2 manhattan      1862         3
- 3 brown          1863       806
- 4 newyorku       1867       101
- 5 syracuse       1863         1
- 6 upenn          1872         0
- 7 amherstma      1868         0
- 8 wake           1869         0
- 9 chicago        1874         2
-10 norwichvt      1873       156
+   schoolID   birthYear home_runs
+   &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
+ 1 vermont         1869        38
+ 2 michigan        1967         2
+ 3 nmstate         1968         0
+ 4 cacerri         1971         3
+ 5 chicago         1874         2
+ 6 byu             1961        28
+ 7 pepperdine      1969         1
+ 8 lsu             1978         2
+ 9 miamidade       1982         0
+10 stanford        1961      1611
 # ℹ 6,196 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
@@ -1162,20 +1162,20 @@ FROM dbplyr_Ao1o8wBQsO</code></pre>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">.by =</span> <span class="fu">c</span>(schoolID, birthYear))<span class="sc">|&gt;</span> </span>
 <span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3,659 × 3
+<pre><code># A tibble: 3,662 × 3
    schoolID   birthYear strike_outs
    &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 pennst          1860         920
- 2 harvard         1856           9
- 3 illinoisst      1869         955
- 4 holycross       1870           4
- 5 knoxil          1871          23
- 6 oberlinoh       1872           1
- 7 beloitwi        1872           3
- 8 tuftsma         1874           3
- 9 maine           1877          12
-10 indiana         1877           2
-# ℹ 3,649 more rows</code></pre>
+ 1 vermont         1869         161
+ 2 michigan        1967         888
+ 3 nmstate         1968          98
+ 4 cacerri         1971         327
+ 5 byu             1961        1030
+ 6 pepperdine      1969           4
+ 7 lsu             1978         162
+ 8 miamidade       1982          56
+ 9 stanford        1961           0
+10 incante         1893         526
+# ℹ 3,652 more rows</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1197,8 +1197,8 @@ SELECT schoolID, birthYear, SUM(H) AS home_runs
 FROM (
   SELECT Batting.*, birthYear, schoolID
   FROM Batting
-  LEFT JOIN dbplyr_Ao1o8wBQsO
-    ON (Batting.playerID = dbplyr_Ao1o8wBQsO.playerID)
+  LEFT JOIN dbplyr_NUS1dw5YMN
+    ON (Batting.playerID = dbplyr_NUS1dw5YMN.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1208,8 +1208,8 @@ SELECT schoolID, birthYear, SUM(SO) AS strike_outs
 FROM (
   SELECT Pitching.*, birthYear, schoolID
   FROM Pitching
-  LEFT JOIN dbplyr_Ao1o8wBQsO
-    ON (Pitching.playerID = dbplyr_Ao1o8wBQsO.playerID)
+  LEFT JOIN dbplyr_NUS1dw5YMN
+    ON (Pitching.playerID = dbplyr_NUS1dw5YMN.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>

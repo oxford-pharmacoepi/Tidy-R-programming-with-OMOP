@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Creating a cdm reference – Tidy R programming with databases: applications with the OMOP common data model</title>
+<title>5&nbsp; Creating a CDM reference – Tidy R programming with databases: applications with the OMOP common data model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a34d670291f06f286357e447776a572a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./omop.html">Working with the OMOP CDM from R</a></li><li class="breadcrumb-item"><a href="./cdm_reference.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./omop.html">Working with the OMOP CDM from R</a></li><li class="breadcrumb-item"><a href="./cdm_reference.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a CDM reference</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -196,7 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cdm_reference.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a CDM reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -247,8 +247,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-omop-cdm-layout" id="toc-the-omop-cdm-layout" class="nav-link active" data-scroll-target="#the-omop-cdm-layout"><span class="header-section-number">5.1</span> The OMOP CDM layout</a></li>
-  <li><a href="#creating-a-reference-to-the-omop-common-data-model" id="toc-creating-a-reference-to-the-omop-common-data-model" class="nav-link" data-scroll-target="#creating-a-reference-to-the-omop-common-data-model"><span class="header-section-number">5.2</span> Creating a reference to the OMOP common data model</a></li>
+  <li><a href="#the-omop-common-data-model-cdm-layout" id="toc-the-omop-common-data-model-cdm-layout" class="nav-link active" data-scroll-target="#the-omop-common-data-model-cdm-layout"><span class="header-section-number">5.1</span> The OMOP common data model (CDM) layout</a></li>
+  <li><a href="#creating-a-reference-to-the-omop-cdm" id="toc-creating-a-reference-to-the-omop-cdm" class="nav-link" data-scroll-target="#creating-a-reference-to-the-omop-cdm"><span class="header-section-number">5.2</span> Creating a reference to the OMOP CDM</a></li>
   <li><a href="#cdm-attributes" id="toc-cdm-attributes" class="nav-link" data-scroll-target="#cdm-attributes"><span class="header-section-number">5.3</span> CDM attributes</a>
   <ul class="collapse">
   <li><a href="#cdm-name" id="toc-cdm-name" class="nav-link" data-scroll-target="#cdm-name"><span class="header-section-number">5.3.1</span> CDM name</a></li>
@@ -267,9 +267,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./omop.html">Working with the OMOP CDM from R</a></li><li class="breadcrumb-item"><a href="./cdm_reference.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./omop.html">Working with the OMOP CDM from R</a></li><li class="breadcrumb-item"><a href="./cdm_reference.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a CDM reference</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cdm_reference" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a cdm reference</span></span></h1>
+<h1 class="title"><span id="sec-cdm_reference" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a CDM reference</span></span></h1>
 </div>
 
 
@@ -286,14 +286,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="the-omop-cdm-layout" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="the-omop-cdm-layout"><span class="header-section-number">5.1</span> The OMOP CDM layout</h2>
-<p>The OMOP CDM standardises the structure of health care data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure, with version 5.4 of the OMOP CDM shown below. <a href="images/erd.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/erd.jpg" class="img-fluid"></a></p>
+<section id="the-omop-common-data-model-cdm-layout" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="the-omop-common-data-model-cdm-layout"><span class="header-section-number">5.1</span> The OMOP common data model (CDM) layout</h2>
+<p>The OMOP CDM standardises the structure of healthcare data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure, with version 5.4 of the OMOP CDM shown below. <a href="images/erd.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/erd.jpg" class="img-fluid"></a></p>
 </section>
-<section id="creating-a-reference-to-the-omop-common-data-model" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="creating-a-reference-to-the-omop-common-data-model"><span class="header-section-number">5.2</span> Creating a reference to the OMOP common data model</h2>
-<p>As we saw in <a href="dbplyr_packages.html" class="quarto-xref"><span>Chapter 4</span></a>, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipleines using the data. Luckily for us we won’t have to create functions and methods for this ourselves. Instead we will use the <code>omopgenerics</code> package which defines a data model for OMOP CDM data and the <code>CDMConnector</code> package which provides functions for connecting to a OMOP CDM data held in a database.</p>
-<p>To see how this works we will use the <code>omock</code> to create example data in the format of the OMOP CDM, which we then copy to a duckdb database.</p>
+<section id="creating-a-reference-to-the-omop-cdm" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="creating-a-reference-to-the-omop-cdm"><span class="header-section-number">5.2</span> Creating a reference to the OMOP CDM</h2>
+<p>As we saw in <a href="dbplyr_packages.html" class="quarto-xref"><span>Chapter 4</span></a>, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipelines using the data. Luckily for us, we won’t have to create functions and methods for this ourselves. Instead, we will use the <code>omopgenerics</code> package which defines a data model for OMOP CDM data and the <code>CDMConnector</code> package which provides functions for connecting to a OMOP CDM data held in a database.</p>
+<p>To see how this works we will use the <code>omock</code> package to create example data in the format of the OMOP CDM, which we will then copy to a <code>duckdb</code> database.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
@@ -318,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                        <span class="at">schema =</span><span class="st">"main"</span>, </span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                        <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we have OMOP CDM data in a database we can use <code>cdmFromCon()</code> to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored (often our OMOP CDM tables will be in a schema that we only have read-access to and we’ll have another schema where we can have write-access where intermediate tables can be created for a given a study).</p>
+<p>Now that we have OMOP CDM data in a database, we can use the function <code>cdmFromCon()</code> from <code>CDMConnector</code> to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we’ll have another schema where we can have write-access and where intermediate tables can be created for a given study.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db, </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
@@ -377,19 +377,19 @@ Setting a write prefix
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;person&gt; [?? x 18]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
    person_id gender_concept_id year_of_birth month_of_birth day_of_birth
        &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
- 1         1              8532          1968              3           27
- 2         2              8532          1964              7           17
- 3         3              8532          1983              1           22
- 4         4              8532          1996             10           24
- 5         5              8507          1974              8            2
- 6         6              8532          1974             12           20
- 7         7              8507          1960             10           27
- 8         8              8532          1958              7           15
- 9         9              8532          1971              3           15
-10        10              8532          1954              5           22
+ 1         1              8532          2000              7           22
+ 2         2              8507          1970              8            9
+ 3         3              8507          1998              6            8
+ 4         4              8507          1999              6           24
+ 5         5              8532          1993              2           10
+ 6         6              8532          1966              1           13
+ 7         7              8507          1967             10           24
+ 8         8              8507          1980              7            3
+ 9         9              8532          1962              6           25
+10        10              8507          1966             11           28
 # ℹ more rows
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
@@ -401,31 +401,32 @@ Setting a write prefix
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cdm[[<span class="st">"observation_period"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;observation_period&gt; [?? x 5]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
    observation_period_id person_id observation_period_s…¹ observation_period_e…²
                    &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
- 1                     1         1 2007-02-28             2019-11-01            
- 2                     2         2 1997-10-29             2014-07-24            
- 3                     3         3 1996-04-06             2011-05-20            
- 4                     4         4 2017-03-18             2017-08-06            
- 5                     5         5 1982-03-19             1985-08-02            
- 6                     6         6 1986-02-23             2010-12-11            
- 7                     7         7 2017-10-07             2017-12-26            
- 8                     8         8 1976-06-28             1987-09-09            
- 9                     9         9 2015-06-30             2019-12-07            
-10                    10        10 1981-11-06             2004-05-24            
+ 1                     1         1 2012-04-04             2019-03-30            
+ 2                     2         2 2017-09-13             2019-09-30            
+ 3                     3         3 2002-01-15             2014-01-02            
+ 4                     4         4 2017-11-02             2019-02-23            
+ 5                     5         5 2000-01-23             2010-05-01            
+ 6                     6         6 1979-05-30             2014-06-10            
+ 7                     7         7 1991-11-06             2019-04-30            
+ 8                     8         8 1987-09-09             2012-02-28            
+ 9                     9         9 1965-02-21             2003-07-09            
+10                    10        10 2014-03-16             2019-11-07            
 # ℹ more rows
 # ℹ abbreviated names: ¹​observation_period_start_date,
 #   ²​observation_period_end_date
 # ℹ 1 more variable: period_type_concept_id &lt;int&gt;</code></pre>
 </div>
 </div>
+<p>Note that here we have first created a local version of the cdm with all the tables of interest with <code>omock</code>, then copied it to a <code>duckdb</code> database, and finally crated a reference to it with <code>CDMConnector</code>, so that we can work with the final <code>cdm</code> object as we normally would for one created with our own healthcare data. In that case we would directly use <code>cdmFromCon</code> with our own database information. Throughout this chapter, however, we will keep working with the mock dataset.</p>
 </section>
 <section id="cdm-attributes" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="cdm-attributes"><span class="header-section-number">5.3</span> CDM attributes</h2>
 <section id="cdm-name" class="level3" data-number="5.3.1">
 <h3 data-number="5.3.1" class="anchored" data-anchor-id="cdm-name"><span class="header-section-number">5.3.1</span> CDM name</h3>
-<p>Our cdm reference will be associated with a name. By default this name will be taken from the cdm source name field from the cdm source table.</p>
+<p>Our cdm reference will be associated with a name. By default this name will be taken from the <code>cdm_source_name</code> field from the <code>cdm_source</code> table. We will use the function <code>cdmName</code> from <code>omopgenerics</code> to get it.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db,</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
@@ -433,20 +434,20 @@ Setting a write prefix
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cdm_source</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;cdm_source&gt; [?? x 10]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
   cdm_source_name cdm_source_abbreviation cdm_holder source_description
-  &lt;chr&gt;           &lt;lgl&gt;                   &lt;lgl&gt;      &lt;lgl&gt;             
-1 mock            NA                      NA         NA                
-# ℹ 6 more variables: source_documentation_reference &lt;lgl&gt;,
-#   cdm_etl_reference &lt;lgl&gt;, source_release_date &lt;lgl&gt;, cdm_release_date &lt;lgl&gt;,
-#   cdm_version &lt;dbl&gt;, vocabulary_version &lt;lgl&gt;</code></pre>
+  &lt;chr&gt;           &lt;chr&gt;                   &lt;chr&gt;      &lt;chr&gt;             
+1 mock            &lt;NA&gt;                    &lt;NA&gt;       &lt;NA&gt;              
+# ℹ 6 more variables: source_documentation_reference &lt;chr&gt;,
+#   cdm_etl_reference &lt;chr&gt;, source_release_date &lt;date&gt;,
+#   cdm_release_date &lt;date&gt;, cdm_version &lt;chr&gt;, vocabulary_version &lt;chr&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "mock"</code></pre>
 </div>
 </div>
-<p>However, we can instead set this name when creating our cdm reference.</p>
+<p>However, we can instead set this name to whatever else we want when creating our cdm reference.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db,</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
@@ -457,7 +458,7 @@ Setting a write prefix
 <pre><code>[1] "my_cdm"</code></pre>
 </div>
 </div>
-<p>Note, we can also can get our cdm name from any of the tables in our cdm reference.</p>
+<p>Note that we can also get our cdm name from any of the tables in our cdm reference.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmName</span>(cdm<span class="sc">$</span>person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -476,7 +477,7 @@ Behind the scenes
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The cdm reference itself has a class of a cdm_reference.</p>
+<p>The class of the cdm reference itself is cdm_reference.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -489,7 +490,7 @@ Behind the scenes
 [7] "tbl"                  </code></pre>
 </div>
 </div>
-<p>Then each of the tables have a class of a cdm_table. If the table is one of the standard OMOP CDM tables it will also have a class of an “omop_table”. This latter class is useful when we want to have different behaviour for these core tables compared to other tables that are added to the cdm reference during the course of running a study.</p>
+<p>Each of the tables has class cdm_table. If the table is one of the standard OMOP CDM tables it will also have class omop_table. This latter class is defined so that we can allow different behaviour for these core tables (person, condition_occurrence, observation_period, etc.) compared to other tables that are added to the cdm reference during the course of running a study.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -498,7 +499,7 @@ Behind the scenes
 [7] "tbl"                  </code></pre>
 </div>
 </div>
-<p>We can see that cdmName() is a generic function, which works for both the cdm reference as a whole and individual tables.</p>
+<p>We can see that <code>cdmName()</code> is a generic function, which works for both the cdm reference as a whole and individual tables.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sloop)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">cdmName</span>(cdm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -524,7 +525,7 @@ Behind the scenes
 </section>
 <section id="cdm-version" class="level3" data-number="5.3.2">
 <h3 data-number="5.3.2" class="anchored" data-anchor-id="cdm-version"><span class="header-section-number">5.3.2</span> CDM version</h3>
-<p>We can also easily check the OMOP CDM version that is being used</p>
+<p>We can also easily check the OMOP CDM version that is being used with the function <code>cdmVersion</code> from <code>omopgenerics</code> like so:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -535,7 +536,7 @@ Behind the scenes
 </section>
 <section id="including-cohort-tables-in-the-cdm-reference" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="including-cohort-tables-in-the-cdm-reference"><span class="header-section-number">5.4</span> Including cohort tables in the cdm reference</h2>
-<p>We’ll be seeing how to create cohorts in more detail in a couple of chapters time. For the moment, let’s just see that we can include a cohort in our cdm reference. For this we’ll use omock to add a cohort to our local cdm and upload that to a duckdb database again.</p>
+<p>We’ll be seeing how to create cohorts in more detail in <span class="quarto-unresolved-ref">?sec-creating_cohorts</span>. For the moment, let’s just outline how we can include a cohort in our cdm reference. For this we’ll use <code>omock</code> to add a cohort to our local cdm and upload that to a <code>duckdb</code> database again.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cdm_local <span class="ot">&lt;-</span> cdm_local <span class="sc">|&gt;</span> </span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  omock<span class="sc">::</span><span class="fu">mockCohort</span>(<span class="at">name =</span> <span class="st">"my_study_cohort"</span>)</span>
@@ -566,7 +567,7 @@ visit_occurrence, procedure_occurrence</code></pre>
 <pre><code>• other tables: -</code></pre>
 </div>
 </div>
-<p>Now we can specify this existing cohort table when creating our cdm reference.</p>
+<p>Now we can specify we want to include this existing cohort table to our cdm object when creating our cdm reference.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db, </span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
@@ -581,17 +582,17 @@ visit_occurrence, procedure_occurrence</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 4
-Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
 $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ subject_id           &lt;int&gt; 1, 1, 1, 1, 1, 1, 2, 3, 3, 3, 4, 4, 4, 5, 5, 7, 9…
-$ cohort_start_date    &lt;date&gt; 2007-06-10, 2008-05-02, 2008-08-14, 2008-09-16, …
-$ cohort_end_date      &lt;date&gt; 2008-05-01, 2008-08-13, 2008-09-15, 2009-04-23, …</code></pre>
+$ subject_id           &lt;int&gt; 1, 3, 5, 7, 8, 8, 8, 9, 9, 12, 13, 14, 14, 14, 16…
+$ cohort_start_date    &lt;date&gt; 2013-11-07, 2003-07-18, 2000-02-14, 1994-07-27, …
+$ cohort_end_date      &lt;date&gt; 2016-03-27, 2007-03-03, 2005-09-13, 2011-08-30, …</code></pre>
 </div>
 </div>
 </section>
 <section id="including-achilles-tables-in-the-cdm-reference" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="including-achilles-tables-in-the-cdm-reference"><span class="header-section-number">5.5</span> Including achilles tables in the cdm reference</h2>
-<p>If we have the results tables from the Achilles R package <a href="https://ohdsi.github.io/Achilles/" class="uri">https://ohdsi.github.io/Achilles/</a> in our database, we can also include these in our cdm reference.</p>
+<p>If we have the results tables from the <a href="https://ohdsi.github.io/Achilles/">Achilles R package</a> in our database, we can also include these in our cdm reference.</p>
 <p>Just to show how this can be done let’s upload some empty results tables in the Achilles format.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbWriteTable</span>(db, </span>
@@ -636,7 +637,7 @@ $ cohort_end_date      &lt;date&gt; 2008-05-01, 2008-08-13, 2008-09-15, 2009-04-
 <span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a>                    <span class="at">p75_value =</span> <span class="cn">NA_character_</span>,</span>
 <span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a>                    <span class="at">p90_value =</span> <span class="cn">NA_character_</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can now include these achilles table in our cdm reference.</p>
+<p>We can now include these achilles table in our cdm reference as in the previous case.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db, </span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
@@ -649,7 +650,7 @@ $ cohort_end_date      &lt;date&gt; 2008-05-01, 2008-08-13, 2008-09-15, 2009-04-
 </section>
 <section id="adding-other-tables-to-the-cdm-reference" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="adding-other-tables-to-the-cdm-reference"><span class="header-section-number">5.6</span> Adding other tables to the cdm reference</h2>
-<p>Let’s say we have some local data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and add to our reference using insertTable().</p>
+<p>Let’s say we have some additional local data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using <code>insertTable</code> from <code>omopgenerics</code>. We will show this with the dataset <code>cars</code> in-built in R.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>cars <span class="sc">|&gt;</span> </span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -666,7 +667,7 @@ $ dist  &lt;dbl&gt; 2, 10, 4, 22, 16, 10, 18, 26, 34, 17, 28, 14, 20, 24, 28, 26
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">table =</span> cars, </span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">temporary =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can see that now we have this extra table has been uploaded to the database behind our cdm reference and added to our reference.</p>
+<p>We can see that now this extra table has been uploaded to the database behind our cdm reference and also added to our reference.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>cdm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -695,7 +696,7 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;cars&gt; [?? x 2]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
    speed  dist
    &lt;dbl&gt; &lt;dbl&gt;
  1     4     2
@@ -711,13 +712,13 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 # ℹ more rows</code></pre>
 </div>
 </div>
-<p>If we already had the table in the database, then we could have instead just assigned it to our existing cdm reference. To see this lets upload the penguins table to our duckdb database.</p>
+<p>If we already had the table in the database we could have instead just assigned it to our existing cdm reference. To see this let’s upload the <code>penguins</code> table to our <code>duckdb</code> database.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbWriteTable</span>(db, </span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"penguins"</span>,</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>                  palmerpenguins<span class="sc">::</span>penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Once we have this table in the database, we can see that we can just assign it to our cdm reference.</p>
+<p>Once we have this table in the database, we can just assign it to our cdm reference.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>penguins <span class="ot">&lt;-</span> <span class="fu">tbl</span>(db, <span class="st">"penguins"</span>)</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -747,7 +748,7 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 </section>
 <section id="mutability-of-the-cdm-reference" class="level2" data-number="5.7">
 <h2 data-number="5.7" class="anchored" data-anchor-id="mutability-of-the-cdm-reference"><span class="header-section-number">5.7</span> Mutability of the cdm reference</h2>
-<p>An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected.</p>
+<p>An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected. We will therefore only be transforming the data in our cdm object but the original datasets behind it will remain intact.</p>
 <p>For example, let’s say we want to perform a study with only people born in 1970. For this we could filter our person table to only people born in this year.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
@@ -756,11 +757,13 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 <span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 18]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1        56              8532          1970              9            3
-2        92              8507          1970              1           24
+1         2              8507          1970              8            9
+2        22              8532          1970              7           22
+3        58              8507          1970              5           18
+4        68              8532          1970              9           20
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -775,13 +778,13 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
       n
   &lt;dbl&gt;
-1     2</code></pre>
+1     4</code></pre>
 </div>
 </div>
-<p>The original OMOP CDM data itself however will remain unaffected. And we can see if we create our reference again that the underlying data is unchanged.</p>
+<p>The original OMOP CDM data itself however will remain unaffected. We can see that, indeed, if we create our reference again the underlying data is unchanged.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> db,</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
@@ -791,14 +794,14 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 <span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
       n
   &lt;dbl&gt;
 1   100</code></pre>
 </div>
 </div>
-<p>The mutability of our cdm reference is a useful feature for studies as it means we can easily tweak our OMOP CDM data if needed. Meanwhile, leaving the underlying data unchanged is essential so that other study code can run against the data unaffected by any of our changes.</p>
-<p>One thing we can’t do though is alter the structure of OMOP CDM tables. For example this code would cause an error as the person table must have the column person_id.</p>
+<p>The mutability of our cdm reference is a useful feature for studies as it means we can easily tweak our OMOP CDM data if needed. Meanwhile, leaving the underlying data unchanged is essential so that other study code can run against the data, unaffected by any of our changes.</p>
+<p>One thing we can’t do, though, is alter the structure of OMOP CDM tables. For example, the following code would cause an error as the person table must always have the column person_id.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="st">"new_id"</span> <span class="ot">=</span> <span class="st">"person_id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -807,14 +810,14 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 ! person_id is not present in table person</code></pre>
 </div>
 </div>
-<p>In such a case we would have to call the table something else.</p>
+<p>In such a case we would have to call the table something else first, and then run the previous code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="st">"new_id"</span> <span class="ot">=</span> <span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"person_new"</span>, </span>
 <span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">temporary =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we would have this new table as an additional table in our cdm reference, knowing it was not in the format of one of the core OMOP CDM tables.</p>
+<p>Now we would be allowed to have this new table as an additional table in our cdm reference, knowing it was not in the format of one of the core OMOP CDM tables.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>cdm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -839,10 +842,11 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 <pre><code>• other tables: -</code></pre>
 </div>
 </div>
+<p>The package <code>omopgenerics</code> provides a comprehensive list of the required features of a valid cdm reference. You can read more about it <a href="https://darwin-eu-dev.github.io/omopgenerics/articles/cdm_reference.html">here</a>.</p>
 </section>
 <section id="working-with-temporary-and-permanent-tables" class="level2" data-number="5.8">
 <h2 data-number="5.8" class="anchored" data-anchor-id="working-with-temporary-and-permanent-tables"><span class="header-section-number">5.8</span> Working with temporary and permanent tables</h2>
-<p>When we create new tables and our cdm reference is in a database we have a choice between using temporary and permanent tables. In most cases we can work with these interchangeably. Below we create one temporary table and one permanent table. We can see that both of these tables have been added to our cdm reference and that we can use them in the same way.</p>
+<p>When we create new tables and our cdm reference is in a database we have a choice between using temporary or permanent tables. In most cases we can work with these interchangeably. Below we create one temporary table and one permanent table. We can see that both of these tables have been added to our cdm reference and that we can use them in the same way. Note that any new computed table will by default be temporary unless otherwise specified.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
@@ -859,15 +863,15 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   table&lt;og_001_1742636789&gt; [?? x 18]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+<pre><code># Source:   table&lt;og_001_1744152514&gt; [?? x 18]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         1              8532          1968              3           27
-2         2              8532          1964              7           17
-3         3              8532          1983              1           22
-4         4              8532          1996             10           24
-5         5              8507          1974              8            2
+1         1              8532          2000              7           22
+2         2              8507          1970              8            9
+3         3              8507          1998              6            8
+4         4              8507          1999              6           24
+5         5              8532          1993              2           10
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -878,14 +882,14 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_permanent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;person_new_permanent&gt; [?? x 18]
-# Database: DuckDB v1.1.3 [eburn@Windows 10 x64:R 4.4.0/:memory:]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         1              8532          1968              3           27
-2         2              8532          1964              7           17
-3         3              8532          1983              1           22
-4         4              8532          1996             10           24
-5         5              8507          1974              8            2
+1         1              8532          2000              7           22
+2         2              8507          1970              8            9
+3         3              8507          1998              6            8
+4         4              8507          1999              6           24
+5         5              8532          1993              2           10
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -894,11 +898,12 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 #   ethnicity_source_concept_id &lt;int&gt;</code></pre>
 </div>
 </div>
-<p>One benefit of working with temporary tables is that they will be automatically dropped at the end of the session, whereas the permanent tables will be left over in the database until explicitly dropped. However, one disadvantage of using temporary tables is that we will generally accumulate more and more of them as we go. Whereas with permanent tables we can overwrite them as we go (as in if we’re inside a loop that requires a compute we could overwite a intermediate permanent table 100 times rather than creating 100 temporary tables).</p>
+<p>One benefit of working with temporary tables is that they will be automatically dropped at the end of the session, whereas the permanent tables will be left over in the database until explicitly dropped. This helps maintain the original database structure tidy and free of irrelevant data.</p>
+<p>However, one disadvantage of using temporary tables is that we will generally accumulate more and more of them as we go (in a single R session), whereas we can overwrite permanent tables continuously. For example, if our study code contains a loop that requires a compute, we would either overwrite an intermediate permanent table 100 times or create 100 different temporary tables in the process. In the latter case we should be wary of consuming a lot of RAM, which could lead to performance issues or even crashes.</p>
 </section>
 <section id="disconnecting" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Disconnecting</h1>
-<p>Once we have finished our analysis we can close our connection to the database behind our cdm reference like so.</p>
+<p>Once we have finished our analysis we can close our connection to the database behind our cdm reference.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
