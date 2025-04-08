@@ -29,10 +29,16 @@ jobs:
         uses: r-lib/actions/setup-renv@v2
         with:
           cache-version: 1
-        
-      - name: Install dependencies
+      
+      - name: Create directiy to download data
+        run: |
+          mkdir -p my_data
+          echo "EUNOMIA_DATA_FOLDER=$(pwd)/my_data" >> $GITHUB_ENV
+      
+      - name: Download synthetic datasets
         run: |
           options(timeout = 600)
+          print(Sys.getenv("EUNOMIA_DATA_FOLDER"))
           CDMConnector::requireEunomia("GiBleed")
           CDMConnector::requireEunomia("synthea-covid19-10k")
         shell: Rscript {0}
