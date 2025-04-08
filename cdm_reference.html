@@ -380,16 +380,16 @@ Setting a write prefix
 # Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
    person_id gender_concept_id year_of_birth month_of_birth day_of_birth
        &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
- 1         1              8532          2000              7           22
- 2         2              8507          1970              8            9
- 3         3              8507          1998              6            8
- 4         4              8507          1999              6           24
- 5         5              8532          1993              2           10
- 6         6              8532          1966              1           13
- 7         7              8507          1967             10           24
- 8         8              8507          1980              7            3
- 9         9              8532          1962              6           25
-10        10              8507          1966             11           28
+ 1         1              8507          1952              1           15
+ 2         2              8507          1969             10            8
+ 3         3              8507          1950              9            4
+ 4         4              8507          1965             12           12
+ 5         5              8507          1951              9           14
+ 6         6              8532          1986             12           13
+ 7         7              8507          1973              7           29
+ 8         8              8507          1957              3           21
+ 9         9              8507          1963             10           25
+10        10              8507          1978             10           26
 # ℹ more rows
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
@@ -404,16 +404,16 @@ Setting a write prefix
 # Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
    observation_period_id person_id observation_period_s…¹ observation_period_e…²
                    &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
- 1                     1         1 2012-04-04             2019-03-30            
- 2                     2         2 2017-09-13             2019-09-30            
- 3                     3         3 2002-01-15             2014-01-02            
- 4                     4         4 2017-11-02             2019-02-23            
- 5                     5         5 2000-01-23             2010-05-01            
- 6                     6         6 1979-05-30             2014-06-10            
- 7                     7         7 1991-11-06             2019-04-30            
- 8                     8         8 1987-09-09             2012-02-28            
- 9                     9         9 1965-02-21             2003-07-09            
-10                    10        10 2014-03-16             2019-11-07            
+ 1                     1         1 1999-12-09             2005-03-06            
+ 2                     2         2 1971-07-20             1985-01-16            
+ 3                     3         3 1998-02-20             2016-09-07            
+ 4                     4         4 1982-05-31             1993-09-08            
+ 5                     5         5 1980-10-31             1996-05-19            
+ 6                     6         6 2004-02-09             2006-08-04            
+ 7                     7         7 1986-04-27             1997-09-10            
+ 8                     8         8 2016-12-14             2018-10-20            
+ 9                     9         9 2012-06-24             2014-04-29            
+10                    10        10 2009-02-06             2011-08-06            
 # ℹ more rows
 # ℹ abbreviated names: ¹​observation_period_start_date,
 #   ²​observation_period_end_date
@@ -584,9 +584,9 @@ visit_occurrence, procedure_occurrence</code></pre>
 Columns: 4
 Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
 $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ subject_id           &lt;int&gt; 1, 3, 5, 7, 8, 8, 8, 9, 9, 12, 13, 14, 14, 14, 16…
-$ cohort_start_date    &lt;date&gt; 2013-11-07, 2003-07-18, 2000-02-14, 1994-07-27, …
-$ cohort_end_date      &lt;date&gt; 2016-03-27, 2007-03-03, 2005-09-13, 2011-08-30, …</code></pre>
+$ subject_id           &lt;int&gt; 1, 5, 5, 6, 6, 7, 9, 11, 11, 11, 12, 15, 16, 18, …
+$ cohort_start_date    &lt;date&gt; 2000-12-14, 1981-12-15, 1984-03-23, 2004-06-16, …
+$ cohort_end_date      &lt;date&gt; 2002-09-07, 1984-03-22, 1987-10-03, 2004-07-30, …</code></pre>
 </div>
 </div>
 </section>
@@ -758,18 +758,13 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 18]
 # Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
-  person_id gender_concept_id year_of_birth month_of_birth day_of_birth
-      &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         2              8507          1970              8            9
-2        22              8532          1970              7           22
-3        58              8507          1970              5           18
-4        68              8532          1970              9           20
-# ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
-#   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
-#   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
+# ℹ 18 variables: person_id &lt;int&gt;, gender_concept_id &lt;int&gt;,
+#   year_of_birth &lt;int&gt;, month_of_birth &lt;int&gt;, day_of_birth &lt;int&gt;,
+#   race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;, birth_datetime &lt;dttm&gt;,
+#   location_id &lt;int&gt;, provider_id &lt;int&gt;, care_site_id &lt;int&gt;,
+#   person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
 #   gender_source_concept_id &lt;int&gt;, race_source_value &lt;chr&gt;,
-#   race_source_concept_id &lt;int&gt;, ethnicity_source_value &lt;chr&gt;,
-#   ethnicity_source_concept_id &lt;int&gt;</code></pre>
+#   race_source_concept_id &lt;int&gt;, ethnicity_source_value &lt;chr&gt;, …</code></pre>
 </div>
 </div>
 <p>From now on, when we work with our cdm reference this restriction will continue to have been applied.</p>
@@ -781,7 +776,7 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 # Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
       n
   &lt;dbl&gt;
-1     4</code></pre>
+1     0</code></pre>
 </div>
 </div>
 <p>The original OMOP CDM data itself however will remain unaffected. We can see that, indeed, if we create our reference again the underlying data is unchanged.</p>
@@ -863,15 +858,15 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   table&lt;og_001_1744152514&gt; [?? x 18]
+<pre><code># Source:   table&lt;og_001_1744153057&gt; [?? x 18]
 # Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         1              8532          2000              7           22
-2         2              8507          1970              8            9
-3         3              8507          1998              6            8
-4         4              8507          1999              6           24
-5         5              8532          1993              2           10
+1         1              8507          1952              1           15
+2         2              8507          1969             10            8
+3         3              8507          1950              9            4
+4         4              8507          1965             12           12
+5         5              8507          1951              9           14
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -885,11 +880,11 @@ concept_synonym, concept_ancestor, drug_strength</code></pre>
 # Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.4.3/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         1              8532          2000              7           22
-2         2              8507          1970              8            9
-3         3              8507          1998              6            8
-4         4              8507          1999              6           24
-5         5              8532          1993              2           10
+1         1              8507          1952              1           15
+2         2              8507          1969             10            8
+3         3              8507          1950              9            4
+4         4              8507          1965             12           12
+5         5              8507          1951              9           14
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
