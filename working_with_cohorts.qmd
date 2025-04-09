@@ -14,7 +14,7 @@ library(dplyr)
 library(PatientProfiles)
 
 # For this example we will use GiBleed data set
-CDMConnector::downloadEunomiaData(datasetName = "GiBleed")        
+downloadEunomiaData(datasetName = "GiBleed")        
 db <- DBI::dbConnect(duckdb::duckdb(), eunomiaDir())
 
 cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
