@@ -2,7 +2,9 @@
 .Rhistory
 /_site/
 /_freeze/
+/_book/
 /.quarto/
 .Rproj.user
 *.zip
 *.duckdb
+.DS_Store

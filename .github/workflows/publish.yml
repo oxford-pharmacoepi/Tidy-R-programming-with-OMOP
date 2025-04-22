@@ -38,7 +38,6 @@ jobs:
       - name: Download synthetic datasets
         run: |
           options(timeout = 600)
-          print(Sys.getenv("EUNOMIA_DATA_FOLDER"))
           CDMConnector::requireEunomia("GiBleed")
           CDMConnector::requireEunomia("synthea-covid19-10k")
         shell: Rscript {0}

@@ -19,14 +19,16 @@ It is beyond the scope of this book to describe all the different ways cohorts c
 We'll use our synthetic dataset for demonstrating how cohorts can be constructed.
 
 ```{r, warning=FALSE, message=FALSE}
+library(DBI)
+library(duckdb)
 library(CDMConnector)
 library(CodelistGenerator)
 library(CohortConstructor)
 library(CohortCharacteristics)
 library(dplyr)
         
-db <- DBI::dbConnect(duckdb::duckdb(),
-              dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
+db <- dbConnect(drv = duckdb(),
+                dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
 cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
 ```
 
@@ -35,8 +37,8 @@ Often study cohorts will be based around a specific clinical event identified by
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- conceptCohort(cdm = cdm, 
-                     conceptSet = list("covid" = 37311061), 
-                     name = "covid")
+                           conceptSet = list("covid" = 37311061), 
+                           name = "covid")
 cdm$covid
 ```
 
@@ -57,8 +59,7 @@ getCandidateCodes(cdm = cdm,
 We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of it's descendants.
 
 ```{r}
-CodelistGenerator::getDrugIngredientCodes(cdm = cdm, 
-                                          name = "acetaminophen")
+getDrugIngredientCodes(cdm = cdm, name = "acetaminophen")
 ```
 
 Note that in practice clinical expertise is vital in the identification of appropriate codes so as to decide which the codes are in line with the clinical idea at hand.
