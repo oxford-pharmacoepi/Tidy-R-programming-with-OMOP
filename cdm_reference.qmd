@@ -12,27 +12,28 @@ To see how this works we will use the `omock` package to create example data in 
 
 ```{r, message=FALSE, warning=FALSE}
 library(DBI)
+library(duckdb)
 library(here)
 library(dplyr)
 library(omock)
 library(omopgenerics)
 library(CDMConnector)
+library(palmerpenguins)
 
-cdm_local <- omock::mockCdmReference() |>
-    omock::mockPerson(nPerson = 100) |>
-    omock::mockObservationPeriod() |>
-    omock::mockConditionOccurrence() |>
-    omock::mockDrugExposure() |>
-    omock::mockObservation() |>
-    omock::mockMeasurement() |>
-    omock::mockVisitOccurrence() |>
-    omock::mockProcedureOccurrence()
+cdm_local <- mockCdmReference() |>
+    mockPerson(nPerson = 100) |>
+    mockObservationPeriod() |>
+    mockConditionOccurrence() |>
+    mockDrugExposure() |>
+    mockObservation() |>
+    mockMeasurement() |>
+    mockVisitOccurrence() |>
+    mockProcedureOccurrence()
 
-db <- DBI::dbConnect(duckdb::duckdb())
-CDMConnector::copyCdmTo(con = db,
-                        cdm = cdm_local,
-                        schema ="main", 
-                        overwrite = TRUE)
+db <- dbConnect(drv = duckdb())
+
+cdm <- insertCdmTo(cdm = cdm_local,
+                   to = dbSource(con = db, writeSchema = "main"))
 ```
 
 Now that we have OMOP CDM data in a database, we can use the function `cdmFromCon()` from `CDMConnector` to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access and where intermediate tables can be created for a given study.
@@ -141,13 +142,10 @@ We'll be seeing how to create cohorts in more detail in @sec-creating_cohorts. F
 
 ```{r, echo = TRUE}
 cdm_local <- cdm_local |> 
-  omock::mockCohort(name = "my_study_cohort")
-db <- DBI::dbConnect(duckdb::duckdb())
-CDMConnector::copyCdmTo(con = db,
-                        cdm = cdm_local,
-                        schema ="main", 
-                        overwrite = TRUE)
-
+  mockCohort(name = "my_study_cohort")
+db <- dbConnect(drv = duckdb())
+cdm <- insertCdmTo(cdm = cdm_local,
+                   to = dbSource(con = db, writeSchema = "main"))
 ```
 
 Now we can specify we want to include this existing cohort table to our cdm object when creating our cdm reference.
@@ -173,48 +171,47 @@ If we have the results tables from the [Achilles R package](https://ohdsi.github
 Just to show how this can be done let's upload some empty results tables in the Achilles format.
 
 ```{r}
-DBI::dbWriteTable(db, 
-                  "achilles_analysis",
-                  tibble(
-                    analysis_id = NA_integer_,
-                    analysis_name = NA_character_,
-                    stratum_1_name = NA_character_,
-                    stratum_2_name = NA_character_,
-                    stratum_3_name = NA_character_,
-                    stratum_4_name = NA_character_,
-                    stratum_5_name = NA_character_,
-                    is_default = NA_character_,
-                    category = NA_character_))
-DBI::dbWriteTable(db, 
-                  "achilles_results",
-                  tibble(
-                    analysis_id = NA_integer_,
-                    stratum_1 = NA_character_,
-                    stratum_2 = NA_character_,
-                    stratum_3 = NA_character_,
-                    stratum_4 = NA_character_,
-                    stratum_5 = NA_character_,
-                    count_value = NA_character_))
-DBI::dbWriteTable(db, 
-                  "achilles_results_dist",
-                  tibble(
-                    analysis_id = NA_integer_,
-                    stratum_1 = NA_character_,
-                    stratum_2 = NA_character_,
-                    stratum_3 = NA_character_,
-                    stratum_4 = NA_character_,
-                    stratum_5 = NA_character_,
-                    count_value = NA_character_,
-                    min_value = NA_character_,
-                    max_value = NA_character_,
-                    avg_value = NA_character_,
-                    stdev_value = NA_character_,
-                    median_value = NA_character_,
-                    p10_value = NA_character_,
-                    p25_value = NA_character_,
-                    p75_value = NA_character_,
-                    p90_value = NA_character_))
-
+dbWriteTable(db, 
+             "achilles_analysis",
+             tibble(
+               analysis_id = NA_integer_,
+               analysis_name = NA_character_,
+               stratum_1_name = NA_character_,
+               stratum_2_name = NA_character_,
+               stratum_3_name = NA_character_,
+               stratum_4_name = NA_character_,
+               stratum_5_name = NA_character_,
+               is_default = NA_character_,
+               category = NA_character_))
+dbWriteTable(db, 
+             "achilles_results",
+             tibble(
+               analysis_id = NA_integer_,
+               stratum_1 = NA_character_,
+               stratum_2 = NA_character_,
+               stratum_3 = NA_character_,
+               stratum_4 = NA_character_,
+               stratum_5 = NA_character_,
+               count_value = NA_character_))
+dbWriteTable(db, 
+             "achilles_results_dist",
+             tibble(
+               analysis_id = NA_integer_,
+               stratum_1 = NA_character_,
+               stratum_2 = NA_character_,
+               stratum_3 = NA_character_,
+               stratum_4 = NA_character_,
+               stratum_5 = NA_character_,
+               count_value = NA_character_,
+               min_value = NA_character_,
+               max_value = NA_character_,
+               avg_value = NA_character_,
+               stdev_value = NA_character_,
+               median_value = NA_character_,
+               p10_value = NA_character_,
+               p25_value = NA_character_,
+               p75_value = NA_character_,
+               p90_value = NA_character_))
 ```
 
 We can now include these achilles table in our cdm reference as in the previous case.
@@ -258,9 +255,9 @@ cdm$cars
 If we already had the table in the database we could have instead just assigned it to our existing cdm reference. To see this let's upload the `penguins` table to our `duckdb` database.
 
 ```{r}
-DBI::dbWriteTable(db, 
-                  "penguins",
-                  palmerpenguins::penguins)
+dbWriteTable(db, 
+             "penguins",
+             penguins)
 ```
 
 Once we have this table in the database, we can just assign it to our cdm reference.

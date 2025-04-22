@@ -9,11 +9,13 @@ To see how we can develop a data model with associated methods and functions we'
 ## Defining a data model
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-library(dplyr)
-library(dbplyr)
-library(tidyr)
-library(duckdb)
 library(DBI)
+library(duckdb)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(cli)
+library(dbplyr)
 library(Lahman)
 
 db <- dbConnect(duckdb(), dbdir = ":memory:")
@@ -24,16 +26,16 @@ Instead of manually creating references to tables of interest as we go, we will 
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
 lahmanFromCon <- function(con) {
-  tables <- c(
+  lahmanRef <- c(
     "AllstarFull", "Appearances", "AwardsManagers", "AwardsPlayers", "AwardsManagers",
     "AwardsShareManagers", "Batting", "BattingPost", "CollegePlaying", "Fielding",
     "FieldingOF", "FieldingOFsplit", "FieldingPost", "HallOfFame", "HomeGames",
     "LahmanData", "Managers", "ManagersHalf", "Parks", "People", "Pitching",
     "PitchingPost", "Salaries", "Schools", "SeriesPost", "Teams", "TeamsFranchises",
     "TeamsHalf"
-  )
-  lahmanRef <- purrr::set_names(tables, tables) |> 
-               purrr::map(~ tbl(con, .))
+  ) |>
+    set_names() |> 
+    map(\(x) tbl(con, x))
   class(lahmanRef) <- c("lahman_ref", class(lahmanRef))
   lahmanRef
 }
@@ -86,23 +88,23 @@ Let's start by making a small function to get the teams players have played for.
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 getTeams <- function(lahman, name = "Barry Bonds") {
   lahman$Batting |>
-    dplyr::inner_join(
+    inner_join(
       lahman$People |>
-        dplyr::mutate(full_name = paste0(nameFirst, " ", nameLast)) |>
-        dplyr::filter(full_name %in% name) |>
-        dplyr::select("playerID"),
+        mutate(full_name = paste0(nameFirst, " ", nameLast)) |>
+        filter(full_name %in% name) |>
+        select("playerID"),
       by = join_by(playerID)
     ) |>
-    dplyr::select(
+    select(
       "teamID",
       "yearID"
     ) |>
-    dplyr::distinct() |>
-    dplyr::left_join(lahman$Teams,
-      by = dplyr::join_by(teamID, yearID)
+    distinct() |>
+    left_join(lahman$Teams,
+      by = join_by(teamID, yearID)
     ) |>
-    dplyr::select("name") |>
-    dplyr::distinct()
+    select("name") |>
+    distinct()
 }
 ```
 
@@ -155,9 +157,9 @@ Similarly we could make a function to add the a player's year of birth to a tabl
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 addBirthCountry <- function(lahmanTbl){
   lahmanTbl |> 
-    dplyr::left_join(lahman$People |> 
-              dplyr::select("playerID", "birthCountry"),
-              dplyr::join_by("playerID"))
+    left_join(lahman$People |> 
+              select("playerID", "birthCountry"),
+              join_by("playerID"))
 }
 ```
 
@@ -268,8 +270,8 @@ With this we can make some specific methods for a "lahman_ref" object. For examp
 ```{r, message=FALSE, warning=FALSE}
 print.lahman_ref <- function(x, ...) {
   len <- length(names(x))
-  cli::cli_h1("# Lahman reference - {len} tables")
-  cli::cli_li(paste(
+  cli_h1("# Lahman reference - {len} tables")
+  cli_li(paste(
     "{.strong tables:}",
     paste(names(x), collapse = ", ")
   ))

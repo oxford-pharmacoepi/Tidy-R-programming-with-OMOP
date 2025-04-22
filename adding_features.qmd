@@ -4,6 +4,7 @@ For this chapter, we'll again use our example COVID-19 dataset.
 
 ```{r, warning=FALSE, message=FALSE}
 library(DBI)
+library(duckdb)
 library(dbplyr)
 library(dplyr)
 library(here)
@@ -13,8 +14,8 @@ library(ggplot2)
 ```
 
 ```{r}
-db <- dbConnect(duckdb::duckdb(),
-              dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
+db <- dbConnect(drv = duckdb(),
+                dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
 cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
 ```
 
@@ -42,7 +43,7 @@ cdm$condition_occurrence |>
 ```{r}
 cdm$condition_occurrence |> 
   addSexQuery() |> 
-  dplyr::show_query()
+  show_query()
 ```
 
 We now have two variables added containing values for age and sex.
@@ -74,7 +75,7 @@ cdm$condition_occurrence |>
 
 ## Adding multiple demographics simultaneously
 
-We've now seen individual functions from `PatientProfiles` to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named `PatientProfiles::addPriorObservation()`). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.[^ch_4_adding_features-3]
+We've now seen individual functions from `PatientProfiles` to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named `addPriorObservation()`). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.[^ch_4_adding_features-3]
 
 [^ch_4_adding_features-3]: This function also provides a more time efficient method that getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables and so can be identified simultaneously.
 
@@ -106,21 +107,21 @@ In the above examples the functions from PatientProfiles will execute queries wi
 cdm$visit_occurrence |> 
   addSex() |> 
   filter(sex == "Male") |> 
-  dplyr::show_query()
+  show_query()
 ```
 
 ```{r, echo = TRUE}
 cdm$visit_occurrence |> 
   addSex(name = "my_new_table") |> 
   filter(sex == "Male") |> 
-  dplyr::show_query()
+  show_query()
 ```
 
 ```{r, echo = TRUE}
 cdm$visit_occurrence |> 
   addSexQuery() |> 
   filter(sex == "Male") |> 
-  dplyr::show_query()
+  show_query()
 ```
 :::
 
@@ -146,7 +147,7 @@ cdm$visit_occurrence |>
   theme_bw()
 ```
 
-`PatientProfiles` also provides a more general function for adding categories. Can you guess it's name? That's right, we have `PatientProfiles::addCategories()` for this.
+`PatientProfiles` also provides a more general function for adding categories. Can you guess it's name? That's right, we have `addCategories()` for this.
 
 ```{r}
 cdm$condition_occurrence |>
@@ -164,7 +165,7 @@ cdm$condition_occurrence |>
 
 While `PatientProfiles` provides a range of functions that can help add characteristics of interest, you may also want to add other features . Obviously we can't cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.
 
-In the first case where we want to add a new variable derived from other variables in our table we'll typically be using `dplyr::mutate()`. For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals' observation period start date. This is rather straightforward.
+In the first case where we want to add a new variable derived from other variables in our table we'll typically be using `mutate()` (from *dplyr* package). For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals' observation period start date. This is rather straightforward.
 
 ```{r}
 cdm$observation_period <- cdm$observation_period |> 
