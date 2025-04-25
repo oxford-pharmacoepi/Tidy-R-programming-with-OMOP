@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a34d670291f06f286357e447776a572a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-292c0866b2e53f8190c286d1fd533ef9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -102,11 +102,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
-<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-<script src="site_libs/viz-1.8.2/viz.js"></script>
-<link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-<script src="site_libs/grViz-binding-1.0.11/grViz.js"></script>
 
 
 </head>
@@ -319,19 +314,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;covid&gt; [?? x 4]
-# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.5.0//tmp/RtmpbCl6yx/file5746551937b5.duckdb]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmpYbmXBf/file2dbb5c2b1d12.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       1753 2020-09-02        2020-09-12     
- 2                    1       3444 2020-11-23        2020-11-23     
- 3                    1        215 2021-07-23        2021-08-22     
- 4                    1        894 2020-08-19        2020-09-18     
- 5                    1       1587 2020-12-13        2021-01-01     
- 6                    1       4724 2021-04-28        2021-05-15     
- 7                    1       5177 2020-11-06        2020-11-16     
- 8                    1       5416 2020-12-22        2021-01-15     
- 9                    1       5947 2021-01-11        2021-02-12     
-10                    1       6454 2020-10-04        2020-10-25     
+ 1                    1       3887 2020-06-30        2020-07-14     
+ 2                    1       2270 2021-04-23        2021-05-05     
+ 3                    1       2680 2021-05-07        2021-06-10     
+ 4                    1       8119 2021-01-12        2021-02-16     
+ 5                    1       3289 2021-02-20        2021-03-26     
+ 6                    1       5505 2020-08-12        2020-09-10     
+ 7                    1       6304 2021-04-25        2021-06-01     
+ 8                    1       6949 2021-04-10        2021-05-06     
+ 9                    1       7059 2021-02-16        2021-02-26     
+10                    1       7086 2020-11-29        2020-12-13     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -367,16 +362,16 @@ Time taken: 0 minutes and 1 seconds</code></pre>
 <pre><code># A tibble: 37 × 6
    concept_id found_from   concept_name domain_id vocabulary_id standard_concept
         &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
- 1    3661885 From initia… Fever cause… Condition SNOMED        S               
- 2   37310286 From initia… Infection o… Condition SNOMED        S               
- 3     703447 From initia… High risk c… Condition SNOMED        S               
- 4    3661632 From initia… Thrombocyto… Condition SNOMED        S               
- 5     756039 From initia… Respiratory… Condition OMOP Extensi… S               
- 6     756031 From initia… Bronchitis … Condition OMOP Extensi… S               
- 7    3661406 From initia… Acute respi… Condition SNOMED        S               
- 8    3655973 From initia… At increase… Condition SNOMED        S               
- 9     439676 From initia… Coronavirus… Condition SNOMED        S               
-10   40479642 From initia… Pneumonia d… Condition SNOMED        S               
+ 1   40479642 From initia… Pneumonia d… Condition SNOMED        S               
+ 2    3661406 From initia… Acute respi… Condition SNOMED        S               
+ 3     439676 From initia… Coronavirus… Condition SNOMED        S               
+ 4    3655973 From initia… At increase… Condition SNOMED        S               
+ 5    3656667 From initia… Cardiomyopa… Condition SNOMED        S               
+ 6    3656669 From initia… Dyspnea cau… Condition SNOMED        S               
+ 7   37310284 From initia… Encephalopa… Condition SNOMED        S               
+ 8     703446 From initia… Moderate ri… Condition SNOMED        S               
+ 9     703445 From initia… Low risk ca… Condition SNOMED        S               
+10   37016927 From initia… Pneumonia c… Condition SNOMED        S               
 # ℹ 27 more rows</code></pre>
 </div>
 </div>
@@ -482,19 +477,19 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;cardiac&gt; [?? x 4]
-# Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.5.0//tmp/RtmpbCl6yx/file5746551937b5.duckdb]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmpYbmXBf/file2dbb5c2b1d12.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       3733 2017-10-14        2017-10-14     
- 2                    1       4752 2003-09-13        2003-09-13     
- 3                    1       6854 1932-11-23        1932-11-23     
- 4                    1       8801 2009-09-21        2009-09-21     
- 5                    1       8879 2007-09-13        2007-09-13     
- 6                    1       9137 2012-07-25        2012-07-25     
- 7                    1       9346 1996-01-27        1996-01-27     
- 8                    1       9430 2020-07-25        2020-07-25     
- 9                    1       9798 2021-11-06        2021-11-06     
-10                    1      10252 2016-01-28        2016-01-28     
+ 1                    1        256 2017-12-01        2017-12-01     
+ 2                    1        695 2000-01-27        2000-01-27     
+ 3                    1        731 2007-02-26        2007-02-26     
+ 4                    1       1194 1997-03-14        1997-03-14     
+ 5                    1       1357 2011-08-28        2011-08-28     
+ 6                    1       1664 2020-11-10        2020-11-10     
+ 7                    1       2257 1978-02-04        1978-02-04     
+ 8                    1       3452 2018-04-04        2018-04-04     
+ 9                    1       5120 2021-08-16        2021-08-16     
+10                    1       6278 1997-01-31        1997-01-31     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -557,10 +552,13 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13</code>
 <p>For attrition, we can use <code>CohortConstructor::summariseCohortAttrition()</code> and then <code>CohortConstructor::tableCohortAttrition()</code> to better view the impact of applying the additional inclusion criteria.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>attrition_summary <span class="ot">&lt;-</span> <span class="fu">summariseCohortAttrition</span>(cdm<span class="sc">$</span>covid)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCohortAttrition</span>(attrition_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCohortAttrition</span>(attrition_summary, <span class="at">type =</span> <span class="st">'png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-9d86e4d4e0393e1ef930" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-9d86e4d4e0393e1ef930">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Database: Synthea\nCohort name: covid\", shape = \"box\", color = \"#FFFFFF\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"1\", pos = \"0,0!\"] \n  \"2\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-0.885!\"] \n  \"3\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-1.835!\"] \n  \"4\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-2.785!\"] \n  \"5\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-3.735!\"] \n  \"6\" [label = \"N subjects = 964\nN records = 964\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-4.685!\"] \n  \"7\" [label = \"N subjects = 793\nN records = 793\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-5.635!\"] \n  \"8\" [label = \"N subjects = 363\nN records = 363\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-6.585!\"] \n  \"9\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-7.535!\"] \n  \"10\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-8.485!\"] \n  \"11\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-9.435!\"] \n  \"12\" [label = \"N subjects = 158\nN records = 158\", shape = \"box\", color = \"#000000\", fillcolor = \"#FFFFFF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"0,-10.645!\"] \n  \"13\" [label = \"Initial qualifying events\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"2\", pos = \"0,-0.41!\"] \n  \"14\" [label = \"Record start <= record end\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"2\", pos = \"0,-1.36!\"] \n  \"15\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"#000000\", fillcolor = \"#F8F8F8\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"1.95,-1.36!\"] \n  \"16\" [label = \"Record in observation\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"2\", pos = \"0,-2.31!\"] \n  \"17\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"#000000\", fillcolor = \"#F8F8F8\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"1.95,-2.31!\"] \n  \"18\" [label = \"Merge overlapping records\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"2\", pos = \"0,-3.26!\"] \n  \"19\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"#000000\", fillcolor = \"#F8F8F8\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"1.95,-3.26!\"] \n  \"20\" [label = \"Restricted to first entry\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"2\", pos = \"0,-4.21!\"] \n  \"21\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"#000000\", fillcolor = \"#F8F8F8\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"1.95,-4.21!\"] \n  \"22\" [label = \"cohort_start_date after 2020-09-01\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"2\", pos = \"0,-5.16!\"] \n  \"23\" [label = \"N subjects = 171\nN records = 171\", shape = \"box\", color = \"#000000\", fillcolor = \"#F8F8F8\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"1.95,-5.16!\"] \n  \"24\" [label = \"Age requirement: 18 to 64\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"2\", pos = \"0,-6.11!\"] \n  \"25\" [label = \"N subjects = 430\nN records = 430\", shape = \"box\", color = \"#000000\", fillcolor = \"#F8F8F8\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"1.95,-6.11!\"] \n  \"26\" [label = \"Sex requirement: Male\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"2\", pos = \"0,-7.06!\"] \n  \"27\" [label = \"N subjects = 192\nN records = 192\", shape = \"box\", color = \"#000000\", fillcolor = \"#F8F8F8\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"1.95,-7.06!\"] \n  \"28\" [label = \"Prior observation requirement: 0 days\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"2\", pos = \"0,-8.01!\"] \n  \"29\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"#000000\", fillcolor = \"#F8F8F8\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"1.95,-8.01!\"] \n  \"30\" [label = \"Future observation requirement: 0 days\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.26\", width = \"2\", pos = \"0,-8.96!\"] \n  \"31\" [label = \"N subjects = 0\nN records = 0\", shape = \"box\", color = \"#000000\", fillcolor = \"#F8F8F8\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"1.95,-8.96!\"] \n  \"32\" [label = \"Not in cohort myocaridal_infarction\nbetween -Inf & -1 days relative to\ncohort_start_date\", shape = \"box\", color = \"#000000\", fillcolor = \"#F0F8FF\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.52\", width = \"2\", pos = \"0,-10.04!\"] \n  \"33\" [label = \"N subjects = 13\nN records = 13\", shape = \"box\", color = \"#000000\", fillcolor = \"#F8F8F8\", fontname = \"Calibri\", fontsize = \"8\", fontcolor = \"#000000\", height = \"0.39\", width = \"1.2\", pos = \"1.95,-10.04!\"] \n\"2\"->\"3\" [color = \"#000000\"] \n\"3\"->\"4\" [color = \"#000000\"] \n\"4\"->\"5\" [color = \"#000000\"] \n\"5\"->\"6\" [color = \"#000000\"] \n\"6\"->\"7\" [color = \"#000000\"] \n\"7\"->\"8\" [color = \"#000000\"] \n\"8\"->\"9\" [color = \"#000000\"] \n\"9\"->\"10\" [color = \"#000000\"] \n\"10\"->\"11\" [color = \"#000000\"] \n\"11\"->\"12\" [color = \"#000000\"] \n\"14\"->\"15\" [color = \"#000000\"] \n\"16\"->\"17\" [color = \"#000000\"] \n\"18\"->\"19\" [color = \"#000000\"] \n\"20\"->\"21\" [color = \"#000000\"] \n\"22\"->\"23\" [color = \"#000000\"] \n\"24\"->\"25\" [color = \"#000000\"] \n\"26\"->\"27\" [color = \"#000000\"] \n\"28\"->\"29\" [color = \"#000000\"] \n\"30\"->\"31\" [color = \"#000000\"] \n\"32\"->\"33\" [color = \"#000000\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div>
+<figure class="figure">
+<p><img src="creating_cohorts_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
