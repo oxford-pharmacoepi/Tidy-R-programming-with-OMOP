@@ -439,9 +439,9 @@ Foreign keys: 1</code></pre>
 # Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0/:memory:]
   name            
   &lt;chr&gt;           
-1 Boston Braves   
-2 Boston Red Sox  
-3 New York Yankees</code></pre>
+1 New York Yankees
+2 Boston Braves   
+3 Boston Red Sox  </code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -493,8 +493,8 @@ FROM (
 # Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0/:memory:]
   name                
   &lt;chr&gt;               
-1 San Francisco Giants
-2 Pittsburgh Pirates  </code></pre>
+1 Pittsburgh Pirates  
+2 San Francisco Giants</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -559,8 +559,8 @@ Choosing the right time to collect data into R
 <pre><code># A tibble: 2 × 1
   name                
   &lt;chr&gt;               
-1 San Francisco Giants
-2 Pittsburgh Pirates  </code></pre>
+1 Pittsburgh Pirates  
+2 San Francisco Giants</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(lahman, <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -849,16 +849,16 @@ Salaries, Schools, SeriesPost, Teams, TeamsFranchises, TeamsHalf</code></pre>
 # Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0/:memory:]
    birthCountry birthYear average_salary
    &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
- 1 USA               1960       1030321.
- 2 USA               1952        498378.
- 3 USA               1956        986760.
- 4 USA               1961        811250.
- 5 USA               1950        625076.
- 6 Nicaragua         1954       2083440.
- 7 Panama            1945        875000 
- 8 CAN               1961       1080292.
- 9 Venezuela         1948        632500 
-10 Cuba              1942        250000 
+ 1 USA               1955        869334.
+ 2 USA               1954        860729.
+ 3 USA               1947       1074135.
+ 4 D.R.              1958        866051.
+ 5 USA               1958        960490.
+ 6 Venezuela         1953        628409.
+ 7 USA               1962       1309433.
+ 8 Venezuela         1964       1388324.
+ 9 USA               1941        679429 
+10 P.R.              1957        291333.
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1048,16 +1048,16 @@ FROM (
 <pre><code># A tibble: 3,662 × 3
    schoolID   birthYear strike_outs
    &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 michigan        1967         888
- 2 texas           1958         549
- 3 nmstate         1968          98
- 4 stanford        1972         218
- 5 beloitwi        1872           3
- 6 upenn           1964          14
- 7 arkansas        1962         537
- 8 mntclairst      1961          46
- 9 incante         1893         526
-10 illinois        1979          19
+ 1 rice            1981         340
+ 2 cacerri         1971         327
+ 3 usc             1947         275
+ 4 pepperdine      1969           4
+ 5 lsu             1978         162
+ 6 miamidade       1982          56
+ 7 upperiowa       1918          11
+ 8 jamesmad        1966           4
+ 9 flinternat      1971         133
+10 ucla            1984         323
 # ℹ 3,652 more rows</code></pre>
 </div>
 </div>
@@ -1131,7 +1131,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
-FROM dbplyr_eR0dDJs6eo</code></pre>
+FROM dbplyr_0nzpKyY9Cb</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1165,18 +1165,18 @@ FROM dbplyr_eR0dDJs6eo</code></pre>
 <span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3,662 × 3
-   schoolID   birthYear strike_outs
-   &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 vermont         1869         161
- 2 michigan        1967         888
- 3 nmstate         1968          98
- 4 cacerri         1971         327
- 5 byu             1961        1030
- 6 pepperdine      1969           4
- 7 lsu             1978         162
- 8 miamidade       1982          56
- 9 stanford        1961           0
-10 incante         1893         526
+   schoolID  birthYear strike_outs
+   &lt;chr&gt;         &lt;int&gt;       &lt;dbl&gt;
+ 1 longbeach      1968         273
+ 2 elon           1921          13
+ 3 lehigh         1901           1
+ 4 usc            1947         275
+ 5 tamukvill      1978         409
+ 6 stanford       1972         218
+ 7 upenn          1964          14
+ 8 arkansas       1962         537
+ 9 kentucky       1985          91
+10 txsjjcn        1983         571
 # ℹ 3,652 more rows</code></pre>
 </div>
 </div>
@@ -1199,8 +1199,8 @@ SELECT schoolID, birthYear, SUM(H) AS home_runs
 FROM (
   SELECT Batting.*, birthYear, schoolID
   FROM Batting
-  LEFT JOIN dbplyr_eR0dDJs6eo
-    ON (Batting.playerID = dbplyr_eR0dDJs6eo.playerID)
+  LEFT JOIN dbplyr_0nzpKyY9Cb
+    ON (Batting.playerID = dbplyr_0nzpKyY9Cb.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1210,8 +1210,8 @@ SELECT schoolID, birthYear, SUM(SO) AS strike_outs
 FROM (
   SELECT Pitching.*, birthYear, schoolID
   FROM Pitching
-  LEFT JOIN dbplyr_eR0dDJs6eo
-    ON (Pitching.playerID = dbplyr_eR0dDJs6eo.playerID)
+  LEFT JOIN dbplyr_0nzpKyY9Cb
+    ON (Pitching.playerID = dbplyr_0nzpKyY9Cb.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
