@@ -12,7 +12,7 @@ When performing research with the OMOP common data model we often want to identi
 
 The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields: 1) cohort definition id (a unique identifier for each cohort), 2) subject id (a foreign key to the subject in the cohort - typically referring to records in the person table), 3) cohort start date, and 4) cohort end date. Individuals can enter a cohort multiple times, but the time periods in which they are in the cohort cannot overlap. Individuals will only be considered in a cohort when they have have an ongoing observation period.
 
-It is beyond the scope of this book to describe all the different ways cohorts could be created, however in this chapter we provide a summary of some of the key building blocks for cohort creation. Cohort-building pipelines can be created following these principles to create a wide range of study cohorts. 
+It is beyond the scope of this book to describe all the different ways cohorts could be created, however in this chapter we provide a summary of some of the key building blocks for cohort creation. Cohort-building pipelines can be created following these principles to create a wide range of study cohorts.
 
 ## Set up
 
@@ -33,6 +33,7 @@ cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
 ```
 
 ## General concept based cohort
+
 Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the `CohortConstructor` package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code 37311061.
 
 ```{r, warning=FALSE, message=FALSE}
@@ -65,7 +66,7 @@ getDrugIngredientCodes(cdm = cdm, name = "acetaminophen")
 Note that in practice clinical expertise is vital in the identification of appropriate codes so as to decide which the codes are in line with the clinical idea at hand.
 :::
 
-We can see that as well as having the cohort entries above, our cohort table is associated with several attributes. 
+We can see that as well as having the cohort entries above, our cohort table is associated with several attributes.
 
 First, we can see the settings associated with cohort.
 
@@ -117,10 +118,9 @@ cdm$covid <- cdm$covid |>
    requireDemographics(ageRange = c(18, 64), sex = "Male")
 ```
 
-
 ### Applying cohort-based inclusion criteria
 
-As well as requirements about specific demographics, we may also want to use another cohort for inclusion criteria. Let's say we want to exclude anyone with a history of cardiac conditions  before their Covid-19 cohort entry. 
+As well as requirements about specific demographics, we may also want to use another cohort for inclusion criteria. Let's say we want to exclude anyone with a history of cardiac conditions before their Covid-19 cohort entry.
 
 We can first generate this new cohort table with records of cardiac conditions.
 
@@ -135,7 +135,8 @@ name = "cardiac"
 cdm$cardiac
 ```
 
-And now we can apply the inclusion criteria that individuals have zero intersections with the table in the time prior to their Covid-19 cohort entry. 
+And now we can apply the inclusion criteria that individuals have zero intersections with the table in the time prior to their Covid-19 cohort entry.
+
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |> 
   requireCohortIntersect(targetCohortTable = "cardiac", 
@@ -169,7 +170,7 @@ For attrition, we can use `CohortConstructor::summariseCohortAttrition()` and th
 
 ```{r, warning=FALSE, message=FALSE}
 attrition_summary <- summariseCohortAttrition(cdm$covid)
-plotCohortAttrition(attrition_summary)
+plotCohortAttrition(attrition_summary, type = 'png')
 ```
 
 # Further reading
