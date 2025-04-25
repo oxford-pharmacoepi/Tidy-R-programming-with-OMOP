@@ -49,24 +49,29 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      # Render both formats to separate directories
-      - name: Render content
+      - name: Render book in pdf
         run: |
           quarto render --to pdf --output tidy-r-programming-omop.pdf
+      
+      - name: Move pdf to data folder
+        run: |
+          mv "_site/tidy-r-programming-omop.pdf" "my_data/tidy-r-programming-omop.pdf"
+      
+      - name: Render book in html
+        run: |
           quarto render --to html
+          
+      - name: Move pdf back to _site folder
+        run: |
+          mv "my_data/tidy-r-programming-omop.pdf" "_site/tidy-r-programming-omop.pdf"
 
       # For PRs, just render (no publishing)
       - name: Exit if PR
         if: github.event_name == 'pull_request'
         run: exit 0
         
-      # rename book pdf name
-      # - name: Rename PDF output
-      # run: |
-      #   mv "_site/Tidy-R-programming-with-databases--applications-with-the-OMOP-common-data-model.pdf" "_site/book.pdf"
-
-      # Publish HTML from _site to GitHub Pages
-      - name: Publish HTML to GitHub Pages
+      # Publish HTML and pdf from _site to GitHub Pages
+      - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
