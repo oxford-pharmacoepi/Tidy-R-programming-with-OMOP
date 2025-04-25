@@ -1,18 +1,15 @@
+name: Render Quarto Book to PDF
+
 on:
-  workflow_dispatch:
   push:
-    branches: main
+    branches: [main]  # or your default branch
   pull_request:
     branches: main
-
-name: Quarto Publish
-
+    
 jobs:
-  build-deploy:
+  render-pdf:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pages: write
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -24,6 +21,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libglpk-dev libx11-dev pandoc librsvg2-dev
+      
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install LaTeX (TinyTeX)
+        uses: r-lib/actions/setup-tinytex@v2
 
       - name: Install R Dependencies
         uses: r-lib/actions/setup-renv@v2
@@ -42,19 +45,20 @@ jobs:
           CDMConnector::requireEunomia("synthea-covid19-10k")
         shell: Rscript {0}
 
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Render Quarto book to PDF
+        run: quarto render --to pdf
 
-      - name: Render and Publish
+      - name: Copy output to a temporary folder
         if: github.event_name != 'pull_request'
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: gh-pages
-          render: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir pdf-output
+          cp _book/book.pdf pdf-output/book.pdf
 
-      - name: Just Render (PR test only)
-        if: github.event_name == 'pull_request'
-        run: quarto render --to html
-        
+      - name: Upload PDF to pdf-release branch
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.event_name != 'pull_request'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: pdf-release
+          publish_dir: ./pdf-output
+          force_orphan: true
