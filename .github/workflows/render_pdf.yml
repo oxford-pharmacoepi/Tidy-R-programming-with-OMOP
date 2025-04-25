@@ -21,6 +21,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libglpk-dev libx11-dev pandoc
+      
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install LaTeX (TinyTeX)
+        uses: r-lib/actions/setup-tinytex@v2
 
       - name: Install R Dependencies
         uses: r-lib/actions/setup-renv@v2
@@ -37,20 +43,6 @@ jobs:
           options(timeout = 600)
           CDMConnector::requireEunomia("GiBleed")
           CDMConnector::requireEunomia("synthea-covid19-10k")
-        shell: Rscript {0}
-
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Install LaTeX (TinyTeX)
-        uses: r-lib/actions/setup-tinytex@v2
-
-      - name: Install dependencies
-        run: |
-          install.packages("rmarkdown")
-          install.packages("tinytex")
-          tinytex::install_tinytex()
-
         shell: Rscript {0}
 
       - name: Render Quarto book to PDF
