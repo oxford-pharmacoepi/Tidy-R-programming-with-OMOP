@@ -30,6 +30,7 @@ format:
     theme: cosmo
   pdf:
     documentclass: book
-    output-file: book
+    output-file: "book"
+    output-ext:  "pdf"
     
 editor: visual
