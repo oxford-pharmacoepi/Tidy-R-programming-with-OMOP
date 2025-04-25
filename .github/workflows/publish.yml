@@ -56,5 +56,5 @@ jobs:
 
       - name: Just Render (PR test only)
         if: github.event_name == 'pull_request'
-        run: quarto render
+        run: quarto render --to html
         
