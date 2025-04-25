@@ -31,7 +31,5 @@ format:
     theme: cosmo
   pdf:
     documentclass: book
-    output-dir: "_book"
-    output-file: "book"
     
 editor: visual

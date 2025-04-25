@@ -53,28 +53,24 @@ jobs:
       - name: Render content
         run: |
           quarto render --to html
-          quarto render --to pdf
+          quarto render --to pdf --output book.pdf
 
       # For PRs, just render (no publishing)
       - name: Exit if PR
         if: github.event_name == 'pull_request'
         run: exit 0
+        
+      # rename book pdf name
+      # - name: Rename PDF output
+      # run: |
+      #   mv "_site/Tidy-R-programming-with-databases--applications-with-the-OMOP-common-data-model.pdf" "_site/book.pdf"
 
       # Publish HTML from _site to GitHub Pages
       - name: Publish HTML to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
-          output-dir: _site  # Explicitly point to HTML output
+          render: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Publish PDF from _book to pdf-release branch
-      - name: Upload PDF to pdf-release branch
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: pdf-release
-          publish_dir: _book  # PDF output directory
-          force_orphan: true
         
