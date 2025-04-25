@@ -1,11 +1,11 @@
+name: Quarto Build and Publish
+
 on:
   workflow_dispatch:
   push:
-    branches: main
+    branches: [main]
   pull_request:
-    branches: main
-
-name: Quarto Publish
+    branches: [main]
 
 jobs:
   build-deploy:
@@ -13,6 +13,7 @@ jobs:
     permissions:
       contents: write
       pages: write
+      
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -24,6 +25,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libglpk-dev libx11-dev pandoc librsvg2-dev
+
+      - name: Install LaTeX (TinyTeX)
+        uses: r-lib/actions/setup-tinytex@v2
 
       - name: Install R Dependencies
         uses: r-lib/actions/setup-renv@v2
@@ -45,13 +49,32 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      - name: Render and Publish (MAIN)
-        if: github.event_name != 'pull_request'
-        run: quarto render --to html && quarto publish gh-pages
+      # Render both formats to separate directories
+      - name: Render content
+        run: |
+          quarto render --to html
+          quarto render --to pdf
+
+      # For PRs, just render (no publishing)
+      - name: Exit if PR
+        if: github.event_name == 'pull_request'
+        run: exit 0
+
+      # Publish HTML from _site to GitHub Pages
+      - name: Publish HTML to GitHub Pages
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+          output-dir: _site  # Explicitly point to HTML output
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Just Render (PR test only)
-        if: github.event_name == 'pull_request'
-        run: quarto render --to html
+      # Publish PDF from _book to pdf-release branch
+      - name: Upload PDF to pdf-release branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: pdf-release
+          publish_dir: _book  # PDF output directory
+          force_orphan: true
         
