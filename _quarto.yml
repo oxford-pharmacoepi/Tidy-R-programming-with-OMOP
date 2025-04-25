@@ -30,5 +30,6 @@ format:
     theme: cosmo
   pdf:
     documentclass: book
+    output-file: book
     
 editor: visual
