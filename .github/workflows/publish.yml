@@ -52,8 +52,8 @@ jobs:
       # Render both formats to separate directories
       - name: Render content
         run: |
+          quarto render --to pdf --output tidy-r-programming-omop.pdf
           quarto render --to html
-          quarto render --to pdf --output book.pdf
 
       # For PRs, just render (no publishing)
       - name: Exit if PR
