@@ -20,7 +20,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libglpk-dev libx11-dev pandoc
+          sudo apt-get install -y libglpk-dev libx11-dev pandoc librsvg2-dev
       
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
