@@ -483,8 +483,8 @@ FROM (
 # Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0/:memory:]
   name                
   &lt;chr&gt;               
-1 San Francisco Giants
-2 Pittsburgh Pirates  </code></pre>
+1 Pittsburgh Pirates  
+2 San Francisco Giants</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -904,16 +904,16 @@ GROUP BY birthCountry, birthYear</code></pre>
 # Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0/:memory:]
    birthCountry birthYear average_salary
    &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
- 1 D.R.              1985       1531438.
- 2 USA               1966       1761151.
- 3 Venezuela         1974       4269365.
- 4 Cuba              1987       4932700.
- 5 Panama            1981        555833.
- 6 USA               1978       3133596.
- 7 CAN               1985        501000 
- 8 P.R.              1959        297786.
- 9 USA               1961        811250.
-10 USA               1990        728740.
+ 1 USA               1954        860729.
+ 2 USA               1967       1833526.
+ 3 USA               1958        960490.
+ 4 USA               1971       1547025.
+ 5 USA               1963       1579269.
+ 6 USA               1962       1309433.
+ 7 P.R.              1982       4261730.
+ 8 P.R.              1969       2261780.
+ 9 USA               1983       3501904.
+10 D.R.              1971       3461094 
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1016,16 +1016,16 @@ FROM (
 <pre><code># A tibble: 6,206 × 3
    schoolID   birthYear home_runs
    &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
- 1 pennst          1981         0
- 2 virginia        1987        27
- 3 cacerri         1971         3
- 4 usc             1947        11
- 5 lsu             1927      1832
- 6 wake            1915        72
- 7 pepperdine      1969         1
- 8 lsu             1978         2
- 9 miamidade       1982         0
-10 cincy           1950         5
+ 1 gamiddl         1972         2
+ 2 illinoisst      1981         1
+ 3 lehigh          1901         1
+ 4 tamukvill       1978         0
+ 5 chicago         1874         2
+ 6 capalom         1963        15
+ 7 hawaiipac       1971       299
+ 8 bostonuniv      1929       135
+ 9 byu             1961        28
+10 kentucky        1985         1
 # ℹ 6,196 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
@@ -1038,16 +1038,16 @@ FROM (
 <pre><code># A tibble: 3,662 × 3
    schoolID   birthYear strike_outs
    &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 michigan        1967         888
- 2 texas           1958         549
- 3 nmstate         1968          98
- 4 stanford        1972         218
- 5 beloitwi        1872           3
- 6 upenn           1964          14
- 7 arkansas        1962         537
- 8 mntclairst      1961          46
- 9 incante         1893         526
-10 illinois        1979          19
+ 1 illinoisst      1981         205
+ 2 lehigh          1901           1
+ 3 tamukvill       1978         409
+ 4 byu             1961        1030
+ 5 kentucky        1985          91
+ 6 txsjjcn         1983         571
+ 7 stanford        1961           0
+ 8 bethanywv       1922           2
+ 9 tulane          1968          59
+10 nmnmjco         1972         232
 # ℹ 3,652 more rows</code></pre>
 </div>
 </div>
@@ -1121,7 +1121,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
-FROM dbplyr_8zJ2ZCPi8p</code></pre>
+FROM dbplyr_DtqsKKiUgs</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1157,16 +1157,16 @@ FROM dbplyr_8zJ2ZCPi8p</code></pre>
 <pre><code># A tibble: 3,662 × 3
    schoolID   birthYear strike_outs
    &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 pennst          1981         340
- 2 swesterntx      1883          41
- 3 ilparkl         1970         350
- 4 texas           1958         549
- 5 beloitwi        1872           3
- 6 okstate         1977          81
- 7 bethanywv       1922           2
- 8 nmnmjco         1972         232
- 9 flhills         1956         134
-10 stthomasfl      1973          42
+ 1 vermont         1869         161
+ 2 michigan        1967         888
+ 3 nmstate         1968          98
+ 4 cacerri         1971         327
+ 5 byu             1961        1030
+ 6 pepperdine      1969           4
+ 7 lsu             1978         162
+ 8 miamidade       1982          56
+ 9 stanford        1961           0
+10 incante         1893         526
 # ℹ 3,652 more rows</code></pre>
 </div>
 </div>
@@ -1189,8 +1189,8 @@ SELECT schoolID, birthYear, SUM(H) AS home_runs
 FROM (
   SELECT Batting.*, birthYear, schoolID
   FROM Batting
-  LEFT JOIN dbplyr_8zJ2ZCPi8p
-    ON (Batting.playerID = dbplyr_8zJ2ZCPi8p.playerID)
+  LEFT JOIN dbplyr_DtqsKKiUgs
+    ON (Batting.playerID = dbplyr_DtqsKKiUgs.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1200,8 +1200,8 @@ SELECT schoolID, birthYear, SUM(SO) AS strike_outs
 FROM (
   SELECT Pitching.*, birthYear, schoolID
   FROM Pitching
-  LEFT JOIN dbplyr_8zJ2ZCPi8p
-    ON (Pitching.playerID = dbplyr_8zJ2ZCPi8p.playerID)
+  LEFT JOIN dbplyr_DtqsKKiUgs
+    ON (Pitching.playerID = dbplyr_DtqsKKiUgs.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
