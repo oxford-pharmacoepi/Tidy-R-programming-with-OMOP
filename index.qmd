@@ -26,3 +26,35 @@ TO ADD
 ## Code
 
 The source code for the book can be found at this [Github repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP)
+
+## renv
+
+This book is rendered using the following version of packages:
+
+```{r, echo=FALSE}
+pkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE) |>
+  purrr::map(\(x) {
+    lines <- paste0(readLines(x), collapse = " ")
+    regmatches(lines, gregexpr("library\\(([^)]+)\\)", lines)) |>
+      purrr::map(\(s) gsub("library\\(([^)]+)\\)", "\\1", s)) |>
+      unlist()
+  }) |>
+  unlist() |>
+  unique() |>
+  sort()
+renv <- jsonlite::read_json(here::here("renv.lock"))
+dplyr::tibble(
+  Packages = pkgs,
+  Version = purrr::map_chr(pkgs, \(x) renv$Packages[[x]]$Version),
+  Link = purrr::map_chr(pkgs, \(x) {
+    link <- renv$Packages[[x]]$URL |>
+      stringr::str_split_1(pattern = ",") |>
+      dplyr::first()
+    paste0("[🔗](", link, ")")
+  })
+) |>
+  gt::gt() |>
+  gt::fmt_markdown("Link")
+```
+
+Note here only the packages called explicitly are mentioned for the full list of packages and versions used see the book [renv file](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/renv.lock) in github.
