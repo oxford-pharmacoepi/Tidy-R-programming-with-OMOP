@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Adding cohorts to the CDM – Tidy R programming with databases: applications with the OMOP common data model</title>
+<title>8&nbsp; Adding cohorts to the CDM – Tidy R programming with databases: applications with the OMOP common data model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./adding_features.html" rel="next">
-<link href="./exploring_the_cdm.html" rel="prev">
+<link href="./working_with_cohorts.html" rel="next">
+<link href="./adding_features.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./omop.html">Working with the OMOP CDM from R</a></li><li class="breadcrumb-item"><a href="./creating_cohorts.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./omop.html">Working with the OMOP CDM from R</a></li><li class="breadcrumb-item"><a href="./creating_cohorts.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -206,32 +206,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./creating_cohorts.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
+  <a href="./adding_features.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./adding_features.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
+  <a href="./creating_cohorts.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./working_with_cohorts.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./summarising_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Summarising cohorts</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./comparing_cohorts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparing cohorts</span></span></a>
   </div>
 </li>
       </ul>
@@ -246,27 +234,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-a-cohort" id="toc-what-is-a-cohort" class="nav-link active" data-scroll-target="#what-is-a-cohort"><span class="header-section-number">7.1</span> What is a cohort?</a></li>
-  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="header-section-number">7.2</span> Set up</a></li>
-  <li><a href="#general-concept-based-cohort" id="toc-general-concept-based-cohort" class="nav-link" data-scroll-target="#general-concept-based-cohort"><span class="header-section-number">7.3</span> General concept based cohort</a></li>
-  <li><a href="#applying-inclusion-criteria" id="toc-applying-inclusion-criteria" class="nav-link" data-scroll-target="#applying-inclusion-criteria"><span class="header-section-number">7.4</span> Applying inclusion criteria</a>
+  <li><a href="#what-is-a-cohort" id="toc-what-is-a-cohort" class="nav-link active" data-scroll-target="#what-is-a-cohort"><span class="header-section-number">8.1</span> What is a cohort?</a></li>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="header-section-number">8.2</span> Set up</a></li>
+  <li><a href="#general-concept-based-cohort" id="toc-general-concept-based-cohort" class="nav-link" data-scroll-target="#general-concept-based-cohort"><span class="header-section-number">8.3</span> General concept based cohort</a></li>
+  <li><a href="#applying-inclusion-criteria" id="toc-applying-inclusion-criteria" class="nav-link" data-scroll-target="#applying-inclusion-criteria"><span class="header-section-number">8.4</span> Applying inclusion criteria</a>
   <ul class="collapse">
-  <li><a href="#only-include-first-cohort-entry-per-person" id="toc-only-include-first-cohort-entry-per-person" class="nav-link" data-scroll-target="#only-include-first-cohort-entry-per-person"><span class="header-section-number">7.4.1</span> Only include first cohort entry per person</a></li>
-  <li><a href="#restrict-to-study-period" id="toc-restrict-to-study-period" class="nav-link" data-scroll-target="#restrict-to-study-period"><span class="header-section-number">7.4.2</span> Restrict to study period</a></li>
-  <li><a href="#applying-demographic-inclusion-criteria" id="toc-applying-demographic-inclusion-criteria" class="nav-link" data-scroll-target="#applying-demographic-inclusion-criteria"><span class="header-section-number">7.4.3</span> Applying demographic inclusion criteria</a></li>
-  <li><a href="#applying-cohort-based-inclusion-criteria" id="toc-applying-cohort-based-inclusion-criteria" class="nav-link" data-scroll-target="#applying-cohort-based-inclusion-criteria"><span class="header-section-number">7.4.4</span> Applying cohort-based inclusion criteria</a></li>
+  <li><a href="#only-include-first-cohort-entry-per-person" id="toc-only-include-first-cohort-entry-per-person" class="nav-link" data-scroll-target="#only-include-first-cohort-entry-per-person"><span class="header-section-number">8.4.1</span> Only include first cohort entry per person</a></li>
+  <li><a href="#restrict-to-study-period" id="toc-restrict-to-study-period" class="nav-link" data-scroll-target="#restrict-to-study-period"><span class="header-section-number">8.4.2</span> Restrict to study period</a></li>
+  <li><a href="#applying-demographic-inclusion-criteria" id="toc-applying-demographic-inclusion-criteria" class="nav-link" data-scroll-target="#applying-demographic-inclusion-criteria"><span class="header-section-number">8.4.3</span> Applying demographic inclusion criteria</a></li>
+  <li><a href="#applying-cohort-based-inclusion-criteria" id="toc-applying-cohort-based-inclusion-criteria" class="nav-link" data-scroll-target="#applying-cohort-based-inclusion-criteria"><span class="header-section-number">8.4.4</span> Applying cohort-based inclusion criteria</a></li>
   </ul></li>
-  <li><a href="#cohort-attributes" id="toc-cohort-attributes" class="nav-link" data-scroll-target="#cohort-attributes"><span class="header-section-number">7.5</span> Cohort attributes</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">8</span> Further reading</a></li>
+  <li><a href="#cohort-attributes" id="toc-cohort-attributes" class="nav-link" data-scroll-target="#cohort-attributes"><span class="header-section-number">8.5</span> Cohort attributes</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">9</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./omop.html">Working with the OMOP CDM from R</a></li><li class="breadcrumb-item"><a href="./creating_cohorts.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./omop.html">Working with the OMOP CDM from R</a></li><li class="breadcrumb-item"><a href="./creating_cohorts.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></h1>
 </div>
 
 
@@ -283,14 +271,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="what-is-a-cohort" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="what-is-a-cohort"><span class="header-section-number">7.1</span> What is a cohort?</h2>
+<section id="what-is-a-cohort" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="what-is-a-cohort"><span class="header-section-number">8.1</span> What is a cohort?</h2>
 <p>When performing research with the OMOP common data model we often want to identify groups of individuals who share some set of characteristics. The criteria for including individuals can range from the seemingly simple (e.g.&nbsp;people diagnosed with asthma) to the much more complicated (e.g.&nbsp;adults diagnosed with asthma who had a year of prior observation time in the database prior to their diagnosis, had no prior history of chronic obstructive pulmonary disease, and no history of use of short-acting beta-antagonists).</p>
 <p>The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields: 1) cohort definition id (a unique identifier for each cohort), 2) subject id (a foreign key to the subject in the cohort - typically referring to records in the person table), 3) cohort start date, and 4) cohort end date. Individuals can enter a cohort multiple times, but the time periods in which they are in the cohort cannot overlap. Individuals will only be considered in a cohort when they have have an ongoing observation period.</p>
 <p>It is beyond the scope of this book to describe all the different ways cohorts could be created, however in this chapter we provide a summary of some of the key building blocks for cohort creation. Cohort-building pipelines can be created following these principles to create a wide range of study cohorts.</p>
 </section>
-<section id="set-up" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="set-up"><span class="header-section-number">7.2</span> Set up</h2>
+<section id="set-up" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="set-up"><span class="header-section-number">8.2</span> Set up</h2>
 <p>We’ll use our synthetic dataset for demonstrating how cohorts can be constructed.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
@@ -306,8 +294,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db, <span class="at">cdmSchema =</span> <span class="st">"main"</span>, <span class="at">writeSchema =</span> <span class="st">"main"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="general-concept-based-cohort" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="general-concept-based-cohort"><span class="header-section-number">7.3</span> General concept based cohort</h2>
+<section id="general-concept-based-cohort" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="general-concept-based-cohort"><span class="header-section-number">8.3</span> General concept based cohort</h2>
 <p>Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the <code>CohortConstructor</code> package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code 37311061.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(<span class="at">cdm =</span> cdm, </span>
@@ -316,19 +304,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;covid&gt; [?? x 4]
-# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmpiUzQGu/file2df73e745556.duckdb]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/Rtmp2y0FNI/file2dfa18269138.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       1068 2020-03-24        2020-04-23     
- 2                    1        157 2020-11-08        2020-11-29     
- 3                    1        942 2020-11-26        2020-11-26     
- 4                    1       1381 2020-08-02        2020-09-07     
- 5                    1       3006 2020-12-07        2020-12-27     
- 6                    1       4285 2020-11-13        2020-12-20     
- 7                    1       4516 2021-04-29        2021-06-01     
- 8                    1       8985 2020-04-17        2020-04-17     
- 9                    1       9321 2021-01-15        2021-02-09     
-10                    1      10269 2021-03-19        2021-04-17     
+ 1                    1        295 2020-04-23        2020-05-21     
+ 2                    1       2518 2020-10-29        2020-11-21     
+ 3                    1       2807 2020-11-26        2020-12-27     
+ 4                    1       6133 2021-02-08        2021-03-15     
+ 5                    1       6734 2020-12-04        2020-12-15     
+ 6                    1       3600 2021-01-16        2021-02-15     
+ 7                    1       6785 2020-11-21        2020-12-09     
+ 8                    1       9036 2021-08-16        2021-08-27     
+ 9                    1       2129 2021-01-07        2021-02-03     
+10                    1       7416 2020-04-28        2020-05-26     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -364,16 +352,16 @@ Time taken: 0 minutes and 1 seconds</code></pre>
 <pre><code># A tibble: 37 × 6
    concept_id found_from   concept_name domain_id vocabulary_id standard_concept
         &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
- 1    3656667 From initia… Cardiomyopa… Condition SNOMED        S               
- 2    3656669 From initia… Dyspnea cau… Condition SNOMED        S               
- 3   37310284 From initia… Encephalopa… Condition SNOMED        S               
- 4     703446 From initia… Moderate ri… Condition SNOMED        S               
- 5     703445 From initia… Low risk ca… Condition SNOMED        S               
- 6   37311061 From initia… COVID-19     Condition SNOMED        S               
- 7    3655975 From initia… Sepsis due … Condition SNOMED        S               
- 8   37016927 From initia… Pneumonia c… Condition SNOMED        S               
- 9    3661885 From initia… Fever cause… Condition SNOMED        S               
-10   37310286 From initia… Infection o… Condition SNOMED        S               
+ 1   40479642 From initia… Pneumonia d… Condition SNOMED        S               
+ 2     439676 From initia… Coronavirus… Condition SNOMED        S               
+ 3    3655973 From initia… At increase… Condition SNOMED        S               
+ 4    3661406 From initia… Acute respi… Condition SNOMED        S               
+ 5     756039 From initia… Respiratory… Condition OMOP Extensi… S               
+ 6     756031 From initia… Bronchitis … Condition OMOP Extensi… S               
+ 7    3661632 From initia… Thrombocyto… Condition SNOMED        S               
+ 8    3661885 From initia… Fever cause… Condition SNOMED        S               
+ 9   37310286 From initia… Infection o… Condition SNOMED        S               
+10     703447 From initia… High risk c… Condition SNOMED        S               
 # ℹ 27 more rows</code></pre>
 </div>
 </div>
@@ -439,33 +427,33 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 </div>
 <p>As we will see below these attributes of the cohorts become particularly useful as we apply further restrictions on our cohort.</p>
 </section>
-<section id="applying-inclusion-criteria" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="applying-inclusion-criteria"><span class="header-section-number">7.4</span> Applying inclusion criteria</h2>
-<section id="only-include-first-cohort-entry-per-person" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="only-include-first-cohort-entry-per-person"><span class="header-section-number">7.4.1</span> Only include first cohort entry per person</h3>
+<section id="applying-inclusion-criteria" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="applying-inclusion-criteria"><span class="header-section-number">8.4</span> Applying inclusion criteria</h2>
+<section id="only-include-first-cohort-entry-per-person" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="only-include-first-cohort-entry-per-person"><span class="header-section-number">8.4.1</span> Only include first cohort entry per person</h3>
 <p>Let’s say we first want to restrict to first entry.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">requireIsFirstEntry</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="restrict-to-study-period" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="restrict-to-study-period"><span class="header-section-number">7.4.2</span> Restrict to study period</h3>
+<section id="restrict-to-study-period" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="restrict-to-study-period"><span class="header-section-number">8.4.2</span> Restrict to study period</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireInDateRange</span>(<span class="at">dateRange =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>), <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="applying-demographic-inclusion-criteria" class="level3" data-number="7.4.3">
-<h3 data-number="7.4.3" class="anchored" data-anchor-id="applying-demographic-inclusion-criteria"><span class="header-section-number">7.4.3</span> Applying demographic inclusion criteria</h3>
+<section id="applying-demographic-inclusion-criteria" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="applying-demographic-inclusion-criteria"><span class="header-section-number">8.4.3</span> Applying demographic inclusion criteria</h3>
 <p>Say for our study we want to include people with a GI bleed who were aged 40 or over at the time. We can use the add variables with these characteristics as seen in chapter 4 and then filter accordingly. The function <code>CDMConnector::record_cohort_attrition()</code> will then update our cohort attributes as we can see below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireDemographics</span>(<span class="at">ageRange =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">64</span>), <span class="at">sex =</span> <span class="st">"Male"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="applying-cohort-based-inclusion-criteria" class="level3" data-number="7.4.4">
-<h3 data-number="7.4.4" class="anchored" data-anchor-id="applying-cohort-based-inclusion-criteria"><span class="header-section-number">7.4.4</span> Applying cohort-based inclusion criteria</h3>
+<section id="applying-cohort-based-inclusion-criteria" class="level3" data-number="8.4.4">
+<h3 data-number="8.4.4" class="anchored" data-anchor-id="applying-cohort-based-inclusion-criteria"><span class="header-section-number">8.4.4</span> Applying cohort-based inclusion criteria</h3>
 <p>As well as requirements about specific demographics, we may also want to use another cohort for inclusion criteria. Let’s say we want to exclude anyone with a history of cardiac conditions before their Covid-19 cohort entry.</p>
 <p>We can first generate this new cohort table with records of cardiac conditions.</p>
 <div class="cell">
@@ -479,19 +467,19 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;cardiac&gt; [?? x 4]
-# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmpiUzQGu/file2df73e745556.duckdb]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/Rtmp2y0FNI/file2dfa18269138.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        346 2000-08-24        2000-08-24     
- 2                    1        759 2016-05-29        2016-05-29     
- 3                    1       1627 2022-09-01        2022-09-01     
- 4                    1       1641 2018-01-14        2018-01-14     
- 5                    1       2754 1994-01-28        1994-01-28     
- 6                    1       3522 2015-08-08        2015-08-08     
- 7                    1       3717 1992-01-09        1992-01-09     
- 8                    1       4338 2006-12-08        2006-12-08     
- 9                    1       6088 1996-01-23        1996-01-23     
-10                    1       6769 1950-01-02        1950-01-02     
+ 1                    1       1822 2005-09-28        2005-09-28     
+ 2                    1       3492 2008-09-01        2008-09-01     
+ 3                    1       7004 1998-07-02        1998-07-02     
+ 4                    1        567 2022-04-04        2022-04-04     
+ 5                    1       1063 2013-04-21        2013-04-21     
+ 6                    1       1370 1952-05-06        1952-05-06     
+ 7                    1       2173 2011-07-23        2011-07-23     
+ 8                    1       2567 2001-11-03        2001-11-03     
+ 9                    1       4304 2017-04-29        2017-04-29     
+10                    1       5369 1971-06-05        1971-06-05     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -506,8 +494,8 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 <p>Note if we had wanted to have required that individuals did have a history of a cardiac condition we would instead have set <code>intersections = c(1, Inf)</code> above.</p>
 </section>
 </section>
-<section id="cohort-attributes" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="cohort-attributes"><span class="header-section-number">7.5</span> Cohort attributes</h2>
+<section id="cohort-attributes" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="cohort-attributes"><span class="header-section-number">8.5</span> Cohort attributes</h2>
 <p>We can see that the attributes of the cohort were updated as we applied the inclusion criteria.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
@@ -564,8 +552,8 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13</code>
 </div>
 </div>
 </section>
-<section id="further-reading" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Further reading</h1>
+<section id="further-reading" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Further reading</h1>
 <ul>
 <li>…</li>
 </ul>
@@ -975,13 +963,13 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13</code>
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./exploring_the_cdm.html" class="pagination-link" aria-label="Exploring the OMOP CDM">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span>
+      <a href="./adding_features.html" class="pagination-link" aria-label="Identifying patient characteristics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./adding_features.html" class="pagination-link" aria-label="Identifying patient characteristics">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./working_with_cohorts.html" class="pagination-link" aria-label="Working with cohorts">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
