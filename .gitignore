@@ -8,3 +8,6 @@
 *.zip
 *.duckdb
 .DS_Store
+*.html
+*.tex
+*_files/
