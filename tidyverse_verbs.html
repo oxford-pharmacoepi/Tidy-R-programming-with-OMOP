@@ -609,16 +609,16 @@ INNER JOIN planes
 # Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0/:memory:]
    dest  distance carrier tailnum delay seats
    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt;
- 1 LAX       2475 UA      N34137    -10   178
- 2 CLT        541 US      N117UW    -34   182
- 3 SFO       2586 UA      N502UA      7   178
- 4 ATL        760 DL      N681DA    -12   178
- 5 FLL       1069 B6      N568JB     -3   200
- 6 BUF        301 B6      N236JB      2    20
- 7 RSW       1074 B6      N583JB      2   200
- 8 LAS       2248 B6      N621JB      0   200
- 9 PHX       2153 US      N510UW    -35   379
-10 TPA       1005 B6      N606JB      7   200
+ 1 BTV        266 B6      N197JB    -10    20
+ 2 BTV        266 B6      N298JB    118    20
+ 3 LAX       2475 B6      N768JB    -11   200
+ 4 FLL       1069 B6      N807JB     14   200
+ 5 PWM        273 B6      N307JB     65    20
+ 6 SJU       1598 DL      N3757D    -25   189
+ 7 MCO        944 DL      N932DL      3   142
+ 8 MCO        944 DL      N930DL    200   142
+ 9 LAX       2475 AA      N324AA    -19   255
+10 BOS        187 9E      N604LR    -11    95
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -632,12 +632,12 @@ INNER JOIN planes
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 93,298
 Columns: 6
-$ dest     &lt;chr&gt; "BQN", "MCO", "PBI", "BOS", "ATL", "SJU", "PHX", "BOS", "LAS"…
-$ distance &lt;dbl&gt; 1576, 944, 1028, 187, 760, 1598, 2153, 187, 2248, 1990, 2586,…
-$ carrier  &lt;chr&gt; "B6", "B6", "B6", "B6", "DL", "B6", "US", "B6", "B6", "DL", "…
-$ tailnum  &lt;chr&gt; "N804JB", "N593JB", "N793JB", "N708JB", "N3739P", "N794JB", "…
-$ delay    &lt;dbl&gt; -18, -8, -2, -4, -8, -21, 0, -10, -6, -9, -8, 2, 1, 44, -15, …
-$ seats    &lt;int&gt; 200, 200, 200, 200, 189, 200, 379, 200, 200, 189, 178, 182, 2…</code></pre>
+$ dest     &lt;chr&gt; "LAX", "CLT", "SFO", "ATL", "FLL", "BUF", "RSW", "LAS", "PHX"…
+$ distance &lt;dbl&gt; 2475, 541, 2586, 760, 1069, 301, 1074, 2248, 2153, 1005, 2475…
+$ carrier  &lt;chr&gt; "UA", "US", "UA", "DL", "B6", "B6", "B6", "B6", "US", "B6", "…
+$ tailnum  &lt;chr&gt; "N34137", "N117UW", "N502UA", "N681DA", "N568JB", "N236JB", "…
+$ delay    &lt;dbl&gt; -10, -34, 7, -12, -3, 2, 2, 0, -35, 7, -12, 11, -20, -10, -1,…
+$ seats    &lt;int&gt; 178, 182, 178, 178, 200, 20, 200, 200, 379, 200, 200, 178, 17…</code></pre>
 </div>
 </div>
 
