@@ -14,31 +14,45 @@ library(ggplot2)
 ```
 
 ```{r}
-db <- dbConnect(drv = duckdb(),
-                dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
-cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
+con <- dbConnect(drv = duckdb(),
+                 dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
+cdm <- cdmFromCon(con = con, cdmSchema = "main", writeSchema = "main")
 ```
 
-As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (ie a characteristic that does not change as time passes and a person ages) or time-varying.[^ch_4_adding_features-1]
+As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (i.e. a characteristic that does not change as time passes and a person ages) or time-varying.[^adding_features-1]
 
-[^ch_4_adding_features-1]: In some datasets characteristics that could conceptually be considered as time-varying are encoded as time-invariant. One example for the latter is that in some cases an individual may be associated with a particular socioeconomic status or nationality that for the purposes of the data is treated as time-invariant.
+[^adding_features-1]: In some datasets characteristics that could conceptually be considered as time-varying are encoded as time-invariant. One example for the latter is that in some cases an individual may be associated with a particular socioeconomic status or nationality that for the purposes of the data is treated as time-invariant.
 
 ## Adding specific demographics
 
-The `PatientProfiles` package makes it easy for us to add demographic information to tables in the OMOP CDM. Like the `CDMConnector` package we've seen previously, the fact that the structure of the OMOP CDM is known allows the `PatientProfiles` package to abstract away some common data manipulations required to do research with patient-level data.[^ch_4_adding_features-2]
+The `PatientProfiles` package makes it easy for us to add demographic information to tables in the OMOP CDM. Like the `CDMConnector` package we've seen previously, the fact that the structure of the OMOP CDM is known allows the `PatientProfiles` package to abstract away some common data manipulations required to do research with patient-level data.[^adding_features-2]
 
-[^ch_4_adding_features-2]: Although these manipulations can on the face of it seem quite simple, their implementation across different database platforms with different data granularity (for example whether day of birth has been filled in for all patients or not) presents challenges that the `PatientProfiles` package solves for us.
+[^adding_features-2]: Although these manipulations can on the face of it seem quite simple, their implementation across different database platforms with different data granularity (for example whether day of birth has been filled in for all patients or not) presents challenges that the `PatientProfiles` package solves for us.
 
 Let's say we are interested in individuals' age and sex at time of diagnosis with COVID-19. We can add these variables to the table like so (noting that because age is time-varying, we have to specify the variable with the date for which we want to calculate age relative to).
 
 ```{r}
-cdm$condition_occurrence <- cdm$condition_occurrence |> 
+covid_records <- cdm$condition_occurrence |>
+  filter(condition_concept_id == 37311061)
+
+covid_records <- covid_records |> 
   addSex() |> 
   addAge(indexDate = "condition_start_date")
 
-cdm$condition_occurrence |> 
+covid_records |> 
   glimpse()
 ```
+
+Note `addAge()` and `addSex()` will add the patients demographics and compute it in a temporary table (use `name` argument if you want it to be a permanent table). If instead of creating the temporary table we want just to add the query we can use the same functions ended in `Query` (e.g. `addAgeQuery()` or `addSexQuery()`).
+
+See that now `covid_records` is the reference to a table as we used the `addAge()` and `addSex` function.
+
+```{r}
+covid_records |>
+  show_query()
+```
+
+whereas if we use the `addSexQuery` function we are 'just' adding the query as we can see here
 
 ```{r}
 cdm$condition_occurrence |> 
@@ -46,26 +60,20 @@ cdm$condition_occurrence |>
   show_query()
 ```
 
-We now have two variables added containing values for age and sex.
-
-```{r}
-cdm$condition_occurrence |> 
-  glimpse()
-```
-
 And with these now added it is straightforward to calculate mean age at condition start date by sex or even plot the distribution of age at diagnosis by sex.
 
 ```{r}
-cdm$condition_occurrence |>
+covid_records |>
   summarise(mean_age = mean(age, na.rm=TRUE), .by = "sex") |> 
   collect()
 ```
 
 ```{r}
-cdm$condition_occurrence |>
+covid_records <- covid_records |>
   select("person_id", "age", "sex") |> 
-  collect()  |>
-  ggplot(aes(fill = sex)) +
+  collect()
+
+ggplot(covid_records, aes(fill = sex)) +
   facet_grid(sex ~ .) +
   geom_histogram(aes(age), colour = "black", binwidth = 5) +
   theme_bw() +
@@ -75,9 +83,9 @@ cdm$condition_occurrence |>
 
 ## Adding multiple demographics simultaneously
 
-We've now seen individual functions from `PatientProfiles` to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named `addPriorObservation()`). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.[^ch_4_adding_features-3]
+We've now seen individual functions from `PatientProfiles` to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named `addPriorObservation()`). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.[^adding_features-3]
 
-[^ch_4_adding_features-3]: This function also provides a more time efficient method that getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables and so can be identified simultaneously.
+[^adding_features-3]: This function also provides a more time efficient method that getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables and so can be identified simultaneously.
 
 ```{r}
 cdm$drug_exposure <- cdm$drug_exposure |> 
