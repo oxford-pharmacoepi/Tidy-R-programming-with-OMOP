@@ -4,7 +4,15 @@ project:
 
 book:
   title: "Tidy R programming with databases: applications with the OMOP common data model"
-  author: "Edward Burn, Adam Black, Berta Raventós, Yuchen Guo, Mike Du, Kim López-Güell, Núria Mercadé-Besora, Martí Català"
+  author:
+    - name: Edward Burn
+    - name: Adam Black
+    - name: Berta Raventós
+    - name: Yuchen Guo
+    - name: Mike Du
+    - name: Kim López-Güell
+    - name: Núria Mercadé-Besora
+    - name: Martí Català
   date: today
   chapters:
     - index.qmd
@@ -27,7 +35,10 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
-  pdf:
-    documentclass: book
-    
+  titlepage-pdf:
+    titlepage: formal
+    documentclass: scrbook
+    classoption: ["oneside", "open=any"]
+    keep-tex: true
+
 editor: visual
