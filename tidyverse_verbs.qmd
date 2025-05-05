@@ -7,6 +7,7 @@ We saw in the previous chapter that we can use familiar `dplyr` verbs with data 
 Let's load the required libraries, add our data to a duckdb database, and then create references to each of these tables.
 
 ```{r, message=FALSE, warning=FALSE}
+install.packages("nycflights13")
 library(dplyr)
 library(dbplyr)
 library(tidyr)
