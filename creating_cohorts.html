@@ -304,19 +304,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;covid&gt; [?? x 4]
-# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmpZQ6X4N/file2ebd646ed112.duckdb]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmprVfhda/file2f0c37a9187.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1          8 2021-01-08        2021-02-13     
- 2                    1       4307 2021-01-20        2021-01-31     
- 3                    1       4998 2021-03-06        2021-03-22     
- 4                    1       8601 2020-12-29        2021-01-31     
- 5                    1       7056 2021-01-04        2021-01-20     
- 6                    1       7185 2021-08-03        2021-08-03     
- 7                    1       2410 2020-12-15        2020-12-25     
- 8                    1       3918 2021-08-28        2021-09-12     
- 9                    1       6625 2020-11-06        2020-12-07     
-10                    1       7933 2020-12-15        2021-01-12     
+ 1                    1       1635 2020-07-14        2020-08-08     
+ 2                    1       2000 2020-11-15        2020-12-10     
+ 3                    1       4649 2021-09-08        2021-10-12     
+ 4                    1       9822 2021-02-06        2021-02-25     
+ 5                    1      10394 2020-11-29        2020-12-31     
+ 6                    1       4783 2020-05-30        2020-06-12     
+ 7                    1       5796 2020-11-04        2020-11-23     
+ 8                    1       6583 2021-01-10        2021-02-13     
+ 9                    1       8721 2020-04-14        2020-04-23     
+10                    1       2386 2021-01-29        2021-02-24     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -352,16 +352,16 @@ Time taken: 0 minutes and 1 seconds</code></pre>
 <pre><code># A tibble: 37 × 6
    concept_id found_from   concept_name domain_id vocabulary_id standard_concept
         &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
- 1    3661406 From initia… Acute respi… Condition SNOMED        S               
- 2    3655973 From initia… At increase… Condition SNOMED        S               
- 3     439676 From initia… Coronavirus… Condition SNOMED        S               
- 4   40479642 From initia… Pneumonia d… Condition SNOMED        S               
- 5    3656667 From initia… Cardiomyopa… Condition SNOMED        S               
- 6    3656669 From initia… Dyspnea cau… Condition SNOMED        S               
- 7   37310284 From initia… Encephalopa… Condition SNOMED        S               
- 8     703446 From initia… Moderate ri… Condition SNOMED        S               
- 9     703445 From initia… Low risk ca… Condition SNOMED        S               
-10   37016927 From initia… Pneumonia c… Condition SNOMED        S               
+ 1    3656668 From initia… Conjunctivi… Condition SNOMED        S               
+ 2   37310254 From initia… Otitis medi… Condition SNOMED        S               
+ 3   37310287 From initia… Myocarditis… Condition SNOMED        S               
+ 4   37310283 From initia… Gastroenter… Condition SNOMED        S               
+ 5    3661631 From initia… Lymphocytop… Condition SNOMED        S               
+ 6    3661748 From initia… Acute kidne… Condition SNOMED        S               
+ 7    3655976 From initia… Acute hypox… Condition SNOMED        S               
+ 8    3655977 From initia… Rhabdomyoly… Condition SNOMED        S               
+ 9     705076 From initia… Post-acute … Condition OMOP Extensi… S               
+10    1340294 From initia… Exacerbatio… Condition OMOP Extensi… S               
 # ℹ 27 more rows</code></pre>
 </div>
 </div>
@@ -467,19 +467,19 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;cardiac&gt; [?? x 4]
-# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmpZQ6X4N/file2ebd646ed112.duckdb]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmprVfhda/file2f0c37a9187.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       1771 2019-02-05        2019-02-05     
- 2                    1       3538 1999-02-09        1999-02-09     
- 3                    1       4186 1978-08-02        1978-08-02     
- 4                    1       4856 2009-07-01        2009-07-01     
- 5                    1       5569 1972-09-02        1972-09-02     
- 6                    1       6326 1997-12-05        1997-12-05     
- 7                    1       7198 1984-09-30        1984-09-30     
- 8                    1       7723 1991-07-01        1991-07-01     
- 9                    1       8926 2015-04-28        2015-04-28     
-10                    1       9095 2002-01-01        2002-01-01     
+ 1                    1        502 2022-10-30        2022-10-30     
+ 2                    1       4403 1990-05-05        1990-05-05     
+ 3                    1       8464 1968-04-03        1968-04-03     
+ 4                    1       9181 1993-11-01        1993-11-01     
+ 5                    1       9737 2017-09-02        2017-09-02     
+ 6                    1      10639 2011-12-06        2011-12-06     
+ 7                    1        777 2021-08-30        2021-08-30     
+ 8                    1       1761 2015-10-02        2015-10-02     
+ 9                    1       3334 1990-02-19        1990-02-19     
+10                    1       5010 2021-09-30        2021-09-30     
 # ℹ more rows</code></pre>
 </div>
 </div>
