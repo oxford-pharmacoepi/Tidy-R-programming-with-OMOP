@@ -4,6 +4,7 @@ For this chapter, we'll use a synthetic Covid-19 dataset.
 
 ```{r, warning=FALSE, message=FALSE}
 library(DBI)
+library(duckdb)
 library(dbplyr)
 library(dplyr)
 library(here)
