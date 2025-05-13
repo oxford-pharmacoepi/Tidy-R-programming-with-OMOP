@@ -30,16 +30,16 @@ cdm_local <- mockCdmReference() |>
     mockVisitOccurrence() |>
     mockProcedureOccurrence()
 
-db <- dbConnect(drv = duckdb())
+con <- dbConnect(drv = duckdb())
 
 cdm <- insertCdmTo(cdm = cdm_local,
-                   to = dbSource(con = db, writeSchema = "main"))
+                   to = dbSource(con = con, writeSchema = "main"))
 ```
 
-Now that we have OMOP CDM data in a database, we can use the function `cdmFromCon()` from `CDMConnector` to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access and where intermediate tables can be created for a given study.
+Note that `insertCdmTo()` output is already a `<cdm_reference>` object. But how we would create this cdm reference from the connection? We can use the function `cdmFromCon()` from `CDMConnector` to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access and where intermediate tables can be created for a given study.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(db, 
+cdm <- cdmFromCon(con = con, 
                   cdmSchema = "main", 
                   writeSchema = "main",
                   cdmName = "example_data")
@@ -71,7 +71,7 @@ cdm$person
 cdm[["observation_period"]]
 ```
 
-Note that here we have first created a local version of the cdm with all the tables of interest with `omock`, then copied it to a `duckdb` database, and finally crated a reference to it with `CDMConnector`, so that we can work with the final `cdm` object as we normally would for one created with our own healthcare data. In that case we would directly use `cdmFromCon` with our own database information. Throughout this chapter, however, we will keep working with the mock dataset.
+Note that here we have first created a local version of the cdm with all the tables of interest with `omock` (`cdm_local`), then copied it to a `duckdb` database, and finally crated a reference to it with `CDMConnector`, so that we can work with the final `cdm` object as we normally would for one created with our own healthcare data. In that case we would directly use `cdmFromCon` with our own database information. Throughout this chapter, however, we will keep working with the mock dataset.
 
 ## CDM attributes
 
@@ -80,9 +80,9 @@ Note that here we have first created a local version of the cdm with all the tab
 Our cdm reference will be associated with a name. By default this name will be taken from the `cdm_source_name` field from the `cdm_source` table. We will use the function `cdmName` from `omopgenerics` to get it.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(db,
-  cdmSchema = "main", 
-  writeSchema = "main")
+cdm <- cdmFromCon(con = con,
+                  cdmSchema = "main", 
+                  writeSchema = "main")
 cdm$cdm_source
 cdmName(cdm)
 ```
@@ -90,10 +90,10 @@ cdmName(cdm)
 However, we can instead set this name to whatever else we want when creating our cdm reference.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(db,
-  cdmSchema = "main", 
-  writeSchema = "main", 
-  cdmName = "my_cdm")
+cdm <- cdmFromCon(con = con,
+                  cdmSchema = "main", 
+                  writeSchema = "main", 
+                  cdmName = "my_cdm")
 cdmName(cdm)
 ```
 
@@ -106,14 +106,13 @@ cdmName(cdm$person)
 ::: {.callout-tip collapse="true"}
 ## Behind the scenes
 
-The class of the cdm reference itself is cdm_reference.
+The class of the cdm reference itself is `<cdm_reference>`.
 
 ```{r, message=FALSE, warning=FALSE}
 class(cdm)
-class(cdm$person)
 ```
 
-Each of the tables has class cdm_table. If the table is one of the standard OMOP CDM tables it will also have class omop_table. This latter class is defined so that we can allow different behaviour for these core tables (person, condition_occurrence, observation_period, etc.) compared to other tables that are added to the cdm reference during the course of running a study.
+Each of the tables has class `<cdm_table>`. If the table is one of the standard OMOP CDM tables it will also have class `<omop_table>`. This latter class is defined so that we can allow different behaviour for these core tables (person, condition_occurrence, observation_period, etc.) compared to other tables that are added to the cdm reference during the course of running a study.
 
 ```{r, message=FALSE, warning=FALSE}
 class(cdm$person)
@@ -136,6 +135,17 @@ We can also easily check the OMOP CDM version that is being used with the functi
 cdmVersion(cdm)
 ```
 
+::: {.callout-note collapse="true"}
+## cdmVersion
+
+Note, the `cdmVersion()` function also works for `<cdm_table>` objects:
+
+```{r}
+cdmVersion(cdm$person)
+```
+
+:::
+
 ## Including cohort tables in the cdm reference
 
 We'll be seeing how to create cohorts in more detail in @sec-creating_cohorts. For the moment, let's just outline how we can include a cohort in our cdm reference. For this we'll use `omock` to add a cohort to our local cdm and upload that to a `duckdb` database again.
@@ -143,15 +153,15 @@ We'll be seeing how to create cohorts in more detail in @sec-creating_cohorts. F
 ```{r, echo = TRUE}
 cdm_local <- cdm_local |> 
   mockCohort(name = "my_study_cohort")
-db <- dbConnect(drv = duckdb())
+con <- dbConnect(drv = duckdb())
 cdm <- insertCdmTo(cdm = cdm_local,
-                   to = dbSource(con = db, writeSchema = "main"))
+                   to = dbSource(con = con, writeSchema = "main"))
 ```
 
 Now we can specify we want to include this existing cohort table to our cdm object when creating our cdm reference.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(db, 
+cdm <- cdmFromCon(con = con, 
                   cdmSchema = "main", 
                   writeSchema = "main",
                   cohortTables = "my_study_cohort",
@@ -171,9 +181,9 @@ If we have the results tables from the [Achilles R package](https://ohdsi.github
 Just to show how this can be done let's upload some empty results tables in the Achilles format.
 
 ```{r}
-dbWriteTable(db, 
-             "achilles_analysis",
-             tibble(
+dbWriteTable(conn = con, 
+             name = "achilles_analysis",
+             value = tibble(
                analysis_id = NA_integer_,
                analysis_name = NA_character_,
                stratum_1_name = NA_character_,
@@ -183,9 +193,9 @@ dbWriteTable(db,
                stratum_5_name = NA_character_,
                is_default = NA_character_,
                category = NA_character_))
-dbWriteTable(db, 
-             "achilles_results",
-             tibble(
+dbWriteTable(conn = con, 
+             name = "achilles_results",
+             value = tibble(
                analysis_id = NA_integer_,
                stratum_1 = NA_character_,
                stratum_2 = NA_character_,
@@ -193,9 +203,9 @@ dbWriteTable(db,
                stratum_4 = NA_character_,
                stratum_5 = NA_character_,
                count_value = NA_character_))
-dbWriteTable(db, 
-             "achilles_results_dist",
-             tibble(
+dbWriteTable(conn = con, 
+             name = "achilles_results_dist",
+             value = tibble(
                analysis_id = NA_integer_,
                stratum_1 = NA_character_,
                stratum_2 = NA_character_,
@@ -217,7 +227,7 @@ dbWriteTable(db,
 We can now include these achilles table in our cdm reference as in the previous case.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(db, 
+cdm <- cdmFromCon(con = con, 
                   cdmSchema = "main", 
                   writeSchema = "main",
                   cohortTables = "my_study_cohort",
@@ -226,9 +236,11 @@ cdm <- cdmFromCon(db,
 cdm
 ```
 
+Note we specified the `achillesSchema` that in this case is the same than the `writeSchema`, but it can be different.
+
 ## Adding other tables to the cdm reference
 
-Let's say we have some additional local data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using `insertTable` from `omopgenerics`. We will show this with the dataset `cars` in-built in R.
+Let's say we have some additional local data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using `insertTable` from `omopgenerics` (`insertTable` is also re-exported in `CDMConnector`). We will show this with the dataset `cars` in-built in R.
 
 ```{r, echo = TRUE}
 cars |> 
@@ -255,18 +267,34 @@ cdm$cars
 If we already had the table in the database we could have instead just assigned it to our existing cdm reference. To see this let's upload the `penguins` table to our `duckdb` database.
 
 ```{r}
-dbWriteTable(db, 
-             "penguins",
-             penguins)
+dbWriteTable(conn = con, 
+             name = "penguins",
+             value = penguins)
 ```
 
 Once we have this table in the database, we can just assign it to our cdm reference.
 
 ```{r}
-cdm$penguins <- tbl(db, "penguins")
+cdm$penguins <- tbl(src = con, "penguins")
 
 cdm
 ```
+
+::: {.callout-note collapse="true"}
+## Difference between `insertTable` and `dbWriteTable`
+
+- `dbWriteTable` is a function from the `DBI` package that writes a local R data frame to a database. You need to manually specify the schema and table name and it does not update the cdm reference object.
+
+- `insertTable` is a function from the `omopgenerics` package designed for use with cdm reference objects. It writes a local table to the database and adds it to the list of tables in the cdm reference. Internally, it uses `dbWriteTable` but also handles the schema and table name automatically using the writeSchema and writePrefix from the cdm reference.
+
+In general, for studies using OMOP CDM data, you should use `insertTable` rather than `dbWriteTable.` It ensures the table is both written to the correct location in the database and accessible through the cdm reference object. Only use `dbWriteTable` if you are confident working directly with the database and understand its structure.
+
+Note `insertTable` would also work for a local cdm reference or any other defined cdm reference source, whereas the `dbWriteTable` is a database specific function.
+
+<!-- TO DO: -->
+<!-- Add a citation to omopgenerics vignette about supported cdm reference sources when it is ready. -->
+
+:::
 
 ## Mutability of the cdm reference
 
@@ -291,10 +319,10 @@ cdm$person |>
 The original OMOP CDM data itself however will remain unaffected. We can see that, indeed, if we create our reference again the underlying data is unchanged.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(con = db,
+cdm <- cdmFromCon(con = con,
                   cdmSchema = "main", 
                   writeSchema = "main", 
-                  cdmName = "Synthea Covid-19 data")
+                  cdmName = "example_data")
 cdm$person |> 
     tally()
 ```
@@ -323,7 +351,7 @@ Now we would be allowed to have this new table as an additional table in our cdm
 cdm
 ```
 
-The package `omopgenerics` provides a comprehensive list of the required features of a valid cdm reference. You can read more about it [here](https://darwin-eu-dev.github.io/omopgenerics/articles/cdm_reference.html).
+The package `omopgenerics` provides a comprehensive list of the required features of a valid cdm reference. You can read more about it [here](https://darwin-eu.github.io/omopgenerics/articles/cdm_reference.html).
 
 ## Working with temporary and permanent tables
 
@@ -352,7 +380,7 @@ cdm$person_new_permanent
 
 One benefit of working with temporary tables is that they will be automatically dropped at the end of the session, whereas the permanent tables will be left over in the database until explicitly dropped. This helps maintain the original database structure tidy and free of irrelevant data.
 
-However, one disadvantage of using temporary tables is that we will generally accumulate more and more of them as we go (in a single R session), whereas we can overwrite permanent tables continuously. For example, if our study code contains a loop that requires a compute, we would either overwrite an intermediate permanent table 100 times or create 100 different temporary tables in the process. In the latter case we should be wary of consuming a lot of RAM, which could lead to performance issues or even crashes.
+However, one disadvantage of using temporary tables is that we will generally accumulate more and more of them as we go (in a single R session), whereas we can overwrite permanent tables continuously. For example, if our study code contains a loop that requires a compute, we would either overwrite an intermediate permanent table 100 times or create 100 different temporary tables in the process. In the latter case we should be wary of consuming a lot of drive memory, which could lead to performance issues or even crashes.
 
 # Disconnecting
 
