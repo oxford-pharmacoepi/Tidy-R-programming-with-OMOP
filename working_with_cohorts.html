@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-1bc3b17e7a2c2828f435aa750fb76336.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -234,14 +234,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#cohort-intersections" id="toc-cohort-intersections" class="nav-link active" data-scroll-target="#cohort-intersections"><span class="header-section-number">9.1</span> Cohort intersections</a></li>
-  <li><a href="#intersection-between-two-cohorts" id="toc-intersection-between-two-cohorts" class="nav-link" data-scroll-target="#intersection-between-two-cohorts"><span class="header-section-number">9.2</span> Intersection between two cohorts</a></li>
-  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up"><span class="header-section-number">9.3</span> Set up</a>
+  <li><a href="#intersection-between-two-cohorts" id="toc-intersection-between-two-cohorts" class="nav-link" data-scroll-target="#intersection-between-two-cohorts"><span class="header-section-number">9.2</span> Intersection between two cohorts</a>
   <ul class="collapse">
-  <li><a href="#flag" id="toc-flag" class="nav-link" data-scroll-target="#flag"><span class="header-section-number">9.3.1</span> Flag</a></li>
-  <li><a href="#count" id="toc-count" class="nav-link" data-scroll-target="#count"><span class="header-section-number">9.3.2</span> Count</a></li>
-  <li><a href="#date-and-times" id="toc-date-and-times" class="nav-link" data-scroll-target="#date-and-times"><span class="header-section-number">9.3.3</span> Date and times</a></li>
+  <li><a href="#flag" id="toc-flag" class="nav-link" data-scroll-target="#flag"><span class="header-section-number">9.2.1</span> Flag</a></li>
+  <li><a href="#count" id="toc-count" class="nav-link" data-scroll-target="#count"><span class="header-section-number">9.2.2</span> Count</a></li>
+  <li><a href="#date-and-times" id="toc-date-and-times" class="nav-link" data-scroll-target="#date-and-times"><span class="header-section-number">9.2.3</span> Date and times</a></li>
   </ul></li>
-  <li><a href="#intersection-between-a-cohort-and-tables-with-patient-data" id="toc-intersection-between-a-cohort-and-tables-with-patient-data" class="nav-link" data-scroll-target="#intersection-between-a-cohort-and-tables-with-patient-data"><span class="header-section-number">9.4</span> Intersection between a cohort and tables with patient data</a></li>
+  <li><a href="#intersection-between-a-cohort-and-tables-with-patient-data" id="toc-intersection-between-a-cohort-and-tables-with-patient-data" class="nav-link" data-scroll-target="#intersection-between-a-cohort-and-tables-with-patient-data"><span class="header-section-number">9.3</span> Intersection between a cohort and tables with patient data</a></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">10</span> Further reading</a></li>
   </ul>
 </nav>
@@ -270,71 +269,160 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="cohort-intersections" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="cohort-intersections"><span class="header-section-number">9.1</span> Cohort intersections</h2>
-<p>PatientProfiles::addCohortIntersect()</p>
+<p>When conducting research, it is often necessary to study patients who meet multiple clinical criteria simultaneously. For example, we may be interested in analysing outcomes among patients who have both diabetes and hypertension. Using the OMOP Common Data Model, this typically involves first creating two separate cohorts: one for patients with diabetes and another for those with hypertension. To identify patients who meet both conditions, the next step is to compute the intersection of these cohorts. This ensures that the final study population includes only individuals who satisfy all specified criteria. Hence, finding cohort intersections is a common and essential task when working with the OMOP Common Data Model, enabling researchers to define precise target populations that align with their research objectives.</p>
+<p>Depending on the research question, the definition of a cohort intersection may vary. For instance, you might require patients to have a diagnosis of hypertension before developing diabetes, or that both diagnoses occur within a specific time window. These additional temporal or clinical criteria can make cohort intersection more complex. The <code>PatientProfiles</code> R package addresses these challenges by providing a suite of flexible functions to support the calculation of cohort intersections under various scenarios.</p>
 </section>
 <section id="intersection-between-two-cohorts" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="intersection-between-two-cohorts"><span class="header-section-number">9.2</span> Intersection between two cohorts</h2>
-</section>
-<section id="set-up" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="set-up"><span class="header-section-number">9.3</span> Set up</h2>
+<p>Suppose we are interested in studying patients with gastrointestinal (GI) bleeding who have also been exposed to acetaminophen. First, we would create two separate cohorts: one for patients with GI bleeding and another for patients with exposure to acetaminophen. Below is an example of the code used to create these cohorts within the Eunomia synthetic database.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CDMConnector)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># For this example we will use GiBleed data set</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">downloadEunomiaData</span>(<span class="at">datasetName =</span> <span class="st">"GiBleed"</span>)        </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="fu">eunomiaDir</span>())</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db, <span class="at">cdmSchema =</span> <span class="st">"main"</span>, <span class="at">writeSchema =</span> <span class="st">"main"</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># cdm &lt;- cdm |&gt; </span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   generate_concept_cohort_set(concept_set = list("gi_bleed" = 192671), </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                             limit = "all", </span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                             end = 30,</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#                             name = "gi_bleed",</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#                             overwrite = TRUE) |&gt; </span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#   generate_concept_cohort_set(concept_set = list("acetaminophen" = c(1125315,</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                               1127078,</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                               1127433,</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                               40229134,</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                               40231925,</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                               40162522,</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                               19133768)), </span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#                               limit = "all", </span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#                             # end = "event_end_date",</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#                             name = "acetaminophen",</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#                             overwrite = TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># For this example we will use GiBleed data set</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">downloadEunomiaData</span>(<span class="at">datasetName =</span> <span class="st">"GiBleed"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="fu">eunomiaDir</span>())</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(db, <span class="at">cdmSchema =</span> <span class="st">"main"</span>, <span class="at">writeSchema =</span> <span class="st">"main"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> cdm <span class="sc">|&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generateConceptCohortSet</span>(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">conceptSet =</span> <span class="fu">list</span>(<span class="st">"gi_bleed"</span> <span class="ot">=</span> <span class="dv">192671</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">limit =</span> <span class="st">"all"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">end =</span> <span class="dv">30</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"gi_bleed"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">overwrite =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generateConceptCohortSet</span>(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">conceptSet =</span> <span class="fu">list</span>(</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      <span class="st">"acetaminophen"</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1125315</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1127078</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1127433</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="dv">40229134</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="dv">40231925</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="dv">40162522</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="dv">19133768</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">limit =</span> <span class="st">"all"</span>,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># end = "event_end_date",</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"acetaminophen"</span>,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">overwrite =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="flag" class="level3" data-number="9.3.1">
-<h3 data-number="9.3.1" class="anchored" data-anchor-id="flag"><span class="header-section-number">9.3.1</span> Flag</h3>
+<p>The <code>PatientProfiles</code> package contains functions to obtain the intersection flag, count, date, or number of days between cohorts. To get a binary indicator showing the presence of an intersection between the cohorts within a given time window, we can use <code>addCohortIntersectFlag</code>.</p>
+<section id="flag" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="flag"><span class="header-section-number">9.2.1</span> Flag</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cdm$gi_bleed &lt;- cdm$gi_bleed |&gt; </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   addCohortIntersectFlag(targetCohortTable = "acetaminophen",</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                          window = list(c(-Inf, -1), c(0,0), c(1, Inf)))</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># cdm$gi_bleed |&gt; </span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarise(acetaminophen_prior = sum(acetaminophen_minf_to_m1), </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#             acetaminophen_index = sum(acetaminophen_0_to_0),</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#             acetaminophen_post = sum(acetaminophen_1_to_inf)) |&gt; </span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   collect()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(<span class="at">targetCohortTable =</span> <span class="st">"acetaminophen"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">acetaminophen_prior =</span> <span class="fu">sum</span>(acetaminophen_minf_to_m1),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">acetaminophen_index =</span> <span class="fu">sum</span>(acetaminophen_0_to_0),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">acetaminophen_post =</span> <span class="fu">sum</span>(acetaminophen_1_to_inf)) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  acetaminophen_prior acetaminophen_index acetaminophen_post
+                &lt;dbl&gt;               &lt;dbl&gt;              &lt;dbl&gt;
+1                 467                 467                476</code></pre>
+</div>
+</div>
+<p>To get the count of occurrences of intersection between two cohorts, we can use <code>addCohortIntersectCount</code></p>
+</section>
+<section id="count" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="count"><span class="header-section-number">9.2.2</span> Count</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectCount</span>(<span class="at">targetCohortTable =</span> <span class="st">"acetaminophen"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">acetaminophen_prior =</span> <span class="fu">sum</span>(acetaminophen_minf_to_m1),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">acetaminophen_index =</span> <span class="fu">sum</span>(acetaminophen_0_to_0),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">acetaminophen_post =</span> <span class="fu">sum</span>(acetaminophen_1_to_inf)) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  acetaminophen_prior acetaminophen_index acetaminophen_post
+                &lt;dbl&gt;               &lt;dbl&gt;              &lt;dbl&gt;
+1                 467                 467                476</code></pre>
+</div>
 </div>
 </section>
-<section id="count" class="level3" data-number="9.3.2">
-<h3 data-number="9.3.2" class="anchored" data-anchor-id="count"><span class="header-section-number">9.3.2</span> Count</h3>
+<section id="date-and-times" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="date-and-times"><span class="header-section-number">9.2.3</span> Date and times</h3>
+<p>To get the date of the intersection with a cohort within a given time window, we can use <code>addCohortIntersectDate</code>. To get the number of days between the index date and intersection, we can use <code>addCohortIntersectDays</code>.</p>
+<p>Both functions allow the <code>order</code> argument to specify which value to return:</p>
+<ul>
+<li><p><code>first</code> returns the first date/days that satisfy the window</p></li>
+<li><p><code>last</code> returns the last date/days that satisfy the window</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectDate</span>(<span class="at">targetCohortTable =</span> <span class="st">"acetaminophen"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">order =</span> <span class="st">"first"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">acetaminophen_prior =</span> <span class="fu">median</span>(acetaminophen_minf_to_m1),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">acetaminophen_post =</span> <span class="fu">median</span>(acetaminophen_1_to_inf)) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  acetaminophen_prior acetaminophen_post 
+  &lt;dttm&gt;              &lt;dttm&gt;             
+1 1967-08-07 00:00:00 1981-09-14 00:00:00</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectDays</span>(<span class="at">targetCohortTable =</span> <span class="st">"acetaminophen"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">order =</span> <span class="st">"first"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">acetaminophen_prior =</span> <span class="fu">median</span>(acetaminophen_minf_to_m1),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">acetaminophen_post =</span> <span class="fu">median</span>(acetaminophen_1_to_inf)) <span class="sc">|&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  acetaminophen_prior acetaminophen_post
+                &lt;dbl&gt;              &lt;dbl&gt;
+1              -12329               3580</code></pre>
+</div>
+</div>
 </section>
-<section id="date-and-times" class="level3" data-number="9.3.3">
-<h3 data-number="9.3.3" class="anchored" data-anchor-id="date-and-times"><span class="header-section-number">9.3.3</span> Date and times</h3>
 </section>
-</section>
-<section id="intersection-between-a-cohort-and-tables-with-patient-data" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="intersection-between-a-cohort-and-tables-with-patient-data"><span class="header-section-number">9.4</span> Intersection between a cohort and tables with patient data</h2>
+<section id="intersection-between-a-cohort-and-tables-with-patient-data" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="intersection-between-a-cohort-and-tables-with-patient-data"><span class="header-section-number">9.3</span> Intersection between a cohort and tables with patient data</h2>
+<p>Sometimes we might want to get the intersection between a cohort and another OMOP table. <code>PatientProfiles</code> also includes several <code>addTableIntersect*</code> functions to obtain intersection flags, counts, days, or dates between a cohort and clinical tables.</p>
+<p>For example, if we want to get the number of general practitioner (GP) visits for individuals in the cohort, we can use the <code>visit_occurrence</code> table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTableIntersectCount</span>(<span class="at">tableName =</span> <span class="st">"visit_occurrence"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>)))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">visit_occurrence_prior =</span> <span class="fu">median</span>(visit_occurrence_minf_to_m1)) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  visit_occurrence_prior
+                   &lt;dbl&gt;
+1                      0</code></pre>
+</div>
+</div>
 </section>
 <section id="further-reading" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> Further reading</h1>
-<ul>
-<li>…</li>
-</ul>
+<p>Full details on the intersection functions in <code>PatientProfiles</code> can be found on the package website:</p>
+<p>https://darwin-eu.github.io/PatientProfiles/</p>
 
 
 </section>

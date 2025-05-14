@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,7 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-1bc3b17e7a2c2828f435aa750fb76336.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -429,9 +429,9 @@ Foreign keys: 1</code></pre>
 # Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0/:memory:]
   name            
   &lt;chr&gt;           
-1 New York Yankees
-2 Boston Braves   
-3 Boston Red Sox  </code></pre>
+1 Boston Braves   
+2 Boston Red Sox  
+3 New York Yankees</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -483,8 +483,8 @@ FROM (
 # Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0/:memory:]
   name                
   &lt;chr&gt;               
-1 San Francisco Giants
-2 Pittsburgh Pirates  </code></pre>
+1 Pittsburgh Pirates  
+2 San Francisco Giants</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -549,13 +549,13 @@ Choosing the right time to collect data into R
 <pre><code># A tibble: 2 × 1
   name                
   &lt;chr&gt;               
-1 Pittsburgh Pirates  
-2 San Francisco Giants</code></pre>
+1 San Francisco Giants
+2 Pittsburgh Pirates  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(lahman, <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "San Francisco Giants" "Pittsburgh Pirates"  </code></pre>
+<pre><code>[1] "Pittsburgh Pirates"   "San Francisco Giants"</code></pre>
 </div>
 </div>
 <p>In other cases however we may need to collect data so as to perform further analysis steps that are not possible using SQL. This might be the case for plotting or for other analytic steps like fitting statistical models. In such cases we should try to only bring out the data that we need (as we will likely have much less memory available on our local computer than is available for the database).</p>
@@ -839,16 +839,16 @@ Salaries, Schools, SeriesPost, Teams, TeamsFranchises, TeamsHalf</code></pre>
 # Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0/:memory:]
    birthCountry birthYear average_salary
    &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
- 1 USA               1953        859391.
- 2 USA               1959        851332.
- 3 USA               1951        863045.
- 4 P.R.              1950        411250 
- 5 USA               1945        590417.
- 6 USA               1944        673262.
- 7 P.R.              1956        511500 
- 8 Mexico            1948        399138.
- 9 Panama            1952        500000 
-10 USA               1964       1390524.
+ 1 USA               1960       1030321.
+ 2 USA               1952        498378.
+ 3 USA               1956        986760.
+ 4 USA               1961        811250.
+ 5 USA               1950        625076.
+ 6 Nicaragua         1954       2083440.
+ 7 Panama            1945        875000 
+ 8 CAN               1961       1080292.
+ 9 Venezuela         1948        632500 
+10 Cuba              1942        250000 
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1016,7 +1016,7 @@ FROM (
 <pre><code># A tibble: 6,206 × 3
    schoolID   birthYear home_runs
    &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
- 1 pennst          1981         0
+ 1 rice            1981         0
  2 virginia        1987        27
  3 cacerri         1971         3
  4 usc             1947        11
@@ -1038,16 +1038,16 @@ FROM (
 <pre><code># A tibble: 3,662 × 3
    schoolID   birthYear strike_outs
    &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 michigan        1967         888
- 2 texas           1958         549
- 3 nmstate         1968          98
- 4 stanford        1972         218
- 5 beloitwi        1872           3
- 6 upenn           1964          14
- 7 arkansas        1962         537
- 8 mntclairst      1961          46
- 9 incante         1893         526
-10 illinois        1979          19
+ 1 illinoisst      1981         205
+ 2 lehigh          1901           1
+ 3 tamukvill       1978         409
+ 4 byu             1961        1030
+ 5 kentucky        1985          91
+ 6 txsjjcn         1983         571
+ 7 stanford        1961           0
+ 8 bethanywv       1922           2
+ 9 tulane          1968          59
+10 nmnmjco         1972         232
 # ℹ 3,652 more rows</code></pre>
 </div>
 </div>
@@ -1121,7 +1121,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
-FROM dbplyr_u4ngSIqBe1</code></pre>
+FROM dbplyr_L48JsOVBUc</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1189,8 +1189,8 @@ SELECT schoolID, birthYear, SUM(H) AS home_runs
 FROM (
   SELECT Batting.*, birthYear, schoolID
   FROM Batting
-  LEFT JOIN dbplyr_u4ngSIqBe1
-    ON (Batting.playerID = dbplyr_u4ngSIqBe1.playerID)
+  LEFT JOIN dbplyr_L48JsOVBUc
+    ON (Batting.playerID = dbplyr_L48JsOVBUc.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1200,8 +1200,8 @@ SELECT schoolID, birthYear, SUM(SO) AS strike_outs
 FROM (
   SELECT Pitching.*, birthYear, schoolID
   FROM Pitching
-  LEFT JOIN dbplyr_u4ngSIqBe1
-    ON (Pitching.playerID = dbplyr_u4ngSIqBe1.playerID)
+  LEFT JOIN dbplyr_L48JsOVBUc
+    ON (Pitching.playerID = dbplyr_L48JsOVBUc.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>

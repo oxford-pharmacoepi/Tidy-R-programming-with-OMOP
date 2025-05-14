@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,7 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-1bc3b17e7a2c2828f435aa750fb76336.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -304,19 +304,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;covid&gt; [?? x 4]
-# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmprVfhda/file2f0c37a9187.duckdb]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmprGvco3/file69962e51ae44.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       1635 2020-07-14        2020-08-08     
- 2                    1       2000 2020-11-15        2020-12-10     
- 3                    1       4649 2021-09-08        2021-10-12     
- 4                    1       9822 2021-02-06        2021-02-25     
- 5                    1      10394 2020-11-29        2020-12-31     
- 6                    1       4783 2020-05-30        2020-06-12     
- 7                    1       5796 2020-11-04        2020-11-23     
- 8                    1       6583 2021-01-10        2021-02-13     
- 9                    1       8721 2020-04-14        2020-04-23     
-10                    1       2386 2021-01-29        2021-02-24     
+ 1                    1          8 2021-01-08        2021-02-13     
+ 2                    1       4307 2021-01-20        2021-01-31     
+ 3                    1       4998 2021-03-06        2021-03-22     
+ 4                    1       8601 2020-12-29        2021-01-31     
+ 5                    1       1186 2020-10-17        2020-10-29     
+ 6                    1       3294 2020-07-03        2020-08-04     
+ 7                    1       3789 2020-12-06        2020-12-20     
+ 8                    1       6815 2020-12-07        2020-12-24     
+ 9                    1       5157 2021-02-01        2021-03-10     
+10                    1       5165 2020-12-21        2021-01-06     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -352,16 +352,16 @@ Time taken: 0 minutes and 1 seconds</code></pre>
 <pre><code># A tibble: 37 × 6
    concept_id found_from   concept_name domain_id vocabulary_id standard_concept
         &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
- 1    3656668 From initia… Conjunctivi… Condition SNOMED        S               
- 2   37310254 From initia… Otitis medi… Condition SNOMED        S               
- 3   37310287 From initia… Myocarditis… Condition SNOMED        S               
- 4   37310283 From initia… Gastroenter… Condition SNOMED        S               
- 5    3661631 From initia… Lymphocytop… Condition SNOMED        S               
- 6    3661748 From initia… Acute kidne… Condition SNOMED        S               
- 7    3655976 From initia… Acute hypox… Condition SNOMED        S               
- 8    3655977 From initia… Rhabdomyoly… Condition SNOMED        S               
- 9     705076 From initia… Post-acute … Condition OMOP Extensi… S               
-10    1340294 From initia… Exacerbatio… Condition OMOP Extensi… S               
+ 1    3661885 From initia… Fever cause… Condition SNOMED        S               
+ 2   37310286 From initia… Infection o… Condition SNOMED        S               
+ 3     703447 From initia… High risk c… Condition SNOMED        S               
+ 4     756039 From initia… Respiratory… Condition OMOP Extensi… S               
+ 5     756031 From initia… Bronchitis … Condition OMOP Extensi… S               
+ 6    3661632 From initia… Thrombocyto… Condition SNOMED        S               
+ 7    3656668 From initia… Conjunctivi… Condition SNOMED        S               
+ 8   37310254 From initia… Otitis medi… Condition SNOMED        S               
+ 9   37310287 From initia… Myocarditis… Condition SNOMED        S               
+10   37310283 From initia… Gastroenter… Condition SNOMED        S               
 # ℹ 27 more rows</code></pre>
 </div>
 </div>
@@ -467,19 +467,19 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;cardiac&gt; [?? x 4]
-# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmprVfhda/file2f0c37a9187.duckdb]
+# Database: DuckDB v1.2.1 [unknown@Linux 6.11.0-1012-azure:R 4.5.0//tmp/RtmprGvco3/file69962e51ae44.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        502 2022-10-30        2022-10-30     
- 2                    1       4403 1990-05-05        1990-05-05     
- 3                    1       8464 1968-04-03        1968-04-03     
- 4                    1       9181 1993-11-01        1993-11-01     
- 5                    1       9737 2017-09-02        2017-09-02     
- 6                    1      10639 2011-12-06        2011-12-06     
- 7                    1        777 2021-08-30        2021-08-30     
- 8                    1       1761 2015-10-02        2015-10-02     
- 9                    1       3334 1990-02-19        1990-02-19     
-10                    1       5010 2021-09-30        2021-09-30     
+ 1                    1        227 2014-12-15        2014-12-15     
+ 2                    1       2827 2004-09-29        2004-09-29     
+ 3                    1       3702 2018-06-19        2018-06-19     
+ 4                    1       7117 1968-11-29        1968-11-29     
+ 5                    1       7150 1995-02-27        1995-02-27     
+ 6                    1       7951 1993-06-22        1993-06-22     
+ 7                    1       9206 2004-08-24        2004-08-24     
+ 8                    1       9501 1995-02-17        1995-02-17     
+ 9                    1       9762 2018-04-28        2018-04-28     
+10                    1      10628 1999-01-21        1999-01-21     
 # ℹ more rows</code></pre>
 </div>
 </div>
