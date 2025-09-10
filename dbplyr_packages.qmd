@@ -210,7 +210,8 @@ plot_data <- lahman$Batting |>
     birthCountry == "Mexico" ~ "Mexico",
     .default = "Other"
   )) |> 
-  summarise(n = n(), .by = c("yearID", "birthCountry")) |> 
+  group_by(yearID, birthCountry) |>
+  summarise(n = n(), .groups = "drop") |> 
   group_by(yearID) |>
   mutate(percentage = n / sum(n) * 100) |> 
   ungroup() |> 
@@ -235,7 +236,8 @@ lahman$Batting |>
     birthCountry == "Mexico" ~ "Mexico",
     .default = "Other"
   )) |> 
-  summarise(n = n(), .by = c("yearID", "birthCountry")) |> 
+  group_by(yearID, birthCountry) |>
+  summarise(n = n(), .groups = "drop") |> 
   group_by(yearID) |>
   mutate(percentage = n / sum(n) * 100) |> 
   ungroup() |> 
@@ -310,8 +312,8 @@ addBirthYear <- function(lahmanTbl){
 lahman$Salaries |> 
   addBirthCountry() |> 
   addBirthYear() |> 
-  summarise(average_salary = mean(salary), 
-            .by = c("birthCountry", "birthYear"))
+  group_by(birthCountry, birthYear) |>
+  summarise(average_salary = mean(salary), .groups = "drop")
 ```
 
 Although the R code on the face of it looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.
@@ -323,8 +325,8 @@ Although the R code on the face of it looks fine, when we look at the SQL we can
 lahman$Salaries |> 
   addBirthCountry() |> 
   addBirthYear() |> 
-  summarise(average_salary = mean(salary), 
-            .by = c("birthCountry", "birthYear")) |> 
+  group_by(birthCountry, birthYear) |>
+  summarise(average_salary = mean(salary), .groups = "drop") |> 
   show_query()
 ```
 :::
@@ -341,8 +343,8 @@ addCharacteristics <- function(lahmanTbl){
 
 lahman$Salaries |> 
   addCharacteristics() |> 
-  summarise(average_salary = mean(salary), 
-            .by = c("birthCountry", "birthYear"))
+  group_by(birthCountry, birthYear) |>
+  summarise(average_salary = mean(salary), .groups = "drop")
 ```
 
 ::: {.callout-note collapse="true"}
@@ -351,8 +353,8 @@ lahman$Salaries |>
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Salaries |> 
   addCharacteristics() |> 
-  summarise(average_salary = mean(salary), 
-            .by = c("birthCountry", "birthYear")) |> 
+  group_by(birthCountry, birthYear) |>
+  summarise(average_salary = mean(salary), .groups = "drop") |> 
   show_query()
 ```
 :::
@@ -407,15 +409,15 @@ players_with_college <- lahman$People |>
 lahman$Batting |> 
   left_join(players_with_college,
             by = join_by(playerID)) |> 
-  summarise(home_runs = sum(H, na.rm = TRUE), 
-                        .by = c(schoolID, birthYear)) |> 
+  group_by(schoolID, birthYear) |>
+  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |> 
   collect()
 
 lahman$Pitching |> 
   left_join(players_with_college,
             by = join_by(playerID)) |> 
-  summarise(strike_outs = sum(SO, na.rm = TRUE), 
-                        .by = c(schoolID, birthYear))|> 
+  group_by(schoolID, birthYear) |>
+  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop")|> 
   collect()
 ```
 
@@ -428,15 +430,15 @@ Looking at the SQL we can see, however, that there is some duplication, because 
 lahman$Batting |> 
   left_join(players_with_college,
             by = join_by(playerID)) |> 
-  summarise(home_runs = sum(H, na.rm = TRUE), 
-                        .by = c(schoolID, birthYear)) |> 
+  group_by(schoolID, birthYear) |>
+  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |> 
   show_query()
 
 lahman$Pitching |> 
   left_join(players_with_college,
-            by = join_by(playerID)) |> 
-  summarise(strike_outs = sum(SO, na.rm = TRUE), 
-                        .by = c(schoolID, birthYear)) |> 
+            by = join_by(playerID)) |>
+  group_by(schoolID, birthYear) |>
+  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |> 
   show_query()
 ```
 :::
@@ -459,15 +461,15 @@ players_with_college |>
 lahman$Batting |> 
   left_join(players_with_college,
             by = join_by(playerID)) |> 
-  summarise(home_runs = sum(H, na.rm = TRUE), 
-                        .by = c(schoolID, birthYear)) |> 
+  group_by(schoolID, birthYear) |>
+  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |> 
   collect()
 
 lahman$Pitching |> 
   left_join(players_with_college,
             by = join_by(playerID)) |> 
-  summarise(strike_outs = sum(SO, na.rm = TRUE), 
-                        .by = c(schoolID, birthYear))|> 
+  group_by(schoolID, birthYear) |>
+  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |> 
   collect()
 ```
 
@@ -477,16 +479,16 @@ lahman$Pitching |>
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Batting |> 
   left_join(players_with_college,
-            by = join_by(playerID)) |> 
-  summarise(home_runs = sum(H, na.rm = TRUE), 
-                        .by = c(schoolID, birthYear)) |> 
+            by = join_by(playerID)) |>
+  group_by(schoolID, birthYear) |>
+  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |> 
   show_query()
 
 lahman$Pitching |> 
   left_join(players_with_college,
             by = join_by(playerID)) |> 
-  summarise(strike_outs = sum(SO, na.rm = TRUE), 
-                        .by = c(schoolID, birthYear)) |> 
+  group_by(schoolID, birthYear) |>
+  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |> 
   show_query()
 ```
 :::

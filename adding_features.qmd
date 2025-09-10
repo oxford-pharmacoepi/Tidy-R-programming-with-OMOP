@@ -57,7 +57,8 @@ And with these now added it is straightforward to calculate mean age at conditio
 
 ```{r}
 cdm$condition_occurrence |>
-  summarise(mean_age = mean(age, na.rm=TRUE), .by = "sex") |> 
+  group_y(sex) |>
+  summarise(mean_age = mean(age, na.rm=TRUE)) |> 
   collect()
 ```
 
@@ -91,10 +92,10 @@ With these characteristics now all added, we can now calculate mean age, prior o
 
 ```{r}
 cdm$drug_exposure |>
+  group_by(sex) |>
   summarise(mean_age = mean(age, na.rm=TRUE),
             mean_prior_observation = mean(prior_observation, na.rm=TRUE),
-            mean_future_observation = mean(future_observation, na.rm=TRUE),
-            .by = "sex") |> 
+            mean_future_observation = mean(future_observation, na.rm=TRUE)) |> 
   collect()
 ```
 
