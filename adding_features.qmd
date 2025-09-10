@@ -57,7 +57,7 @@ And with these now added it is straightforward to calculate mean age at conditio
 
 ```{r}
 cdm$condition_occurrence |>
-  group_y(sex) |>
+  group_by(sex) |>
   summarise(mean_age = mean(age, na.rm=TRUE)) |> 
   collect()
 ```
