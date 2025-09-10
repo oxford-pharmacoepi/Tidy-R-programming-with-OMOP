@@ -30,9 +30,10 @@ jobs:
         uses: r-lib/actions/setup-tinytex@v2
 
       - name: Install R Dependencies
-        uses: r-lib/actions/setup-renv@v2
-        with:
-          cache-version: 1
+        run: |
+          install.packages(c("renv", "pak"))
+          pak::pkg_install(renv::dependencies()$Package)
+        shell: Rscript {0}
       
       - name: Create directiy to download data
         run: |
