@@ -23,20 +23,11 @@ jobs:
         with:
           r-version: '4.4.1'
         
-      # - name: Install system dependencies
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y libglpk-dev libx11-dev pandoc librsvg2-dev
-        
       - name: Install R packages
         uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: website
 
-      - name: Install R Dependencies
-        run: |
-          install.packages(c("renv", "pak"))
-          pak::pkg_install(renv::dependencies()$Package)
-        shell: Rscript {0}
-        
       - name: Install LaTeX (TinyTeX)
         uses: r-lib/actions/setup-tinytex@v2
       
