@@ -129,7 +129,7 @@ delayed_flights_db <- delayed_flights_db |>
   inner_join(planes_db |> 
               select(tailnum, 
                      seats),
-            by = join_by(tailnum))
+            by = "tailnum")
 ```
 
 Note that our first query was not executed, as we didn't use either `compute()` or `collect()`, so we'll now have added our join to the original query.
