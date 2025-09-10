@@ -93,7 +93,7 @@ getTeams <- function(lahman, name = "Barry Bonds") {
         mutate(full_name = paste0(nameFirst, " ", nameLast)) |>
         filter(full_name %in% name) |>
         select("playerID"),
-      by = join_by(playerID)
+      by = "playerID"
     ) |>
     select(
       "teamID",
@@ -101,7 +101,7 @@ getTeams <- function(lahman, name = "Barry Bonds") {
     ) |>
     distinct() |>
     left_join(lahman$Teams,
-      by = join_by(teamID, yearID)
+      by = c("teamID", "yearID")
     ) |>
     select("name") |>
     distinct()
@@ -159,7 +159,7 @@ addBirthCountry <- function(lahmanTbl){
   lahmanTbl |> 
     left_join(lahman$People |> 
               select("playerID", "birthCountry"),
-              join_by("playerID"))
+              by = "playerID")
 }
 ```
 
@@ -304,7 +304,7 @@ addBirthYear <- function(lahmanTbl){
   lahmanTbl |> 
     left_join(lahman$People |> 
               select("playerID", "birthYear"),
-              join_by("playerID"))
+              by = "playerID")
 }
 
 lahman$Salaries |> 
@@ -336,7 +336,7 @@ addCharacteristics <- function(lahmanTbl){
   lahmanTbl |> 
     left_join(lahman$People |> 
               select("playerID", "birthYear", "birthCountry"),
-              join_by("playerID"))
+              by = "playerID")
 }
 
 lahman$Salaries |> 
@@ -402,18 +402,18 @@ players_with_college <- lahman$People |>
               filter(!is.na(schoolID)) |> 
               select(playerID, schoolID) |> 
               distinct(),
-            by = join_by(playerID))
+            by = "playerID")
 
 lahman$Batting |> 
   left_join(players_with_college,
-            by = join_by(playerID)) |> 
+            by = "playerID") |> 
   summarise(home_runs = sum(H, na.rm = TRUE), 
                         .by = c(schoolID, birthYear)) |> 
   collect()
 
 lahman$Pitching |> 
   left_join(players_with_college,
-            by = join_by(playerID)) |> 
+            by = "playerID") |> 
   summarise(strike_outs = sum(SO, na.rm = TRUE), 
                         .by = c(schoolID, birthYear))|> 
   collect()
@@ -427,14 +427,14 @@ Looking at the SQL we can see, however, that there is some duplication, because 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Batting |> 
   left_join(players_with_college,
-            by = join_by(playerID)) |> 
+            by = "playerID") |> 
   summarise(home_runs = sum(H, na.rm = TRUE), 
                         .by = c(schoolID, birthYear)) |> 
   show_query()
 
 lahman$Pitching |> 
   left_join(players_with_college,
-            by = join_by(playerID)) |> 
+            by = "playerID") |> 
   summarise(strike_outs = sum(SO, na.rm = TRUE), 
                         .by = c(schoolID, birthYear)) |> 
   show_query()
@@ -458,14 +458,14 @@ players_with_college |>
 ```{r, echo = TRUE}
 lahman$Batting |> 
   left_join(players_with_college,
-            by = join_by(playerID)) |> 
+            by = "playerID") |> 
   summarise(home_runs = sum(H, na.rm = TRUE), 
                         .by = c(schoolID, birthYear)) |> 
   collect()
 
 lahman$Pitching |> 
   left_join(players_with_college,
-            by = join_by(playerID)) |> 
+            by = "playerID") |> 
   summarise(strike_outs = sum(SO, na.rm = TRUE), 
                         .by = c(schoolID, birthYear))|> 
   collect()
@@ -477,14 +477,14 @@ lahman$Pitching |>
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Batting |> 
   left_join(players_with_college,
-            by = join_by(playerID)) |> 
+            by = "playerID") |> 
   summarise(home_runs = sum(H, na.rm = TRUE), 
                         .by = c(schoolID, birthYear)) |> 
   show_query()
 
 lahman$Pitching |> 
   left_join(players_with_college,
-            by = join_by(playerID)) |> 
+            by = "playerID") |> 
   summarise(strike_outs = sum(SO, na.rm = TRUE), 
                         .by = c(schoolID, birthYear)) |> 
   show_query()
