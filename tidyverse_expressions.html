@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.7.34">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,10 +73,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-1bc3b17e7a2c2828f435aa750fb76336.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-23102fe0f0b5b1a9f09cc09ebcc8fe5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1322,12 +1322,12 @@ Show SQL
 <div class="sourceCode cell-code" id="cb316"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb316-1"><a href="#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">str_starts</span>(var, <span class="st">"a"</span>), </span>
 <span id="cb316-2"><a href="#cb316-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_duckdb</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;SQL&gt; REGEXP_MATCHES(`var`,'^(?:'||'a'))</code></pre>
+<pre><code>&lt;SQL&gt; REGEXP_MATCHES(`var`, '^(?:' || 'a' || ')')</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb318"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb318-1"><a href="#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">str_ends</span>(var, <span class="st">"a"</span>), </span>
 <span id="cb318-2"><a href="#cb318-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_duckdb</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;SQL&gt; REGEXP_MATCHES((?:`var`,'a'||')$')</code></pre>
+<pre><code>&lt;SQL&gt; REGEXP_MATCHES(`var`, '(?:' || 'a' || ')$')</code></pre>
 </div>
 </div>
 </div>
@@ -2006,19 +2006,19 @@ Show SQL
 <div class="sourceCode cell-code" id="cb556"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb556-1"><a href="#cb556-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">difftime</span>(date_1, date_2), </span>
 <span id="cb556-2"><a href="#cb556-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_redshift</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;SQL&gt; DATEDIFF(DAY, `date_1`, `date_2`)</code></pre>
+<pre><code>&lt;SQL&gt; DATEDIFF(DAY, `date_2`, `date_1`)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb558"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb558-1"><a href="#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">date_count_between</span>(date_1, date_2, <span class="st">"day"</span>), </span>
 <span id="cb558-2"><a href="#cb558-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_redshift</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `date_count_between()`:
-! Don't know how to translate `date_count_between()`</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;SQL&gt; DATEDIFF(DAY, `date_1`, `date_2`)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb560"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb560-1"><a href="#cb560-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">date_count_between</span>(date_1, date_2, <span class="st">"year"</span>), </span>
 <span id="cb560-2"><a href="#cb560-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_redshift</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `date_count_between()`:
-! Don't know how to translate `date_count_between()`</code></pre>
+! `precision = "year"` isn't supported on database backends.
+ℹ It must be "day" instead.</code></pre>
 </div>
 </div>
 </div>
@@ -2052,19 +2052,19 @@ Show SQL
 <div class="sourceCode cell-code" id="cb572"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb572-1"><a href="#cb572-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">difftime</span>(date_1, date_2), </span>
 <span id="cb572-2"><a href="#cb572-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_postgres</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;SQL&gt; (CAST(`date_2` AS DATE) - CAST(`date_1` AS DATE))</code></pre>
+<pre><code>&lt;SQL&gt; (CAST(`date_1` AS DATE) - CAST(`date_2` AS DATE))</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb574"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb574-1"><a href="#cb574-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">date_count_between</span>(date_1, date_2, <span class="st">"day"</span>), </span>
 <span id="cb574-2"><a href="#cb574-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_postgres</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `date_count_between()`:
-! Don't know how to translate `date_count_between()`</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;SQL&gt; `date_2` - `date_1`</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb576"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb576-1"><a href="#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">date_count_between</span>(date_1, date_2, <span class="st">"year"</span>), </span>
 <span id="cb576-2"><a href="#cb576-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_postgres</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `date_count_between()`:
-! Don't know how to translate `date_count_between()`</code></pre>
+! `precision = "year"` isn't supported on database backends.
+ℹ It must be "day" instead.</code></pre>
 </div>
 </div>
 </div>
@@ -2098,19 +2098,19 @@ Show SQL
 <div class="sourceCode cell-code" id="cb588"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb588-1"><a href="#cb588-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">difftime</span>(date_1, date_2), </span>
 <span id="cb588-2"><a href="#cb588-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_snowflake</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;SQL&gt; DATEDIFF(DAY, `date_1`, `date_2`)</code></pre>
+<pre><code>&lt;SQL&gt; DATEDIFF(DAY, `date_2`, `date_1`)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb590"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb590-1"><a href="#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">date_count_between</span>(date_1, date_2, <span class="st">"day"</span>), </span>
 <span id="cb590-2"><a href="#cb590-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_snowflake</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `date_count_between()`:
-! Don't know how to translate `date_count_between()`</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;SQL&gt; DATEDIFF(DAY, `date_1`, `date_2`)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb592"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb592-1"><a href="#cb592-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">date_count_between</span>(date_1, date_2, <span class="st">"year"</span>), </span>
 <span id="cb592-2"><a href="#cb592-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_snowflake</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `date_count_between()`:
-! Don't know how to translate `date_count_between()`</code></pre>
+! `precision = "year"` isn't supported on database backends.
+ℹ It must be "day" instead.</code></pre>
 </div>
 </div>
 </div>
@@ -2139,7 +2139,7 @@ Show SQL
 <div class="sourceCode cell-code" id="cb602"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb602-1"><a href="#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">add_years</span>(date_1, <span class="dv">1</span>), </span>
 <span id="cb602-2"><a href="#cb602-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_spark_sql</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;SQL&gt; ADD_MONTHS('`date_1`', 1.0 * 12.0)</code></pre>
+<pre><code>&lt;SQL&gt; ADD_MONTHS(`date_1`, 1.0 * 12.0)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb604"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb604-1"><a href="#cb604-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">difftime</span>(date_1, date_2), </span>
 <span id="cb604-2"><a href="#cb604-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_spark_sql</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2148,15 +2148,15 @@ Show SQL
 </div>
 <div class="sourceCode cell-code" id="cb606"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb606-1"><a href="#cb606-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">date_count_between</span>(date_1, date_2, <span class="st">"day"</span>), </span>
 <span id="cb606-2"><a href="#cb606-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_spark_sql</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `date_count_between()`:
-! Don't know how to translate `date_count_between()`</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;SQL&gt; DATEDIFF(`date_2`, `date_1`)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb608"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb608-1"><a href="#cb608-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">date_count_between</span>(date_1, date_2, <span class="st">"year"</span>), </span>
 <span id="cb608-2"><a href="#cb608-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_spark_sql</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `date_count_between()`:
-! Don't know how to translate `date_count_between()`</code></pre>
+! `precision = "year"` isn't supported on database backends.
+ℹ It must be "day" instead.</code></pre>
 </div>
 </div>
 </div>
@@ -2190,19 +2190,19 @@ Show SQL
 <div class="sourceCode cell-code" id="cb620"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb620-1"><a href="#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">difftime</span>(date_1, date_2), </span>
 <span id="cb620-2"><a href="#cb620-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_mssql</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;SQL&gt; DATEDIFF(DAY, `date_1`, `date_2`)</code></pre>
+<pre><code>&lt;SQL&gt; DATEDIFF(DAY, `date_2`, `date_1`)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb622"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb622-1"><a href="#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">date_count_between</span>(date_1, date_2, <span class="st">"day"</span>), </span>
 <span id="cb622-2"><a href="#cb622-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_mssql</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `date_count_between()`:
-! Don't know how to translate `date_count_between()`</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;SQL&gt; DATEDIFF(DAY, `date_1`, `date_2`)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb624"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb624-1"><a href="#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate_sql</span>(<span class="fu">date_count_between</span>(date_1, date_2, <span class="st">"year"</span>), </span>
 <span id="cb624-2"><a href="#cb624-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">con =</span> <span class="fu">simulate_mssql</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `date_count_between()`:
-! Don't know how to translate `date_count_between()`</code></pre>
+! `precision = "year"` isn't supported on database backends.
+ℹ It must be "day" instead.</code></pre>
 </div>
 </div>
 </div>
@@ -2386,7 +2386,7 @@ FROM `df`</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT
-  COUNT(*) AS `n`,
+  COUNT_BIG(*) AS `n`,
   COUNT(DISTINCT `x`) AS `n_unique`,
   SUM(`x`) AS `sum`,
   SUM(CAST(IIF(`x` = 1.0, 1, 0) AS BIT)) AS `sum_is_1`,

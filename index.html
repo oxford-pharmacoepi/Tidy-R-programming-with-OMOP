@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.7.34">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -14,7 +14,7 @@
 <meta name="author" content="Kim López-Güell">
 <meta name="author" content="Núria Mercadé-Besora">
 <meta name="author" content="Martí Català">
-<meta name="dcterms.date" content="2025-05-14">
+<meta name="dcterms.date" content="2025-09-10">
 
 <title>Tidy R programming with databases: applications with the OMOP common data model</title>
 <style>
@@ -46,10 +46,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-1bc3b17e7a2c2828f435aa750fb76336.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-23102fe0f0b5b1a9f09cc09ebcc8fe5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -248,7 +248,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 14, 2025</p>
+      <p class="date">September 10, 2025</p>
     </div>
   </div>
   
@@ -289,24 +289,27 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="renv">renv</h2>
 <p>This book is rendered using the following version of packages:</p>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Finding R package dependencies ... Done!</code></pre>
+</div>
 <div class="cell-output-display">
-<div id="islyhlvmgl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#islyhlvmgl table {
+<div id="zuzdurdctj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zuzdurdctj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#islyhlvmgl thead, #islyhlvmgl tbody, #islyhlvmgl tfoot, #islyhlvmgl tr, #islyhlvmgl td, #islyhlvmgl th {
+#zuzdurdctj thead, #zuzdurdctj tbody, #zuzdurdctj tfoot, #zuzdurdctj tr, #zuzdurdctj td, #zuzdurdctj th {
   border-style: none;
 }
 
-#islyhlvmgl p {
+#zuzdurdctj p {
   margin: 0;
   padding: 0;
 }
 
-#islyhlvmgl .gt_table {
+#zuzdurdctj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -332,12 +335,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_caption {
+#zuzdurdctj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#islyhlvmgl .gt_title {
+#zuzdurdctj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -349,7 +352,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#islyhlvmgl .gt_subtitle {
+#zuzdurdctj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -361,7 +364,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#islyhlvmgl .gt_heading {
+#zuzdurdctj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -373,13 +376,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_bottom_border {
+#zuzdurdctj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_col_headings {
+#zuzdurdctj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -394,7 +397,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_col_heading {
+#zuzdurdctj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -414,7 +417,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#islyhlvmgl .gt_column_spanner_outer {
+#zuzdurdctj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -426,15 +429,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#islyhlvmgl .gt_column_spanner_outer:first-child {
+#zuzdurdctj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#islyhlvmgl .gt_column_spanner_outer:last-child {
+#zuzdurdctj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#islyhlvmgl .gt_column_spanner {
+#zuzdurdctj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -446,11 +449,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#islyhlvmgl .gt_spanner_row {
+#zuzdurdctj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#islyhlvmgl .gt_group_heading {
+#zuzdurdctj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -476,7 +479,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#islyhlvmgl .gt_empty_group_heading {
+#zuzdurdctj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -491,15 +494,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#islyhlvmgl .gt_from_md > :first-child {
+#zuzdurdctj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#islyhlvmgl .gt_from_md > :last-child {
+#zuzdurdctj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#islyhlvmgl .gt_row {
+#zuzdurdctj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -518,7 +521,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#islyhlvmgl .gt_stub {
+#zuzdurdctj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -531,7 +534,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#islyhlvmgl .gt_stub_row_group {
+#zuzdurdctj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -545,15 +548,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#islyhlvmgl .gt_row_group_first td {
+#zuzdurdctj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#islyhlvmgl .gt_row_group_first th {
+#zuzdurdctj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#islyhlvmgl .gt_summary_row {
+#zuzdurdctj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -563,16 +566,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#islyhlvmgl .gt_first_summary_row {
+#zuzdurdctj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_first_summary_row.thick {
+#zuzdurdctj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#islyhlvmgl .gt_last_summary_row {
+#zuzdurdctj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -582,7 +585,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_grand_summary_row {
+#zuzdurdctj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -592,7 +595,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#islyhlvmgl .gt_first_grand_summary_row {
+#zuzdurdctj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -602,7 +605,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_last_grand_summary_row_top {
+#zuzdurdctj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -612,11 +615,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_striped {
+#zuzdurdctj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#islyhlvmgl .gt_table_body {
+#zuzdurdctj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -625,7 +628,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_footnotes {
+#zuzdurdctj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -639,7 +642,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_footnote {
+#zuzdurdctj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -648,7 +651,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#islyhlvmgl .gt_sourcenotes {
+#zuzdurdctj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -662,7 +665,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#islyhlvmgl .gt_sourcenote {
+#zuzdurdctj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -670,72 +673,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#islyhlvmgl .gt_left {
+#zuzdurdctj .gt_left {
   text-align: left;
 }
 
-#islyhlvmgl .gt_center {
+#zuzdurdctj .gt_center {
   text-align: center;
 }
 
-#islyhlvmgl .gt_right {
+#zuzdurdctj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#islyhlvmgl .gt_font_normal {
+#zuzdurdctj .gt_font_normal {
   font-weight: normal;
 }
 
-#islyhlvmgl .gt_font_bold {
+#zuzdurdctj .gt_font_bold {
   font-weight: bold;
 }
 
-#islyhlvmgl .gt_font_italic {
+#zuzdurdctj .gt_font_italic {
   font-style: italic;
 }
 
-#islyhlvmgl .gt_super {
+#zuzdurdctj .gt_super {
   font-size: 65%;
 }
 
-#islyhlvmgl .gt_footnote_marks {
+#zuzdurdctj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#islyhlvmgl .gt_asterisk {
+#zuzdurdctj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#islyhlvmgl .gt_indent_1 {
+#zuzdurdctj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#islyhlvmgl .gt_indent_2 {
+#zuzdurdctj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#islyhlvmgl .gt_indent_3 {
+#zuzdurdctj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#islyhlvmgl .gt_indent_4 {
+#zuzdurdctj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#islyhlvmgl .gt_indent_5 {
+#zuzdurdctj .gt_indent_5 {
   text-indent: 25px;
 }
 
-#islyhlvmgl .katex-display {
+#zuzdurdctj .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#islyhlvmgl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zuzdurdctj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -743,124 +746,124 @@ ul.task-list li input[type="checkbox"] {
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
-<th id="Packages" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Packages</th>
+<th id="Package" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Package</th>
 <th id="Version" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Version</th>
 <th id="Link" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Link</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="Packages">bit64</td>
-<td class="gt_row gt_right" headers="Version">4.6.0-1</td>
-<td class="gt_row gt_left" headers="Link"><a href="https://github.com/r-lib/bit64">🔗</a></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Packages">CDMConnector</td>
-<td class="gt_row gt_right" headers="Version">2.0.0</td>
+<td class="gt_row gt_left" headers="Package">CDMConnector</td>
+<td class="gt_row gt_right" headers="Version">2.1.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/CDMConnector/">🔗</a></td>
 </tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Packages">cli</td>
-<td class="gt_row gt_right" headers="Version">3.6.4</td>
-<td class="gt_row gt_left" headers="Link"><a href="https://cli.r-lib.org">🔗</a></td>
-</tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Packages">clock</td>
-<td class="gt_row gt_right" headers="Version">0.7.2</td>
-<td class="gt_row gt_left" headers="Link"><a href="https://clock.r-lib.org">🔗</a></td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Packages">CodelistGenerator</td>
-<td class="gt_row gt_right" headers="Version">3.4.1</td>
+<td class="gt_row gt_left" headers="Package">CodelistGenerator</td>
+<td class="gt_row gt_right" headers="Version">3.5.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/CodelistGenerator/">🔗</a></td>
 </tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Packages">CohortCharacteristics</td>
-<td class="gt_row gt_right" headers="Version">0.5.1</td>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Package">CohortCharacteristics</td>
+<td class="gt_row gt_right" headers="Version">1.0.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/CohortCharacteristics/">🔗</a></td>
 </tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Packages">CohortConstructor</td>
-<td class="gt_row gt_right" headers="Version">0.3.5</td>
+<tr class="even">
+<td class="gt_row gt_left" headers="Package">CohortConstructor</td>
+<td class="gt_row gt_right" headers="Version">0.5.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://ohdsi.github.io/CohortConstructor/">🔗</a></td>
 </tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Packages">DBI</td>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Package">DBI</td>
 <td class="gt_row gt_right" headers="Version">1.2.3</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://dbi.r-dbi.org">🔗</a></td>
 </tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Package">Lahman</td>
+<td class="gt_row gt_right" headers="Version">13.0-0</td>
+<td class="gt_row gt_left" headers="Link"><a href="https://cdalzell.github.io/Lahman/">🔗</a></td>
+</tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="Packages">dbplyr</td>
-<td class="gt_row gt_right" headers="Version">2.5.0</td>
+<td class="gt_row gt_left" headers="Package">PatientProfiles</td>
+<td class="gt_row gt_right" headers="Version">1.4.2</td>
+<td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/PatientProfiles/">🔗</a></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Package">bit64</td>
+<td class="gt_row gt_right" headers="Version">4.6.0-1</td>
+<td class="gt_row gt_left" headers="Link"><a href="https://github.com/r-lib/bit64">🔗</a></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Package">cli</td>
+<td class="gt_row gt_right" headers="Version">3.6.5</td>
+<td class="gt_row gt_left" headers="Link"><a href="https://cli.r-lib.org">🔗</a></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Package">clock</td>
+<td class="gt_row gt_right" headers="Version">0.7.3</td>
+<td class="gt_row gt_left" headers="Link"><a href="https://clock.r-lib.org">🔗</a></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Package">dbplyr</td>
+<td class="gt_row gt_right" headers="Version">2.5.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://dbplyr.tidyverse.org/">🔗</a></td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Packages">dm</td>
-<td class="gt_row gt_right" headers="Version">1.0.11</td>
+<td class="gt_row gt_left" headers="Package">dm</td>
+<td class="gt_row gt_right" headers="Version">1.0.12</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://dm.cynkra.com/">🔗</a></td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="Packages">dplyr</td>
+<td class="gt_row gt_left" headers="Package">dplyr</td>
 <td class="gt_row gt_right" headers="Version">1.1.4</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://dplyr.tidyverse.org">🔗</a></td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Packages">duckdb</td>
-<td class="gt_row gt_right" headers="Version">1.2.1</td>
+<td class="gt_row gt_left" headers="Package">duckdb</td>
+<td class="gt_row gt_right" headers="Version">1.3.3</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://r.duckdb.org/">🔗</a></td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="Packages">ggplot2</td>
-<td class="gt_row gt_right" headers="Version">3.5.1</td>
+<td class="gt_row gt_left" headers="Package">ggplot2</td>
+<td class="gt_row gt_right" headers="Version">3.5.2</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://ggplot2.tidyverse.org">🔗</a></td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Packages">here</td>
+<td class="gt_row gt_left" headers="Package">here</td>
 <td class="gt_row gt_right" headers="Version">1.0.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://here.r-lib.org/">🔗</a></td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="Packages">Lahman</td>
-<td class="gt_row gt_right" headers="Version">12.0-0</td>
-<td class="gt_row gt_left" headers="Link"><a href="https://CRAN.R-project.org/package=Lahman">🔗</a></td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Packages">omock</td>
-<td class="gt_row gt_right" headers="Version">0.3.2</td>
+<td class="gt_row gt_left" headers="Package">omock</td>
+<td class="gt_row gt_right" headers="Version">0.5.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://ohdsi.github.io/omock/">🔗</a></td>
 </tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Packages">omopgenerics</td>
-<td class="gt_row gt_right" headers="Version">1.1.1</td>
+<tr class="even">
+<td class="gt_row gt_left" headers="Package">omopgenerics</td>
+<td class="gt_row gt_right" headers="Version">1.3.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/omopgenerics/">🔗</a></td>
 </tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Packages">palmerpenguins</td>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Package">palmerpenguins</td>
 <td class="gt_row gt_right" headers="Version">0.1.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://allisonhorst.github.io/palmerpenguins/">🔗</a></td>
 </tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Packages">PatientProfiles</td>
-<td class="gt_row gt_right" headers="Version">1.3.1</td>
-<td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/PatientProfiles/">🔗</a></td>
-</tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Packages">purrr</td>
-<td class="gt_row gt_right" headers="Version">1.0.4</td>
+<td class="gt_row gt_left" headers="Package">purrr</td>
+<td class="gt_row gt_right" headers="Version">1.1.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://purrr.tidyverse.org/">🔗</a></td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="Packages">sloop</td>
+<td class="gt_row gt_left" headers="Package">sloop</td>
 <td class="gt_row gt_right" headers="Version">1.0.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://github.com/r-lib/sloop">🔗</a></td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Packages">stringr</td>
-<td class="gt_row gt_right" headers="Version">1.5.1</td>
+<td class="gt_row gt_left" headers="Package">stringr</td>
+<td class="gt_row gt_right" headers="Version">1.5.2</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://stringr.tidyverse.org">🔗</a></td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="Packages">tidyr</td>
+<td class="gt_row gt_left" headers="Package">tidyr</td>
 <td class="gt_row gt_right" headers="Version">1.3.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://tidyr.tidyverse.org">🔗</a></td>
 </tr>
@@ -870,7 +873,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>Note here only the packages called explicitly are mentioned for the full list of packages and versions used see the book <a href="https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/renv.lock">renv file</a> in github.</p>
+<p>Note we only included the packages called explicitly in the book.</p>
 
 
 </section>
