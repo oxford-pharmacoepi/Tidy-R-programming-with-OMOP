@@ -32,7 +32,7 @@ The source code for the book can be found at this [Github repository](https://gi
 This book is rendered using the following version of packages:
 
 ```{r, echo=FALSE}
-pkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE) |>
+explicitPkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE) |>
   purrr::map(\(x) {
     lines <- paste0(readLines(x), collapse = " ")
     regmatches(lines, gregexpr("library\\(([^)]+)\\)", lines)) |>
@@ -42,19 +42,27 @@ pkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE) |>
   unlist() |>
   unique() |>
   sort()
-renv <- jsonlite::read_json(here::here("renv.lock"))
-dplyr::tibble(
-  Packages = pkgs,
-  Version = purrr::map_chr(pkgs, \(x) renv$Packages[[x]]$Version),
-  Link = purrr::map_chr(pkgs, \(x) {
-    link <- renv$Packages[[x]]$URL |>
-      stringr::str_split_1(pattern = ",") |>
+allPkgs <- renv::dependencies()$Package
+
+# to decide if we want to include all the packages or only the packages that we 
+# use explicitly
+explicitPkgs |>
+  unique() |>
+  purrr::map(\(pkg) {
+    d <- utils::packageDescription(pkg = pkg)
+    link <- d$URL |>
+      stringr::str_split_1(pattern = "[,\\s]+") |>
       dplyr::first()
-    paste0("[🔗](", link, ")")
-  })
-) |>
+    dplyr::tibble(
+      Package = pkg,
+      Version = d$Version,
+      Link = paste0("[🔗](", link, ")")
+    )
+  }) |>
+  dplyr::bind_rows() |>
+  dplyr::arrange(Package) |>
   gt::gt() |>
   gt::fmt_markdown("Link")
 ```
 
-Note here only the packages called explicitly are mentioned for the full list of packages and versions used see the book [renv file](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/renv.lock) in github.
+Note we only included the packages called explicitly in the book.
