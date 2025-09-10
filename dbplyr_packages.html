@@ -429,9 +429,9 @@ Foreign keys: 1</code></pre>
 # Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   name            
   &lt;chr&gt;           
-1 Boston Braves   
-2 Boston Red Sox  
-3 New York Yankees</code></pre>
+1 Boston Red Sox  
+2 New York Yankees
+3 Boston Braves   </code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -683,11 +683,12 @@ LEFT JOIN People
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Mexico"</span> <span class="sc">~</span> <span class="st">"Mexico"</span>,</span>
 <span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> <span class="st">"Other"</span></span>
 <span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> </span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.by =</span> <span class="fu">c</span>(<span class="st">"yearID"</span>, <span class="st">"birthCountry"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">|&gt;</span></span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percentage =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, birthCountry) <span class="sc">|&gt;</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">|&gt;</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percentage =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
@@ -832,23 +833,23 @@ Salaries, Schools, SeriesPost, Teams, TeamsFranchises, TeamsHalf</code></pre>
 <span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Salaries <span class="sc">|&gt;</span> </span>
 <span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthYear</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), </span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(<span class="st">"birthCountry"</span>, <span class="st">"birthYear"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birthCountry, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 3]
 # Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    birthCountry birthYear average_salary
    &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
- 1 USA               1954        860729.
- 2 USA               1967       1833526.
- 3 D.R.              1977       2724606.
- 4 Mexico            1970        783395.
- 5 USA               1958        960490.
- 6 D.R.              1991        582794.
- 7 USA               1971       1547025.
- 8 USA               1963       1585150.
- 9 USA               1962       1303970.
-10 P.R.              1982       4261730.
+ 1 USA               1966       1761151.
+ 2 Venezuela         1974       4269365.
+ 3 D.R.              1984       2924854.
+ 4 Mexico            1982       1174912.
+ 5 Panama            1981        555833.
+ 6 USA               1978       3133596.
+ 7 P.R.              1959        297786.
+ 8 USA               1961        811250.
+ 9 USA               1990        728740.
+10 USA               1950        625076.
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -897,23 +898,23 @@ GROUP BY birthCountry, birthYear</code></pre>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Salaries <span class="sc">|&gt;</span> </span>
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCharacteristics</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), </span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(<span class="st">"birthCountry"</span>, <span class="st">"birthYear"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birthCountry, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 3]
 # Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    birthCountry birthYear average_salary
    &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
- 1 USA               1981       3064605.
- 2 USA               1972       2253152.
- 3 D.R.              1985       1531438.
- 4 Cuba              1987       4932700.
- 5 USA               1988       2101223.
- 6 USA               1987       1947774.
- 7 USA               1973       2142680.
- 8 USA               1959        851332.
- 9 Venezuela         1989        667980.
-10 D.R.              1992        513467.
+ 1 USA               1969       1496593.
+ 2 USA               1968       2180316.
+ 3 USA               1980       3564986.
+ 4 USA               1977       2804277.
+ 5 USA               1986       2007402.
+ 6 CAN               1985        501000 
+ 7 USA               1979       3234779.
+ 8 P.R.              1958        671191.
+ 9 D.R.              1971       3461094 
+10 D.R.              1989       1113683.
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1009,45 +1010,45 @@ FROM (
 <span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
 <span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college,</span>
 <span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">.by =</span> <span class="fu">c</span>(schoolID, birthYear)) <span class="sc">|&gt;</span> </span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6,205 × 3
    schoolID   birthYear home_runs
    &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
- 1 gamiddl         1972         2
- 2 illinoisst      1981         1
- 3 lehigh          1901         1
- 4 tamukvill       1978         0
- 5 chicago         1874         2
- 6 capalom         1963        15
- 7 hawaiipac       1971       299
- 8 bostonuniv      1929       135
- 9 byu             1961        28
-10 kentucky        1985         1
+ 1 rice            1981         0
+ 2 virginia        1987        27
+ 3 cacerri         1971         3
+ 4 usc             1947        11
+ 5 lsu             1927      1832
+ 6 wake            1915        72
+ 7 pepperdine      1969         1
+ 8 lsu             1978         2
+ 9 miamidade       1982         0
+10 cincy           1950         5
 # ℹ 6,195 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college,</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">.by =</span> <span class="fu">c</span>(schoolID, birthYear))<span class="sc">|&gt;</span> </span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)<span class="sc">|&gt;</span> </span>
 <span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3,663 × 3
    schoolID   birthYear strike_outs
    &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 pennst          1981         340
- 2 cacerri         1971         327
- 3 usc             1947         275
- 4 pepperdine      1969           4
- 5 lsu             1978         162
- 6 miamidade       1982          56
- 7 upperiowa       1918          11
- 8 jamesmad        1966           4
- 9 flinternat      1971         133
-10 ucla            1984         323
+ 1 vermont         1869         161
+ 2 longbeach       1968         273
+ 3 elon            1921          13
+ 4 swesterntx      1883          41
+ 5 ilparkl         1970         350
+ 6 okstate         1977          81
+ 7 casequo         1940         404
+ 8 highpoint       1988         593
+ 9 rhodestn        1888         457
+10 longbeach       1982        1626
 # ℹ 3,653 more rows</code></pre>
 </div>
 </div>
@@ -1121,15 +1122,15 @@ GROUP BY schoolID, birthYear</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
-FROM dbplyr_rhfC6kfWyV</code></pre>
+FROM dbplyr_vdKjqXYOBU</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college,</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">.by =</span> <span class="fu">c</span>(schoolID, birthYear)) <span class="sc">|&gt;</span> </span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6,205 × 3
@@ -1150,23 +1151,23 @@ FROM dbplyr_rhfC6kfWyV</code></pre>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college,</span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">.by =</span> <span class="fu">c</span>(schoolID, birthYear))<span class="sc">|&gt;</span> </span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3,663 × 3
    schoolID  birthYear strike_outs
    &lt;chr&gt;         &lt;int&gt;       &lt;dbl&gt;
- 1 longbeach      1968         273
- 2 elon           1921          13
- 3 lehigh         1901           1
- 4 usc            1947         275
- 5 tamukvill      1978         409
- 6 stanford       1972         218
- 7 upenn          1964          14
- 8 arkansas       1962         537
- 9 kentucky       1985          91
-10 txsjjcn        1983         571
+ 1 elon           1921          13
+ 2 lehigh         1901           1
+ 3 usc            1947         275
+ 4 tamukvill      1978         409
+ 5 stanford       1972         218
+ 6 upenn          1964          14
+ 7 arkansas       1962         537
+ 8 kentucky       1985          91
+ 9 txsjjcn        1983         571
+10 rhodestn       1888         457
 # ℹ 3,653 more rows</code></pre>
 </div>
 </div>
@@ -1189,8 +1190,8 @@ SELECT schoolID, birthYear, SUM(H) AS home_runs
 FROM (
   SELECT Batting.*, birthYear, schoolID
   FROM Batting
-  LEFT JOIN dbplyr_rhfC6kfWyV
-    ON (Batting.playerID = dbplyr_rhfC6kfWyV.playerID)
+  LEFT JOIN dbplyr_vdKjqXYOBU
+    ON (Batting.playerID = dbplyr_vdKjqXYOBU.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1200,8 +1201,8 @@ SELECT schoolID, birthYear, SUM(SO) AS strike_outs
 FROM (
   SELECT Pitching.*, birthYear, schoolID
   FROM Pitching
-  LEFT JOIN dbplyr_rhfC6kfWyV
-    ON (Pitching.playerID = dbplyr_rhfC6kfWyV.playerID)
+  LEFT JOIN dbplyr_vdKjqXYOBU
+    ON (Pitching.playerID = dbplyr_vdKjqXYOBU.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>

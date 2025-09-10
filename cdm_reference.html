@@ -371,16 +371,16 @@ Setting a write prefix
 # Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    person_id gender_concept_id year_of_birth month_of_birth day_of_birth
        &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
- 1         1              8532          1961             12           18
- 2         2              8507          1971              8            5
- 3         3              8532          1998              3           19
- 4         4              8532          1975             10            2
- 5         5              8507          1967              8            4
- 6         6              8532          1981              8           17
- 7         7              8507          1959              9            4
- 8         8              8532          1985             12           25
- 9         9              8532          1950              1            5
-10        10              8532          1956              7           19
+ 1         1              8507          1976              1           21
+ 2         2              8507          1982              7           21
+ 3         3              8507          1977              9           13
+ 4         4              8532          1972              5            5
+ 5         5              8507          1954              6            2
+ 6         6              8532          1968             12           14
+ 7         7              8532          1990              1            1
+ 8         8              8507          1966             12            4
+ 9         9              8507          1997             12            8
+10        10              8532          1998              1           11
 # ℹ more rows
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
@@ -395,16 +395,16 @@ Setting a write prefix
 # Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    observation_period_id person_id observation_period_s…¹ observation_period_e…²
                    &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
- 1                     1         1 1990-07-31             2007-10-30            
- 2                     2         2 1993-09-03             2004-12-27            
- 3                     3         3 2005-09-30             2018-02-06            
- 4                     4         4 2013-09-07             2015-02-21            
- 5                     5         5 1973-08-07             1978-02-18            
- 6                     6         6 2014-04-14             2018-04-12            
- 7                     7         7 1994-10-03             2005-05-10            
- 8                     8         8 2005-09-15             2006-11-21            
- 9                     9         9 1962-02-01             1994-09-02            
-10                    10        10 1965-05-11             1990-07-27            
+ 1                     1         1 1983-04-12             2007-05-31            
+ 2                     2         2 1987-03-13             1994-10-03            
+ 3                     3         3 2015-08-29             2017-08-01            
+ 4                     4         4 2016-12-20             2017-11-14            
+ 5                     5         5 1991-02-17             2008-07-26            
+ 6                     6         6 2006-04-05             2013-07-06            
+ 7                     7         7 1993-08-10             2016-05-01            
+ 8                     8         8 1972-03-31             1980-11-18            
+ 9                     9         9 2013-04-16             2015-10-31            
+10                    10        10 2007-02-18             2019-02-21            
 # ℹ more rows
 # ℹ abbreviated names: ¹​observation_period_start_date,
 #   ²​observation_period_end_date
@@ -552,9 +552,9 @@ Behind the scenes
 Columns: 4
 Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ subject_id           &lt;int&gt; 1, 1, 1, 2, 3, 4, 6, 6, 7, 7, 8, 8, 8, 9, 9, 9, 1…
-$ cohort_start_date    &lt;date&gt; 1991-09-15, 2002-11-27, 2003-03-17, 1999-09-01, …
-$ cohort_end_date      &lt;date&gt; 1994-08-10, 2003-03-16, 2003-05-22, 2001-05-05, …</code></pre>
+$ subject_id           &lt;int&gt; 1, 1, 2, 4, 6, 8, 8, 9, 10, 10, 10, 11, 12, 12, 1…
+$ cohort_start_date    &lt;date&gt; 1983-09-30, 1987-04-07, 1991-11-27, 2017-05-03, …
+$ cohort_end_date      &lt;date&gt; 1987-04-06, 2006-07-04, 1993-01-29, 2017-09-13, …</code></pre>
 </div>
 </div>
 </section>
@@ -728,7 +728,8 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1        73              8532          1970             11           17
+1        98              8507          1970              9           10
+2       100              8532          1970              9            7
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -746,7 +747,7 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
       n
   &lt;dbl&gt;
-1     1</code></pre>
+1     2</code></pre>
 </div>
 </div>
 <p>The original OMOP CDM data itself however will remain unaffected. We can see that, indeed, if we create our reference again the underlying data is unchanged.</p>
@@ -828,15 +829,15 @@ visit_occurrence, vocabulary</code></pre>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   table&lt;og_001_1757538455&gt; [?? x 18]
+<pre><code># Source:   table&lt;og_001_1757538929&gt; [?? x 18]
 # Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         1              8532          1961             12           18
-2         2              8507          1971              8            5
-3         3              8532          1998              3           19
-4         4              8532          1975             10            2
-5         5              8507          1967              8            4
+1         1              8507          1976              1           21
+2         2              8507          1982              7           21
+3         3              8507          1977              9           13
+4         4              8532          1972              5            5
+5         5              8507          1954              6            2
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -850,11 +851,11 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         1              8532          1961             12           18
-2         2              8507          1971              8            5
-3         3              8532          1998              3           19
-4         4              8532          1975             10            2
-5         5              8507          1967              8            4
+1         1              8507          1976              1           21
+2         2              8507          1982              7           21
+3         3              8507          1977              9           13
+4         4              8532          1972              5            5
+5         5              8507          1954              6            2
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
