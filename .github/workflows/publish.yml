@@ -61,14 +61,10 @@ jobs:
       - name: Move pdf back to _site folder
         run: |
           mv "my_data/tidy-r-programming-omop.pdf" "_site/tidy-r-programming-omop.pdf"
-
-      # For PRs, just render (no publishing)
-      - name: Exit if PR
-        if: github.event_name == 'pull_request'
-        run: exit 0
         
       # Publish HTML and pdf from _site to GitHub Pages
       - name: Publish to GitHub Pages
+        if: github.event_name != 'pull_request'
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
