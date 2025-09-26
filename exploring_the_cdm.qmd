@@ -4,6 +4,7 @@ For this chapter, we'll use a synthetic Covid-19 dataset.
 
 ```{r, warning=FALSE, message=FALSE}
 library(DBI)
+library(duckdb)
 library(dbplyr)
 library(dplyr)
 library(here)
@@ -12,13 +13,28 @@ library(ggplot2)
 library(clock)
 ```
 
-```{r, warning=FALSE, message=FALSE}
-db<-dbConnect(duckdb::duckdb(), 
-              dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
-cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
+You can download the dataset using the function `requireEunomiaData()`:
+
+```{r, eval=FALSE}
+requireEunomia(datasetName = "synthea-covid19-10k")
 ```
 
-```{r, echo = TRUE}
+::: {.callout-note collapse="true"}
+### Setup EUNOMIA_DATA_FOLDER
+
+The `requireEunomia` function checks if the database has already been downloaded and if it is not is downloaded in a temporary directory. To avoid downloading the database every time that we want to use we need to set up the `EUNOMIA_DATA_FOLDER`. To do that you need to create an environment variable named `EUNOMIA_DATA_FOLDER`, you can add it in the r environment file (`usethis::edit_r_environ()`) or using `Sys.setenv(EUNOMIA_DATA_FOLDER = "...")` either way `EUNOMIA_DATA_FOLDER` should point to a folder where the dataset will be downloaded. This way the dataset will be stored permanently in your computer and you will not have to download it every time that you want to use it.
+
+:::
+
+Once the dataset is downloaded you can create the cdm reference:
+
+```{r, warning=FALSE, message=FALSE}
+con <- dbConnect(drv = duckdb(), 
+                 dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
+cdm <- cdmFromCon(con = con, cdmSchema = "main", writeSchema = "main")
+```
+
+```{r, message=TRUE}
 cdm
 ```
 
@@ -37,9 +53,8 @@ The person table also contains some demographic information, including a gender 
 cdm$person |> 
   group_by(gender_concept_id) |> 
   count() |> 
-  left_join(cdm$concept, 
-            by=c("gender_concept_id" = "concept_id")) |> 
-              select("gender_concept_id", "concept_name", "n") |> 
+  left_join(cdm$concept, by = c("gender_concept_id" = "concept_id")) |> 
+  select("gender_concept_id", "concept_name", "n") |> 
   collect()
 ```
 
@@ -72,18 +87,18 @@ The observation period table contains records indicating spans of time over whic
 
 ```{r, echo = TRUE}
 first_observation_period <- cdm$observation_period |>
-    group_by(person_id) |> 
-    filter(row_number() == 1) |> 
-    compute()
+  group_by(person_id) |> 
+  filter(row_number() == 1) |> 
+  compute()
 
-cdm$person |> 
-  left_join(first_observation_period,
-            by = "person_id") |> 
+first_records_per_year <- cdm$person |> 
+  left_join(first_observation_period, by = "person_id") |> 
   mutate(observation_period_start_year = get_year(observation_period_start_date)) |> 
   group_by(observation_period_start_year) |> 
   count() |> 
-  collect() |> 
-  ggplot() +
+  collect()
+
+ggplot(first_records_per_year) +
   geom_col(aes(observation_period_start_year, n)) +
   theme_bw()
 ```
@@ -93,18 +108,20 @@ cdm$person |>
 What's the number of condition occurrence records per person in the database? We can find this out like so
 
 ```{r, echo = TRUE}
-cdm$person |> 
-  left_join(cdm$condition_occurrence |> 
-  group_by(person_id) |> 
-  count(name = "condition_occurrence_records"),
-  by="person_id") |> 
+number_condition_occurrence_records <- cdm$person |> 
+  left_join(
+    cdm$condition_occurrence |> 
+      group_by(person_id) |> 
+      count(name = "condition_occurrence_records"),
+    by="person_id") |> 
   mutate(condition_occurrence_records = if_else(
     is.na(condition_occurrence_records), 0,
     condition_occurrence_records)) |> 
   group_by(condition_occurrence_records) |>
   count() |> 
-  collect() |> 
-  ggplot() +
+  collect()
+
+ggplot(number_condition_occurrence_records) +
   geom_col(aes(condition_occurrence_records, n)) +
   theme_bw()
 ```
@@ -112,16 +129,16 @@ cdm$person |>
 How about we were interested in getting record counts for some specific concepts related to Covid-19 symptoms?
 
 ```{r, echo = TRUE}
-cdm$condition_occurrence |> 
-  filter(condition_concept_id %in% c(437663,437390,31967,
-                                     4289517,4223659, 312437,
-                                     434490,254761,77074)) |> 
+symptoms_records <- cdm$condition_occurrence |> 
+  filter(condition_concept_id %in% c(437663, 437390, 31967,
+                                     4289517, 4223659, 312437,
+                                     434490, 254761, 77074)) |> 
   group_by(condition_concept_id) |> 
   count() |> 
-  left_join(cdm$concept,
-            by=c("condition_concept_id" = "concept_id")) |> 
-  collect() |> 
-  ggplot() +
+  left_join(cdm$concept, by=c("condition_concept_id" = "concept_id")) |> 
+  collect()
+
+ggplot(symptoms_records) +
   geom_col(aes(concept_name, n)) +
   theme_bw()+
   xlab("")
@@ -147,12 +164,11 @@ As we've seen before, we can also quickly get results for various groupings or r
 grouped_summary <- cdm$person |> 
    group_by(gender_concept_id) |> 
    summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
-            q25_year_of_birth = quantile(year_of_birth, 0.25, na.rm=TRUE),
-            median_year_of_birth = median(year_of_birth, na.rm=TRUE),
-            q75_year_of_birth = quantile(year_of_birth, 0.75, na.rm=TRUE),
-            max_year_of_birth = max(year_of_birth, na.rm=TRUE)) |> 
-  left_join(cdm$concept, 
-            by=c("gender_concept_id" = "concept_id")) |> 
+             q25_year_of_birth = quantile(year_of_birth, 0.25, na.rm=TRUE),
+             median_year_of_birth = median(year_of_birth, na.rm=TRUE),
+             q75_year_of_birth = quantile(year_of_birth, 0.75, na.rm=TRUE),
+             max_year_of_birth = max(year_of_birth, na.rm=TRUE)) |> 
+  left_join(cdm$concept, by = c("gender_concept_id" = "concept_id")) |> 
    collect() 
 
 grouped_summary |> 
@@ -167,44 +183,6 @@ grouped_summary |>
     stat = "identity", width = 0.5) + 
   theme_bw()+ 
   theme(legend.position = "none") +
-  xlab("")
-
-```
-
-What's the number of condition occurrence records per person in the database? We can find this out like so
-
-```{r, echo = TRUE}
-cdm$person |> 
-  left_join(cdm$condition_occurrence |> 
-  group_by(person_id) |> 
-  count(name = "condition_occurrence_records"),
-  by="person_id") |> 
-  mutate(condition_occurrence_records = if_else(
-    is.na(condition_occurrence_records), 0,
-    condition_occurrence_records)) |> 
-  group_by(condition_occurrence_records) |>
-  count() |> 
-  collect() |> 
-  ggplot() +
-  geom_col(aes(condition_occurrence_records, n)) +
-  theme_bw()
-```
-
-How about we were interested in getting record counts for some specific concepts related to Covid-19 symptoms?
-
-```{r, echo = TRUE}
-cdm$condition_occurrence |> 
-  filter(condition_concept_id %in% c(437663,437390,31967,
-                                     4289517,4223659, 312437,
-                                     434490,254761,77074)) |> 
-  group_by(condition_concept_id) |> 
-  count() |> 
-  left_join(cdm$concept,
-            by=c("condition_concept_id" = "concept_id")) |> 
-  collect() |> 
-  ggplot() +
-  geom_col(aes(concept_name, n)) +
-  theme_bw()+
   xlab("")
 
 ```
