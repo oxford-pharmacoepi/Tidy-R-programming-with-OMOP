@@ -1,8 +1,6 @@
----
-title: "Working with the OMOP CDM from R"
----
+# Working with the OMOP CDM from R
 
-In this second half of the book we will see how we can work with data in the OMOP CDM format from R.
+In this second half of the book we will focus on how we can work with data in the OMOP CDM format from R.
 
 -   In @sec-cdm_reference we will see how to create a cdm_reference in R, a data model that contains references to the OMOP CDM tables and provides the foundation for analysis.
 

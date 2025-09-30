@@ -2,13 +2,13 @@
 
 ## Is this book for me?
 
-We've written this book for anyone interested in a working with databases using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <https://design.tidyverse.org/unifying.html> for more details on these principles).
+We've written this book for anyone interested in a working with OMOP CDM instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see [TODO](https://design.tidyverse.org/unifying.html) for more details on these principles).
 
-New to R? We recommend you compliment the book with [R for data science](https://r4ds.had.co.nz/)
+New to R? We recommend you to take a look to [R for data science](https://r4ds.had.co.nz/) before reading this book. We assume that you have [R](TODO) installed and together with an adequate IDE (TODO) such as [R Studio](TODO) or [positron](TODO). See this [tutorial](https://rstudio-education.github.io/hopr/starting.html) if you need guidance on how to get started. The book uses multiple packages, that you will need to install see the list in the [R packages](TODO) section.
 
-New to databases? We recommend you take a look at some web tutorials on SQL, such as [SQLBolt](https://sqlbolt.com/) or [SQLZoo](https://www.sqlzoo.net/wiki/SQL_Tutorial)
+New to databases? We recommend you take a look at some web tutorials on SQL, such as [SQLBolt](https://sqlbolt.com/) or [SQLZoo](https://www.sqlzoo.net/wiki/SQL_Tutorial) to have a basic understanding of how databases work.
 
-New to the OMOP CDM? We'd recommend you pare this book with [The Book of OHDSI](https://ohdsi.github.io/TheBookOfOhdsi/)
+New to the OMOP CDM? We'd recommend you pare this book with [The Book of OHDSI](https://ohdsi.github.io/TheBookOfOhdsi/).
 
 ## How is the book organised?
 
@@ -16,7 +16,7 @@ The book is divided into two parts. The first half of the book is focused on the
 
 ## Citation
 
-TO ADD
+Please if you found this book useful help us citing it: TODO.
 
 ## License
 
@@ -25,11 +25,11 @@ TO ADD
 ```
 ## Code
 
-The source code for the book can be found at this [Github repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP)
+The source code for the book can be found at this [Github repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP), we welcome TODO to help the dissemination of the book.
 
-## renv
+## R Packages
 
-This book is rendered using the following version of packages:
+This book is rendered automatically though [GitHub Actions](TODO) using the following version of packages:
 
 ```{r, echo=FALSE}
 explicitPkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE) |>
@@ -65,4 +65,4 @@ explicitPkgs |>
   gt::fmt_markdown("Link")
 ```
 
-Note we only included the packages called explicitly in the book.
+TODO Note we only included the packages called explicitly in the book.

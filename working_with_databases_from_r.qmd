@@ -4,22 +4,9 @@
 
 *Artwork by [\@allison_horst](https://x.com/allison_horst)*
 
-Before we start thinking about working with healthcare data spread across a database using the OMOP common data model, let's first do a simpler analysis. In this case we will do a quick data analysis with R using a simpler dataset held in a database to understand the general approach. For this we'll use data from [palmerpenguins package](https://allisonhorst.github.io/palmerpenguins/), which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
+Before we start thinking about working with healthcare data spread across a database using the OMOP common data model, let's first do a simpler analysis. In this case we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we'll use data from [palmerpenguins package](TODO), which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
 
 ## Getting set up
-
-Assuming that you have R and RStudio already set up[1](https://rstudio-education.github.io/hopr/starting.html), first we need to install a few packages not included in base R if we don't already have them.
-
-```{r, eval=FALSE}
-install.packages("dplyr")
-install.packages("dbplyr")
-install.packages("ggplot2")
-install.packages("DBI")
-install.packages("duckdb")
-install.packages("palmerpenguins")
-```
-
-Once installed, we can load them like so.
 
 ```{r, message=FALSE, warning=FALSE}
 library(dplyr)
@@ -32,7 +19,7 @@ library(palmerpenguins)
 
 ## Taking a peek at the data
 
-The package `palmerpenguins` contains two datasets, one of them called `penguins`, which we will use in this chapter. We can get an overview of the data using the `glimpse()` command.
+The package [`palmerpenguins`](TODO) contains two datasets, one of them called `penguins`, which we will use in this chapter. We can get an overview of the data using the [`glimpse()`](TODO) command.
 
 ```{r}
 glimpse(penguins)
@@ -46,44 +33,54 @@ head(penguins, 5)
 
 ## Inserting data into a database
 
-Let's put our penguins data into a [duckdb database](https://duckdb.org/). We need to first create the database and then add the penguins data to it.
+By default the data provided by the package is local (allocated in the RAM memory of your computer), so let's first put it into a [duckdb database](https://duckdb.org/). We need to first create the database.
 
 ```{r}
-db <- dbConnect(drv = duckdb())
-dbWriteTable(db, "penguins", penguins)
+con <- dbConnect(drv = duckdb())
 ```
 
-We can see that our database now has one table:
+See that now we have created an empty duckdb database. We can easily add the penguins data to it.
 
 ```{r}
-dbListTables(db)
+dbWriteTable(conn = con, name = "penguins", value = penguins)
+```
+
+With the function `dbListTables()` we can list the tables of a database, in our case we it now has one table:
+
+```{r}
+dbListTables(conn = con)
 ```
 
 And now that the data is in a database we could use SQL to get the first rows that we saw before.
 
 ```{r}
-dbGetQuery(db, "SELECT * FROM penguins LIMIT 5")
+dbGetQuery(conn = con, statement = "SELECT * FROM penguins LIMIT 5")
 ```
+
+As you can see we have the same data that we had locally but now inside the database.
 
 ::: {.callout-tip collapse="true"}
 ## Connecting to databases from R
 
-Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. In the code snipets above we created a new, empty, in-process [duckdb](https://duckdb.org/) database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like
+Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. In the code snipets above we created a new, empty, in-process [duckdb](https://duckdb.org/) database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like:
 
 ```{r, eval = FALSE}
-db <- dbConnect(drv = duckdb(), 
-                dbdir = here("my_duckdb_database.ducdkb"))
+con <- dbConnect(drv = duckdb(dbdir = "my_duckdb_database.ducdkb"))
 ```
+
+Note that you you point to a none existing duckdb file, this will be created with an empty database.
 
 In this book for simplicity we will mostly be working with in-process duckdb databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like:
 
 ```{r, eval=FALSE}
-db <- dbConnect(Postgres(),
-                dbname = Sys.getenv("CDM5_POSTGRESQL_DBNAME"),
-                host = Sys.getenv("CDM5_POSTGRESQL_HOST"),
-                user = Sys.getenv("CDM5_POSTGRESQL_USER"),
-                password = Sys.getenv("CDM5_POSTGRESQL_PASSWORD"))
+con <- dbConnect(drv = Postgres(),
+                 dbname = "my_database",
+                 host = "my_server",
+                 user = "user",
+                 password = "password")
 ```
+
+For more examples on how to connect to databases using the DBI package please see [Connecting with DBI](TODO).
 :::
 
 ## Translation from R to SQL
@@ -91,7 +88,7 @@ db <- dbConnect(Postgres(),
 Instead of using SQL to query our database, we might instead want to use the same R code as before. However, instead of working with the local dataset, now we will need it to query the data held in the database. To do this, first we can create a reference to the table in the database as such:
 
 ```{r}
-penguins_db <- tbl(db, "penguins")
+penguins_db <- tbl(src = con, "penguins")
 penguins_db
 ```
 
@@ -101,7 +98,7 @@ Once we have this reference, we can then use it with familiar looking R code.
 head(penguins_db, 5)
 ```
 
-The magic here is provided by the `dbplyr` package, which takes the R code and converts it into SQL. In this case the query looks like the SQL we wrote directly before.
+The magic here is provided by the [`dbplyr`](TODO) package, which takes the R code and converts it into SQL. In this case the query looks like the SQL we wrote directly before.
 
 ```{r}
 head(penguins_db, 5) |> 
@@ -117,20 +114,14 @@ penguins_db |>
   group_by(species) |>
   summarise(
     n = n(),
-    min_bill_length_mm = min(bill_length_mm),
-    mean_bill_length_mm = mean(bill_length_mm),
-    max_bill_length_mm = max(bill_length_mm)
+    min_bill_length_mm = min(bill_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    max_bill_length_mm = max(bill_length_mm, na.rm = TRUE)
   ) |>
   mutate(min_max_bill_length_mm = paste0(
-    min_bill_length_mm,
-    " to ",
-    max_bill_length_mm
+    min_bill_length_mm, " to ", max_bill_length_mm
   )) |>
-  select(
-    "species",
-    "mean_bill_length_mm",
-    "min_max_bill_length_mm"
-  )
+  select("species", "mean_bill_length_mm", "min_max_bill_length_mm")
 ```
 
 The benefit of using `dbplyr` now becomes quite clear if we take a look at the corresponding SQL that is generated for us:
@@ -140,28 +131,95 @@ penguins_db |>
   group_by(species) |>
   summarise(
     n = n(),
-    min_bill_length_mm = min(bill_length_mm),
-    mean_bill_length_mm = mean(bill_length_mm),
-    max_bill_length_mm = max(bill_length_mm)
+    min_bill_length_mm = min(bill_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    max_bill_length_mm = max(bill_length_mm, na.rm = TRUE)
   ) |>
-  mutate(min_max_bill_length_mm = paste0(min, " to ", max)) |>
-  select(
-    "species",
-    "mean_bill_length_mm",
-    "min_max_bill_length_mm"
-  ) |>
+  mutate(min_max_bill_length_mm = paste0(
+    min_bill_length_mm, " to ", max_bill_length_mm
+  )) |>
+  select("species", "mean_bill_length_mm", "min_max_bill_length_mm") |>
   show_query()
 ```
 
 Instead of having to write this somewhat complex SQL specific to `duckdb` we can use the friendlier `dplyr` syntax that may well be more familiar if coming from an R programming background.
 
+::: {.callout-note collapse="true"}
+## Translation to different SQL dialects
+
+Note this same R code will also work for other SQL dialects such as Postgres, SQL server, Snowflake and Spark. Here you can see the different generated translations:
+
+TODO add more dbms
+
+::: {.panel-tabset}
+### Postgres
+
+```{r, echo=FALSE}
+library(dbplyr)
+df <- lazy_frame(
+  species = character(),
+  island = character(),
+  bill_length_mm = numeric(),
+  bill_depth_mm = numeric(),
+  flipper_length_mm = integer(),
+  body_mass_g = integer(),
+  sex = character(),
+  year = integer(),
+  con = simulate_postgres()
+) |>
+  group_by(species) |>
+  summarise(
+    n = n(),
+    min_bill_length_mm = min(bill_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    max_bill_length_mm = max(bill_length_mm, na.rm = TRUE)
+  ) |>
+  mutate(min_max_bill_length_mm = paste0(
+    min_bill_length_mm, " to ", max_bill_length_mm
+  )) |>
+  select("species", "mean_bill_length_mm", "min_max_bill_length_mm") |>
+  show_query()
+```
+
+### SQL Server
+
+```{r, echo=FALSE}
+library(dbplyr)
+df <- lazy_frame(
+  species = character(),
+  island = character(),
+  bill_length_mm = numeric(),
+  bill_depth_mm = numeric(),
+  flipper_length_mm = integer(),
+  body_mass_g = integer(),
+  sex = character(),
+  year = integer(),
+  con = simulate_mssql()
+) |>
+  group_by(species) |>
+  summarise(
+    n = n(),
+    min_bill_length_mm = min(bill_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    max_bill_length_mm = max(bill_length_mm, na.rm = TRUE)
+  ) |>
+  mutate(min_max_bill_length_mm = paste0(
+    min_bill_length_mm, " to ", max_bill_length_mm
+  )) |>
+  select("species", "mean_bill_length_mm", "min_max_bill_length_mm") |>
+  show_query()
+```
+
+:::
+
+TODO symbol (i) Note that even the different SQL statements look similar, each SQL dialect has it own particularities. Using the *dbplyr* approach allow us to support multiple different SQL dialects and back-ends just writing R code.
+:::
+
 Not having to worry about the SQL translation behind our queries allows us to interrogate the database in a simple way even for more complex questions. For instance, suppose now that we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.
 
 ```{r}
 penguins_db |>
-  mutate(missing_body_mass_g = if_else(
-    is.na(body_mass_g), 1, 0
-  )) |>
+  mutate(missing_body_mass_g = if_else(is.na(body_mass_g), 1, 0)) |>
   group_by(species, missing_body_mass_g) |>
   tally()
 ```
@@ -174,7 +232,7 @@ penguins_db |>
   summarise(mean_body_mass_g = round(mean(body_mass_g, na.rm = TRUE)))
 ```
 
-We could also make a histogram of values for each of the species. Here we would collect our data back into R before creating our plot.
+We could also make a histogram of values for each of the species using the ggplot2 package. Here we would bring our data back into R before creating our plot with the `collect()` function.
 
 ```{r, warning=FALSE, message=FALSE}
 penguins_db |>
@@ -226,7 +284,7 @@ As well as having an example of working with data in database from R, you also h
 Now that we've reached the end of this example, we can close our connection to the database using the `DBI` package.
 
 ```{r}
-dbDisconnect(db)
+dbDisconnect(conn = con)
 ```
 
 ## Further reading
