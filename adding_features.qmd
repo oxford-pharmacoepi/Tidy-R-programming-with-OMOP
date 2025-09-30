@@ -8,26 +8,24 @@ library(duckdb)
 library(dbplyr)
 library(dplyr)
 library(here)
-library(CDMConnector)
+library(omock)
 library(PatientProfiles)
 library(ggplot2)
 ```
 
 ```{r}
-db <- dbConnect(drv = duckdb(),
-                dbdir = eunomiaDir(datasetName = "synthea-covid19-10k"))
-cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
+cdm <- mockCdmFromDataset(datasetName = "synthea-covid19-10k", source = "duckdb")
 ```
 
-As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (ie a characteristic that does not change as time passes and a person ages) or time-varying.[^ch_4_adding_features-1]
+As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (ie a characteristic that does not change as time passes and a person ages) or time-varying.[^adding_features-1]
 
-[^ch_4_adding_features-1]: In some datasets characteristics that could conceptually be considered as time-varying are encoded as time-invariant. One example for the latter is that in some cases an individual may be associated with a particular socioeconomic status or nationality that for the purposes of the data is treated as time-invariant.
+[^adding_features-1]: In some datasets characteristics that could conceptually be considered as time-varying are encoded as time-invariant. One example for the latter is that in some cases an individual may be associated with a particular socioeconomic status or nationality that for the purposes of the data is treated as time-invariant.
 
 ## Adding specific demographics
 
-The `PatientProfiles` package makes it easy for us to add demographic information to tables in the OMOP CDM. Like the `CDMConnector` package we've seen previously, the fact that the structure of the OMOP CDM is known allows the `PatientProfiles` package to abstract away some common data manipulations required to do research with patient-level data.[^ch_4_adding_features-2]
+The `PatientProfiles` package makes it easy for us to add demographic information to tables in the OMOP CDM. Like the `CDMConnector` package we've seen previously, the fact that the structure of the OMOP CDM is known allows the `PatientProfiles` package to abstract away some common data manipulations required to do research with patient-level data.[^adding_features-2]
 
-[^ch_4_adding_features-2]: Although these manipulations can on the face of it seem quite simple, their implementation across different database platforms with different data granularity (for example whether day of birth has been filled in for all patients or not) presents challenges that the `PatientProfiles` package solves for us.
+[^adding_features-2]: Although these manipulations can on the face of it seem quite simple, their implementation across different database platforms with different data granularity (for example whether day of birth has been filled in for all patients or not) presents challenges that the `PatientProfiles` package solves for us.
 
 Let's say we are interested in individuals' age and sex at time of diagnosis with COVID-19. We can add these variables to the table like so (noting that because age is time-varying, we have to specify the variable with the date for which we want to calculate age relative to).
 
@@ -38,12 +36,6 @@ cdm$condition_occurrence <- cdm$condition_occurrence |>
 
 cdm$condition_occurrence |> 
   glimpse()
-```
-
-```{r}
-cdm$condition_occurrence |> 
-  addSexQuery() |> 
-  show_query()
 ```
 
 We now have two variables added containing values for age and sex.
@@ -71,18 +63,35 @@ cdm$condition_occurrence |>
   geom_histogram(aes(age), colour = "black", binwidth = 5) +
   theme_bw() +
   theme(legend.position = "none")
-
 ```
+
+::: {.callout-note collapse="true"}
+### Show query
+```{r}
+cdm$condition_occurrence |> 
+  addSexQuery() |> 
+  show_query()
+```
+
+Difference between `addSexQuery()` and `addSex()` is explained in TODO add citation.
+:::
 
 ## Adding multiple demographics simultaneously
 
-We've now seen individual functions from `PatientProfiles` to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named `addPriorObservation()`). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.[^ch_4_adding_features-3]
+We've now seen individual functions from `PatientProfiles` to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named `addPriorObservation()`). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.[^adding_features-3]
 
-[^ch_4_adding_features-3]: This function also provides a more time efficient method that getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables and so can be identified simultaneously.
+[^adding_features-3]: This function also provides a more time efficient method that getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables and so can be identified simultaneously.
 
 ```{r}
 cdm$drug_exposure <- cdm$drug_exposure |> 
-  addDemographics(indexDate = "drug_exposure_start_date")
+  addDemographics(
+    indexDate = "drug_exposure_start_date",
+    age = TRUE,
+    sex = TRUE,
+    priorObservation = TRUE,
+    futureObservation = TRUE,
+    dateOfBirth = TRUE
+  )
 
 cdm$drug_exposure |> 
   glimpse()
@@ -102,7 +111,7 @@ cdm$drug_exposure |>
 ::: {.callout-tip collapse="true"}
 ## Returning a query from `PatientProfiles` rather than the result
 
-In the above examples the functions from PatientProfiles will execute queries with the results written to a table in the database (either temporary if no name is provided or a permanent table if one is given). We might though instead want to to instead just get the underlying query back so that we have more control over how and when the query will be executed.
+In the above examples the functions from PatientProfiles will execute queries with the results written to a table in the database (either temporary if no name is provided or a permanent table if one is given). We might though instead want to instead just get the underlying query back so that we have more control over how and when the query will be executed.
 
 ```{r, echo = TRUE}
 cdm$visit_occurrence |> 
@@ -124,6 +133,8 @@ cdm$visit_occurrence |>
   filter(sex == "Male") |> 
   show_query()
 ```
+
+Query functions can be useful in some contexts where you don't want to generate multiple temporary tables or do not want to lose indexes of a certain table, but also can generate large queries that could result in low performance.
 :::
 
 ## Creating categories
@@ -132,9 +143,10 @@ When we add age, either via addAge or addDemographics, we can also add another v
 
 ```{r}
 cdm$visit_occurrence <- cdm$visit_occurrence |>
-  addAge(indexDate = "visit_start_date",
-    ageGroup = list(c(0,17), c(18, 64),
-                    c(65, Inf)))
+  addAge(
+    indexDate = "visit_start_date",
+    ageGroup = list(c(0,17), c(18, 64), c(65, Inf))
+  )
 
 cdm$visit_occurrence |> 
   # data quality issues with our synthetic data means we have 
@@ -144,9 +156,32 @@ cdm$visit_occurrence |>
   tally() |> 
   collect() |> 
   ggplot() + 
-  geom_col(aes(x = age_group, y = n)) + 
+  geom_col(aes(x = age_group, y = n, fill = age_group)) + 
   theme_bw()
 ```
+
+::: {.callout-tip collapse="true"}
+### Naming age groups
+
+As we have seen the age groups have been named using their lower and upper bounds ('0 to 17', '18 to 64' and '65 or above'). But we can customise those labels naming the age group:
+
+```{r}
+cdm$condition_occurrence |>
+  addAgeQuery(
+    indexDate = "condition_start_date",
+    ageGroup = list("pediatric" = c(0,17), "adult" = c(18, Inf))
+  ) |>
+  filter(age >= 0) |> 
+  group_by(age_group) |> 
+  tally() |> 
+  collect() |> 
+  ggplot() + 
+  geom_col(aes(x = age_group, y = n, fill = age_group)) + 
+  theme_bw()
+```
+
+If you take a close look to the documentation of the function you will see that you can also add multiple age groups and control the name of the new column that and we have seen by default is 'age_group'.
+:::
 
 `PatientProfiles` also provides a more general function for adding categories. Can you guess it's name? That's right, we have `addCategories()` for this.
 
@@ -176,19 +211,19 @@ cdm$observation_period |>
   glimpse()
 ```
 
-The second case is normally a more complex task where adding a new variable involves joining to some other table. This table may well have been created by some intermediate query that we wrote to derive the variable of interest. For example, lets say we want to add each number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). For this we will need to do a join between the person and condition occurrence tables (as some people might not have any records in the condition occurrence table). Here we'll save the create a table containing just the information we're interested in and compute to a temporary table.
+The second case is normally a more complex task where adding a new variable involves joining to some other table following a certain logic. This table may well have been created by some intermediate query that we wrote to derive the variable of interest. For example, lets say we want to add each number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). For this we will need to do a join between the person and condition occurrence tables (as some people might not have any records in the condition occurrence table). Here we'll save the create a table containing just the information we're interested in and compute to a temporary table.
 
 ```{r}
 condition_summary <- cdm$person |> 
   select("person_id") |> 
-  left_join(cdm$condition_occurrence |> 
-  group_by(person_id) |> 
-  count(name = "condition_occurrence_records"),
-  by="person_id") |> 
+  left_join(
+    cdm$condition_occurrence |> 
+      group_by(person_id) |> 
+      count(name = "condition_occurrence_records"),
+    by="person_id"
+  ) |> 
   select("person_id", "condition_occurrence_records") |> 
-  mutate(condition_occurrence_records = if_else(
-    is.na(condition_occurrence_records), 
-    0, condition_occurrence_records)) |> 
+  mutate(condition_occurrence_records = coalesce(condition_occurrence_records, 0)) |>
   compute()
 
 condition_summary |> 
@@ -200,14 +235,14 @@ We can see what goes on behind the scenes by viewing the associated SQL.
 ```{r}
 cdm$person |> 
   select("person_id") |> 
-  left_join(cdm$condition_occurrence |> 
-  group_by(person_id) |> 
-  count(name = "condition_occurrence_records"),
-  by="person_id") |> 
+  left_join(
+    cdm$condition_occurrence |> 
+      group_by(person_id) |> 
+      count(name = "condition_occurrence_records"),
+    by="person_id"
+  ) |> 
   select("person_id", "condition_occurrence_records") |> 
-  mutate(condition_occurrence_records = if_else(
-    is.na(condition_occurrence_records), 
-    0, condition_occurrence_records)) |> 
+  mutate(condition_occurrence_records = coalesce(condition_occurrence_records, 0)) |>
   show_query()
 ```
 
@@ -227,11 +262,12 @@ cdm$drug_exposure |>
   tally()
 cdm$condition_occurrence |> 
   select(person_id, condition_start_date) |> 
-  left_join(cdm$drug_exposure |> 
-  select(person_id, drug_exposure_start_date), 
-  by = "person_id") |> 
+  left_join(
+    cdm$drug_exposure |> 
+      select(person_id, drug_exposure_start_date), 
+    by = "person_id"
+  ) |> 
   tally()
-
 ```
 :::
 
