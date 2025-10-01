@@ -136,6 +136,7 @@ names(attributes(cdm$covid))
 In particular the `cohort_set` (contains the `settings()` source), `cohort_attrition` (contains the source for `cohortCount()` and `attrition()`) and `cohort_codelist` (contains the source for `cohortCodelist()`) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table 'cdm$covid' in fact four tables were written in the database:
 
 ```{r}
+library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
 listSourceTables(cdm = cdm)
 ```
 
@@ -249,12 +250,58 @@ attrition_summary <- summariseCohortAttrition(cohort = cdm$covid)
 plotCohortAttrition(result = attrition_summary, type = 'png')
 ```
 
+Note that `conceptCohort()` first step lead to several rows in the attrition table, whereas any other `require*()` function always add just one record of attrition.
+
 ::: {.callout-tip collapse="true"}
 ### Cohort naming utilities
-- renameCohort
-- cohortId
+
+As we have seen that by default the naming of the cohorts in the name of the codelist:
+```{r}
+cdm$my_cohort <- conceptCohort(cdm = cdm, 
+                               conceptSet = list("concept_1" = 37311061L, "concept_2" = 317576L), 
+                               name = "my_cohort")
+settings(cdm$my_cohort)
+```
+
+But maybe we are interested to rename a cohort (e.g. after applying the inclusion criteria), we can do that with the `renameCohort()` utility function:
+
+```{r}
+cdm$my_cohort <- cdm$my_cohort |>
+  requirePriorObservation(minPriorObservation = 365, cohortId = 1) |>
+  renameCohort(cohortId = 1, newCohortName = "concept_1_365obs")
+settings(cdm$my_cohort)
+```
+
+Note that for arguments such as `cohortId`, `targetCohortId`, ... we are able to use the name of the cohort of interest, see for example:
+
+```{r}
+cdm$my_cohort <- cdm$my_cohort |>
+  requireSex(sex = "Female", cohortId = "concept_2") |>
+  renameCohort(cohortId = "concept_2", newCohortName = "concept_2_female")
+settings(cdm$my_cohort)
+```
+
+This functionality also applies to other packages, such as CohortCharacteristics, PatientProfiles, DrugUtilisation, ... Finally in some cases it is useful to add the cohort_name as a column to not have to check manually the equivalence between *cohort definition id* and *cohort name*, this can be done using the PatientProfiles utility function `addCohortName()`:
+
+```{r}
+library(PatientProfiles)
+cdm$my_cohort |>
+  addCohortName() |>
+  glimpse()
+```
+
+Also other utility functions that can be useful are those provided by omopgenerics:
+
+```{r}
+library(omopgenerics)
+getCohortId(cohort = cdm$my_cohort, cohortName = "concept_2_female")
+getCohortId(cohort = cdm$my_cohort)
+getCohortName(cohort = cdm$my_cohort, cohortId = 1)
+getCohortName(cohort = cdm$my_cohort, cohortId = c(2, 1))
+getCohortName(cohort = cdm$my_cohort)
+```
 :::
 
 # Further reading
 
--   ...
+- [Cohort tables](https://darwin-eu.github.io/omopgenerics/articles/cohorts.html)
