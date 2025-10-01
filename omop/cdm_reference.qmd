@@ -10,7 +10,7 @@ The OMOP CDM standardises the structure of healthcare data. Data is stored acros
 
 As we saw in @sec-dbplyr_packages, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipelines using the data. Luckily for us, we won't have to create functions and methods for this ourselves. Instead, we will use the `omopgenerics` package which defines a data model for OMOP CDM data and the `CDMConnector` package which provides functions for connecting to a OMOP CDM data held in a database.
 
-To see how this works we will use the `omock` package to create example data in the format of the OMOP CDM, which we will then copy to a `duckdb` database.
+To see how this works we will use the `omock` package to create example data in the format of the OMOP CDM, which we will then copy to a DuckDB database created by the `duckdb` package.
 
 ```{r, message=FALSE, warning=FALSE}
 library(DBI)
@@ -75,7 +75,7 @@ cdm$person
 cdm[["observation_period"]]
 ```
 
-Note that here we have first created a local version of the cdm with all the tables of interest with `omock` (`cdm_local`), then copied it to a `duckdb` database, and finally crated a reference to it with `CDMConnector`, so that we can work with the final `cdm` object as we normally would for one created with our own healthcare data. In that case we would directly use `cdmFromCon` with our own database information. Throughout this chapter, however, we will keep working with the mock dataset.
+Note that here we have first created a local version of the cdm with all the tables of interest with `omock` (`cdm_local`), then copied it to a DuckDB database, and finally crated a reference to it with `CDMConnector`, so that we can work with the final `cdm` object as we normally would for one created with our own healthcare data. In that case we would directly use `cdmFromCon` with our own database information. Throughout this chapter, however, we will keep working with the mock dataset.
 
 ## CDM attributes
 
@@ -158,7 +158,7 @@ TODO is there a way to name the packages that reexport a function?
 
 ## Including cohort tables in the cdm reference
 
-A [cohort](TODO citation) is a fundamental piece in epidemiological studies, later we'll see how to create cohorts in more detail in @sec-creating_cohorts. For the moment, let's just outline how we can include the reference to an existing cohort in our cdm reference. For this we'll use `omock` to add a cohort to our local cdm and upload that to a `duckdb` database again.
+A [cohort](TODO citation) is a fundamental piece in epidemiological studies, later we'll see how to create cohorts in more detail in @sec-creating_cohorts. For the moment, let's just outline how we can include the reference to an existing cohort in our cdm reference. For this we'll use `omock` to add a cohort to our local cdm and upload that to a DuckDB database again.
 
 ```{r, echo = TRUE}
 cdm_local <- cdm_local |> 
@@ -293,7 +293,7 @@ cdm
 cdm$cars
 ```
 
-If we already had the table in the database we could have instead just assigned it to our existing cdm reference. To see this let's upload the `penguins` table to our `duckdb` database.
+If we already had the table in the database we could have instead just assigned it to our existing cdm reference. To see this let's upload the `penguins` table to our DuckDB database.
 
 ```{r}
 dbWriteTable(conn = con, name = "penguins", value = penguins)

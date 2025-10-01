@@ -33,13 +33,13 @@ head(penguins, 5)
 
 ## Inserting data into a database
 
-By default the data provided by the package is local (allocated in the RAM memory of your computer), so let's first put it into a [duckdb database](https://duckdb.org/). We need to first create the database.
+By default the data provided by the package is local (allocated in the RAM memory of your computer), so let's first put it into a [DuckDB](https://duckdb.org/) database. We need to first create the database.
 
 ```{r}
 con <- dbConnect(drv = duckdb())
 ```
 
-See that now we have created an empty duckdb database. We can easily add the penguins data to it.
+See that now we have created an empty DuckDB database. We can easily add the penguins data to it.
 
 ```{r}
 dbWriteTable(conn = con, name = "penguins", value = penguins)
@@ -62,15 +62,15 @@ As you can see we have the same data that we had locally but now inside the data
 ::: {.callout-tip collapse="true"}
 ## Connecting to databases from R
 
-Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. In the code snipets above we created a new, empty, in-process [duckdb](https://duckdb.org/) database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like:
+Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. In the code snipets above we created a new, empty, in-process DuckDB database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like:
 
 ```{r, eval = FALSE}
 con <- dbConnect(drv = duckdb(dbdir = "my_duckdb_database.ducdkb"))
 ```
 
-Note that you you point to a none existing duckdb file, this will be created with an empty database.
+Note that you you point to a none existing DuckDB file, this will be created with an empty database.
 
-In this book for simplicity we will mostly be working with in-process duckdb databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like:
+In this book for simplicity we will mostly be working with in-process DuckDB databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like:
 
 ```{r, eval=FALSE}
 con <- dbConnect(drv = Postgres(),
@@ -142,7 +142,7 @@ penguins_db |>
   show_query()
 ```
 
-Instead of having to write this somewhat complex SQL specific to `duckdb` we can use the friendlier `dplyr` syntax that may well be more familiar if coming from an R programming background.
+Instead of having to write this somewhat complex SQL specific to DuckDB we can use the friendlier `dplyr` syntax that may well be more familiar if coming from an R programming background.
 
 ::: {.callout-note collapse="true"}
 ## Translation to different SQL dialects

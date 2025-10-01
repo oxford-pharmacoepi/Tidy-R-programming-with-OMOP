@@ -41,7 +41,7 @@ cdm
 ## `mockCdmFromDataset()`
 Note that if you call the function without downloading the database first you will be prompted to download it (or it will be downloaded directly if the session is not interactive).
 
-By default the mock cdm returns a local data set that can be inserted in any source of interest using the `insertCdmTo()` function. Populating source with duckdb will return you an in memory duckdb cdm_reference with two schemas cdmSchema = "main" and writeSchema = "results".
+By default the mock cdm returns a local data set that can be inserted in any source of interest using the `insertCdmTo()` function. Populating source with `source = "duckdb"` will return you an in memory DuckDB cdm_reference with two schemas cdmSchema = "main" and writeSchema = "results".
 :::
 
 ## Counting people

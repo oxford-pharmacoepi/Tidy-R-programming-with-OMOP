@@ -6,7 +6,7 @@ TODO: add citation of the figure
 
 ![](../images/relational-01.png)
 
-Let's load the required libraries, add our data to a duckdb database, and then create references to each of these tables.
+Let's load the required libraries, add our data to a DuckDB database, and then create references to each of these tables.
 
 ```{r, message=FALSE, warning=FALSE}
 library(nycflights13)

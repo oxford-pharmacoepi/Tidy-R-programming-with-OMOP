@@ -29,7 +29,7 @@ copy_lahman(con = con)
 
 The `copy_lahman()` function inserts all the different tables in the connection, it works similarly as we have done before with the for loop and the `dbWriteTable()` function.
 
-See that there are 28 new tables inserted in our duckdb reference:
+See that there are 28 new tables inserted in our DuckDB database:
 
 ```{r}
 dbListTables(conn = con)
