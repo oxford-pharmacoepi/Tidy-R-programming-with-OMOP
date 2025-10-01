@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.34">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -14,9 +14,9 @@
 <meta name="author" content="Kim López-Güell">
 <meta name="author" content="Núria Mercadé-Besora">
 <meta name="author" content="Martí Català">
-<meta name="dcterms.date" content="2025-09-11">
+<meta name="dcterms.date" content="2025-10-01">
 
-<title>Tidy R programming with databases: applications with the OMOP common data model</title>
+<title>Tidy R programming with the OMOP Common Data Model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -39,17 +39,18 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./intro.html" rel="next">
+<link href="./tidy_databases/index.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-23102fe0f0b5b1a9f09cc09ebcc8fe5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -103,9 +104,11 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Tidy R programming with databases: applications with the OMOP common data model</a> 
+      <a href="./">Tidy R programming with the OMOP Common Data Model</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -123,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./intro.html" class="sidebar-item-text sidebar-link">
+            <a href="./tidy_databases/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Getting started with working databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -132,25 +135,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./working_with_databases_from_r.html" class="sidebar-item-text sidebar-link">
+  <a href="./tidy_databases/working_with_databases.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first analysis using data in a database</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tidyverse_verbs.html" class="sidebar-item-text sidebar-link">
+  <a href="./tidy_databases/tidyverse_verbs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./tidyverse_expressions.html" class="sidebar-item-text sidebar-link">
+  <a href="./tidy_databases/tidyverse_expressions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Supported expressions for database queries</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dbplyr_packages.html" class="sidebar-item-text sidebar-link">
+  <a href="./tidy_databases/data_model.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></span></a>
   </div>
 </li>
@@ -158,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./omop.html" class="sidebar-item-text sidebar-link">
+            <a href="./omop/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Working with the OMOP CDM from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -167,36 +170,42 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cdm_reference.html" class="sidebar-item-text sidebar-link">
+  <a href="./omop/cdm_reference.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Creating a CDM reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./exploring_the_cdm.html" class="sidebar-item-text sidebar-link">
+  <a href="./omop/exploring_the_cdm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exploring the OMOP CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./adding_features.html" class="sidebar-item-text sidebar-link">
+  <a href="./omop/adding_features.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Identifying patient characteristics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./creating_cohorts.html" class="sidebar-item-text sidebar-link">
+  <a href="./omop/creating_cohorts.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Adding cohorts to the CDM</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./working_with_cohorts.html" class="sidebar-item-text sidebar-link">
+  <a href="./omop/working_with_cohorts.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with cohorts</span></span></a>
   </div>
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./final_remarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final remarks</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -214,7 +223,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
   <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
-  <li><a href="#renv" id="toc-renv" class="nav-link" data-scroll-target="#renv">renv</a></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -224,7 +233,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Tidy R programming with databases: applications with the OMOP common data model</h1>
+<h1 class="title">Tidy R programming with the OMOP Common Data Model</h1>
 </div>
 
 
@@ -248,7 +257,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 11, 2025</p>
+      <p class="date">October 1, 2025</p>
     </div>
   </div>
   
@@ -264,18 +273,19 @@ ul.task-list li input[type="checkbox"] {
 <h1 class="unnumbered">Preface</h1>
 <section id="is-this-book-for-me" class="level2">
 <h2 class="anchored" data-anchor-id="is-this-book-for-me">Is this book for me?</h2>
-<p>We’ve written this book for anyone interested in a working with databases using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <a href="https://design.tidyverse.org/unifying.html" class="uri">https://design.tidyverse.org/unifying.html</a> for more details on these principles).</p>
-<p>New to R? We recommend you compliment the book with <a href="https://r4ds.had.co.nz/">R for data science</a></p>
-<p>New to databases? We recommend you take a look at some web tutorials on SQL, such as <a href="https://sqlbolt.com/">SQLBolt</a> or <a href="https://www.sqlzoo.net/wiki/SQL_Tutorial">SQLZoo</a></p>
-<p>New to the OMOP CDM? We’d recommend you pare this book with <a href="https://ohdsi.github.io/TheBookOfOhdsi/">The Book of OHDSI</a></p>
+<p>We’ve written this book for anyone interested in a working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <a href="https://design.tidyverse.org/unifying.html">Tidy design principles</a> for more details on these principles).</p>
+<p>New to R? We recommend you to take a look to <a href="https://r4ds.had.co.nz/">R for data science</a> before reading this book. We assume that you have <a href="https://cran.r-project.org">R</a> installed and together with an adequate Integrated Development Environment (IDE) such as <a href="https://posit.co/download/rstudio-desktop/">R Studio</a> or <a href="https://positron.posit.co">positron</a>. See this <a href="https://rstudio-education.github.io/hopr/starting.html">tutorial</a> if you need guidance on how to get started. The book uses multiple packages, that you will need to install see the list in the <a href="TODO">R packages</a> section.</p>
+<p>New to databases? We recommend you take a look at some web tutorials on SQL, such as <a href="https://sqlbolt.com/">SQLBolt</a> or <a href="https://www.sqlzoo.net/wiki/SQL_Tutorial">SQLZoo</a> to have a basic understanding of how databases work.</p>
+<p>New to the OMOP CDM? We’d recommend you pare this book with <a href="https://ohdsi.github.io/TheBookOfOhdsi/">The Book of OHDSI</a>.</p>
 </section>
 <section id="how-is-the-book-organised" class="level2">
 <h2 class="anchored" data-anchor-id="how-is-the-book-organised">How is the book organised?</h2>
-<p>The book is divided into two parts. The first half of the book is focused on the general principles for working with databases from R. In these chapters you will see how you can use familiar tidyverse-style code to build up analytic pipelines that start with data held in a database and end with your analytic results. The second half of the book is focused on working with data in the OMOP Common Data Model (CDM) format, a widely used data format for health care data. In these chapters you will see how to work with this data format using the general principles from the first half of the book along with a set of R packages that have been built for the OMOP CDM.</p>
+<p>The book is divided into two parts. The first half of the book is focused on the general principles for working with databases from R. In these chapters you will see how you can use familiar tidyverse-style code to build up analytic pipelines that start with data held in a database and end with your analytic results. The second half of the book is focused on working with data in the OMOP CDM format, a widely used data format for health care data. In these chapters you will see how to work with this data format using the general principles from the first half of the book along with a set of R packages that have been built for the OMOP CDM.</p>
 </section>
 <section id="citation" class="level2">
 <h2 class="anchored" data-anchor-id="citation">Citation</h2>
-<p>TO ADD</p>
+<p>Please if you found this book useful help us citing it:</p>
+<pre><code>Burn E, Black A, Raventós B, Guo Y, Du M, López-Güell K, Mercadé-Besora N, Català M. Tidy R programming with the OMOP Common Data Model. GitHub; 2025. https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
 </section>
 <section id="license" class="level2">
 <h2 class="anchored" data-anchor-id="license">License</h2>
@@ -283,33 +293,33 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="code" class="level2">
 <h2 class="anchored" data-anchor-id="code">Code</h2>
-<p>The source code for the book can be found at this <a href="https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP">Github repository</a></p>
+<p>The source code for the book can be found at this <a href="https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP">Github repository</a>, please star it if you found it useful.</p>
 </section>
-<section id="renv" class="level2">
-<h2 class="anchored" data-anchor-id="renv">renv</h2>
-<p>This book is rendered using the following version of packages:</p>
+<section id="r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="r-packages">R Packages</h2>
+<p>This book is rendered automatically though <a href="https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml">GitHub Actions</a> using the following version of packages:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Finding R package dependencies ... Done!</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="xmgiimdftl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xmgiimdftl table {
+<div id="xmwgtxhqip" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xmwgtxhqip table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xmgiimdftl thead, #xmgiimdftl tbody, #xmgiimdftl tfoot, #xmgiimdftl tr, #xmgiimdftl td, #xmgiimdftl th {
+#xmwgtxhqip thead, #xmwgtxhqip tbody, #xmwgtxhqip tfoot, #xmwgtxhqip tr, #xmwgtxhqip td, #xmwgtxhqip th {
   border-style: none;
 }
 
-#xmgiimdftl p {
+#xmwgtxhqip p {
   margin: 0;
   padding: 0;
 }
 
-#xmgiimdftl .gt_table {
+#xmwgtxhqip .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -335,12 +345,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_caption {
+#xmwgtxhqip .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xmgiimdftl .gt_title {
+#xmwgtxhqip .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -352,7 +362,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#xmgiimdftl .gt_subtitle {
+#xmwgtxhqip .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -364,7 +374,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#xmgiimdftl .gt_heading {
+#xmwgtxhqip .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -376,13 +386,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_bottom_border {
+#xmwgtxhqip .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_col_headings {
+#xmwgtxhqip .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -397,7 +407,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_col_heading {
+#xmwgtxhqip .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -417,7 +427,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#xmgiimdftl .gt_column_spanner_outer {
+#xmwgtxhqip .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -429,15 +439,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#xmgiimdftl .gt_column_spanner_outer:first-child {
+#xmwgtxhqip .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xmgiimdftl .gt_column_spanner_outer:last-child {
+#xmwgtxhqip .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xmgiimdftl .gt_column_spanner {
+#xmwgtxhqip .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -449,11 +459,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#xmgiimdftl .gt_spanner_row {
+#xmwgtxhqip .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xmgiimdftl .gt_group_heading {
+#xmwgtxhqip .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -479,7 +489,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#xmgiimdftl .gt_empty_group_heading {
+#xmwgtxhqip .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -494,15 +504,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#xmgiimdftl .gt_from_md > :first-child {
+#xmwgtxhqip .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xmgiimdftl .gt_from_md > :last-child {
+#xmwgtxhqip .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xmgiimdftl .gt_row {
+#xmwgtxhqip .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -521,7 +531,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#xmgiimdftl .gt_stub {
+#xmwgtxhqip .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -534,7 +544,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xmgiimdftl .gt_stub_row_group {
+#xmwgtxhqip .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -548,15 +558,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#xmgiimdftl .gt_row_group_first td {
+#xmwgtxhqip .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xmgiimdftl .gt_row_group_first th {
+#xmwgtxhqip .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xmgiimdftl .gt_summary_row {
+#xmwgtxhqip .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -566,16 +576,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xmgiimdftl .gt_first_summary_row {
+#xmwgtxhqip .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_first_summary_row.thick {
+#xmwgtxhqip .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xmgiimdftl .gt_last_summary_row {
+#xmwgtxhqip .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -585,7 +595,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_grand_summary_row {
+#xmwgtxhqip .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -595,7 +605,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xmgiimdftl .gt_first_grand_summary_row {
+#xmwgtxhqip .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -605,7 +615,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_last_grand_summary_row_top {
+#xmwgtxhqip .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -615,11 +625,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_striped {
+#xmwgtxhqip .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xmgiimdftl .gt_table_body {
+#xmwgtxhqip .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -628,7 +638,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_footnotes {
+#xmwgtxhqip .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -642,7 +652,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_footnote {
+#xmwgtxhqip .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -651,7 +661,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xmgiimdftl .gt_sourcenotes {
+#xmwgtxhqip .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -665,7 +675,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xmgiimdftl .gt_sourcenote {
+#xmwgtxhqip .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -673,77 +683,77 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xmgiimdftl .gt_left {
+#xmwgtxhqip .gt_left {
   text-align: left;
 }
 
-#xmgiimdftl .gt_center {
+#xmwgtxhqip .gt_center {
   text-align: center;
 }
 
-#xmgiimdftl .gt_right {
+#xmwgtxhqip .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xmgiimdftl .gt_font_normal {
+#xmwgtxhqip .gt_font_normal {
   font-weight: normal;
 }
 
-#xmgiimdftl .gt_font_bold {
+#xmwgtxhqip .gt_font_bold {
   font-weight: bold;
 }
 
-#xmgiimdftl .gt_font_italic {
+#xmwgtxhqip .gt_font_italic {
   font-style: italic;
 }
 
-#xmgiimdftl .gt_super {
+#xmwgtxhqip .gt_super {
   font-size: 65%;
 }
 
-#xmgiimdftl .gt_footnote_marks {
+#xmwgtxhqip .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xmgiimdftl .gt_asterisk {
+#xmwgtxhqip .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xmgiimdftl .gt_indent_1 {
+#xmwgtxhqip .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xmgiimdftl .gt_indent_2 {
+#xmwgtxhqip .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xmgiimdftl .gt_indent_3 {
+#xmwgtxhqip .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xmgiimdftl .gt_indent_4 {
+#xmwgtxhqip .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xmgiimdftl .gt_indent_5 {
+#xmwgtxhqip .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xmgiimdftl .katex-display {
+#xmwgtxhqip .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xmgiimdftl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xmwgtxhqip div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="Package" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Package</th>
@@ -754,7 +764,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="Package">CDMConnector</td>
-<td class="gt_row gt_right" headers="Version">2.1.1</td>
+<td class="gt_row gt_right" headers="Version">2.2.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/CDMConnector/">🔗</a></td>
 </tr>
 <tr class="even">
@@ -764,7 +774,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Package">CohortCharacteristics</td>
-<td class="gt_row gt_right" headers="Version">1.0.0</td>
+<td class="gt_row gt_right" headers="Version">1.0.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/CohortCharacteristics/">🔗</a></td>
 </tr>
 <tr class="even">
@@ -784,7 +794,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Package">PatientProfiles</td>
-<td class="gt_row gt_right" headers="Version">1.4.2</td>
+<td class="gt_row gt_right" headers="Version">1.4.3</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/PatientProfiles/">🔗</a></td>
 </tr>
 <tr class="even">
@@ -819,50 +829,55 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Package">duckdb</td>
-<td class="gt_row gt_right" headers="Version">1.3.3</td>
+<td class="gt_row gt_right" headers="Version">1.4.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://r.duckdb.org/">🔗</a></td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Package">ggplot2</td>
-<td class="gt_row gt_right" headers="Version">3.5.2</td>
+<td class="gt_row gt_right" headers="Version">4.0.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://ggplot2.tidyverse.org">🔗</a></td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Package">here</td>
-<td class="gt_row gt_right" headers="Version">1.0.1</td>
+<td class="gt_row gt_right" headers="Version">1.0.2</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://here.r-lib.org/">🔗</a></td>
 </tr>
 <tr class="odd">
+<td class="gt_row gt_left" headers="Package">nycflights13</td>
+<td class="gt_row gt_right" headers="Version">1.0.2</td>
+<td class="gt_row gt_left" headers="Link"><a href="https://github.com/hadley/nycflights13">🔗</a></td>
+</tr>
+<tr class="even">
 <td class="gt_row gt_left" headers="Package">omock</td>
 <td class="gt_row gt_right" headers="Version">0.5.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://ohdsi.github.io/omock/">🔗</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td class="gt_row gt_left" headers="Package">omopgenerics</td>
-<td class="gt_row gt_right" headers="Version">1.3.0</td>
+<td class="gt_row gt_right" headers="Version">1.3.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/omopgenerics/">🔗</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td class="gt_row gt_left" headers="Package">palmerpenguins</td>
 <td class="gt_row gt_right" headers="Version">0.1.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://allisonhorst.github.io/palmerpenguins/">🔗</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td class="gt_row gt_left" headers="Package">purrr</td>
 <td class="gt_row gt_right" headers="Version">1.1.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://purrr.tidyverse.org/">🔗</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td class="gt_row gt_left" headers="Package">sloop</td>
 <td class="gt_row gt_right" headers="Version">1.0.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://github.com/r-lib/sloop">🔗</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td class="gt_row gt_left" headers="Package">stringr</td>
 <td class="gt_row gt_right" headers="Version">1.5.2</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://stringr.tidyverse.org">🔗</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td class="gt_row gt_left" headers="Package">tidyr</td>
 <td class="gt_row gt_right" headers="Version">1.3.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://tidyr.tidyverse.org">🔗</a></td>
@@ -931,13 +946,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1283,7 +1299,7 @@ ul.task-list li input[type="checkbox"] {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./intro.html" class="pagination-link" aria-label="Getting started with working databases from R">
+      <a href="./tidy_databases/index.html" class="pagination-link" aria-label="Getting started with working databases from R">
         <span class="nav-page-text">Getting started with working databases from R</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
