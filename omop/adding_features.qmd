@@ -73,7 +73,7 @@ cdm$condition_occurrence |>
   show_query()
 ```
 
-Difference between `addSexQuery()` and `addSex()` is explained in TODO add citation.
+Difference between `addSexQuery()` and `addSex()` is explained in the next tip chunck.
 :::
 
 ## Adding multiple demographics simultaneously

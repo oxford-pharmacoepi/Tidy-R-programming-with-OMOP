@@ -152,8 +152,6 @@ cdmVersion(cdm$person)
 ::: {.callout-note collapse="true"}
 ## Methods functions
 Although as stated the `cdmName()` and `cdmVersion()` functions are defined by the omopgenerics packages, these functions are reexported in other packages and you won't need to load omopgenerics explicitly.
-
-TODO is there a way to name the packages that reexport a function?
 :::
 
 ## Including cohort tables in the cdm reference

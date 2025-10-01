@@ -2,9 +2,9 @@
 
 ## Is this book for me?
 
-We've written this book for anyone interested in a working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see [TODO](https://design.tidyverse.org/unifying.html) for more details on these principles).
+We've written this book for anyone interested in a working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see [Tidy design principles](https://design.tidyverse.org/unifying.html) for more details on these principles).
 
-New to R? We recommend you to take a look to [R for data science](https://r4ds.had.co.nz/) before reading this book. We assume that you have [R](TODO) installed and together with an adequate IDE (TODO) such as [R Studio](TODO) or [positron](TODO). See this [tutorial](https://rstudio-education.github.io/hopr/starting.html) if you need guidance on how to get started. The book uses multiple packages, that you will need to install see the list in the [R packages](TODO) section.
+New to R? We recommend you to take a look to [R for data science](https://r4ds.had.co.nz/) before reading this book. We assume that you have [R](https://cran.r-project.org) installed and together with an adequate Integrated Development Environment (IDE) such as [R Studio](https://posit.co/download/rstudio-desktop/) or [positron](https://positron.posit.co). See this [tutorial](https://rstudio-education.github.io/hopr/starting.html) if you need guidance on how to get started. The book uses multiple packages, that you will need to install see the list in the [R packages](TODO) section.
 
 New to databases? We recommend you take a look at some web tutorials on SQL, such as [SQLBolt](https://sqlbolt.com/) or [SQLZoo](https://www.sqlzoo.net/wiki/SQL_Tutorial) to have a basic understanding of how databases work.
 
@@ -29,11 +29,11 @@ Burn E, Black A, Raventós B, Guo Y, Du M, López-Güell K, Mercadé-Besora N, C
 ```
 ## Code
 
-The source code for the book can be found at this [Github repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP), we welcome TODO to help the dissemination of the book.
+The source code for the book can be found at this [Github repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP), please star it if you found it useful.
 
 ## R Packages
 
-This book is rendered automatically though [GitHub Actions](TODO) using the following version of packages:
+This book is rendered automatically though [GitHub Actions](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml) using the following version of packages:
 
 ```{r, echo=FALSE}
 explicitPkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE, recursive = TRUE) |>
