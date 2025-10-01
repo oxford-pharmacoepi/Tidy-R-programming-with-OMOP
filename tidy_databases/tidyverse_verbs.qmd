@@ -2,9 +2,7 @@
 
 We saw in the previous chapter that we can use familiar `dplyr` verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we'll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the `nycflights13` data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.
 
-TODO: add citation of the figure
-
-![](../images/relational-01.png)
+![`nycflights13` relational diagram from <https://collinn.github.io/teaching/2023/labs/joins.html>.](../images/relational-01.png){.lightbox #fig-nycflights13}
 
 Let's load the required libraries, add our data to a DuckDB database, and then create references to each of these tables.
 

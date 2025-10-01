@@ -4,9 +4,7 @@ In the previous chapters we've seen that after connecting to a database we can c
 
 To see how we can develop a data model with associated methods and functions we'll use the Lahman baseball data. We can see below how the data is stored across various related tables.
 
-TODO add citation for figure
-
-![](../images/lahman.jpg)
+![Lahman's Baseball Dabatase schema from <https://cdalzell.github.io/Lahman/>](../images/lahman.jpg){.lightbox #fig-lahman}
 
 ## Defining a data model
 
