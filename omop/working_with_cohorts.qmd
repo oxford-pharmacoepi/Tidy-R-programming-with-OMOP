@@ -1,8 +1,8 @@
-# Working with cohorts
+# Working with cohorts {#sec-working_with_cohorts}
 
 ## Cohort intersections
 
-When conducting research, it is often necessary to study patients who meet multiple clinical criteria simultaneously. For example, we may be interested in analysing outcomes among patients who have both diabetes and hypertension. Using the OMOP CDM, this typically involves first creating two separate cohorts: one for patients with diabetes and another for those with hypertension. To identify patients who meet both conditions, the next step is to compute the intersection of these cohorts. This ensures that the final study population includes only individuals who satisfy all specified criteria. Hence, finding cohort intersections is a common and essential task when working with the OMOP Common Data Model, enabling researchers to define precise target populations that align with their research objectives.
+When conducting research, it is often necessary to study patients who meet multiple clinical criteria simultaneously. For example, we may be interested in analysing outcomes among patients who have both diabetes and hypertension. Using the OMOP CDM, this typically involves first creating two separate cohorts: one for patients with diabetes and another for those with hypertension. To identify patients who meet both conditions, the next step is to compute the intersection of these cohorts. This ensures that the final study population includes only individuals who satisfy all specified criteria. Hence, finding cohort intersections is a common and essential task when working with the OMOP CDM, enabling researchers to define precise target populations that align with their research objectives.
 
 Depending on the research question, the definition of a cohort intersection may vary. For instance, you might require patients to have a diagnosis of hypertension before developing diabetes, or that both diagnoses occur within a specific time window. These additional temporal or clinical criteria can make cohort intersection more complex. The `PatientProfiles` R package addresses these challenges by providing a suite of flexible functions to support the calculation of cohort intersections under various scenarios.
 
@@ -90,7 +90,7 @@ cdm$gi_bleed |>
 ::: {.callout-tip collapse="true"}
 ### New column naming
 
-By default the name of new columns is '\{cohort_name\}_\{window_name\}' as we have seen in the prior examples, in some cases you only have one cohort or one window and you might want to rename the column as you please. In that case you can use the `nameStyle` argument to change the new naming of the columns:
+By default the name of new columns is '{cohort_name}\_{window_name}' as we have seen in the prior examples, in some cases you only have one cohort or one window and you might want to rename the column as you please. In that case you can use the `nameStyle` argument to change the new naming of the columns:
 
 ```{r}
 cdm$gi_bleed |>
@@ -102,7 +102,7 @@ cdm$gi_bleed |>
   glimpse()
 ```
 
-If multiple windows are provided but '\{window_name\}' is not included in `nameStyle` then an error will prompt:
+If multiple windows are provided but '{window_name}' is not included in `nameStyle` then an error will prompt:
 
 ```{r, error=TRUE}
 cdm$gi_bleed |>
@@ -141,7 +141,6 @@ x |>
   
 ```
 
-
 ::: {.callout-note collapse="true"}
 ### Handling the obsrevation period
 
@@ -169,7 +168,7 @@ glimpse()
 ```
 
 See that for the window 2000 to 3000 where the individual is still in observation a 0 is reported, the same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window as individual is not in observation at any point of the window, NA is reported.
-::: 
+:::
 
 ### Date and times
 
@@ -230,6 +229,14 @@ x |>
   
 ```
 
-# Further reading
+## Disconnecting
+
+Once we have finished our analysis we can close our connection to the database behind our cdm reference.
+
+```{r}
+cdmDisconnect(cdm) 
+```
+
+## Further reading
 
 Full details on the intersection functions in `PatientProfiles` can be found on the package website: <https://darwin-eu.github.io/PatientProfiles/>.

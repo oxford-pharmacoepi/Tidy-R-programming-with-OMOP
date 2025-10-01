@@ -1,4 +1,4 @@
-# A first analysis using data in a database {#sec-databases_and_r}
+# A first analysis using data in a database {#sec-working_with_databases}
 
 ![](../images/lter_penguins.png){width="250"}
 
@@ -60,7 +60,7 @@ dbGetQuery(conn = con, statement = "SELECT * FROM penguins LIMIT 5")
 As you can see we have the same data that we had locally but now inside the database.
 
 ::: {.callout-tip collapse="true"}
-## Connecting to databases from R
+### Connecting to databases from R
 
 Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. In the code snipets above we created a new, empty, in-process DuckDB database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like:
 
@@ -145,7 +145,7 @@ penguins_db |>
 Instead of having to write this somewhat complex SQL specific to DuckDB we can use the friendlier `dplyr` syntax that may well be more familiar if coming from an R programming background.
 
 ::: {.callout-note collapse="true"}
-## Translation to different SQL dialects
+### Translation to different SQL dialects
 
 Note this same R code will also work for other SQL dialects such as Postgres, SQL server, Snowflake and Spark. Here you can see the different generated translations:
 
@@ -280,7 +280,7 @@ As well as having an example of working with data in database from R, you also h
 
 ## Disconnecting from the database
 
-Now that we've reached the end of this example, we can close our connection to the database using the `DBI` package.
+Now that we've reached the end of this example, we can close our connection to the database.
 
 ```{r}
 dbDisconnect(conn = con)

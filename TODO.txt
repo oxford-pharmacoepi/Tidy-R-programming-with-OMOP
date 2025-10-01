@@ -1,12 +1,11 @@
 - Name packages consistency
 - provide link to reference always that we use a funct
-- To render with links to funs
-- check summary at the begining of the parts
-- add final remarks
 - explicitly format classes.
+
+- To render with links to funs
+
 - cdmReference
 - sourceType
-- disconnect from the database
 - arrange vs window_order
 - cdm_table class
 - summarise data in the omop cdm (summarised result)

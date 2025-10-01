@@ -1,16 +1,13 @@
-# Identifying patient characteristics
+# Identifying patient characteristics {#sec-adding_features}
 
 For this chapter, we'll again use our example COVID-19 dataset.
 
 ```{r, warning=FALSE, message=FALSE}
-library(DBI)
-library(duckdb)
-library(dbplyr)
 library(dplyr)
-library(here)
 library(omock)
 library(PatientProfiles)
 library(ggplot2)
+library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
 ```
 
 ```{r}
@@ -67,6 +64,7 @@ cdm$condition_occurrence |>
 
 ::: {.callout-note collapse="true"}
 ### Show query
+
 ```{r}
 cdm$condition_occurrence |> 
   addSexQuery() |> 
@@ -109,7 +107,7 @@ cdm$drug_exposure |>
 ```
 
 ::: {.callout-tip collapse="true"}
-## Returning a query from `PatientProfiles` rather than the result
+### Returning a query from `PatientProfiles` rather than the result
 
 In the above examples the functions from PatientProfiles will execute queries with the results written to a table in the database (either temporary if no name is provided or a permanent table if one is given). We might though instead want to instead just get the underlying query back so that we have more control over how and when the query will be executed.
 
@@ -247,7 +245,7 @@ cdm$person |>
 ```
 
 ::: {.callout-tip collapse="true"}
-## Taking care with joins
+### Taking care with joins
 
 When adding variables through joins we need to pay particular attention to the dimensions of the resulting table. While sometimes we may want to have additional rows added as well as new columns, this is often not desired. If we, for example, have a table with one row per person then a left join to a table with multiple rows per person can then result in a table with multiple rows per person.
 
@@ -271,6 +269,14 @@ cdm$condition_occurrence |>
 ```
 :::
 
-# Further reading
+## Disconnecting
+
+Once we have finished our analysis we can close our connection to the database behind our cdm reference.
+
+```{r}
+cdmDisconnect(cdm) 
+```
+
+## Further reading
 
 -   [PatientProfiles package](https://darwin-eu-dev.github.io/PatientProfiles/)

@@ -1,15 +1,14 @@
-# Building analytic pipelines for a data model {#sec-dbplyr_packages}
+# Building analytic pipelines for a data model {#sec-data_model}
 
 In the previous chapters we've seen that after connecting to a database we can create references to the various tables we've interested in it and write bespoke analytic code to query them. However, if we are working with the same database over and over again we are likely to want to build some tooling for tasks we are often performing.
 
 To see how we can develop a data model with associated methods and functions we'll use the Lahman baseball data. We can see below how the data is stored across various related tables.
 
-![Lahman's Baseball Dabatase schema from <https://cdalzell.github.io/Lahman/>](../images/lahman.jpg){.lightbox #fig-lahman}
+![Lahman's Baseball Dabatase schema from <https://cdalzell.github.io/Lahman/>](../images/lahman.jpg){#fig-lahman .lightbox}
 
 ## Defining a data model
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-library(DBI)
 library(duckdb)
 library(dplyr)
 library(tidyr)
@@ -63,11 +62,11 @@ lahman$People |>
 ```
 
 ::: {.callout-note collapse="true"}
-## The dm package
+### The dm package
 
-In this chapter we will be creating a bespoke data model for our database. This approach can be further extended using the `dm` package, which also provides various helpful functions for creating a data model and working with it.
+In this chapter we will be creating a bespoke data model for our database. This approach can be further extended using the `dm` package [@dm], which also provides various helpful functions for creating a data model and working with it.
 
-Similar to above, we can use `dm` to create a single object to access our database tables.
+Similar to above, we can use [`dm()`](https://dm.cynkra.com/reference/dm.html) to create a single object to access our database tables.
 
 ```{r, message=FALSE, warning=FALSE}
 library(dm)
@@ -75,7 +74,7 @@ lahman_dm <- dm(batting = tbl(con, "Batting"), people = tbl(con, "People"))
 lahman_dm
 ```
 
-Using this approach, we can make use of various utility functions. For example here we specify [primary and foreign keys](TODO%20add%20citation) and then check that the key constraints are satisfied.
+Using this approach, we can make use of various utility functions. For example here we specify [primary and foreign keys](https://www.geeksforgeeks.org/dbms/difference-between-primary-key-and-foreign-key/) and then check that the key constraints are satisfied.
 
 ```{r, echo=TRUE}
 lahman_dm <- lahman_dm |>
@@ -119,7 +118,7 @@ getTeams(lahman = lahman, name = "Babe Ruth")
 ```
 
 ::: {.callout-note collapse="true"}
-## Show query
+### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 getTeams(lahman = lahman, name = "Babe Ruth") |>
@@ -132,7 +131,7 @@ getTeams(lahman = lahman, name = "Barry Bonds")
 ```
 
 ::: {.callout-note collapse="true"}
-## Show query
+### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 getTeams(lahman = lahman, name = "Barry Bonds") |>
@@ -141,7 +140,7 @@ getTeams(lahman = lahman, name = "Barry Bonds") |>
 :::
 
 ::: {.callout-tip collapse="true"}
-## Choosing the right time to collect data into R
+### Choosing the right time to collect data into R
 
 The function `collect()` brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our `getTeams()` function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case we could also use `pull()` to get our result out as a vector rather that a data frame.
 
@@ -175,7 +174,7 @@ lahman$Batting |>
 ```
 
 ::: {.callout-note collapse="true"}
-## Show query
+### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Batting |>
@@ -190,7 +189,7 @@ lahman$Pitching |>
 ```
 
 ::: {.callout-note collapse="true"}
-## Show query
+### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Pitching |>
@@ -225,7 +224,7 @@ plot_data <- lahman$Batting |>
 ```
 
 ::: {.callout-note collapse="true"}
-## Show query
+### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Batting |>
@@ -262,7 +261,7 @@ plot_data |>
 ```
 
 ::: {.callout-note collapse="true"}
-## Defining methods for the data model
+### Defining methods for the data model
 
 As part of our `lahmanFromCon()` function our data model object has the class "lahman_ref". Therefore as well as creating user-facing functions to work with our lahman data model, we can also define methods for this object.
 
@@ -321,7 +320,7 @@ lahman$Salaries |>
 Although the R code on the face of it looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.
 
 ::: {.callout-note collapse="true"}
-## Show query
+### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Salaries |> 
@@ -352,7 +351,7 @@ lahman$Salaries |>
 ```
 
 ::: {.callout-note collapse="true"}
-## Show query
+### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Salaries |> 
@@ -421,7 +420,7 @@ lahman$Pitching |>
 Looking at the SQL we can see, however, that there is some duplication, because as part of each full query we have run our players_with_college query.
 
 ::: {.callout-note collapse="true"}
-## Show query
+### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Batting |> 
@@ -467,7 +466,7 @@ lahman$Pitching |>
 ```
 
 ::: {.callout-note collapse="true"}
-## Show query
+### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Batting |> 
@@ -487,7 +486,15 @@ lahman$Pitching |>
 In this case the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore although we don't want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.
 
 ::: {.callout-note collapse="true"}
-## Indexes
+### Indexes
 
 Some SQL dialects use indexes for more efficient 'joins' performance. Briefly speaking indexes store the location of the different values of a column. Every time that you create a new table with `compute()` the indexes won't be carried over, so if you want your new table to keep some indexes you will have to add them manually. That's why sometimes it won't be more efficient to add a `compute()` in between because the new table generated won't have the indexes that make your query to be executed faster.
 :::
+
+## Disconnecting from the database
+
+Now that we've reached the end of this example, we can close our connection to the database.
+
+```{r}
+dbDisconnect(conn = con)
+```
