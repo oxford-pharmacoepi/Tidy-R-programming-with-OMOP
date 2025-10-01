@@ -34,13 +34,13 @@ jobs:
       - name: Create directiy to download data
         run: |
           mkdir -p my_data
-          echo "EUNOMIA_DATA_FOLDER=$(pwd)/my_data" >> $GITHUB_ENV
+          echo "MOCK_DATASETS_FOLDER=$(pwd)/my_data" >> $GITHUB_ENV
       
       - name: Download synthetic datasets
         run: |
           options(timeout = 600)
-          CDMConnector::requireEunomia("GiBleed")
-          CDMConnector::requireEunomia("synthea-covid19-10k")
+          omock::downloadMockDataset("GiBleed")
+          omock::downloadMockDataset("synthea-covid19-10k")
         shell: Rscript {0}
 
       - name: Set up Quarto

@@ -21,7 +21,7 @@ It is beyond the scope of this book to describe all the different ways cohorts c
 
 ## Set up
 
-We'll use our synthetic dataset for demonstrating how cohorts can be constructed.
+We'll use our the same COVID-19 synthetic dataset that we used before for demonstrating how cohorts can be constructed.
 
 ```{r, warning=FALSE, message=FALSE}
 library(omock)

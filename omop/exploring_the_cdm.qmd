@@ -1,6 +1,6 @@
-## Exploring the OMOP CDM
+# Exploring the OMOP CDM
 
-For this chapter, we'll use a synthetic Covid-19 dataset.
+For this chapter, we'll use a synthetic COVID-19 dataset (`"synthea-covid19-10k"`). A characterisation of this dataset can be found [here](https://dpa-pde-oxford.shinyapps.io/OmopSketchCharacterisation/).
 
 ```{r, warning=FALSE, message=FALSE}
 library(DBI)
