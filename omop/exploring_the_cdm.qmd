@@ -1,0 +1,191 @@
+# Exploring the OMOP CDM
+
+For this chapter, we'll use a synthetic COVID-19 dataset (`"synthea-covid19-10k"`). A characterisation of this dataset can be found [here](https://dpa-pde-oxford.shinyapps.io/OmopSketchCharacterisation/).
+
+```{r, warning=FALSE, message=FALSE}
+library(DBI)
+library(duckdb)
+library(dbplyr)
+library(dplyr)
+library(here)
+library(omock)
+library(ggplot2)
+library(clock)
+```
+
+You can download the dataset using the function `downloadMockDataset()`:
+
+```{r, eval=FALSE}
+downloadMockDataset(datasetName = "synthea-covid19-10k")
+```
+
+::: {.callout-note collapse="true"}
+### Setup OMOP_DATA_FOLDER
+
+The `downloadMockDataset` function checks if the database has already been downloaded and if it is not is downloaded in a temporary directory. To avoid downloading the database every time that we want to use we need to set up the `OMOP_DATA_FOLDER`. To do that you need to create an environment variable named `OMOP_DATA_FOLDER`, you can add it in the r environment file (`usethis::edit_r_environ()`) or using `Sys.setenv(OMOP_DATA_FOLDER = "...")` either way `OMOP_DATA_FOLDER` should point to a folder where the dataset will be downloaded. This way the dataset will be stored permanently in your computer and you will not have to download it every time that you want to use it.
+
+Note this folder is defined by omopgenerics and used also by other packages to store OMOP related data.
+:::
+
+Once the dataset is downloaded you can create the cdm reference:
+
+```{r, warning=FALSE, message=FALSE}
+cdm <- mockCdmFromDataset(datasetName = "synthea-covid19-10k", source = "duckdb")
+```
+
+```{r, message=TRUE}
+cdm
+```
+
+::: {.callout-note collapse="true"}
+## `mockCdmFromDataset()`
+Note that if you call the function without downloading the database first you will be prompted to download it (or it will be downloaded directly if the session is not interactive).
+
+By default the mock cdm returns a local data set that can be inserted in any source of interest using the `insertCdmTo()` function. Populating source with `source = "duckdb"` will return you an in memory DuckDB cdm_reference with two schemas cdmSchema = "main" and writeSchema = "results".
+:::
+
+## Counting people
+
+The OMOP CDM is person-centric, with the person table containing records to uniquely identify each person in the database. As each row refers to a unique person, we can quickly get a count of the number of individuals in the database like so
+
+```{r, echo = TRUE}
+cdm$person |> 
+  count()
+```
+
+The person table also contains some demographic information, including a gender concept for each person. We can get a count grouped by this variable, but as this uses a concept we'll also need to join to the concept table to get the corresponding concept name for each concept id.
+
+```{r, echo = TRUE}
+cdm$person |> 
+  group_by(gender_concept_id) |> 
+  count() |> 
+  left_join(cdm$concept, by = c("gender_concept_id" = "concept_id")) |> 
+  select("gender_concept_id", "concept_name", "n") |> 
+  collect()
+```
+
+::: {.callout-tip collapse="true"}
+## Vocabulary tables
+
+Above we've got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associated with the concept, along with other information such as its domain and vocabulary id.
+
+```{r, echo = TRUE}
+cdm$concept |> 
+  glimpse()
+```
+
+Other vocabulary tables capture other information about concepts, such as the direct relationships between concepts (the concept relationship table) and hierarchical relationships between (the concept ancestor table).
+
+```{r, echo = TRUE}
+cdm$concept_relationship |> 
+  glimpse()
+
+cdm$concept_ancestor |> 
+  glimpse()
+```
+
+More information on the vocabulary tables (as well as other tables in the OMOP CDM version 5.3) can be found at <https://ohdsi.github.io/CommonDataModel/cdm53.html#Vocabulary_Tables>.
+:::
+
+## Summarising observation periods
+
+The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:
+
+```{r, echo = TRUE}
+first_observation_period <- cdm$observation_period |>
+  group_by(person_id) |> 
+  arrange(observation_period_start_date) |>
+  filter(row_number() == 1) |> 
+  compute()
+
+first_records_per_year <- cdm$person |> 
+  left_join(first_observation_period, by = "person_id") |> 
+  mutate(observation_period_start_year = get_year(observation_period_start_date)) |> 
+  group_by(observation_period_start_year) |> 
+  count() |> 
+  collect()
+
+ggplot(first_records_per_year) +
+  geom_col(mapping = aes(x = observation_period_start_year, y = n)) +
+  theme_bw()
+```
+
+## Summarising clinical records
+
+What's the number of condition occurrence records per person in the database? We can find this out like so
+
+```{r, echo = TRUE}
+number_condition_occurrence_records <- cdm$person |> 
+  left_join(
+    cdm$condition_occurrence |> 
+      group_by(person_id) |> 
+      count(name = "condition_occurrence_records"),
+    by="person_id"
+  ) |> 
+  mutate(condition_occurrence_records = coalesce(condition_occurrence_records, 0)) |>
+  group_by(condition_occurrence_records) |>
+  count() |> 
+  collect()
+
+ggplot(number_condition_occurrence_records) +
+  geom_col(mapping = aes(x = condition_occurrence_records, y = n)) +
+  theme_bw()
+```
+
+How about we were interested in getting record counts for some specific concepts related to Covid-19 symptoms?
+
+```{r, echo = TRUE}
+symptoms_records <- cdm$condition_occurrence |> 
+  filter(condition_concept_id %in% c(437663, 437390, 31967, 4289517, 4223659, 
+                                     312437, 434490, 254761, 77074)) |> 
+  group_by(condition_concept_id) |> 
+  count() |> 
+  left_join(cdm$concept, by = c("condition_concept_id" = "concept_id")) |> 
+  collect()
+
+ggplot(symptoms_records) +
+  geom_col(mapping = aes(x = concept_name, y = n)) +
+  theme_bw()+
+  xlab("")
+```
+
+We can also use summarise for various other calculations
+
+```{r, echo = TRUE}
+cdm$person |> 
+  summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
+            q05_year_of_birth = quantile(year_of_birth, 0.05, na.rm=TRUE),
+            mean_year_of_birth = round(mean(year_of_birth, na.rm=TRUE),0),
+            median_year_of_birth = median(year_of_birth, na.rm=TRUE),
+            q95_year_of_birth = quantile(year_of_birth, 0.95, na.rm=TRUE),
+            max_year_of_birth = max(year_of_birth, na.rm=TRUE)) |>  
+  glimpse()
+```
+
+As we've seen before, we can also quickly get results for various groupings or restrictions
+
+```{r, echo = TRUE}
+grouped_summary <- cdm$person |> 
+   group_by(gender_concept_id) |> 
+   summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
+             q25_year_of_birth = quantile(year_of_birth, 0.25, na.rm=TRUE),
+             median_year_of_birth = median(year_of_birth, na.rm=TRUE),
+             q75_year_of_birth = quantile(year_of_birth, 0.75, na.rm=TRUE),
+             max_year_of_birth = max(year_of_birth, na.rm=TRUE)) |> 
+  left_join(cdm$concept, by = c("gender_concept_id" = "concept_id")) |> 
+  collect() 
+
+grouped_summary |> 
+  ggplot(mapping = aes(x = concept_name, group = concept_name, fill = concept_name)) +
+  geom_boxplot(mapping = aes(
+    lower = q25_year_of_birth, 
+    upper = q75_year_of_birth, 
+    middle = median_year_of_birth, 
+    ymin = min_year_of_birth, 
+    ymax = max_year_of_birth),
+    stat = "identity", width = 0.5) + 
+  theme_bw()+ 
+  theme(legend.position = "none") +
+  xlab("")
+
+```

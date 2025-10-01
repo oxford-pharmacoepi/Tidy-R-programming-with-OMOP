@@ -2,34 +2,40 @@
 
 We saw in the previous chapter that we can use familiar `dplyr` verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we'll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the `nycflights13` data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.
 
-![](images/relational-01.png)
+![`nycflights13` relational diagram from <https://collinn.github.io/teaching/2023/labs/joins.html>.](../images/relational-01.png){.lightbox #fig-nycflights13}
 
-Let's load the required libraries, add our data to a duckdb database, and then create references to each of these tables.
+Let's load the required libraries, add our data to a DuckDB database, and then create references to each of these tables.
 
 ```{r, message=FALSE, warning=FALSE}
+library(nycflights13)
 library(dplyr)
 library(dbplyr)
 library(tidyr)
 library(duckdb)
 library(DBI)
 
-db <- dbConnect(duckdb(), dbdir = ":memory:")
-copy_nycflights13(db)
+# create duckdb connection
+con <- dbConnect(drv = duckdb())
 
-airports_db <- tbl(db, "airports")
-airports_db |> glimpse()
+# copy tables in a loop
+for (nm in c("airlines", "airports", "flights", "planes", "weather")) {
+  dbWriteTable(conn = con, name = nm, value = get(nm))
+}
 
-flights_db <- tbl(db, "flights")
-flights_db |> glimpse()
+airports_db <- tbl(src = con, "airports")
+glimpse(airports_db)
 
-weather_db <- tbl(db, "weather")
-weather_db |> glimpse()
+flights_db <- tbl(src = con, "flights")
+glimpse(flights_db)
 
-planes_db <- tbl(db, "planes")
-planes_db |> glimpse()
+weather_db <- tbl(src = con, "weather")
+glimpse(weather_db)
 
-airlines_db <- tbl(db, "airlines")
-airlines_db |> glimpse()
+planes_db <- tbl(src = con, "planes")
+glimpse(planes_db)
+
+airlines_db <- tbl(src = con, "airlines")
+glimpse(airlines_db)
 ```
 
 ### Tidyverse functions
@@ -37,11 +43,17 @@ airlines_db |> glimpse()
 For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from `dplyr`, but a couple also from the `tidyr` package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.
 
 ::: callout-important
-Remember, until we use `compute()` or `collect()` (or printing the first few rows of the result) all we're doing is translating R code into SQL.
+Until we use `compute()` or `collect()` (or printing the first few rows of the result) all we're doing is translating R code into SQL. Which means no code is being executed in the database side.
+
+-   `compute()` will execute the query and store it in a new table in the database.
+
+-   `collect()` will execute the query and bring the result back to R.
+
+-   printing (e.g. `glimpse()` or `print()`) will execute the query limiting the result to the first set of rows which leads to smaller computation time in the database side.
 :::
 
 | Purpose                  | Functions                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Description                                                                             |
-|------------------|------------------------------------|------------------|
+|-----------|-------------------------------------------------|-----------|
 | Selecting rows           | [filter](https://dplyr.tidyverse.org/reference/filter.html), [distinct](https://dplyr.tidyverse.org/reference/distinct.html)                                                                                                                                                                                                                                                                                                                                                                              | To select rows in a table.                                                              |
 | Ordering rows            | [arrange](https://dplyr.tidyverse.org/reference/arrange.html)                                                                                                                                                                                                                                                                                                                                                                                                                                             | To order rows in a table.                                                               |
 | Column Transformation    | [mutate](https://dplyr.tidyverse.org/reference/mutate.html), [select](https://dplyr.tidyverse.org/reference/select.html), [relocate](https://dplyr.tidyverse.org/reference/relocate.html), [rename](https://dplyr.tidyverse.org/reference/rename.html)                                                                                                                                                                                                                                                    | To create new columns or change existing ones.                                          |
@@ -62,7 +74,7 @@ library(sloop)
 ftype(inner_join)
 ```
 
-Among others, the references we create to tables in a database have `tbl_lazy` as a class attribute. Meanwhile, we can see that when collected into r the object changes to have different attributes, one of which being `data.frame` :
+Among others, the references we create to tables in a database have `tbl_lazy` as a class attribute. Meanwhile, we can see that when collected into R the object changes to have different attributes, one of which being `data.frame` :
 
 ```{r, message=FALSE, warning=FALSE}
 class(flights_db)
@@ -98,21 +110,17 @@ For this we'll first use the `filter()` and `select()` `dplyr` verbs to get the 
 
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights_db <- flights_db |> 
-  filter(!is.na(arr_delay),
-        origin == "JFK") |> 
-  select(dest, 
-         distance, 
-         carrier, 
-         tailnum, 
-         "delay" = "arr_delay")
+  filter(!is.na(arr_delay) & origin == "JFK") |> 
+  select("dest", "distance", "carrier", "tailnum", "delay" = "arr_delay")
 ```
 
 ::: {.callout-note collapse="true"}
 ## Show query
 
+See the resultant DuckDB query:
+
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
-delayed_flights_db |> 
-  show_query()
+show_query(delayed_flights_db)
 ```
 :::
 
@@ -126,10 +134,11 @@ Now we'll add plane characteristics from the planes table. We will use an inner 
 
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights_db <- delayed_flights_db |> 
-  inner_join(planes_db |> 
-              select(tailnum, 
-                     seats),
-            by = "tailnum")
+  inner_join(
+    planes_db |> 
+      select("tailnum", "seats"),
+    by = "tailnum"
+  )
 ```
 
 Note that our first query was not executed, as we didn't use either `compute()` or `collect()`, so we'll now have added our join to the original query.
@@ -137,9 +146,10 @@ Note that our first query was not executed, as we didn't use either `compute()` 
 ::: {.callout-note collapse="true"}
 ## Show query
 
+See that now the SQL code combines both queries:
+
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
-delayed_flights_db |> 
-  show_query()
+show_query(delayed_flights_db)
 ```
 :::
 
@@ -149,12 +159,11 @@ And when executed, our results will look like the following:
 delayed_flights_db
 ```
 
-Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform locally statistical analyses which might not be possible to run in a database).
+Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform locally statistical analyses which might not be possible to run in a database such as plots, density distributions, regression, ... anything beyond the data manipulation).
 
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights <- delayed_flights_db |> 
   collect() 
 
-delayed_flights |> 
- glimpse()
+glimpse(delayed_flights)
 ```

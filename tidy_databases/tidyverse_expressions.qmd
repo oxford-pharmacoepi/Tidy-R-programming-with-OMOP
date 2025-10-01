@@ -1,0 +1,942 @@
+# Supported expressions for database queries {#sec-tidyverse_expressions}
+
+In the previous chapter, @sec-dbplyr_verbs, we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.
+
+For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these pipelines get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.
+
+Let's first load the packages which these expressions come from. In addition to base R types, `bit64` adds support for integer64. The `stringr` package provides functions for working with strings, while `clock` has various functions for working with dates. Many other useful expressions will come from `dplyr` itself.
+
+```{r, warning=FALSE, message=FALSE, error=TRUE}
+library(duckdb)
+library(bit64)
+library(dplyr)
+library(dbplyr)
+library(stringr)
+library(clock)
+
+options(dplyr.strict_sql = TRUE) # force error if no known translation
+```
+
+## Data types
+
+Commonly used data types are consistently supported across database backends. We can use the base `as.numeric()`, `as.integer()`, `as.charater()`, `as.Date()`, and `as.POSIXct()`. We can also use `as.integer64()` from the `bit64` package to coerce to integer64, and the `as_date()` and `as_datetime()` from the `clock` package instead of `as.Date()` and `as.POSIXct()`, respectively.
+
+TODO: style code
+
+::: {.callout-tip collapse="true"}
+### Show SQL
+
+::: panel-tabset
+### DuckDB
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_duckdb()
+translate_sql(as.numeric(var), con = con)
+translate_sql(as.integer(var), con = con)
+translate_sql(as.integer64(var), con = con)
+translate_sql(as.character(var), con = con)
+translate_sql(as.Date(var), con = con)
+translate_sql(as_date(var), con = con)
+translate_sql(as.POSIXct(var), con = con)
+translate_sql(as_datetime(var), con = con)
+translate_sql(as.logical(var), con = con)
+```
+
+### Postgres
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_postgres()
+translate_sql(as.numeric(var), con = con)
+translate_sql(as.integer(var), con = con)
+translate_sql(as.integer64(var), con = con)
+translate_sql(as.character(var), con = con)
+translate_sql(as.Date(var), con = con)
+translate_sql(as_date(var), con = con)
+translate_sql(as.POSIXct(var), con = con)
+translate_sql(as_datetime(var), con = con)
+translate_sql(as.logical(var), con = con)
+```
+
+### SQL Server
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_mssql()
+translate_sql(as.numeric(var), con = con)
+translate_sql(as.integer(var), con = con)
+translate_sql(as.integer64(var), con = con)
+translate_sql(as.character(var), con = con)
+translate_sql(as.Date(var), con = con)
+translate_sql(as_date(var), con = con)
+translate_sql(as.POSIXct(var), con = con)
+translate_sql(as_datetime(var), con = con)
+translate_sql(as.logical(var), con = con)
+```
+
+### Redshift
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_redshift()
+translate_sql(as.numeric(var), con = con)
+translate_sql(as.integer(var), con = con)
+translate_sql(as.integer64(var), con = con)
+translate_sql(as.character(var), con = con)
+translate_sql(as.Date(var), con = con)
+translate_sql(as_date(var), con = con)
+translate_sql(as.POSIXct(var), con = con)
+translate_sql(as_datetime(var), con = con)
+translate_sql(as.logical(var), con = con)
+```
+
+### Snowflake
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_snowflake()
+translate_sql(as.numeric(var), con = con)
+translate_sql(as.integer(var), con = con)
+translate_sql(as.integer64(var), con = con)
+translate_sql(as.character(var), con = con)
+translate_sql(as.Date(var), con = con)
+translate_sql(as_date(var), con = con)
+translate_sql(as.POSIXct(var), con = con)
+translate_sql(as_datetime(var), con = con)
+translate_sql(as.logical(var), con = con)
+```
+
+### Spark
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_spark_sql()
+translate_sql(as.numeric(var), con = con)
+translate_sql(as.integer(var), con = con)
+translate_sql(as.integer64(var), con = con)
+translate_sql(as.character(var), con = con)
+translate_sql(as.Date(var), con = con)
+translate_sql(as_date(var), con = con)
+translate_sql(as.POSIXct(var), con = con)
+translate_sql(as_datetime(var), con = con)
+translate_sql(as.logical(var), con = con)
+```
+:::
+:::
+
+## Comparison and logical operators
+
+Base R comparison operators, such as `<`, `<=`, `==`, `>=`, `>`, are also well supported in all database backends. Logical operators, such as `&` and `|` can also be used as if the data was in R.
+
+::: {.callout-tip collapse="true"}
+### Show SQL
+
+::: {.panel-tabset collapse="true"}
+### DuckDB
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_duckdb()
+translate_sql(var_1 == var_2, con = con)
+translate_sql(var_1 >= var_2, con = con)
+translate_sql(var_1 < 100, con = con)
+translate_sql(var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(is.na(var_1), con = con)
+translate_sql(!is.na(var_1), con = con)
+translate_sql(var_1 >= 100 & var_1  < 200, con = con)
+translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+```
+
+### Postgres
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_postgres()
+translate_sql(var_1 == var_2, con = con)
+translate_sql(var_1 >= var_2, con = con)
+translate_sql(var_1 < 100, con = con)
+translate_sql(var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(is.na(var_1), con = con)
+translate_sql(!is.na(var_1), con = con)
+translate_sql(var_1 >= 100 & var_1  < 200, con = con)
+translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+```
+
+### SQL Server
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_mssql()
+translate_sql(var_1 == var_2, con = con)
+translate_sql(var_1 >= var_2, con = con)
+translate_sql(var_1 < 100, con = con)
+translate_sql(var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(is.na(var_1), con = con)
+translate_sql(!is.na(var_1), con = con)
+translate_sql(var_1 >= 100 & var_1  < 200, con = con)
+translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+```
+
+### Redshift
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_redshift()
+translate_sql(var_1 == var_2, con = con)
+translate_sql(var_1 >= var_2, con = con)
+translate_sql(var_1 < 100, con = con)
+translate_sql(var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(is.na(var_1), con = con)
+translate_sql(!is.na(var_1), con = con)
+translate_sql(var_1 >= 100 & var_1  < 200, con = con)
+translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+```
+
+### Snowflake
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_snowflake()
+translate_sql(var_1 == var_2, con = con)
+translate_sql(var_1 >= var_2, con = con)
+translate_sql(var_1 < 100, con = con)
+translate_sql(var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(is.na(var_1), con = con)
+translate_sql(!is.na(var_1), con = con)
+translate_sql(var_1 >= 100 & var_1  < 200, con = con)
+translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+```
+
+### Spark
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_spark_sql()
+translate_sql(var_1 == var_2, con = con)
+translate_sql(var_1 >= var_2, con = con)
+translate_sql(var_1 < 100, con = con)
+translate_sql(var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
+translate_sql(is.na(var_1), con = con)
+translate_sql(!is.na(var_1), con = con)
+translate_sql(var_1 >= 100 & var_1  < 200, con = con)
+translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+```
+:::
+:::
+
+## Conditional statements
+
+The base `ifelse` function, along with `if_else` and `case_when` from `dplyr` are translated for each database backend. As can be seen in the translations, `case_when` maps to the SQL CASE WHEN statement.
+
+::: {.callout-tip collapse="true"}
+### Show SQL
+
+::: {.panel-tabset collapse="true"}
+### DuckDB
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_duckdb()
+translate_sql(ifelse(var == "a", 1L, 2L), con = con)
+translate_sql(if_else(var == "a", 1L, 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = NULL), 
+              con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = "something else"), 
+              con = con)
+```
+
+### Postgres
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_postgres()
+translate_sql(ifelse(var == "a", 1L, 2L), con = con)
+translate_sql(if_else(var == "a", 1L, 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = NULL), 
+              con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = "something else"), 
+              con = con)
+```
+
+### SQL Server
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_mssql()
+translate_sql(ifelse(var == "a", 1L, 2L), con = con)
+translate_sql(if_else(var == "a", 1L, 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = NULL), 
+              con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = "something else"), 
+              con = con)
+```
+
+### Redshift
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_redshift()
+translate_sql(ifelse(var == "a", 1L, 2L), con = con)
+translate_sql(if_else(var == "a", 1L, 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = NULL), 
+              con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = "something else"), 
+              con = con)
+```
+
+### Snowflake
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_snowflake()
+translate_sql(ifelse(var == "a", 1L, 2L), con = con)
+translate_sql(if_else(var == "a", 1L, 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = NULL), 
+              con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = "something else"), 
+              con = con)
+```
+
+### Spark
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_spark_sql()
+translate_sql(ifelse(var == "a", 1L, 2L), con = con)
+translate_sql(if_else(var == "a", 1L, 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = NULL), 
+              con = con)
+translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .default = "something else"), 
+              con = con)
+```
+:::
+:::
+
+## Working with strings
+
+Compared to the previous sections, there is much more variation in support of functions to work with strings across database management systems. In particular, although various useful `stringr` functions do have translations ubiquitously it can be seen below that more translations are available for some databases compared to others.
+
+::: {.callout-tip collapse="true"}
+### Show SQL
+
+::: {.panel-tabset collapse="true"}
+### DuckDB
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_duckdb()
+translate_sql(nchar(var), con = con)
+translate_sql(nzchar(var), con = con)
+translate_sql(substr(var, 1, 2), con = con)
+translate_sql(trimws(var), con = con)
+translate_sql(tolower(var), con = con)
+translate_sql(str_to_lower(var), con = con)
+translate_sql(toupper(var), con = con)
+translate_sql(str_to_upper(var), con = con)
+translate_sql(str_to_title(var), con = con)
+translate_sql(str_trim(var), con = con)
+translate_sql(str_squish(var), con = con)
+translate_sql(str_detect(var, "b"), con = con)
+translate_sql(str_detect(var, "b", negate = TRUE), con = con)
+translate_sql(str_detect(var, "[aeiou]"), con = con)
+translate_sql(str_replace(var, "a", "b"), con = con)
+translate_sql(str_replace_all(var, "a", "b"), con = con)
+translate_sql(str_remove(var, "a"), con = con)
+translate_sql(str_remove_all(var, "a"), con = con)
+translate_sql(str_like(var, "a"), con = con)
+translate_sql(str_starts(var, "a"), con = con)
+translate_sql(str_ends(var, "a"), con = con)
+```
+
+### Postgres
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_postgres()
+translate_sql(nchar(var), con = con)
+translate_sql(nzchar(var), con = con)
+translate_sql(substr(var, 1, 2), con = con)
+translate_sql(trimws(var), con = con)
+translate_sql(tolower(var), con = con)
+translate_sql(str_to_lower(var), con = con)
+translate_sql(toupper(var), con = con)
+translate_sql(str_to_upper(var), con = con)
+translate_sql(str_to_title(var), con = con)
+translate_sql(str_trim(var), con = con)
+translate_sql(str_squish(var), con = con)
+translate_sql(str_detect(var, "b"), con = con)
+translate_sql(str_detect(var, "b", negate = TRUE), con = con)
+translate_sql(str_detect(var, "[aeiou]"), con = con)
+translate_sql(str_replace(var, "a", "b"), con = con)
+translate_sql(str_replace_all(var, "a", "b"), con = con)
+translate_sql(str_remove(var, "a"), con = con)
+translate_sql(str_remove_all(var, "a"), con = con)
+translate_sql(str_like(var, "a"), con = con)
+translate_sql(str_starts(var, "a"), con = con)
+translate_sql(str_ends(var, "a"), con = con)
+```
+
+### SQL Server
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_mssql()
+translate_sql(nchar(var), con = con)
+translate_sql(nzchar(var), con = con)
+translate_sql(substr(var, 1, 2), con = con)
+translate_sql(trimws(var), con = con)
+translate_sql(tolower(var), con = con)
+translate_sql(str_to_lower(var), con = con)
+translate_sql(toupper(var), con = con)
+translate_sql(str_to_upper(var), con = con)
+translate_sql(str_to_title(var), con = con)
+translate_sql(str_trim(var), con = con)
+translate_sql(str_squish(var), con = con)
+translate_sql(str_detect(var, "b"), con = con)
+translate_sql(str_detect(var, "b", negate = TRUE), con = con)
+translate_sql(str_detect(var, "[aeiou]"), con = con)
+translate_sql(str_replace(var, "a", "b"), con = con)
+translate_sql(str_replace_all(var, "a", "b"), con = con)
+translate_sql(str_remove(var, "a"), con = con)
+translate_sql(str_remove_all(var, "a"), con = con)
+translate_sql(str_like(var, "a"), con = con)
+translate_sql(str_starts(var, "a"), con = con)
+translate_sql(str_ends(var, "a"), con = con)
+```
+
+### Redshift
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_redshift()
+translate_sql(nchar(var), con = con)
+translate_sql(nzchar(var), con = con)
+translate_sql(substr(var, 1, 2), con = con)
+translate_sql(trimws(var), con = con)
+translate_sql(tolower(var), con = con)
+translate_sql(str_to_lower(var), con = con)
+translate_sql(toupper(var), con = con)
+translate_sql(str_to_upper(var), con = con)
+translate_sql(str_to_title(var), con = con)
+translate_sql(str_trim(var), con = con)
+translate_sql(str_squish(var), con = con)
+translate_sql(str_detect(var, "b"), con = con)
+translate_sql(str_detect(var, "b", negate = TRUE), con = con)
+translate_sql(str_detect(var, "[aeiou]"), con = con)
+translate_sql(str_replace(var, "a", "b"), con = con)
+translate_sql(str_replace_all(var, "a", "b"), con = con)
+translate_sql(str_remove(var, "a"), con = con)
+translate_sql(str_remove_all(var, "a"), con = con)
+translate_sql(str_like(var, "a"), con = con)
+translate_sql(str_starts(var, "a"), con = con)
+translate_sql(str_ends(var, "a"), con = con)
+```
+
+### Snowflake
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_snowflake()
+translate_sql(nchar(var), con = con)
+translate_sql(nzchar(var), con = con)
+translate_sql(substr(var, 1, 2), con = con)
+translate_sql(trimws(var), con = con)
+translate_sql(tolower(var), con = con)
+translate_sql(str_to_lower(var), con = con)
+translate_sql(toupper(var), con = con)
+translate_sql(str_to_upper(var), con = con)
+translate_sql(str_to_title(var), con = con)
+translate_sql(str_trim(var), con = con)
+translate_sql(str_squish(var), con = con)
+translate_sql(str_detect(var, "b"), con = con)
+translate_sql(str_detect(var, "b", negate = TRUE), con = con)
+translate_sql(str_detect(var, "[aeiou]"), con = con)
+translate_sql(str_replace(var, "a", "b"), con = con)
+translate_sql(str_replace_all(var, "a", "b"), con = con)
+translate_sql(str_remove(var, "a"), con = con)
+translate_sql(str_remove_all(var, "a"), con = con)
+translate_sql(str_like(var, "a"), con = con)
+translate_sql(str_starts(var, "a"), con = con)
+translate_sql(str_ends(var, "a"), con = con)
+```
+
+### Spark
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_spark_sql()
+translate_sql(nchar(var), con = con)
+translate_sql(nzchar(var), con = con)
+translate_sql(substr(var, 1, 2), con = con)
+translate_sql(trimws(var), con = con)
+translate_sql(tolower(var), con = con)
+translate_sql(str_to_lower(var), con = con)
+translate_sql(toupper(var), con = con)
+translate_sql(str_to_upper(var), con = con)
+translate_sql(str_to_title(var), con = con)
+translate_sql(str_trim(var), con = con)
+translate_sql(str_squish(var), con = con)
+translate_sql(str_detect(var, "b"), con = con)
+translate_sql(str_detect(var, "b", negate = TRUE), con = con)
+translate_sql(str_detect(var, "[aeiou]"), con = con)
+translate_sql(str_replace(var, "a", "b"), con = con)
+translate_sql(str_replace_all(var, "a", "b"), con = con)
+translate_sql(str_remove(var, "a"), con = con)
+translate_sql(str_remove_all(var, "a"), con = con)
+translate_sql(str_like(var, "a"), con = con)
+translate_sql(str_starts(var, "a"), con = con)
+translate_sql(str_ends(var, "a"), con = con)
+```
+:::
+:::
+
+## Working with dates
+
+Like with strings, support for working with dates is somewhat mixed. In general, we would use functions from the `clock` package such as `get_day()`, `get_month()`, `get_year()` to extract parts from a date, `add_days()` to add or subtract days to a date, and `date_count_between()` to get the number of days between two date variables.
+
+::: {.callout-tip collapse="true"}
+### Show SQL
+
+::: {.panel-tabset collapse="true"}
+### DuckDB
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_duckdb()
+translate_sql(get_day(date_1), con = con)
+translate_sql(get_month(date_1), con = con)
+translate_sql(get_year(date_1), con = con)
+translate_sql(add_days(date_1, 1), con = con)
+translate_sql(add_years(date_1, 1), con = con)
+translate_sql(difftime(date_1, date_2), con = con)
+translate_sql(date_count_between(date_1, date_2, "day"), con = con)
+translate_sql(date_count_between(date_1, date_2, "year"), con = con)
+```
+
+### Postgres
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_postgres()
+translate_sql(get_day(date_1), con = con)
+translate_sql(get_month(date_1), con = con)
+translate_sql(get_year(date_1), con = con)
+translate_sql(add_days(date_1, 1), con = con)
+translate_sql(add_years(date_1, 1), con = con)
+translate_sql(difftime(date_1, date_2), con = con)
+translate_sql(date_count_between(date_1, date_2, "day"), con = con)
+translate_sql(date_count_between(date_1, date_2, "year"), con = con)
+```
+
+### SQL Server
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_mssql()
+translate_sql(get_day(date_1), con = con)
+translate_sql(get_month(date_1), con = con)
+translate_sql(get_year(date_1), con = con)
+translate_sql(add_days(date_1, 1), con = con)
+translate_sql(add_years(date_1, 1), con = con)
+translate_sql(difftime(date_1, date_2), con = con)
+translate_sql(date_count_between(date_1, date_2, "day"), con = con)
+translate_sql(date_count_between(date_1, date_2, "year"), con = con)
+```
+
+### Redshift
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_redshift()
+translate_sql(get_day(date_1), con = con)
+translate_sql(get_month(date_1), con = con)
+translate_sql(get_year(date_1), con = con)
+translate_sql(add_days(date_1, 1), con = con)
+translate_sql(add_years(date_1, 1), con = con)
+translate_sql(difftime(date_1, date_2), con = con)
+translate_sql(date_count_between(date_1, date_2, "day"), con = con)
+translate_sql(date_count_between(date_1, date_2, "year"), con = con)
+```
+
+### Snowflake
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_snowflake()
+translate_sql(get_day(date_1), con = con)
+translate_sql(get_month(date_1), con = con)
+translate_sql(get_year(date_1), con = con)
+translate_sql(add_days(date_1, 1), con = con)
+translate_sql(add_years(date_1, 1), con = con)
+translate_sql(difftime(date_1, date_2), con = con)
+translate_sql(date_count_between(date_1, date_2, "day"), con = con)
+translate_sql(date_count_between(date_1, date_2, "year"), con = con)
+```
+
+### Spark
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_spark_sql()
+translate_sql(get_day(date_1), con = con)
+translate_sql(get_month(date_1), con = con)
+translate_sql(get_year(date_1), con = con)
+translate_sql(add_days(date_1, 1), con = con)
+translate_sql(add_years(date_1, 1), con = con)
+translate_sql(difftime(date_1, date_2), con = con)
+translate_sql(date_count_between(date_1, date_2, "day"), con = con)
+translate_sql(date_count_between(date_1, date_2, "year"), con = con)
+```
+:::
+:::
+
+## Data aggregation
+
+Within the context of using `summarise()`, we can get aggregated results across entire columns using functions such as `n()`, `n_distinct()`, `sum()`, `min()`, `max()`, `mean()`, and `sd()`. As can be seen below, the SQL for these calculations is similar across different database management systems.
+
+::: {.callout-tip collapse="true"}
+### Show SQL
+
+::: {.panel-tabset collapse="true"}
+### DuckDB
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+lazy_frame(x = c(1, 2), con = simulate_duckdb()) |>
+  summarise(
+    n = n(),
+    n_unique = n_distinct(x),
+    sum = sum(x, na.rm = TRUE),
+    sum_is_1 = sum(x == 1, na.rm = TRUE),
+    min = min(x, na.rm = TRUE),
+    mean = mean(x, na.rm = TRUE),
+    max = max(x, na.rm = TRUE),
+    sd = sd(x, na.rm = TRUE)
+  ) |> 
+  show_query()
+```
+
+### Postgres
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+lazy_frame(x = c(1, 2), con = simulate_postgres()) |>
+  summarise(
+    n = n(),
+    n_unique = n_distinct(x),
+    sum = sum(x, na.rm = TRUE),
+    sum_is_1 = sum(x == 1, na.rm = TRUE),
+    min = min(x, na.rm = TRUE),
+    mean = mean(x, na.rm = TRUE),
+    max = max(x, na.rm = TRUE),
+    sd = sd(x, na.rm = TRUE)
+  ) |> 
+  show_query()
+```
+
+### SQL Server
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+lazy_frame(x = c(1, 2), con = simulate_mssql()) |>
+  summarise(
+    n = n(),
+    n_unique = n_distinct(x),
+    sum = sum(x, na.rm = TRUE),
+    sum_is_1 = sum(x == 1, na.rm = TRUE),
+    min = min(x, na.rm = TRUE),
+    mean = mean(x, na.rm = TRUE),
+    max = max(x, na.rm = TRUE),
+    sd = sd(x, na.rm = TRUE)
+  ) |> 
+  show_query()
+```
+
+### Redshift
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+lazy_frame(x = c(1, 2), con = simulate_redshift()) |>
+  summarise(
+    n = n(),
+    n_unique = n_distinct(x),
+    sum = sum(x, na.rm = TRUE),
+    sum_is_1 = sum(x == 1, na.rm = TRUE),
+    min = min(x, na.rm = TRUE),
+    mean = mean(x, na.rm = TRUE),
+    max = max(x, na.rm = TRUE),
+    sd = sd(x, na.rm = TRUE)
+  ) |> 
+  show_query()
+```
+
+### Snowflake
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+lazy_frame(x = c(1, 2), con = simulate_snowflake()) |>
+  summarise(
+    n = n(),
+    n_unique = n_distinct(x),
+    sum = sum(x, na.rm = TRUE),
+    sum_is_1 = sum(x == 1, na.rm = TRUE),
+    min = min(x, na.rm = TRUE),
+    mean = mean(x, na.rm = TRUE),
+    max = max(x, na.rm = TRUE),
+    sd = sd(x, na.rm = TRUE)
+  ) |> 
+  show_query()
+```
+
+### Spark
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+lazy_frame(x = c(1, 2), con = simulate_spark_sql()) |>
+  summarise(
+    n = n(),
+    n_unique = n_distinct(x),
+    sum = sum(x, na.rm = TRUE),
+    sum_is_1 = sum(x == 1, na.rm = TRUE),
+    min = min(x, na.rm = TRUE),
+    mean = mean(x, na.rm = TRUE),
+    max = max(x, na.rm = TRUE),
+    sd = sd(x, na.rm = TRUE)
+  ) |> 
+  show_query()
+```
+:::
+:::
+
+## Window functions
+
+In the previous section we saw how aggregate functions can be used to perform operations across entire columns. Window functions differ in that they perform calculations across rows that are in some way related to a current row. For these we now use `mutate()` instead of using `summarise()`.
+
+We can use window functions like `cumsum()` and `cummean()` to calculate running totals and averages, or `lag()` and `lead()` to help compare rows to their preceding or following rows.
+
+Given that window functions compare rows to rows before or after them, we will often use `arrange()` or `window_order()` to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using `group_by()` would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.
+
+::: {.callout-tip collapse="true"}
+### Show SQL
+
+::: {.panel-tabset collapse="true"}
+### DuckDB
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_duckdb()
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
+  window_order(z) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
+  window_order(z) |> 
+  group_by(y) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+```
+
+### Postgres
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_postgres()
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
+  window_order(z) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
+  window_order(z) |> 
+  group_by(y) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+```
+
+### SQL Server
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_mssql()
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
+  window_order(z) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
+  window_order(z) |> 
+  group_by(y) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+```
+
+### Redshift
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_redshift()
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
+  window_order(z) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
+  window_order(z) |> 
+  group_by(y) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+```
+
+### Snowflake
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_snowflake()
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
+  window_order(z) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
+  window_order(z) |> 
+  group_by(y) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+```
+
+### Spark
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_spark_sql()
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
+  window_order(z) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
+  window_order(z) |> 
+  group_by(y) |> 
+  mutate(
+    sum_x = cumsum(x),
+    mean_x = cummean(x),
+    lag_x = lag(x), 
+    lead_x = lead(x)
+  ) |> 
+  show_query()
+```
+:::
+:::
+
+TODO add note arrange vs window_order
+
+::: {.callout-note collapse="true"}
+### `arrange()` vs `window_order()`
+
+Although sometimes are used interchangeably
+:::
+
+## Calculating quantiles, including the median
+
+So far we've seen that we can perform various data manipulations and calculate summary statistics for different database management systems using the same R code. Although the translated SQL has been different, the databases all supported similar approaches to perform these queries.
+
+A case where this is not the case is when we are interested in summarising distributions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately this means that for some databases quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.
+
+::: {.callout-tip collapse="true"}
+### Show SQL
+
+::: {.panel-tabset collapse="true"}
+### DuckDB
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_duckdb()
+lazy_frame(x = c(1,2), con = con) |>
+  summarise(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+lazy_frame(x = c(1,2), con = con) |>
+  mutate(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+```
+
+### Postgres
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_postgres()
+lazy_frame(x = c(1,2), con = con) |>
+  summarise(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+lazy_frame(x = c(1,2), con = con) |>
+  mutate(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+```
+
+### SQL Server
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_mssql()
+lazy_frame(x = c(1,2), con = con) |>
+  summarise(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+lazy_frame(x = c(1,2), con = con) |>
+  mutate(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+```
+
+### Redshift
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_redshift()
+lazy_frame(x = c(1,2), con = con) |>
+  summarise(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+lazy_frame(x = c(1,2), con = con) |>
+  mutate(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+```
+
+### Snowflake
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_snowflake()
+lazy_frame(x = c(1,2), con = con) |>
+  summarise(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+lazy_frame(x = c(1,2), con = con) |>
+  mutate(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+```
+
+### Spark
+
+```{r, message=FALSE, warning=FALSE, error=TRUE}
+con <- simulate_spark_sql()
+lazy_frame(x = c(1,2), con = con) |>
+  summarise(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+lazy_frame(x = c(1,2), con = con) |>
+  mutate(median = median(x, na.rm = TRUE)) |> 
+  show_query()
+```
+:::
+:::

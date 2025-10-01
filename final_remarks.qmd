@@ -1,0 +1,17 @@
+# Final remarks
+
+*Tidy R programming with the OMOP CDM* aims to (1) explain the main principles for working with databases from R and (2) how to apply this principles and use it with the OMOP Common Data Model. Hopefully after reading this book you can understand how the dplyr and dbplyr packages interact with the databases, in particular with data formatted to the OMOP CDM; and how the cdm_reference object can be used to extract TODO.
+
+## Tidy R in OMOP collection
+
+This book is the first of the *Tidy OMOP CDM* collection. If you like it please take a look to the full collection:
+
+- **1** [Tidy R programing with the OMOP CDM](https://oxford-pharmacoepi.github.io/Tidy-R-programming-with-OMOP)
+
+- **2** [Development of tidy R OMOP CDM packages](https://oxford-pharmacoepi.github.io/DeveloperBook) *under construction*
+
+- **3** [DrugUtilisation in the OMOP CDM](https://oxford-pharmacoepi.github.io/DrugUtilisation-in-OMOP-CDM/) *under construction*
+
+## Support us
+
+We encourage you to support this work by: either citing the book in your papers or documentation; recommending it to your colleagues; starring the [GitHub repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP); or simply letting us know how it helped you. But on top of that **use it** so it can help you and others in your research.
