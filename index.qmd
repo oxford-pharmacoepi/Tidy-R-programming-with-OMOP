@@ -2,7 +2,7 @@
 
 ## Is this book for me?
 
-We've written this book for anyone interested in a working with OMOP CDM instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see [TODO](https://design.tidyverse.org/unifying.html) for more details on these principles).
+We've written this book for anyone interested in a working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see [TODO](https://design.tidyverse.org/unifying.html) for more details on these principles).
 
 New to R? We recommend you to take a look to [R for data science](https://r4ds.had.co.nz/) before reading this book. We assume that you have [R](TODO) installed and together with an adequate IDE (TODO) such as [R Studio](TODO) or [positron](TODO). See this [tutorial](https://rstudio-education.github.io/hopr/starting.html) if you need guidance on how to get started. The book uses multiple packages, that you will need to install see the list in the [R packages](TODO) section.
 
@@ -12,7 +12,7 @@ New to the OMOP CDM? We'd recommend you pare this book with [The Book of OHDSI](
 
 ## How is the book organised?
 
-The book is divided into two parts. The first half of the book is focused on the general principles for working with databases from R. In these chapters you will see how you can use familiar tidyverse-style code to build up analytic pipelines that start with data held in a database and end with your analytic results. The second half of the book is focused on working with data in the OMOP Common Data Model (CDM) format, a widely used data format for health care data. In these chapters you will see how to work with this data format using the general principles from the first half of the book along with a set of R packages that have been built for the OMOP CDM.
+The book is divided into two parts. The first half of the book is focused on the general principles for working with databases from R. In these chapters you will see how you can use familiar tidyverse-style code to build up analytic pipelines that start with data held in a database and end with your analytic results. The second half of the book is focused on working with data in the OMOP CDM format, a widely used data format for health care data. In these chapters you will see how to work with this data format using the general principles from the first half of the book along with a set of R packages that have been built for the OMOP CDM.
 
 ## Citation
 

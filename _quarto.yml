@@ -3,7 +3,7 @@ project:
   output-dir: "_site"
 
 book:
-  title: "Tidy R programming with databases: applications with the OMOP common data model"
+  title: "Tidy R programming with the OMOP Common Data Model"
   author:
     - name: Edward Burn
     - name: Adam Black
