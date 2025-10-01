@@ -1,4 +1,4 @@
-## Working with cohorts
+# Working with cohorts
 
 ## Cohort intersections
 
@@ -8,80 +8,168 @@ Depending on the research question, the definition of a cohort intersection may 
 
 ## Intersection between two cohorts
 
-Suppose we are interested in studying patients with gastrointestinal (GI) bleeding who have also been exposed to acetaminophen. First, we would create two separate cohorts: one for patients with GI bleeding and another for patients with exposure to acetaminophen. Below is an example of the code used to create these cohorts within the Eunomia synthetic database.
+Suppose we are interested in studying patients with gastrointestinal (GI) bleeding who have also been exposed to acetaminophen. First, we would create two separate cohorts: one for patients with GI bleeding and another for patients with exposure to acetaminophen. Below is an example of the code used to create these cohorts within the GiBleed synthetic database.
 
 ```{r, warning=FALSE, message=FALSE}
-library(CDMConnector)
+library(omock)
 library(dplyr)
 library(PatientProfiles)
-library(here)
+library(CohortConstructor)
 
-# For this example we will use GiBleed data set
-downloadEunomiaData(datasetName = "GiBleed")
-db <- DBI::dbConnect(duckdb::duckdb(), eunomiaDir())
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
 
-cdm <- cdmFromCon(db, cdmSchema = "main", writeSchema = "main")
+# gi_bleed contains all records of gi bleed, end date is 30 days after index 
+# date
+cdm$gi_bleed <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list("gi_bleed" = 192671L), 
+  name = "gi_bleed", 
+  exit = "event_start_date"
+) |>
+  padCohortEnd(days = 30)
 
-cdm <- cdm |>
-  generateConceptCohortSet(
-    conceptSet = list("gi_bleed" = 192671),
-    limit = "all",
-    end = 30,
-    name = "gi_bleed",
-    overwrite = TRUE
-  ) |>
-  generateConceptCohortSet(
-    conceptSet = list(
-      "acetaminophen" = c(
-        1125315,
-        1127078,
-        1127433,
-        40229134,
-        40231925,
-        40162522,
-        19133768
-      )
-    ),
-    limit = "all",
-    # end = "event_end_date",
-    name = "acetaminophen",
-    overwrite = TRUE
-  )
+# drugs cohort contains records of acetaminophen using start and end dates of 
+# the drug records and collapsing record separated by less than 30 days
+cdm$drugs <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list("acetaminophen" = c(
+    1125315L, 1127078L, 1127433L, 40229134L, 40231925L, 40162522L, 19133768L
+  )), 
+  name = "drugs", 
+  exit = "event_end_date"
+) |>
+  collapseCohorts(gap = 30)
 ```
 
-The `PatientProfiles` package contains functions to obtain the intersection flag, count, date, or number of days between cohorts. To get a binary indicator showing the presence of an intersection between the cohorts within a given time window, we can use `addCohortIntersectFlag`.
+The `PatientProfiles` package contains functions to obtain the intersection flag, count, date, or number of days between cohorts. To get a binary indicator showing the presence of an intersection between the cohorts within a given time window, we can use `addCohortIntersectFlag()`.
 
 ### Flag
 
 ```{r, warning=FALSE, message=FALSE}
 x <- cdm$gi_bleed |>
-  addCohortIntersectFlag(targetCohortTable = "acetaminophen",
-                         window = list(c(-Inf, -1), c(0,0), c(1, Inf)))
+  addCohortIntersectFlag(
+    targetCohortTable = "drugs",
+    window = list("prior" = c(-Inf, -1), "index" = c(0, 0), "post" = c(1, Inf))
+  )
 
 x |>
-  summarise(acetaminophen_prior = sum(acetaminophen_minf_to_m1),
-            acetaminophen_index = sum(acetaminophen_0_to_0),
-            acetaminophen_post = sum(acetaminophen_1_to_inf)) |>
+  summarise(
+    acetaminophen_prior = sum(acetaminophen_prior, na.rm = TRUE),
+    acetaminophen_index = sum(acetaminophen_index, na.rm = TRUE),
+    acetaminophen_post = sum(acetaminophen_post, na.rm = TRUE)
+  ) |>
   collect()
-  
 ```
 
-To get the count of occurrences of intersection between two cohorts, we can use `addCohortIntersectCount`
+::: {.callout-note collapse="true"}
+### Window naming
+
+Windows work very similarly to age groups that we have seen before, if a name is not provided an automatic name will be obtained from the values of the window limits:
+
+```{r}
+cdm$gi_bleed |>
+  addCohortIntersectFlag(
+    targetCohortTable = "drugs",
+    window = list(c(-Inf, -1), c(0, 0), c(1, Inf))
+  ) |>
+  glimpse()
+```
+
+Note that to avoid conflicts with column naming, all names will be lower case, spaces are not allowed and the `-` symbol for negative values is replaced by `m`. That's why it is usually nice to provide your own custom names:
+
+```{r}
+cdm$gi_bleed |>
+  addCohortIntersectFlag(
+    targetCohortTable = "drugs",
+    window = list("prior" = c(-Inf, -1), "index" = c(0, 0), "post" = c(1, Inf))
+  ) |>
+  glimpse()
+```
+:::
+
+::: {.callout-tip collapse="true"}
+### New column naming
+
+By default the name of new columns is '\{cohort_name\}_\{window_name\}' as we have seen in the prior examples, in some cases you only have one cohort or one window and you might want to rename the column as you please. In that case you can use the `nameStyle` argument to change the new naming of the columns:
+
+```{r}
+cdm$gi_bleed |>
+  addCohortIntersectFlag(
+    targetCohortTable = "drugs",
+    window = list("prior" = c(-Inf, -1), "index" = c(0, 0), "post" = c(1, Inf)),
+    nameStyle = "my_column_{window_name}"
+  ) |>
+  glimpse()
+```
+
+If multiple windows are provided but '\{window_name\}' is not included in `nameStyle` then an error will prompt:
+
+```{r, error=TRUE}
+cdm$gi_bleed |>
+  addCohortIntersectFlag(
+    targetCohortTable = "drugs",
+    window = list("prior" = c(-Inf, -1), "index" = c(0, 0), "post" = c(1, Inf)),
+    nameStyle = "my_new_column"
+  ) |>
+  glimpse()
+```
+
+Many functions that create new columns (usually start with `add*()`) have this `nameStyle` functionality that allows you to control the naming of the new columns created.
+:::
 
 ### Count
 
+To get the count of occurrences of intersection between two cohorts, we can use `addCohortIntersectCount()`:
+
 ```{r, warning=FALSE, message=FALSE}
 x <- cdm$gi_bleed |>
-  addCohortIntersectCount(targetCohortTable = "acetaminophen",
-                         window = list(c(-Inf, -1), c(0,0), c(1, Inf)))
+  addCohortIntersectCount(
+    targetCohortTable = "drugs",
+    window = list("prior" = c(-Inf, -1), "index" = c(0, 0), "post" = c(1, Inf)),
+  )
 
 x |>
-  summarise(acetaminophen_prior = sum(acetaminophen_minf_to_m1),
-            acetaminophen_index = sum(acetaminophen_0_to_0),
-            acetaminophen_post = sum(acetaminophen_1_to_inf)) |>
+  summarise(
+    sum_prior = sum(acetaminophen_prior, na.rm = TRUE),
+    mean_prior = mean(acetaminophen_prior, na.rm = TRUE),
+    sum_index = sum(acetaminophen_index, na.rm = TRUE),
+    mean_index = mean(acetaminophen_index, na.rm = TRUE),
+    sum_post = sum(acetaminophen_post, na.rm = TRUE),
+    mean_post = mean(acetaminophen_post, na.rm = TRUE)
+  ) |>
   collect()
   
 ```
+
+
+::: {.callout-note collapse="true"}
+### Handling the obsrevation period
+
+Note that **only intersections in the current observation period are considered**.
+
+The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. I we see individual `2070` it has *3748* of future obsevation:
+
+```{r}
+cdm$gi_bleed |>
+  filter(subject_id == 2070) |>
+  addFutureObservation() |>
+  glimpse()
+```
+
+Now we will preform the intersect with the following window of interest: `c(2000, 3000), c(3000, 4000), c(4000, 5000)`.
+
+```{r}
+cdm$gi_bleed |>
+  filter(subject_id == 2070) |>
+  addCohortIntersectCount(
+    targetCohortTable = "drugs",
+    window = list(c(2000, 3000), c(3000, 4000), c(4000, 5000)),
+  ) |>
+glimpse()
+```
+
+See that for the window 2000 to 3000 where the individual is still in observation a 0 is reported, the same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window as individual is not in observation at any point of the window, NA is reported.
+::: 
 
 ### Date and times
 
@@ -89,35 +177,38 @@ To get the date of the intersection with a cohort within a given time window, we
 
 Both functions allow the `order` argument to specify which value to return:
 
-- `first` returns the first date/days that satisfy the window
+-   `first` returns the first date/days that satisfy the window
 
-- `last` returns the last date/days that satisfy the window
+-   `last` returns the last date/days that satisfy the window
 
 ```{r, warning=FALSE, message=FALSE}
 x <- cdm$gi_bleed |>
-  addCohortIntersectDate(targetCohortTable = "acetaminophen",
-                         window = list(c(-Inf, -1), c(1, Inf)),
-                         order = "first")
+  addCohortIntersectDate(
+    targetCohortTable = "drugs",
+    window = list("post" = c(1, Inf)),
+    order = "first"
+  )
 
 x |>
-  summarise(acetaminophen_prior = median(acetaminophen_minf_to_m1),
-            acetaminophen_post = median(acetaminophen_1_to_inf)) |>
+  summarise(acetaminophen_post = median(acetaminophen_post, na.rm = TRUE)) |>
   collect()
   
 ```
 
 ```{r, warning=FALSE, message=FALSE}
 x <- cdm$gi_bleed |>
-  addCohortIntersectDays(targetCohortTable = "acetaminophen",
-                         window = list(c(-Inf, -1), c(1, Inf)),
-                         order = "first")
+  addCohortIntersectDays(
+    targetCohortTable = "drugs",
+    window = list("prior" = c(-Inf, -1)),
+    order = "last"
+  )
 
 x |>
-  summarise(acetaminophen_prior = median(acetaminophen_minf_to_m1),
-            acetaminophen_post = median(acetaminophen_1_to_inf)) |>
+  summarise(acetaminophen_prior = median(acetaminophen_prior, na.rm = TRUE)) |>
   collect()
-  
 ```
+
+Note that for the window in the future we used `order = "first"` and for the window in the past we used `order = "last"` as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA on the new created columns.
 
 ## Intersection between a cohort and tables with patient data
 
@@ -127,17 +218,18 @@ For example, if we want to get the number of general practitioner (GP) visits fo
 
 ```{r, warning=FALSE, message=FALSE}
 x <- cdm$gi_bleed |>
-  addTableIntersectCount(tableName = "visit_occurrence",
-                         window = list(c(-Inf, -1)))
+  addTableIntersectCount(
+    tableName = "visit_occurrence",
+    window = list(c(-Inf, -1)),
+    nameStyle = "number_visits"
+  )
 
 x |>
-  summarise(visit_occurrence_prior = median(visit_occurrence_minf_to_m1)) |>
+  summarise(visit_occurrence_prior = median(number_visits, na.rm = TRUE)) |>
   collect()
   
 ```
 
 # Further reading
 
-Full details on the intersection functions in `PatientProfiles` can be found on the package website:
-
-https://darwin-eu.github.io/PatientProfiles/
+Full details on the intersection functions in `PatientProfiles` can be found on the package website: <https://darwin-eu.github.io/PatientProfiles/>.
