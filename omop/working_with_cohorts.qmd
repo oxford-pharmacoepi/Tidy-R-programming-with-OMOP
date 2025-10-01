@@ -15,6 +15,7 @@ library(omock)
 library(dplyr)
 library(PatientProfiles)
 library(CohortConstructor)
+library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
 
 cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
 
