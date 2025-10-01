@@ -6,7 +6,7 @@ To see how we can develop a data model with associated methods and functions we'
 
 TODO add citation for figure
 
-![](images/lahman.jpg)
+![](../images/lahman.jpg)
 
 ## Defining a data model
 
@@ -24,7 +24,7 @@ con <- dbConnect(drv = duckdb())
 copy_lahman(con = con)
 ```
 
-:::{.callout-note collapse="true"}
+::: {.callout-note collapse="true"}
 ### copy_lahman
 
 The `copy_lahman()` function inserts all the different tables in the connection, it works similarly as we have done before with the for loop and the `dbWriteTable()` function.
@@ -77,7 +77,7 @@ lahman_dm <- dm(batting = tbl(con, "Batting"), people = tbl(con, "People"))
 lahman_dm
 ```
 
-Using this approach, we can make use of various utility functions. For example here we specify [primary and foreign keys](TODO add citation) and then check that the key constraints are satisfied.
+Using this approach, we can make use of various utility functions. For example here we specify [primary and foreign keys](TODO%20add%20citation) and then check that the key constraints are satisfied.
 
 ```{r, echo=TRUE}
 lahman_dm <- lahman_dm |>

@@ -26,7 +26,7 @@ TODO: style code
 ::: {.callout-tip collapse="true"}
 ### Show SQL
 
-::: {.panel-tabset}
+::: panel-tabset
 ### duckdb
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
@@ -855,7 +855,6 @@ TODO add note arrange vs window_order
 ### `arrange()` vs `window_order()`
 
 Although sometimes are used interchangeably
-
 :::
 
 ## Calculating quantiles, including the median

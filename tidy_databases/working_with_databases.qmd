@@ -1,6 +1,6 @@
 # A first analysis using data in a database {#sec-databases_and_r}
 
-![](images/lter_penguins.png){width="250"}
+![](../images/lter_penguins.png){width="250"}
 
 *Artwork by [\@allison_horst](https://x.com/allison_horst)*
 
@@ -151,7 +151,7 @@ Note this same R code will also work for other SQL dialects such as Postgres, SQ
 
 TODO add more dbms
 
-::: {.panel-tabset}
+::: panel-tabset
 ### Postgres
 
 ```{r, echo=FALSE}
@@ -209,7 +209,6 @@ df <- lazy_frame(
   select("species", "mean_bill_length_mm", "min_max_bill_length_mm") |>
   show_query()
 ```
-
 :::
 
 TODO symbol (i) Note that even the different SQL statements look similar, each SQL dialect has it own particularities. Using the *dbplyr* approach allow us to support multiple different SQL dialects and back-ends just writing R code.

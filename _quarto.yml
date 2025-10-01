@@ -16,19 +16,20 @@ book:
   date: today
   chapters:
     - index.qmd
-    - part: intro.qmd
+    - part: tidy_databases/index.qmd
       chapters: 
-        - working_with_databases_from_r.qmd
-        - tidyverse_verbs.qmd
-        - tidyverse_expressions.qmd
-        - dbplyr_packages.qmd
-    - part: omop.qmd
+        - tidy_databases/working_with_databases.qmd
+        - tidy_databases/tidyverse_verbs.qmd
+        - tidy_databases/tidyverse_expressions.qmd
+        - tidy_databases/data_model.qmd
+    - part: omop/index.qmd
       chapters: 
-        - cdm_reference.qmd
-        - exploring_the_cdm.qmd   
-        - adding_features.qmd  
-        - creating_cohorts.qmd
-        - working_with_cohorts.qmd
+        - omop/cdm_reference.qmd
+        - omop/exploring_the_cdm.qmd   
+        - omop/adding_features.qmd  
+        - omop/creating_cohorts.qmd
+        - omop/working_with_cohorts.qmd
+    - final_remarks.qmd
 
 bibliography: references.bib
 
@@ -40,5 +41,3 @@ format:
     documentclass: scrbook
     classoption: ["oneside", "open=any"]
     keep-tex: true
-
-editor: visual

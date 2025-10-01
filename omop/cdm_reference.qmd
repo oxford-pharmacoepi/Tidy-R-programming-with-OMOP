@@ -4,7 +4,7 @@
 
 The OMOP CDM standardises the structure of healthcare data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure, with version 5.4 of the OMOP CDM shown below.
 
-![](images/erd.jpg){.lightbox}
+![](../images/erd.jpg){.lightbox}
 
 ## Creating a reference to the OMOP CDM
 
