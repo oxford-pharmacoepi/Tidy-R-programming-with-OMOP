@@ -4,8 +4,10 @@ In this second half of the book we will focus on how we can work with data in th
 
 -   In @sec-cdm_reference we will see how to create a cdm_reference in R, a data model that contains references to the OMOP CDM tables and provides the foundation for analysis.
 
--   The OMOP CDM is a person-centric model, and the person and observation period tables are two key tables for any analysis. In @sec-omop_person_obs_period we will see more on how these tables can be used as the starting point for identifying your study participants.
+-   The OMOP CDM is a person-centric model, and the person and observation period tables are two key tables for any analysis. In @sec-exploring_the_cdm we will see more on how these tables can be used as the starting point for identifying your study participants.
 
--   The OMOP CDM standarises the content of health care data via the OMOP CDM vocabulary tables, which provides a set of standard concepts to represent different clinical events. The vocabulary tables are described in @sec-omop_vocabularies, with these tables playing a fundamental role when we identify the clinical events of interest for our study.
+-   In @sec-adding_features we will see how to add demographics information to different tables of interest and summarise it using dplyr code. Finally we will also see how use tidyverse verbs to add some custom features.
 
--   Clinical records associated with individuals are spread across various OMOP CDM tables, covering various domains. In @sec-omop_clinical_tables we will see how these tables represent events and link back to the person and vocabulary tables.
+-   In @sec-creating_cohorts we will have a look to the cohort object, how it is defined and what are their attributes. We we also see how to create some simple base cohorts and apply some inclusion criteria to them.
+
+-   Finally, in @sec-working_with_cohorts we will learn how to intersect cohorts with one another, extracting counts, presence indicators, specific dates, or time differences to obtain the information of interest for our study population.

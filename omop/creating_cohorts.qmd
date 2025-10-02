@@ -1,19 +1,18 @@
-
-# Adding cohorts to the CDM
+# Adding cohorts to the CDM {#sec-creating_cohorts}
 
 ## What is a cohort?
 
 When performing research with the OMOP CDM we often want to identify groups of individuals who share some set of characteristics. The criteria for including individuals can range from the seemingly simple (e.g. people diagnosed with asthma) to the much more complicated (e.g. adults diagnosed with asthma who had a year of prior observation time in the database prior to their diagnosis, had no prior history of chronic obstructive pulmonary disease, and no history of use of short-acting beta-antagonists).
 
-The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields: 
+The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields:
 
-1) *Cohort definition id* a unique identifier for each cohort (multiple cohorts can be defined in the same cohort table)
+1)  *Cohort definition id* a unique identifier for each cohort (multiple cohorts can be defined in the same cohort table)
 
-2) *Subject id* a foreign key to the subject in the cohort - typically referring to records in the person table
+2)  *Subject id* a foreign key to the subject in the cohort - typically referring to records in the person table
 
-3) *Cohort start date* date that indicates the start date of the record.
+3)  *Cohort start date* date that indicates the start date of the record.
 
-4) *Cohort end date* date that indicates the end date of the record.
+4)  *Cohort end date* date that indicates the end date of the record.
 
 Individuals must be defined in the person table and have an ongoing record in the observation period table to be part of a cohort. Individuals can enter a cohort multiple times, but the time periods in which they are in the cohort cannot overlap.
 
@@ -133,7 +132,7 @@ All these attributes that we have seen are part of the attributes of the cohort_
 names(attributes(cdm$covid))
 ```
 
-In particular the `cohort_set` (contains the `settings()` source), `cohort_attrition` (contains the source for `cohortCount()` and `attrition()`) and `cohort_codelist` (contains the source for `cohortCodelist()`) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table 'cdm$covid' in fact four tables were written in the database:
+In particular the `cohort_set` (contains the `settings()` source), `cohort_attrition` (contains the source for `cohortCount()` and `attrition()`) and `cohort_codelist` (contains the source for `cohortCodelist()`) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table 'cdm\$covid' in fact four tables were written in the database:
 
 ```{r}
 library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
@@ -141,7 +140,6 @@ listSourceTables(cdm = cdm)
 ```
 
 We do not have to worry about the attributes and the naming of the tables as CohortConstructor, CDMConnector and omopgenerics take care of that and if we create the cohorts with functions such as `conceptCohort()` then we will be able to read them back with the `cohortTables` argument of `cdmFromCon()` or the `readSourceTable()` function and all the attributes will be in place.
-
 :::
 
 ## Applying inclusion criteria
@@ -256,6 +254,7 @@ Note that `conceptCohort()` first step lead to several rows in the attrition tab
 ### Cohort naming utilities
 
 As we have seen that by default the naming of the cohorts in the name of the codelist:
+
 ```{r}
 cdm$my_cohort <- conceptCohort(cdm = cdm, 
                                conceptSet = list("concept_1" = 37311061L, "concept_2" = 317576L), 
@@ -302,6 +301,14 @@ getCohortName(cohort = cdm$my_cohort)
 ```
 :::
 
-# Further reading
+## Disconnecting
 
-- [Cohort tables](https://darwin-eu.github.io/omopgenerics/articles/cohorts.html)
+Once we have finished our analysis we can close our connection to the database behind our cdm reference.
+
+```{r}
+cdmDisconnect(cdm) 
+```
+
+## Further reading
+
+-   [Cohort tables](https://darwin-eu.github.io/omopgenerics/articles/cohorts.html)

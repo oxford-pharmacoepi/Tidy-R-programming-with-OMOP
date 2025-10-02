@@ -1,16 +1,13 @@
-# Exploring the OMOP CDM
+# Exploring the OMOP CDM {#sec-exploring_the_cdm}
 
 For this chapter, we'll use a synthetic COVID-19 dataset (`"synthea-covid19-10k"`). A characterisation of this dataset can be found [here](https://dpa-pde-oxford.shinyapps.io/OmopSketchCharacterisation/).
 
 ```{r, warning=FALSE, message=FALSE}
-library(DBI)
-library(duckdb)
-library(dbplyr)
 library(dplyr)
-library(here)
 library(omock)
 library(ggplot2)
 library(clock)
+library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
 ```
 
 You can download the dataset using the function `downloadMockDataset()`:
@@ -38,7 +35,8 @@ cdm
 ```
 
 ::: {.callout-note collapse="true"}
-## `mockCdmFromDataset()`
+### `mockCdmFromDataset()`
+
 Note that if you call the function without downloading the database first you will be prompted to download it (or it will be downloaded directly if the session is not interactive).
 
 By default the mock cdm returns a local data set that can be inserted in any source of interest using the `insertCdmTo()` function. Populating source with `source = "duckdb"` will return you an in memory DuckDB cdm_reference with two schemas cdmSchema = "main" and writeSchema = "results".
@@ -65,7 +63,7 @@ cdm$person |>
 ```
 
 ::: {.callout-tip collapse="true"}
-## Vocabulary tables
+### Vocabulary tables
 
 Above we've got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associated with the concept, along with other information such as its domain and vocabulary id.
 
@@ -188,4 +186,12 @@ grouped_summary |>
   theme(legend.position = "none") +
   xlab("")
 
+```
+
+## Disconnecting
+
+Once we have finished our analysis we can close our connection to the database behind our cdm reference.
+
+```{r}
+cdmDisconnect(cdm) 
 ```

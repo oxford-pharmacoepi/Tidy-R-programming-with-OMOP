@@ -18,7 +18,7 @@ The book is divided into two parts. The first half of the book is focused on the
 
 Please if you found this book useful help us citing it:
 
-```
+```         
 Burn E, Black A, Raventós B, Guo Y, Du M, López-Güell K, Mercadé-Besora N, Català M. Tidy R programming with the OMOP Common Data Model. GitHub; 2025. https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP
 ```
 
@@ -27,6 +27,7 @@ Burn E, Black A, Raventós B, Guo Y, Du M, López-Güell K, Mercadé-Besora N, C
 ```{=html}
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"/></a> <br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 ```
+
 ## Code
 
 The source code for the book can be found at this [Github repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP), please star it if you found it useful.

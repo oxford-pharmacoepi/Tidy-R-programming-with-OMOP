@@ -1,17 +1,17 @@
-# Final remarks
+# Final remarks {.unnumbered}
 
-*Tidy R programming with the OMOP CDM* aims to (1) explain the main principles for working with databases from R and (2) how to apply this principles and use it with the OMOP Common Data Model. Hopefully after reading this book you can understand how the dplyr and dbplyr packages interact with the databases, in particular with data formatted to the OMOP CDM; and how the cdm_reference object can be used to extract TODO.
+*Tidy R programming with the OMOP Common Data Model* aims to (1) explain the main principles for working with databases from R and (2) how to apply this principles and use it with the OMOP CDM. Hopefully after reading this book you can understand how the dplyr and dbplyr packages interact with the databases, in particular with data formatted to the OMOP CDM; how the cdm_reference object can be used to extract identify your population of interests; and add the desired features to your dataset. Note in this book we always worked in relatively small synthetic data with an unrealistic performance, any analysis conducted with Real World Data and big databases will take more time, that's why we would always recommend you to tests your code against synthetic data or subsets of your data to ensure good performance. Be careful, specially while writing custom code using join functions that can create some ugly SQL.
 
 ## Tidy R in OMOP collection
 
 This book is the first of the *Tidy OMOP CDM* collection. If you like it please take a look to the full collection:
 
-- **1** [Tidy R programing with the OMOP CDM](https://oxford-pharmacoepi.github.io/Tidy-R-programming-with-OMOP)
+-   **1** [Tidy R programing with the OMOP CDM](https://oxford-pharmacoepi.github.io/Tidy-R-programming-with-OMOP)
 
-- **2** [Development of tidy R OMOP CDM packages](https://oxford-pharmacoepi.github.io/DeveloperBook) *under construction*
+-   **2** [Development of tidy R OMOP CDM packages](https://oxford-pharmacoepi.github.io/DeveloperBook) *under construction*
 
-- **3** [DrugUtilisation in the OMOP CDM](https://oxford-pharmacoepi.github.io/DrugUtilisation-in-OMOP-CDM/) *under construction*
+-   **3** [DrugUtilisation in the OMOP CDM](https://oxford-pharmacoepi.github.io/DrugUtilisation-in-OMOP-CDM/) *under construction*
 
 ## Support us
 
-We encourage you to support this work by: either citing the book in your papers or documentation; recommending it to your colleagues; starring the [GitHub repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP); or simply letting us know how it helped you. But on top of that **use it** so it can help you and others in your research.
+We encourage you to support this work by: either citing the book in your papers or documentation; recommending it to your colleagues; starring the [GitHub repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP); or simply letting us know how it helped you. But on top of that **use it** so it can help you and others in your research for patient benefit.

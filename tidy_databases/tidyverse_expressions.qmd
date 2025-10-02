@@ -1,6 +1,6 @@
 # Supported expressions for database queries {#sec-tidyverse_expressions}
 
-In the previous chapter, @sec-dbplyr_verbs, we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.
+In the previous chapter, @sec-tidyverse_verbs, we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.
 
 For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these pipelines get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.
 
@@ -13,8 +13,6 @@ library(dplyr)
 library(dbplyr)
 library(stringr)
 library(clock)
-
-options(dplyr.strict_sql = TRUE) # force error if no known translation
 ```
 
 ## Data types

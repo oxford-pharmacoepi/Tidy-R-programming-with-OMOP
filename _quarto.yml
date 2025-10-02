@@ -36,6 +36,10 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
+    citations: true
+    link-citations: true
+    code-tools: true
+    code-link: true
   titlepage-pdf:
     titlepage: formal
     documentclass: scrbook

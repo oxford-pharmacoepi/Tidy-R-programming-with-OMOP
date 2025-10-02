@@ -4,21 +4,18 @@
 
 The OMOP CDM standardises the structure of healthcare data. Data is stored across a system of tables with established relationships between them. In other words, the OMOP CDM provides a relational database structure, with version 5.4 of the OMOP CDM shown below.
 
-![OMOP CDM v5.4 entity-relationship diagram retrieved from <https://ohdsi.github.io/CommonDataModel/cdm54erd.html>](../images/erd.jpg){.lightbox #fig-scatter}
+![OMOP CDM v5.4 entity-relationship diagram retrieved from <https://ohdsi.github.io/CommonDataModel/cdm54erd.html>](../images/erd.jpg){#fig-scatter .lightbox}
 
 ## Creating a reference to the OMOP CDM
 
-As we saw in @sec-dbplyr_packages, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipelines using the data. Luckily for us, we won't have to create functions and methods for this ourselves. Instead, we will use the `omopgenerics` package which defines a data model for OMOP CDM data and the `CDMConnector` package which provides functions for connecting to a OMOP CDM data held in a database.
+As we saw in @sec-data_model, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipelines using the data. Luckily for us, we won't have to create functions and methods for this ourselves. Instead, we will use the `omopgenerics` package which defines a data model for OMOP CDM data and the `CDMConnector` package which provides functions for connecting to a OMOP CDM data held in a database.
 
 To see how this works we will use the `omock` package to create example data in the format of the OMOP CDM, which we will then copy to a DuckDB database created by the `duckdb` package.
 
 ```{r, message=FALSE, warning=FALSE}
-library(DBI)
 library(duckdb)
-library(here)
 library(dplyr)
 library(omock)
-library(omopgenerics)
 library(CDMConnector)
 library(palmerpenguins)
 
@@ -52,7 +49,7 @@ cdm
 ```
 
 ::: {.callout-tip collapse="true"}
-## Setting a write prefix
+### Setting a write prefix
 
 We can also specify a write prefix and this will be used whenever permanent tables are created in the write schema. This can be useful when we're sharing our write schema with others and want to avoid table name conflicts and easily drop tables created as part of a particular study.
 
@@ -108,7 +105,7 @@ cdmName(cdm$person)
 ```
 
 ::: {.callout-tip collapse="true"}
-## Behind the scenes
+### Behind the scenes
 
 The class of the cdm reference itself is `<cdm_reference>`.
 
@@ -140,7 +137,7 @@ cdmVersion(cdm)
 ```
 
 ::: {.callout-note collapse="true"}
-## cdmVersion
+### cdmVersion
 
 Note, the `cdmVersion()` function also works for `<cdm_table>` objects:
 
@@ -150,13 +147,14 @@ cdmVersion(cdm$person)
 :::
 
 ::: {.callout-note collapse="true"}
-## Methods functions
+### Methods functions
+
 Although as stated the `cdmName()` and `cdmVersion()` functions are defined by the omopgenerics packages, these functions are reexported in other packages and you won't need to load omopgenerics explicitly.
 :::
 
 ## Including cohort tables in the cdm reference
 
-A [cohort](TODO citation) is a fundamental piece in epidemiological studies, later we'll see how to create cohorts in more detail in @sec-creating_cohorts. For the moment, let's just outline how we can include the reference to an existing cohort in our cdm reference. For this we'll use `omock` to add a cohort to our local cdm and upload that to a DuckDB database again.
+A [cohort](TODO%20citation) is a fundamental piece in epidemiological studies, later we'll see how to create cohorts in more detail in @sec-creating_cohorts. For the moment, let's just outline how we can include the reference to an existing cohort in our cdm reference. For this we'll use `omock` to add a cohort to our local cdm and upload that to a DuckDB database again.
 
 ```{r, echo = TRUE}
 cdm_local <- cdm_local |> 
@@ -183,7 +181,7 @@ cdm$my_study_cohort |>
 ```
 
 ::: {.callout-note collapse="true"}
-## Tables included in the cdm reference
+### Tables included in the cdm reference
 
 Note that by default the cohort table won't be included in the cdm_reference object.
 
@@ -266,7 +264,7 @@ cdm <- cdmFromCon(con = con,
 cdm
 ```
 
-Note we specified the `achillesSchema` that in this case is the same than the `writeSchema` and `cdmSchema`, but each one of them can be different and point to a separate [schema](TODO add citation).
+Note we specified the `achillesSchema` that in this case is the same than the `writeSchema` and `cdmSchema`, but each one of them can be different and point to a separate [schema](TODO%20add%20citation).
 
 ## Adding other tables to the cdm reference
 
@@ -314,7 +312,7 @@ listSourceTables(cdm = cdm)
 ```
 
 ::: {.callout-note collapse="true"}
-## Difference between `insertTable` and `dbWriteTable`
+### Difference between `insertTable` and `dbWriteTable`
 
 -   `dbWriteTable` is a function from the `DBI` package that writes a local R data frame to a database. You need to manually specify the schema and table name and it does not update the cdm reference object.
 
@@ -384,7 +382,7 @@ cdm
 The package `omopgenerics` provides a comprehensive list of the required features of a valid cdm reference. You can read more about it [here](https://darwin-eu.github.io/omopgenerics/articles/cdm_reference.html).
 
 ::: {.callout-note collapse="true"}
-## Name consistency
+### Name consistency
 
 Note also that there must be a name consistency between the name of the table and the assignment in the cdm_reference object.
 
@@ -423,7 +421,7 @@ One benefit of working with temporary tables is that they will be automatically 
 However, one disadvantage of using temporary tables is that we will generally accumulate more and more of them as we go (in a single R session), whereas we can overwrite permanent tables continuously. For example, if our study code contains a loop that requires a compute, we would either overwrite an intermediate permanent table 100 times or create 100 different temporary tables in the process. In the latter case we should be wary of consuming a lot of drive memory, which could lead to performance issues or even crashes.
 
 ::: {.callout-note collapse="true"}
-## `name` argument in `compute()`
+### `name` argument in `compute()`
 
 Note that in the previous examples we explicitly specified the name of the new table and whether it must be temporary or permanent (temporary = FALSE), but we do not need to populate the temporary field explicitly as if name is left as NULL (default behavior) then the table will be temporary (temporary = TRUE) and if the name argument is populated with a character (e.g name = "my_custom_table") then the created table will be permanent:
 
@@ -434,10 +432,9 @@ cdm$person_new_temp <- cdm$person |>
 cdm$person_new_permanent <- cdm$person |> 
   compute(name = "person_new_permanent")
 ```
-
 :::
 
-# Disconnecting
+## Disconnecting
 
 Once we have finished our analysis we can close our connection to the database behind our cdm reference.
 
@@ -445,7 +442,7 @@ Once we have finished our analysis we can close our connection to the database b
 cdmDisconnect(cdm) 
 ```
 
-# Further reading
+## Further reading
 
 -   [omopgenerics package](https://darwin-eu.github.io/omopgenerics)
 -   [CDMConnector package](https://darwin-eu.github.io/CDMConnector)
