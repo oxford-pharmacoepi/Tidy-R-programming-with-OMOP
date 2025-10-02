@@ -233,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../final_remarks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final remarks</span></span></a>
+ <span class="menu-text">Final remarks</span></a>
   </div>
 </li>
     </ul>
@@ -246,8 +246,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#tidyverse-functions" id="toc-tidyverse-functions" class="nav-link active" data-scroll-target="#tidyverse-functions"><span class="header-section-number">2.0.1</span> Tidyverse functions</a></li>
-  <li><a href="#getting-to-an-analytic-dataset" id="toc-getting-to-an-analytic-dataset" class="nav-link" data-scroll-target="#getting-to-an-analytic-dataset"><span class="header-section-number">2.1</span> Getting to an analytic dataset</a></li>
+  <li><a href="#tidyverse-functions" id="toc-tidyverse-functions" class="nav-link active" data-scroll-target="#tidyverse-functions"><span class="header-section-number">2.1</span> Tidyverse functions</a></li>
+  <li><a href="#getting-to-an-analytic-dataset" id="toc-getting-to-an-analytic-dataset" class="nav-link" data-scroll-target="#getting-to-an-analytic-dataset"><span class="header-section-number">2.2</span> Getting to an analytic dataset</a></li>
+  <li><a href="#disconnecting-from-the-database" id="toc-disconnecting-from-the-database" class="nav-link" data-scroll-target="#disconnecting-from-the-database"><span class="header-section-number">2.3</span> Disconnecting from the database</a></li>
   </ul>
 </nav>
     </div>
@@ -256,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with working databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/tidyverse_verbs.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-dbplyr_verbs" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-tidyverse_verbs" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -390,8 +391,8 @@ $ carrier &lt;chr&gt; "9E", "AA", "AS", "B6", "DL", "EV", "F9", "FL", "HA", "MQ"
 $ name    &lt;chr&gt; "Endeavor Air Inc.", "American Airlines Inc.", "Alaska Airline…</code></pre>
 </div>
 </div>
-<section id="tidyverse-functions" class="level3" data-number="2.0.1">
-<h3 data-number="2.0.1" class="anchored" data-anchor-id="tidyverse-functions"><span class="header-section-number">2.0.1</span> Tidyverse functions</h3>
+<section id="tidyverse-functions" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="tidyverse-functions"><span class="header-section-number">2.1</span> Tidyverse functions</h2>
 <p>For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from <code>dplyr</code>, but a couple also from the <code>tidyr</code> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -538,8 +539,8 @@ Important
 </div>
 </div>
 </section>
-<section id="getting-to-an-analytic-dataset" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="getting-to-an-analytic-dataset"><span class="header-section-number">2.1</span> Getting to an analytic dataset</h2>
+<section id="getting-to-an-analytic-dataset" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="getting-to-an-analytic-dataset"><span class="header-section-number">2.2</span> Getting to an analytic dataset</h2>
 <p>To see a little more on how we can use the above functions, let’s say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.</p>
 <p>For this we’ll first use the <code>filter()</code> and <code>select()</code> <code>dplyr</code> verbs to get the data from the flights table. Note, we’ll rename arr_delay to just delay.</p>
 <div class="cell">
@@ -639,16 +640,16 @@ INNER JOIN planes
 # Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    dest  distance carrier tailnum delay seats
    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt;
- 1 SLC       1990 DL      N379DA    -12   189
- 2 SFO       2586 UA      N557UA    -25   178
- 3 BTV        266 B6      N197JB    -10    20
- 4 BTV        266 B6      N298JB    118    20
- 5 LAX       2475 B6      N768JB    -11   200
- 6 FLL       1069 B6      N807JB     14   200
- 7 PWM        273 B6      N307JB     65    20
- 8 SJU       1598 DL      N3757D    -25   189
- 9 MCO        944 DL      N932DL      3   142
-10 MCO        944 DL      N930DL    200   142
+ 1 MIA       1089 AA      N619AA     33   178
+ 2 BQN       1576 B6      N804JB    -18   200
+ 3 MCO        944 B6      N593JB     -8   200
+ 4 PBI       1028 B6      N793JB     -2   200
+ 5 TPA       1005 B6      N657JB     -3   200
+ 6 LAX       2475 UA      N29129      7   178
+ 7 BOS        187 B6      N708JB     -4   200
+ 8 ATL        760 DL      N3739P     -8   189
+ 9 RSW       1074 B6      N635JB      4   200
+10 SJU       1598 B6      N794JB    -21   200
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -669,7 +670,16 @@ $ delay    &lt;dbl&gt; -10, -34, -2, 7, -12, -3, 2, 2, 0, -19, -35, -8, 7, -12, 
 $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 200,…</code></pre>
 </div>
 </div>
+</section>
+<section id="disconnecting-from-the-database" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="disconnecting-from-the-database"><span class="header-section-number">2.3</span> Disconnecting from the database</h2>
+<p>Now that we’ve reached the end of this example, we can close our connection to the database.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(<span class="at">conn =</span> con)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
+
+<!-- -->
 
 </section>
 
@@ -744,6 +754,57 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1085,7 +1146,186 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Supported expressions for database queries</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Core verbs for analytic pipelines utilising a database {#sec-tidyverse_verbs}</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>We saw in the previous chapter that we can use familiar <span class="in">`dplyr`</span> verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we'll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the <span class="in">`nycflights13`</span> data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="al">![`nycflights13` relational diagram from &lt;https://collinn.github.io/teaching/2023/labs/joins.html&gt;.](../images/relational-01.png)</span>{#fig-nycflights13 .lightbox}</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>Let's load the required libraries, add our data to a DuckDB database, and then create references to each of these tables.</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dbplyr)</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="co"># create duckdb connection</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="at">drv =</span> <span class="fu">duckdb</span>())</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="co"># copy tables in a loop</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (nm <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"airlines"</span>, <span class="st">"airports"</span>, <span class="st">"flights"</span>, <span class="st">"planes"</span>, <span class="st">"weather"</span>)) {</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbWriteTable</span>(<span class="at">conn =</span> con, <span class="at">name =</span> nm, <span class="at">value =</span> <span class="fu">get</span>(nm))</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>airports_db <span class="ot">&lt;-</span> <span class="fu">tbl</span>(<span class="at">src =</span> con, <span class="st">"airports"</span>)</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(airports_db)</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>flights_db <span class="ot">&lt;-</span> <span class="fu">tbl</span>(<span class="at">src =</span> con, <span class="st">"flights"</span>)</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(flights_db)</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>weather_db <span class="ot">&lt;-</span> <span class="fu">tbl</span>(<span class="at">src =</span> con, <span class="st">"weather"</span>)</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(weather_db)</span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>planes_db <span class="ot">&lt;-</span> <span class="fu">tbl</span>(<span class="at">src =</span> con, <span class="st">"planes"</span>)</span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(planes_db)</span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a>airlines_db <span class="ot">&lt;-</span> <span class="fu">tbl</span>(<span class="at">src =</span> con, <span class="st">"airlines"</span>)</span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(airlines_db)</span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tidyverse functions</span></span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from <span class="in">`dplyr`</span>, but a couple also from the <span class="in">`tidyr`</span> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>Until we use <span class="in">`compute()`</span> or <span class="in">`collect()`</span> (or printing the first few rows of the result) all we're doing is translating R code into SQL. Which means no code is being executed in the database side.</span>
+<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`compute()`</span> will execute the query and store it in a new table in the database.</span>
+<span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`collect()`</span> will execute the query and bring the result back to R.</span>
+<span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>printing (e.g. <span class="in">`glimpse()`</span> or <span class="in">`print()`</span>) will execute the query limiting the result to the first set of rows which leads to smaller computation time in the database side.</span>
+<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Purpose                  <span class="pp">|</span> Functions                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <span class="pp">|</span> Description                                                                             <span class="pp">|</span></span>
+<span id="cb34-56"><a href="#cb34-56" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------------|----------------------------------------|----------------|</span></span>
+<span id="cb34-57"><a href="#cb34-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Selecting rows           <span class="pp">|</span> <span class="co">[</span><span class="ot">filter</span><span class="co">](https://dplyr.tidyverse.org/reference/filter.html)</span>, <span class="co">[</span><span class="ot">distinct</span><span class="co">](https://dplyr.tidyverse.org/reference/distinct.html)</span>                                                                                                                                                                                                                                                                                                                                                                              <span class="pp">|</span> To select rows in a table.                                                              <span class="pp">|</span></span>
+<span id="cb34-58"><a href="#cb34-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ordering rows            <span class="pp">|</span> <span class="co">[</span><span class="ot">arrange</span><span class="co">](https://dplyr.tidyverse.org/reference/arrange.html)</span>                                                                                                                                                                                                                                                                                                                                                                                                                                             <span class="pp">|</span> To order rows in a table.                                                               <span class="pp">|</span></span>
+<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Column Transformation    <span class="pp">|</span> <span class="co">[</span><span class="ot">mutate</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate.html)</span>, <span class="co">[</span><span class="ot">select</span><span class="co">](https://dplyr.tidyverse.org/reference/select.html)</span>, <span class="co">[</span><span class="ot">relocate</span><span class="co">](https://dplyr.tidyverse.org/reference/relocate.html)</span>, <span class="co">[</span><span class="ot">rename</span><span class="co">](https://dplyr.tidyverse.org/reference/rename.html)</span>                                                                                                                                                                                                                                                    <span class="pp">|</span> To create new columns or change existing ones.                                          <span class="pp">|</span></span>
+<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Grouping and ungrouping  <span class="pp">|</span> <span class="co">[</span><span class="ot">group_by</span><span class="co">](https://dplyr.tidyverse.org/reference/group_by.html)</span>, <span class="co">[</span><span class="ot">rowwise</span><span class="co">](https://dplyr.tidyverse.org/reference/rowwise.html)</span>, <span class="co">[</span><span class="ot">ungroup</span><span class="co">](https://dplyr.tidyverse.org/reference/ungroup.html)</span>                                                                                                                                                                                                                                                                                                             <span class="pp">|</span> To group data by one or more variables and to remove grouping.                          <span class="pp">|</span></span>
+<span id="cb34-61"><a href="#cb34-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Aggregation              <span class="pp">|</span> <span class="co">[</span><span class="ot">count</span><span class="co">](https://dplyr.tidyverse.org/reference/count.html)</span>, <span class="co">[</span><span class="ot">tally</span><span class="co">](https://dplyr.tidyverse.org/reference/tally.html)</span>, <span class="co">[</span><span class="ot">summarise</span><span class="co">](https://dplyr.tidyverse.org/reference/summarise.html)</span>                                                                                                                                                                                                                                                                                                                   <span class="pp">|</span> These functions are used for summarising data.                                          <span class="pp">|</span></span>
+<span id="cb34-62"><a href="#cb34-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data merging and joining <span class="pp">|</span> <span class="co">[</span><span class="ot">inner_join</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate-joins.html)</span>, <span class="co">[</span><span class="ot">left_join</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate-joins.html)</span>, <span class="co">[</span><span class="ot">right_join</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate-joins.html)</span>, <span class="co">[</span><span class="ot">full_join</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate-joins.html)</span>, <span class="co">[</span><span class="ot">anti_join</span><span class="co">](https://dplyr.tidyverse.org/reference/filter-joins.html)</span>, <span class="co">[</span><span class="ot">semi_join</span><span class="co">](https://dplyr.tidyverse.org/reference/filter-joins.html)</span>, <span class="co">[</span><span class="ot">cross_join</span><span class="co">](https://dplyr.tidyverse.org/reference/cross_join.html)</span> <span class="pp">|</span> These functions are used to combine data from different tables based on common columns. <span class="pp">|</span></span>
+<span id="cb34-63"><a href="#cb34-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data reshaping           <span class="pp">|</span> <span class="co">[</span><span class="ot">pivot_wider</span><span class="co">](https://tidyr.tidyverse.org/reference/pivot_wider.html)</span>, <span class="co">[</span><span class="ot">pivot_longer</span><span class="co">](https://tidyr.tidyverse.org/reference/pivot_longer.html)</span>                                                                                                                                                                                                                                                                                                                                                            <span class="pp">|</span> These functions are used to reshape data between wide and long formats.                 <span class="pp">|</span></span>
+<span id="cb34-64"><a href="#cb34-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data union               <span class="pp">|</span> <span class="co">[</span><span class="ot">union_all</span><span class="co">](https://dplyr.tidyverse.org/reference/setops.html)</span>, <span class="co">[</span><span class="ot">union</span><span class="co">](https://dplyr.tidyverse.org/reference/setops.html)</span>                                                                                                                                                                                                                                                                                                                                                                                <span class="pp">|</span> This function combines two tables.                                                      <span class="pp">|</span></span>
+<span id="cb34-65"><a href="#cb34-65" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Randomly selects rows    <span class="pp">|</span> <span class="co">[</span><span class="ot">slice_sample</span><span class="co">](https://dplyr.tidyverse.org/reference/slice.html)</span>                                                                                                                                                                                                                                                                                                                                                                                                                                          <span class="pp">|</span> We can use this to take a random subset a table.                                        <span class="pp">|</span></span>
+<span id="cb34-66"><a href="#cb34-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-67"><a href="#cb34-67" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
+<span id="cb34-68"><a href="#cb34-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### Behind the scenes</span></span>
+<span id="cb34-69"><a href="#cb34-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-70"><a href="#cb34-70" aria-hidden="true" tabindex="-1"></a>By using the above functions we can use the same code regardless of whether the data is held in the database or locally in R. This is because the functions used above are generic functions which behave differently depending on the type of input they are given. Let's take <span class="in">`inner_join()`</span> for example. We can see that this function is a S3 generic function (with S3 being the most common object-oriented system used in R).</span>
+<span id="cb34-71"><a href="#cb34-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-72"><a href="#cb34-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-73"><a href="#cb34-73" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sloop)</span>
+<span id="cb34-74"><a href="#cb34-74" aria-hidden="true" tabindex="-1"></a><span class="fu">ftype</span>(inner_join)</span>
+<span id="cb34-75"><a href="#cb34-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-76"><a href="#cb34-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-77"><a href="#cb34-77" aria-hidden="true" tabindex="-1"></a>Among others, the references we create to tables in a database have <span class="in">`tbl_lazy`</span> as a class attribute. Meanwhile, we can see that when collected into R the object changes to have different attributes, one of which being <span class="in">`data.frame`</span> :</span>
+<span id="cb34-78"><a href="#cb34-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-79"><a href="#cb34-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-80"><a href="#cb34-80" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(flights_db)</span>
+<span id="cb34-81"><a href="#cb34-81" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(flights_db <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">collect</span>())</span>
+<span id="cb34-82"><a href="#cb34-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-83"><a href="#cb34-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-84"><a href="#cb34-84" aria-hidden="true" tabindex="-1"></a>We can see that <span class="in">`inner_join()`</span> has different methods for <span class="in">`tbl_lazy`</span> and <span class="in">`data.frame`</span>.</span>
+<span id="cb34-85"><a href="#cb34-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-86"><a href="#cb34-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-87"><a href="#cb34-87" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_methods_generic</span>(<span class="st">"inner_join"</span>)</span>
+<span id="cb34-88"><a href="#cb34-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-89"><a href="#cb34-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-90"><a href="#cb34-90" aria-hidden="true" tabindex="-1"></a>When working with references to tables in the database the <span class="in">`tbl_lazy`</span> method will be used.</span>
+<span id="cb34-91"><a href="#cb34-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-92"><a href="#cb34-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-93"><a href="#cb34-93" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span> </span>
+<span id="cb34-94"><a href="#cb34-94" aria-hidden="true" tabindex="-1"></a>              <span class="fu">inner_join</span>(planes_db))</span>
+<span id="cb34-95"><a href="#cb34-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-96"><a href="#cb34-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-97"><a href="#cb34-97" aria-hidden="true" tabindex="-1"></a>But once we bring data into R, the <span class="in">`data.frame`</span> method will be used.</span>
+<span id="cb34-98"><a href="#cb34-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-99"><a href="#cb34-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-100"><a href="#cb34-100" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">collect</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb34-101"><a href="#cb34-101" aria-hidden="true" tabindex="-1"></a>              <span class="fu">inner_join</span>(planes_db <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">collect</span>()))</span>
+<span id="cb34-102"><a href="#cb34-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-103"><a href="#cb34-103" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-104"><a href="#cb34-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-105"><a href="#cb34-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting to an analytic dataset</span></span>
+<span id="cb34-106"><a href="#cb34-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a>To see a little more on how we can use the above functions, let's say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.</span>
+<span id="cb34-108"><a href="#cb34-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a>For this we'll first use the <span class="in">`filter()`</span> and <span class="in">`select()`</span> <span class="in">`dplyr`</span> verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.</span>
+<span id="cb34-110"><a href="#cb34-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> flights_db <span class="sc">|&gt;</span> </span>
+<span id="cb34-113"><a href="#cb34-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arr_delay) <span class="sc">&amp;</span> origin <span class="sc">==</span> <span class="st">"JFK"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb34-114"><a href="#cb34-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"dest"</span>, <span class="st">"distance"</span>, <span class="st">"carrier"</span>, <span class="st">"tailnum"</span>, <span class="st">"delay"</span> <span class="ot">=</span> <span class="st">"arr_delay"</span>)</span>
+<span id="cb34-115"><a href="#cb34-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-116"><a href="#cb34-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-117"><a href="#cb34-117" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb34-118"><a href="#cb34-118" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb34-119"><a href="#cb34-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-120"><a href="#cb34-120" aria-hidden="true" tabindex="-1"></a>See the resultant DuckDB query:</span>
+<span id="cb34-121"><a href="#cb34-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-122"><a href="#cb34-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb34-123"><a href="#cb34-123" aria-hidden="true" tabindex="-1"></a><span class="fu">show_query</span>(delayed_flights_db)</span>
+<span id="cb34-124"><a href="#cb34-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-125"><a href="#cb34-125" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-126"><a href="#cb34-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-127"><a href="#cb34-127" aria-hidden="true" tabindex="-1"></a>When executed, our results will look like the following:</span>
+<span id="cb34-128"><a href="#cb34-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-129"><a href="#cb34-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-130"><a href="#cb34-130" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span>
+<span id="cb34-131"><a href="#cb34-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-132"><a href="#cb34-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-133"><a href="#cb34-133" aria-hidden="true" tabindex="-1"></a>Now we'll add plane characteristics from the planes table. We will use an inner join so that only records for which we have the plane characteristics are kept.</span>
+<span id="cb34-134"><a href="#cb34-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-135"><a href="#cb34-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-136"><a href="#cb34-136" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
+<span id="cb34-137"><a href="#cb34-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb34-138"><a href="#cb34-138" aria-hidden="true" tabindex="-1"></a>    planes_db <span class="sc">|&gt;</span> </span>
+<span id="cb34-139"><a href="#cb34-139" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="st">"tailnum"</span>, <span class="st">"seats"</span>),</span>
+<span id="cb34-140"><a href="#cb34-140" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"tailnum"</span></span>
+<span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a>Note that our first query was not executed, as we didn't use either <span class="in">`compute()`</span> or <span class="in">`collect()`</span>, so we'll now have added our join to the original query.</span>
+<span id="cb34-145"><a href="#cb34-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-146"><a href="#cb34-146" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb34-147"><a href="#cb34-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb34-148"><a href="#cb34-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-149"><a href="#cb34-149" aria-hidden="true" tabindex="-1"></a>See that now the SQL code combines both queries:</span>
+<span id="cb34-150"><a href="#cb34-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-151"><a href="#cb34-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb34-152"><a href="#cb34-152" aria-hidden="true" tabindex="-1"></a><span class="fu">show_query</span>(delayed_flights_db)</span>
+<span id="cb34-153"><a href="#cb34-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-154"><a href="#cb34-154" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-155"><a href="#cb34-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-156"><a href="#cb34-156" aria-hidden="true" tabindex="-1"></a>And when executed, our results will look like the following:</span>
+<span id="cb34-157"><a href="#cb34-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-158"><a href="#cb34-158" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-159"><a href="#cb34-159" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span>
+<span id="cb34-160"><a href="#cb34-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-161"><a href="#cb34-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a>Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform locally statistical analyses which might not be possible to run in a database such as plots, density distributions, regression, ... anything beyond the data manipulation).</span>
+<span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-164"><a href="#cb34-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-165"><a href="#cb34-165" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
+<span id="cb34-166"><a href="#cb34-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>
+<span id="cb34-167"><a href="#cb34-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-168"><a href="#cb34-168" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(delayed_flights)</span>
+<span id="cb34-169"><a href="#cb34-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-170"><a href="#cb34-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-171"><a href="#cb34-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting from the database</span></span>
+<span id="cb34-172"><a href="#cb34-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-173"><a href="#cb34-173" aria-hidden="true" tabindex="-1"></a>Now that we've reached the end of this example, we can close our connection to the database.</span>
+<span id="cb34-174"><a href="#cb34-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(<span class="at">conn =</span> con)</span>
+<span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Final remarks – Tidy R programming with the OMOP Common Data Model</title>
+<title>Final remarks – Tidy R programming with the OMOP Common Data Model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -82,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./final_remarks.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final remarks</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./final_remarks.html">Final remarks</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -194,7 +229,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./final_remarks.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final remarks</span></span></a>
+ <span class="menu-text">Final remarks</span></a>
   </div>
 </li>
     </ul>
@@ -207,8 +242,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#tidy-r-in-omop-collection" id="toc-tidy-r-in-omop-collection" class="nav-link active" data-scroll-target="#tidy-r-in-omop-collection"><span class="header-section-number">10.1</span> Tidy R in OMOP collection</a></li>
-  <li><a href="#support-us" id="toc-support-us" class="nav-link" data-scroll-target="#support-us"><span class="header-section-number">10.2</span> Support us</a></li>
+  <li><a href="#tidy-r-in-omop-collection" id="toc-tidy-r-in-omop-collection" class="nav-link active" data-scroll-target="#tidy-r-in-omop-collection">Tidy R in OMOP collection</a></li>
+  <li><a href="#support-us" id="toc-support-us" class="nav-link" data-scroll-target="#support-us">Support us</a></li>
   </ul>
 </nav>
     </div>
@@ -217,7 +252,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final remarks</span></h1>
+<div class="quarto-title-block"><div><h1 class="title">Final remarks</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -234,9 +269,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><em>Tidy R programming with the OMOP CDM</em> aims to (1) explain the main principles for working with databases from R and (2) how to apply this principles and use it with the OMOP Common Data Model. Hopefully after reading this book you can understand how the dplyr and dbplyr packages interact with the databases, in particular with data formatted to the OMOP CDM; and how the cdm_reference object can be used to extract TODO.</p>
-<section id="tidy-r-in-omop-collection" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="tidy-r-in-omop-collection"><span class="header-section-number">10.1</span> Tidy R in OMOP collection</h2>
+<p><em>Tidy R programming with the OMOP Common Data Model</em> aims to (1) explain the main principles for working with databases from R and (2) how to apply this principles and use it with the OMOP CDM. Hopefully after reading this book you can understand how the dplyr and dbplyr packages interact with the databases, in particular with data formatted to the OMOP CDM; how the cdm_reference object can be used to extract identify your population of interests; and add the desired features to your dataset. Note in this book we always worked in relatively small synthetic data with an unrealistic performance, any analysis conducted with Real World Data and big databases will take more time, that’s why we would always recommend you to tests your code against synthetic data or subsets of your data to ensure good performance. Be careful, specially while writing custom code using join functions that can create some ugly SQL.</p>
+<section id="tidy-r-in-omop-collection" class="level2">
+<h2 class="anchored" data-anchor-id="tidy-r-in-omop-collection">Tidy R in OMOP collection</h2>
 <p>This book is the first of the <em>Tidy OMOP CDM</em> collection. If you like it please take a look to the full collection:</p>
 <ul>
 <li><p><strong>1</strong> <a href="https://oxford-pharmacoepi.github.io/Tidy-R-programming-with-OMOP">Tidy R programing with the OMOP CDM</a></p></li>
@@ -244,10 +279,12 @@ ul.task-list li input[type="checkbox"] {
 <li><p><strong>3</strong> <a href="https://oxford-pharmacoepi.github.io/DrugUtilisation-in-OMOP-CDM/">DrugUtilisation in the OMOP CDM</a> <em>under construction</em></p></li>
 </ul>
 </section>
-<section id="support-us" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="support-us"><span class="header-section-number">10.2</span> Support us</h2>
-<p>We encourage you to support this work by: either citing the book in your papers or documentation; recommending it to your colleagues; starring the <a href="https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP">GitHub repository</a>; or simply letting us know how it helped you. But on top of that <strong>use it</strong> so it can help you and others in your research.</p>
+<section id="support-us" class="level2">
+<h2 class="anchored" data-anchor-id="support-us">Support us</h2>
+<p>We encourage you to support this work by: either citing the book in your papers or documentation; recommending it to your colleagues; starring the <a href="https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP">GitHub repository</a>; or simply letting us know how it helped you. But on top of that <strong>use it</strong> so it can help you and others in your research for patient benefit.</p>
 
+
+<!-- -->
 
 </section>
 
@@ -322,6 +359,57 @@ ul.task-list li input[type="checkbox"] {
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -660,7 +748,25 @@ ul.task-list li input[type="checkbox"] {
   </div>
   <div class="nav-page nav-page-next">
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Final remarks {.unnumbered}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>*Tidy R programming with the OMOP Common Data Model* aims to (1) explain the main principles for working with databases from R and (2) how to apply this principles and use it with the OMOP CDM. Hopefully after reading this book you can understand how the dplyr and dbplyr packages interact with the databases, in particular with data formatted to the OMOP CDM; how the cdm_reference object can be used to extract identify your population of interests; and add the desired features to your dataset. Note in this book we always worked in relatively small synthetic data with an unrealistic performance, any analysis conducted with Real World Data and big databases will take more time, that's why we would always recommend you to tests your code against synthetic data or subsets of your data to ensure good performance. Be careful, specially while writing custom code using join functions that can create some ugly SQL.</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tidy R in OMOP collection</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>This book is the first of the *Tidy OMOP CDM* collection. If you like it please take a look to the full collection:</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**1** <span class="co">[</span><span class="ot">Tidy R programing with the OMOP CDM</span><span class="co">](https://oxford-pharmacoepi.github.io/Tidy-R-programming-with-OMOP)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**2** <span class="co">[</span><span class="ot">Development of tidy R OMOP CDM packages</span><span class="co">](https://oxford-pharmacoepi.github.io/DeveloperBook)</span> *under construction*</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**3** <span class="co">[</span><span class="ot">DrugUtilisation in the OMOP CDM</span><span class="co">](https://oxford-pharmacoepi.github.io/DrugUtilisation-in-OMOP-CDM/)</span> *under construction*</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## Support us</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>We encourage you to support this work by: either citing the book in your papers or documentation; recommending it to your colleagues; starring the <span class="co">[</span><span class="ot">GitHub repository</span><span class="co">](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP)</span>; or simply letting us know how it helped you. But on top of that **use it** so it can help you and others in your research for patient benefit.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 
