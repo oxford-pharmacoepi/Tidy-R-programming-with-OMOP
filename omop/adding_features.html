@@ -289,10 +289,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ℹ Adding drug_strength table.</code></pre>
 </div>
 </div>
-<p>As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (ie a characteristic that does not change as time passes and a person ages) or time-varying.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (i.e.&nbsp;a characteristic that does not change as time passes and a person ages) or time-varying.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <section id="adding-specific-demographics" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="adding-specific-demographics"><span class="header-section-number">7.1</span> Adding specific demographics</h2>
-<p>The <code>PatientProfiles</code> package makes it easy for us to add demographic information to tables in the OMOP CDM. Like the <code>CDMConnector</code> package we’ve seen previously, the fact that the structure of the OMOP CDM is known allows the <code>PatientProfiles</code> package to abstract away some common data manipulations required to do research with patient-level data.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>The <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> package makes it easy for us to add demographic information to tables in the OMOP CDM. Like the <a href="https://darwin-eu.github.io/CDMConnector/"><code>CDMConnector</code></a> package we’ve seen previously, the fact that the structure of the OMOP CDM is known allows the <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> package to abstract away some common data manipulations required to do research with patient-level data.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>Let’s say we are interested in individuals’ age and sex at time of diagnosis with COVID-19. We can add these variables to the table like so (noting that because age is time-varying, we have to specify the variable with the date for which we want to calculate age relative to).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="ot">&lt;-</span> cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
@@ -304,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 18
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpqMmuoY/file30f66379d176.duckdb]
+Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpe2zDBP/file383859171762.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
 $ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
@@ -332,7 +332,7 @@ $ age                           &lt;int&gt; 57, 25, 97, 2, 2, 2, 2, 75, 77, 57, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 18
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpqMmuoY/file30f66379d176.duckdb]
+Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpe2zDBP/file383859171762.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
 $ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
@@ -407,7 +407,7 @@ $ age                           &lt;int&gt; 57, 25, 97, 2, 2, 2, 2, 75, 77, 57, 
 <pre><code>&lt;SQL&gt;
 SELECT
   condition_occurrence_id,
-  og_002_1759397508.person_id AS person_id,
+  og_002_1759688680.person_id AS person_id,
   condition_concept_id,
   condition_start_date,
   condition_start_datetime,
@@ -424,7 +424,7 @@ SELECT
   condition_status_source_value,
   age,
   RHS.sex AS sex
-FROM og_002_1759397508
+FROM og_002_1759688680
 LEFT JOIN (
   SELECT
     person_id,
@@ -435,17 +435,17 @@ ELSE 'None'
 END AS sex
   FROM person
 ) RHS
-  ON (og_002_1759397508.person_id = RHS.person_id)</code></pre>
+  ON (og_002_1759688680.person_id = RHS.person_id)</code></pre>
 </div>
 </div>
-<p>Difference between <code>addSexQuery()</code> and <code>addSex()</code> is explained in the next tip chunck.</p>
+<p>Difference between <a href="https://darwin-eu.github.io/PatientProfiles/reference/addSexQuery.html"><code>addSexQuery()</code></a> and <a href="https://darwin-eu.github.io/PatientProfiles/reference/addSex.html"><code>addSex()</code></a> is explained in the next tip chunck.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="adding-multiple-demographics-simultaneously" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="adding-multiple-demographics-simultaneously"><span class="header-section-number">7.2</span> Adding multiple demographics simultaneously</h2>
-<p>We’ve now seen individual functions from <code>PatientProfiles</code> to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named <code>addPriorObservation()</code>). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>We’ve now seen individual functions from <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named <a href="https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html"><code>addPriorObservation()</code></a>). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>drug_exposure <span class="ot">&lt;-</span> cdm<span class="sc">$</span>drug_exposure <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addDemographics</span>(</span>
@@ -462,7 +462,7 @@ END AS sex
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 28
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpqMmuoY/file30f66379d176.duckdb]
+Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpe2zDBP/file383859171762.duckdb]
 $ drug_exposure_id             &lt;int&gt; 245761, 245762, 245763, 245764, 245765, 2…
 $ person_id                    &lt;int&gt; 7764, 7764, 7764, 7764, 7764, 7764, 7764,…
 $ drug_concept_id              &lt;int&gt; 40213227, 40213201, 40213198, 40213154, 4…
@@ -505,8 +505,8 @@ $ date_of_birth                &lt;date&gt; 1943-10-10, 1943-10-10, 1943-10-10, 
 <pre><code># A tibble: 2 × 4
   sex    mean_age mean_prior_observation mean_future_observation
   &lt;chr&gt;     &lt;dbl&gt;                  &lt;dbl&gt;                   &lt;dbl&gt;
-1 Female     39.4                  2096.                   1661.
-2 Male       43.0                  2455.                   1768.</code></pre>
+1 Male       43.0                  2455.                   1768.
+2 Female     39.4                  2096.                   1661.</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -515,13 +515,13 @@ $ date_of_birth                &lt;date&gt; 1943-10-10, 1943-10-10, 1943-10-10, 
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Returning a query from <code>PatientProfiles</code> rather than the result
+<span class="screen-reader-only">Tip</span>Returning a query from <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> rather than the result
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>In the above examples the functions from PatientProfiles will execute queries with the results written to a table in the database (either temporary if no name is provided or a permanent table if one is given). We might though instead want to instead just get the underlying query back so that we have more control over how and when the query will be executed.</p>
+<p>In the above examples the functions from <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> will execute queries with the results written to a table in the database (either temporary if no name is provided or a permanent table if one is given). We might though instead want to instead just get the underlying query back so that we have more control over how and when the query will be executed.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>visit_occurrence <span class="sc">|&gt;</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addSex</span>() <span class="sc">|&gt;</span> </span>
@@ -529,8 +529,8 @@ $ date_of_birth                &lt;date&gt; 1943-10-10, 1943-10-10, 1943-10-10, 
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
-SELECT og_004_1759397511.*
-FROM og_004_1759397511
+SELECT og_004_1759688683.*
+FROM og_004_1759688683
 WHERE (sex = 'Male')</code></pre>
 </div>
 </div>
@@ -646,7 +646,7 @@ WHERE (sex = 'Male')</code></pre>
 </div>
 </div>
 </div>
-<p><code>PatientProfiles</code> also provides a more general function for adding categories. Can you guess it’s name? That’s right, we have <code>addCategories()</code> for this.</p>
+<p><a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> also provides a more general function for adding categories. Can you guess it’s name? That’s right, we have <a href="https://darwin-eu.github.io/PatientProfiles/reference/addCategories.html"><code>addCategories()</code></a> for this.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addPriorObservation</span>(<span class="at">indexDate =</span> <span class="st">"condition_start_date"</span>) <span class="sc">|&gt;</span></span>
@@ -660,7 +660,7 @@ WHERE (sex = 'Male')</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 20
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpqMmuoY/file30f66379d176.duckdb]
+Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpe2zDBP/file383859171762.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
 $ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
@@ -686,8 +686,8 @@ $ prior_observation_group       &lt;chr&gt; "365 or above", "365 or above", "365
 </section>
 <section id="adding-custom-variables" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="adding-custom-variables"><span class="header-section-number">7.4</span> Adding custom variables</h2>
-<p>While <code>PatientProfiles</code> provides a range of functions that can help add characteristics of interest, you may also want to add other features . Obviously we can’t cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.</p>
-<p>In the first case where we want to add a new variable derived from other variables in our table we’ll typically be using <code>mutate()</code> (from <em>dplyr</em> package). For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals’ observation period start date. This is rather straightforward.</p>
+<p>While <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> provides a range of functions that can help add characteristics of interest, you may also want to add other features . Obviously we can’t cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.</p>
+<p>In the first case where we want to add a new variable derived from other variables in our table we’ll typically be using <a href="dplyr.tidyverse.org/reference/mutate.html"><code>mutate()</code></a> (from <a href="dplyr.tidyverse.org"><code>dplyr</code></a> package). For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals’ observation period start date. This is rather straightforward.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span> </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year =</span> <span class="fu">get_year</span>(observation_period_start_date))</span>
@@ -697,7 +697,7 @@ $ prior_observation_group       &lt;chr&gt; "365 or above", "365 or above", "365
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpqMmuoY/file30f66379d176.duckdb]
+Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpe2zDBP/file383859171762.duckdb]
 $ observation_period_id         &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ observation_period_start_date &lt;date&gt; 2014-05-09, 1977-04-11, 2014-04-19, 201…
@@ -725,7 +725,7 @@ $ observation_period_start_year &lt;dbl&gt; 2014, 1977, 2014, 2014, 2013, 2013, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 2
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpqMmuoY/file30f66379d176.duckdb]
+Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpe2zDBP/file383859171762.duckdb]
 $ person_id                    &lt;int&gt; 2, 6, 7, 8, 16, 18, 25, 36, 40, 42, 44, 4…
 $ condition_occurrence_records &lt;dbl&gt; 1, 1, 1, 4, 2, 2, 1, 4, 1, 3, 2, 5, 1, 3,…</code></pre>
 </div>
@@ -753,7 +753,7 @@ FROM (
   FROM person
   LEFT JOIN (
     SELECT person_id, COUNT(*) AS condition_occurrence_records
-    FROM og_002_1759397508
+    FROM og_002_1759688680
     GROUP BY person_id
   ) RHS
     ON (person.person_id = RHS.person_id)
@@ -780,7 +780,7 @@ FROM (
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpqMmuoY/file30f66379d176.duckdb]
+# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpe2zDBP/file383859171762.duckdb]
       n
   &lt;dbl&gt;
 1  9967</code></pre>
@@ -789,7 +789,7 @@ FROM (
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpqMmuoY/file30f66379d176.duckdb]
+# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpe2zDBP/file383859171762.duckdb]
        n
    &lt;dbl&gt;
 1 337509</code></pre>
@@ -804,7 +804,7 @@ FROM (
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpqMmuoY/file30f66379d176.duckdb]
+# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpe2zDBP/file383859171762.duckdb]
        n
    &lt;dbl&gt;
 1 410683</code></pre>
@@ -824,7 +824,7 @@ FROM (
 <section id="further-reading" class="level2" data-number="7.6">
 <h2 data-number="7.6" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">7.6</span> Further reading</h2>
 <ul>
-<li><a href="https://darwin-eu-dev.github.io/PatientProfiles/">PatientProfiles package</a></li>
+<li>Català M, Guo Y, Du M, Lopez-Guell K, Burn E, Mercade-Besora N (2025). <em>PatientProfiles: Identify Characteristics of Patients in the OMOP Common Data Model</em>. R package version 1.4.3, <a href="https://darwin-eu.github.io/PatientProfiles/" class="uri">https://darwin-eu.github.io/PatientProfiles/</a>.</li>
 </ul>
 
 
@@ -835,7 +835,7 @@ FROM (
 <hr>
 <ol>
 <li id="fn1"><p>In some datasets characteristics that could conceptually be considered as time-varying are encoded as time-invariant. One example for the latter is that in some cases an individual may be associated with a particular socioeconomic status or nationality that for the purposes of the data is treated as time-invariant.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Although these manipulations can on the face of it seem quite simple, their implementation across different database platforms with different data granularity (for example whether day of birth has been filled in for all patients or not) presents challenges that the <code>PatientProfiles</code> package solves for us.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Although these manipulations can on the face of it seem quite simple, their implementation across different database platforms with different data granularity (for example whether day of birth has been filled in for all patients or not) presents challenges that the <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> package solves for us.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>This function also provides a more time efficient method that getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables and so can be identified simultaneously.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
@@ -1320,15 +1320,15 @@ FROM (
 <span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">mockCdmFromDataset</span>(<span class="at">datasetName =</span> <span class="st">"synthea-covid19-10k"</span>, <span class="at">source =</span> <span class="st">"duckdb"</span>)</span>
 <span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (ie a characteristic that does not change as time passes and a person ages) or time-varying.<span class="ot">[^adding_features-1]</span></span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>As part of an analysis we almost always have a need to identify certain characteristics related to the individuals in our data. These characteristics might be time-invariant (i.e. a characteristic that does not change as time passes and a person ages) or time-varying.<span class="ot">[^adding_features-1]</span></span>
 <span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a><span class="ot">[^adding_features-1]: </span>In some datasets characteristics that could conceptually be considered as time-varying are encoded as time-invariant. One example for the latter is that in some cases an individual may be associated with a particular socioeconomic status or nationality that for the purposes of the data is treated as time-invariant.</span>
 <span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adding specific demographics</span></span>
 <span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>The <span class="in">`PatientProfiles`</span> package makes it easy for us to add demographic information to tables in the OMOP CDM. Like the <span class="in">`CDMConnector`</span> package we've seen previously, the fact that the structure of the OMOP CDM is known allows the <span class="in">`PatientProfiles`</span> package to abstract away some common data manipulations required to do research with patient-level data.<span class="ot">[^adding_features-2]</span></span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> package makes it easy for us to add demographic information to tables in the OMOP CDM. Like the <span class="co">[</span><span class="ot">`CDMConnector`</span><span class="co">](https://darwin-eu.github.io/CDMConnector/)</span> package we've seen previously, the fact that the structure of the OMOP CDM is known allows the <span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> package to abstract away some common data manipulations required to do research with patient-level data.<span class="ot">[^adding_features-2]</span></span>
 <span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a><span class="ot">[^adding_features-2]: </span>Although these manipulations can on the face of it seem quite simple, their implementation across different database platforms with different data granularity (for example whether day of birth has been filled in for all patients or not) presents challenges that the <span class="in">`PatientProfiles`</span> package solves for us.</span>
+<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a><span class="ot">[^adding_features-2]: </span>Although these manipulations can on the face of it seem quite simple, their implementation across different database platforms with different data granularity (for example whether day of birth has been filled in for all patients or not) presents challenges that the <span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> package solves for us.</span>
 <span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>Let's say we are interested in individuals' age and sex at time of diagnosis with COVID-19. We can add these variables to the table like so (noting that because age is time-varying, we have to specify the variable with the date for which we want to calculate age relative to).</span>
 <span id="cb42-30"><a href="#cb42-30" aria-hidden="true" tabindex="-1"></a></span>
@@ -1377,12 +1377,12 @@ FROM (
 <span id="cb42-83"><a href="#cb42-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
 <span id="cb42-84"><a href="#cb42-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-85"><a href="#cb42-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-86"><a href="#cb42-86" aria-hidden="true" tabindex="-1"></a>Difference between <span class="in">`addSexQuery()`</span> and <span class="in">`addSex()`</span> is explained in the next tip chunck.</span>
+<span id="cb42-86"><a href="#cb42-86" aria-hidden="true" tabindex="-1"></a>Difference between <span class="co">[</span><span class="ot">`addSexQuery()`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/reference/addSexQuery.html)</span> and <span class="co">[</span><span class="ot">`addSex()`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/reference/addSex.html)</span> is explained in the next tip chunck.</span>
 <span id="cb42-87"><a href="#cb42-87" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb42-88"><a href="#cb42-88" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-89"><a href="#cb42-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adding multiple demographics simultaneously</span></span>
 <span id="cb42-90"><a href="#cb42-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-91"><a href="#cb42-91" aria-hidden="true" tabindex="-1"></a>We've now seen individual functions from <span class="in">`PatientProfiles`</span> to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named <span class="in">`addPriorObservation()`</span>). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.<span class="ot">[^adding_features-3]</span></span>
+<span id="cb42-91"><a href="#cb42-91" aria-hidden="true" tabindex="-1"></a>We've now seen individual functions from <span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named <span class="co">[</span><span class="ot">`addPriorObservation()`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html)</span>). In additional to these individuals functions, the package also provides a more general function to get all of these characteristics at the same time.<span class="ot">[^adding_features-3]</span></span>
 <span id="cb42-92"><a href="#cb42-92" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-93"><a href="#cb42-93" aria-hidden="true" tabindex="-1"></a><span class="ot">[^adding_features-3]: </span>This function also provides a more time efficient method that getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables and so can be identified simultaneously.</span>
 <span id="cb42-94"><a href="#cb42-94" aria-hidden="true" tabindex="-1"></a></span>
@@ -1413,9 +1413,9 @@ FROM (
 <span id="cb42-123"><a href="#cb42-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-124"><a href="#cb42-124" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-125"><a href="#cb42-125" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
-<span id="cb42-126"><a href="#cb42-126" aria-hidden="true" tabindex="-1"></a><span class="fu">### Returning a query from `PatientProfiles` rather than the result</span></span>
+<span id="cb42-126"><a href="#cb42-126" aria-hidden="true" tabindex="-1"></a><span class="fu">### Returning a query from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) rather than the result</span></span>
 <span id="cb42-127"><a href="#cb42-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-128"><a href="#cb42-128" aria-hidden="true" tabindex="-1"></a>In the above examples the functions from PatientProfiles will execute queries with the results written to a table in the database (either temporary if no name is provided or a permanent table if one is given). We might though instead want to instead just get the underlying query back so that we have more control over how and when the query will be executed.</span>
+<span id="cb42-128"><a href="#cb42-128" aria-hidden="true" tabindex="-1"></a>In the above examples the functions from <span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> will execute queries with the results written to a table in the database (either temporary if no name is provided or a permanent table if one is given). We might though instead want to instead just get the underlying query back so that we have more control over how and when the query will be executed.</span>
 <span id="cb42-129"><a href="#cb42-129" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-130"><a href="#cb42-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
 <span id="cb42-131"><a href="#cb42-131" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>visit_occurrence <span class="sc">|&gt;</span> </span>
@@ -1487,7 +1487,7 @@ FROM (
 <span id="cb42-201"><a href="#cb42-201" aria-hidden="true" tabindex="-1"></a>If you take a close look to the documentation of the function you will see that you can also add multiple age groups and control the name of the new column that and we have seen by default is 'age_group'.</span>
 <span id="cb42-202"><a href="#cb42-202" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb42-203"><a href="#cb42-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-204"><a href="#cb42-204" aria-hidden="true" tabindex="-1"></a><span class="in">`PatientProfiles`</span> also provides a more general function for adding categories. Can you guess it's name? That's right, we have <span class="in">`addCategories()`</span> for this.</span>
+<span id="cb42-204"><a href="#cb42-204" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> also provides a more general function for adding categories. Can you guess it's name? That's right, we have <span class="co">[</span><span class="ot">`addCategories()`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/reference/addCategories.html)</span> for this.</span>
 <span id="cb42-205"><a href="#cb42-205" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-208"><a href="#cb42-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb42-209"><a href="#cb42-209" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span></span>
@@ -1503,9 +1503,9 @@ FROM (
 <span id="cb42-219"><a href="#cb42-219" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-220"><a href="#cb42-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adding custom variables</span></span>
 <span id="cb42-221"><a href="#cb42-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-222"><a href="#cb42-222" aria-hidden="true" tabindex="-1"></a>While <span class="in">`PatientProfiles`</span> provides a range of functions that can help add characteristics of interest, you may also want to add other features . Obviously we can't cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.</span>
+<span id="cb42-222"><a href="#cb42-222" aria-hidden="true" tabindex="-1"></a>While <span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> provides a range of functions that can help add characteristics of interest, you may also want to add other features . Obviously we can't cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.</span>
 <span id="cb42-223"><a href="#cb42-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-224"><a href="#cb42-224" aria-hidden="true" tabindex="-1"></a>In the first case where we want to add a new variable derived from other variables in our table we'll typically be using <span class="in">`mutate()`</span> (from *dplyr* package). For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals' observation period start date. This is rather straightforward.</span>
+<span id="cb42-224"><a href="#cb42-224" aria-hidden="true" tabindex="-1"></a>In the first case where we want to add a new variable derived from other variables in our table we'll typically be using <span class="co">[</span><span class="ot">`mutate()`</span><span class="co">](dplyr.tidyverse.org/reference/mutate.html)</span> (from <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](dplyr.tidyverse.org)</span> package). For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals' observation period start date. This is rather straightforward.</span>
 <span id="cb42-225"><a href="#cb42-225" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-228"><a href="#cb42-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb42-229"><a href="#cb42-229" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span> </span>
@@ -1585,7 +1585,7 @@ FROM (
 <span id="cb42-311"><a href="#cb42-311" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-312"><a href="#cb42-312" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
 <span id="cb42-313"><a href="#cb42-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-314"><a href="#cb42-314" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">PatientProfiles package</span><span class="co">](https://darwin-eu-dev.github.io/PatientProfiles/)</span></span>
+<span id="cb42-314"><a href="#cb42-314" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Català M, Guo Y, Du M, Lopez-Guell K, Burn E, Mercade-Besora N (2025). *PatientProfiles: Identify Characteristics of Patients in the OMOP Common Data Model*. R package version 1.4.3, <span class="ot">&lt;https://darwin-eu.github.io/PatientProfiles/&gt;</span>.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

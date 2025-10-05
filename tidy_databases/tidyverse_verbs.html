@@ -249,6 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#tidyverse-functions" id="toc-tidyverse-functions" class="nav-link active" data-scroll-target="#tidyverse-functions"><span class="header-section-number">2.1</span> Tidyverse functions</a></li>
   <li><a href="#getting-to-an-analytic-dataset" id="toc-getting-to-an-analytic-dataset" class="nav-link" data-scroll-target="#getting-to-an-analytic-dataset"><span class="header-section-number">2.2</span> Getting to an analytic dataset</a></li>
   <li><a href="#disconnecting-from-the-database" id="toc-disconnecting-from-the-database" class="nav-link" data-scroll-target="#disconnecting-from-the-database"><span class="header-section-number">2.3</span> Disconnecting from the database</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">2.4</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
@@ -274,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>We saw in the previous chapter that we can use familiar <code>dplyr</code> verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we’ll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the <code>nycflights13</code> data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.</p>
+<p>We saw in the previous chapter that we can use familiar <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we’ll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the <a href="https://nycflights13.tidyverse.org"><code>nycflights13</code></a> data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.</p>
 <div id="fig-nycflights13" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nycflights13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -393,7 +394,7 @@ $ name    &lt;chr&gt; "Endeavor Air Inc.", "American Airlines Inc.", "Alaska Air
 </div>
 <section id="tidyverse-functions" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="tidyverse-functions"><span class="header-section-number">2.1</span> Tidyverse functions</h2>
-<p>For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from <code>dplyr</code>, but a couple also from the <code>tidyr</code> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</p>
+<p>For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a>, but a couple also from the <a href="https://tidyr.tidyverse.org"><code>tidyr</code></a> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -404,11 +405,11 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Until we use <code>compute()</code> or <code>collect()</code> (or printing the first few rows of the result) all we’re doing is translating R code into SQL. Which means no code is being executed in the database side.</p>
+<p>Until we use <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> or <a href="https://dplyr.tidyverse.org/reference/collect.html"><code>collect()</code></a> (or printing the first few rows of the result) all we’re doing is translating R code into SQL. Which means no code is being executed in the database side.</p>
 <ul>
-<li><p><code>compute()</code> will execute the query and store it in a new table in the database.</p></li>
-<li><p><code>collect()</code> will execute the query and bring the result back to R.</p></li>
-<li><p>printing (e.g.&nbsp;<code>glimpse()</code> or <code>print()</code>) will execute the query limiting the result to the first set of rows which leads to smaller computation time in the database side.</p></li>
+<li><p><a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> will execute the query and store it in a new table in the database.</p></li>
+<li><p><a href="https://dplyr.tidyverse.org/reference/collect.html"><code>collect()</code></a> will execute the query and bring the result back to R.</p></li>
+<li><p>printing (e.g.&nbsp;<a href="https://pillar.r-lib.org/reference/glimpse.html"><code>glimpse()</code></a> or <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/print"><code>print()</code></a>) will execute the query limiting the result to the first set of rows which leads to smaller computation time in the database side.</p></li>
 </ul>
 </div>
 </div>
@@ -480,7 +481,7 @@ Important
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>By using the above functions we can use the same code regardless of whether the data is held in the database or locally in R. This is because the functions used above are generic functions which behave differently depending on the type of input they are given. Let’s take <code>inner_join()</code> for example. We can see that this function is a S3 generic function (with S3 being the most common object-oriented system used in R).</p>
+<p>By using the above functions we can use the same code regardless of whether the data is held in the database or locally in R. This is because the functions used above are generic functions which behave differently depending on the type of input they are given. Let’s take <a href="https://dplyr.tidyverse.org/reference/mutate-joins.html"><code>inner_join()</code></a> for example. We can see that this function is a S3 generic function (with S3 being the most common object-oriented system used in R).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sloop)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ftype</span>(inner_join)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -500,7 +501,7 @@ Important
 <pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
 </div>
 </div>
-<p>We can see that <code>inner_join()</code> has different methods for <code>tbl_lazy</code> and <code>data.frame</code>.</p>
+<p>We can see that <a href="https://dplyr.tidyverse.org/reference/mutate-joins.html"><code>inner_join()</code></a> has different methods for <code>tbl_lazy</code> and <code>data.frame</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_methods_generic</span>(<span class="st">"inner_join"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -542,7 +543,7 @@ Important
 <section id="getting-to-an-analytic-dataset" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="getting-to-an-analytic-dataset"><span class="header-section-number">2.2</span> Getting to an analytic dataset</h2>
 <p>To see a little more on how we can use the above functions, let’s say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.</p>
-<p>For this we’ll first use the <code>filter()</code> and <code>select()</code> <code>dplyr</code> verbs to get the data from the flights table. Note, we’ll rename arr_delay to just delay.</p>
+<p>For this we’ll first use the <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> and <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>select()</code></a> <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> verbs to get the data from the flights table. Note, we’ll rename arr_delay to just delay.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> flights_db <span class="sc">|&gt;</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arr_delay) <span class="sc">&amp;</span> origin <span class="sc">==</span> <span class="st">"JFK"</span>) <span class="sc">|&gt;</span> </span>
@@ -602,7 +603,7 @@ WHERE (NOT((arr_delay IS NULL)) AND origin = 'JFK')</code></pre>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"tailnum"</span></span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note that our first query was not executed, as we didn’t use either <code>compute()</code> or <code>collect()</code>, so we’ll now have added our join to the original query.</p>
+<p>Note that our first query was not executed, as we didn’t use either <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> or <a href="https://dplyr.tidyverse.org/reference/collect.html"><code>collect()</code></a>, so we’ll now have added our join to the original query.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -677,6 +678,13 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(<span class="at">conn =</span> con)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="further-reading" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">2.4</span> Further reading</h2>
+<ul>
+<li><p>Wickham H, François R, Henry L, Müller K, Vaughan D (2025). <em>dplyr: A Grammar of Data Manipulation</em>. R package version 1.1.4, <a href="https://dplyr.tidyverse.org" class="uri">https://dplyr.tidyverse.org</a></p></li>
+<li><p>Wickham H, Vaughan D, Girlich M (2025). <em>tidyr: Tidy Messy Data</em>. R package version 1.3.1, <a href="https://tidyr.tidyverse.org" class="uri">https://tidyr.tidyverse.org</a>.</p></li>
+</ul>
 
 
 <!-- -->
@@ -1149,7 +1157,7 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Core verbs for analytic pipelines utilising a database {#sec-tidyverse_verbs}</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>We saw in the previous chapter that we can use familiar <span class="in">`dplyr`</span> verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we'll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the <span class="in">`nycflights13`</span> data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>We saw in the previous chapter that we can use familiar <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span> verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we'll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the <span class="co">[</span><span class="ot">`nycflights13`</span><span class="co">](https://nycflights13.tidyverse.org)</span> data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="al">![`nycflights13` relational diagram from &lt;https://collinn.github.io/teaching/2023/labs/joins.html&gt;.](../images/relational-01.png)</span>{#fig-nycflights13 .lightbox}</span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -1189,16 +1197,16 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tidyverse functions</span></span>
 <span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from <span class="in">`dplyr`</span>, but a couple also from the <span class="in">`tidyr`</span> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span>, but a couple also from the <span class="co">[</span><span class="ot">`tidyr`</span><span class="co">](https://tidyr.tidyverse.org)</span> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</span>
 <span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>Until we use <span class="in">`compute()`</span> or <span class="in">`collect()`</span> (or printing the first few rows of the result) all we're doing is translating R code into SQL. Which means no code is being executed in the database side.</span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>Until we use <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> or <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/collect.html)</span> (or printing the first few rows of the result) all we're doing is translating R code into SQL. Which means no code is being executed in the database side.</span>
 <span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`compute()`</span> will execute the query and store it in a new table in the database.</span>
+<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> will execute the query and store it in a new table in the database.</span>
 <span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`collect()`</span> will execute the query and bring the result back to R.</span>
+<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/collect.html)</span> will execute the query and bring the result back to R.</span>
 <span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>printing (e.g. <span class="in">`glimpse()`</span> or <span class="in">`print()`</span>) will execute the query limiting the result to the first set of rows which leads to smaller computation time in the database side.</span>
+<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>printing (e.g. <span class="co">[</span><span class="ot">`glimpse()`</span><span class="co">](https://pillar.r-lib.org/reference/glimpse.html)</span> or <span class="co">[</span><span class="ot">`print()`</span><span class="co">](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/print)</span>) will execute the query limiting the result to the first set of rows which leads to smaller computation time in the database side.</span>
 <span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Purpose                  <span class="pp">|</span> Functions                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <span class="pp">|</span> Description                                                                             <span class="pp">|</span></span>
@@ -1216,7 +1224,7 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-67"><a href="#cb34-67" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
 <span id="cb34-68"><a href="#cb34-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### Behind the scenes</span></span>
 <span id="cb34-69"><a href="#cb34-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-70"><a href="#cb34-70" aria-hidden="true" tabindex="-1"></a>By using the above functions we can use the same code regardless of whether the data is held in the database or locally in R. This is because the functions used above are generic functions which behave differently depending on the type of input they are given. Let's take <span class="in">`inner_join()`</span> for example. We can see that this function is a S3 generic function (with S3 being the most common object-oriented system used in R).</span>
+<span id="cb34-70"><a href="#cb34-70" aria-hidden="true" tabindex="-1"></a>By using the above functions we can use the same code regardless of whether the data is held in the database or locally in R. This is because the functions used above are generic functions which behave differently depending on the type of input they are given. Let's take <span class="co">[</span><span class="ot">`inner_join()`</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate-joins.html)</span> for example. We can see that this function is a S3 generic function (with S3 being the most common object-oriented system used in R).</span>
 <span id="cb34-71"><a href="#cb34-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-72"><a href="#cb34-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
 <span id="cb34-73"><a href="#cb34-73" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sloop)</span>
@@ -1230,7 +1238,7 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-81"><a href="#cb34-81" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(flights_db <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">collect</span>())</span>
 <span id="cb34-82"><a href="#cb34-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-83"><a href="#cb34-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-84"><a href="#cb34-84" aria-hidden="true" tabindex="-1"></a>We can see that <span class="in">`inner_join()`</span> has different methods for <span class="in">`tbl_lazy`</span> and <span class="in">`data.frame`</span>.</span>
+<span id="cb34-84"><a href="#cb34-84" aria-hidden="true" tabindex="-1"></a>We can see that <span class="co">[</span><span class="ot">`inner_join()`</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate-joins.html)</span> has different methods for <span class="in">`tbl_lazy`</span> and <span class="in">`data.frame`</span>.</span>
 <span id="cb34-85"><a href="#cb34-85" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-86"><a href="#cb34-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
 <span id="cb34-87"><a href="#cb34-87" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_methods_generic</span>(<span class="st">"inner_join"</span>)</span>
@@ -1255,7 +1263,7 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-106"><a href="#cb34-106" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a>To see a little more on how we can use the above functions, let's say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.</span>
 <span id="cb34-108"><a href="#cb34-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a>For this we'll first use the <span class="in">`filter()`</span> and <span class="in">`select()`</span> <span class="in">`dplyr`</span> verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.</span>
+<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a>For this we'll first use the <span class="co">[</span><span class="ot">`filter()`</span><span class="co">](https://dplyr.tidyverse.org/reference/filter.html)</span> and <span class="co">[</span><span class="ot">`select()`</span><span class="co">](https://dplyr.tidyverse.org/reference/filter.html)</span> <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span> verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.</span>
 <span id="cb34-110"><a href="#cb34-110" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
 <span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> flights_db <span class="sc">|&gt;</span> </span>
@@ -1290,7 +1298,7 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a>Note that our first query was not executed, as we didn't use either <span class="in">`compute()`</span> or <span class="in">`collect()`</span>, so we'll now have added our join to the original query.</span>
+<span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a>Note that our first query was not executed, as we didn't use either <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> or <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/collect.html)</span>, so we'll now have added our join to the original query.</span>
 <span id="cb34-145"><a href="#cb34-145" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-146"><a href="#cb34-146" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb34-147"><a href="#cb34-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
@@ -1324,6 +1332,12 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(<span class="at">conn =</span> con)</span>
 <span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-180"><a href="#cb34-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-181"><a href="#cb34-181" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
+<span id="cb34-182"><a href="#cb34-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-183"><a href="#cb34-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wickham H, François R, Henry L, Müller K, Vaughan D (2025). *dplyr: A Grammar of Data Manipulation*. R package version 1.1.4, <span class="ot">&lt;https://dplyr.tidyverse.org&gt;</span></span>
+<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wickham H, Vaughan D, Girlich M (2025). *tidyr: Tidy Messy Data*. R package version 1.3.1, <span class="ot">&lt;https://tidyr.tidyverse.org&gt;</span>.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

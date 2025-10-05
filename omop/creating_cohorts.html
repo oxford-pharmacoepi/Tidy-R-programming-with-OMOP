@@ -308,7 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="general-concept-based-cohort" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="general-concept-based-cohort"><span class="header-section-number">8.3</span> General concept based cohort</h2>
-<p>Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the <code>CohortConstructor</code> package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code 37311061.</p>
+<p>Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the <a href="https://ohdsi.github.io/CohortConstructor/"><code>CohortConstructor</code></a> package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code <a href="https://athena.ohdsi.org/search-terms/terms/37311061">37311061</a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(<span class="at">cdm =</span> cdm, </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">conceptSet =</span> <span class="fu">list</span>(<span class="st">"covid"</span> <span class="ot">=</span> <span class="dv">37311061</span>), </span>
@@ -316,19 +316,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_covid&gt; [?? x 4]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVVJXs5/file31734f1c4029.duckdb]
+# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5e21wo/file38b330d37a2c.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       1635 2020-07-14        2020-08-08     
- 2                    1       2000 2020-11-15        2020-12-10     
- 3                    1       4649 2021-09-08        2021-10-12     
- 4                    1       9822 2021-02-06        2021-02-25     
- 5                    1      10394 2020-11-29        2020-12-31     
- 6                    1        724 2020-11-21        2020-12-23     
- 7                    1        975 2021-03-03        2021-03-23     
- 8                    1       2802 2020-11-16        2020-12-23     
- 9                    1       4038 2020-07-09        2020-07-24     
-10                    1       7967 2021-01-19        2021-02-14     
+ 1                    1        250 2021-01-02        2021-01-18     
+ 2                    1        394 2020-04-09        2020-05-16     
+ 3                    1       6755 2020-04-09        2020-05-15     
+ 4                    1       7173 2020-12-02        2021-01-01     
+ 5                    1      10197 2020-05-16        2020-06-04     
+ 6                    1       5780 2020-11-20        2020-12-14     
+ 7                    1       6601 2020-06-07        2020-06-23     
+ 8                    1       7616 2020-07-30        2020-08-14     
+ 9                    1       7837 2021-01-31        2021-02-21     
+10                    1       3226 2020-06-14        2020-07-11     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -386,7 +386,7 @@ cdm[['not_covid']] &lt;- yourObject |&gt;
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In the defining the cohorts above we have needed to provide concept IDs to define our cohort. But, where do these come from?</p>
-<p>We can search for codes of interest using the <code>CodelistGenerator</code> package. This can be done using a text search with the function <code>CodelistGenerator::getCandidateCodes()</code>. For example, we can have found the code we used above (and many others) like so:</p>
+<p>We can search for codes of interest using the <a href="https://darwin-eu.github.io/CodelistGenerator/"><code>CodelistGenerator</code></a> package. This can be done using a text search with the function <a href="https://darwin-eu.github.io/CodelistGenerator/reference/getCandidateCodes.html"><code>getCandidateCodes()</code></a>. For example, we can have found the code we used above (and many others) like so:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CodelistGenerator)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getCandidateCodes</span>(<span class="at">cdm =</span> cdm, </span>
@@ -410,12 +410,12 @@ Time taken: 0 minutes and 1 seconds</code></pre>
  2    3661885 From initia… Fever cause… Condition SNOMED        S               
  3   37310286 From initia… Infection o… Condition SNOMED        S               
  4     703447 From initia… High risk c… Condition SNOMED        S               
- 5    3661406 From initia… Acute respi… Condition SNOMED        S               
- 6   37016927 From initia… Pneumonia c… Condition SNOMED        S               
- 7    1340294 From initia… Exacerbatio… Condition OMOP Extensi… S               
- 8    3661631 From initia… Lymphocytop… Condition SNOMED        S               
- 9    3661632 From initia… Thrombocyto… Condition SNOMED        S               
-10    3655973 From initia… At increase… Condition SNOMED        S               
+ 5    3661631 From initia… Lymphocytop… Condition SNOMED        S               
+ 6    3661632 From initia… Thrombocyto… Condition SNOMED        S               
+ 7    3655973 From initia… At increase… Condition SNOMED        S               
+ 8    3661406 From initia… Acute respi… Condition SNOMED        S               
+ 9   37016927 From initia… Pneumonia c… Condition SNOMED        S               
+10    1340294 From initia… Exacerbatio… Condition OMOP Extensi… S               
 # ℹ 27 more rows</code></pre>
 </div>
 </div>
@@ -531,7 +531,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0</code></pre>
 [5] "cohort_set"       "cohort_attrition" "cohort_codelist"  "cdm_reference"   </code></pre>
 </div>
 </div>
-<p>In particular the <code>cohort_set</code> (contains the <code>settings()</code> source), <code>cohort_attrition</code> (contains the source for <code>cohortCount()</code> and <code>attrition()</code>) and <code>cohort_codelist</code> (contains the source for <code>cohortCodelist()</code>) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table ‘cdm$covid’ in fact four tables were written in the database:</p>
+<p>In particular the <code>cohort_set</code> (contains the <a href="https://darwin-eu.github.io/omopgenerics/reference/settings.html"><code>settings()</code></a> source), <code>cohort_attrition</code> (contains the source for <a href="https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html"><code>cohortCount()</code></a> and <a href="https://darwin-eu.github.io/omopgenerics/reference/attrition.html"><code>attrition()</code></a>) and <code>cohort_codelist</code> (contains the source for <a href="https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html"><code>cohortCodelist()</code></a>) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table ‘cdm$covid’ in fact four tables were written in the database:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> https://github.com/OHDSI/omock/issues/189 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -548,7 +548,7 @@ Attaching package: 'omopgenerics'</code></pre>
 <pre><code>[1] "covid"           "covid_attrition" "covid_codelist"  "covid_set"      </code></pre>
 </div>
 </div>
-<p>We do not have to worry about the attributes and the naming of the tables as CohortConstructor, CDMConnector and omopgenerics take care of that and if we create the cohorts with functions such as <code>conceptCohort()</code> then we will be able to read them back with the <code>cohortTables</code> argument of <code>cdmFromCon()</code> or the <code>readSourceTable()</code> function and all the attributes will be in place.</p>
+<p>We do not have to worry about the attributes and the naming of the tables as <code>CohortConstructor</code>, <code>CDMConnector</code> and <code>omopgenerics</code> take care of that and if we create the cohorts with functions such as <code>conceptCohort()</code> then we will be able to read them back with the <code>cohortTables</code> argument of <code>cdmFromCon()</code> or the <code>readSourceTable()</code> function and all the attributes will be in place.</p>
 </div>
 </div>
 </div>
@@ -608,19 +608,19 @@ Attaching package: 'omopgenerics'</code></pre>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_cardiac&gt; [?? x 4]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVVJXs5/file31734f1c4029.duckdb]
+# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5e21wo/file38b330d37a2c.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       1808 2020-04-21        2020-04-21     
- 2                    1       1874 2003-12-30        2003-12-30     
- 3                    1       2229 2007-04-13        2007-04-13     
- 4                    1       2406 2009-09-10        2009-09-10     
- 5                    1       4361 2020-07-10        2020-07-10     
- 6                    1       4415 1987-08-05        1987-08-05     
- 7                    1       4928 2020-07-26        2020-07-26     
- 8                    1       5983 1980-10-01        1980-10-01     
- 9                    1       7549 2017-07-31        2017-07-31     
-10                    1      10078 2019-06-24        2019-06-24     
+ 1                    1        785 2021-02-12        2021-02-12     
+ 2                    1       1813 1995-08-05        1995-08-05     
+ 3                    1       2371 2005-07-17        2005-07-17     
+ 4                    1       3384 2019-07-02        2019-07-02     
+ 5                    1       3802 2020-10-03        2020-10-03     
+ 6                    1       3903 2007-01-11        2007-01-11     
+ 7                    1       4073 1985-01-19        1985-01-19     
+ 8                    1       7094 1964-02-15        1964-02-15     
+ 9                    1       7145 1987-02-02        1987-02-02     
+10                    1       7833 1958-04-02        1958-04-02     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -793,7 +793,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13<
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 5
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVVJXs5/file31734f1c4029.duckdb]
+Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5e21wo/file38b330d37a2c.duckdb]
 $ cohort_definition_id &lt;int&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
 $ subject_id           &lt;int&gt; 71, 82, 134, 151, 153, 183, 194, 196, 200, 215, 2…
 $ cohort_start_date    &lt;date&gt; 1936-01-24, 1997-08-04, 2001-01-09, 2022-01-13, …
@@ -844,7 +844,8 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <section id="further-reading" class="level2" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">8.7</span> Further reading</h2>
 <ul>
-<li><a href="https://darwin-eu.github.io/omopgenerics/articles/cohorts.html">Cohort tables</a></li>
+<li><p><a href="https://darwin-eu.github.io/omopgenerics/articles/cohorts.html">Cohort tables</a></p></li>
+<li><p>Burn E, Català M, Mercade-Besora N, Alcalde-Herraiz M, Du M, Guo Y, Chen X, Lopez-Guell K, Rowlands E (2025). <em>CohortConstructor: Build and Manipulate Study Cohorts Using a Common Data Model</em>. R package version 0.5.0, <a href="https://ohdsi.github.io/CohortConstructor/" class="uri">https://ohdsi.github.io/CohortConstructor/</a>.</p></li>
 </ul>
 
 
@@ -1351,7 +1352,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-33"><a href="#cb71-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-34"><a href="#cb71-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## General concept based cohort</span></span>
 <span id="cb71-35"><a href="#cb71-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-36"><a href="#cb71-36" aria-hidden="true" tabindex="-1"></a>Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the <span class="in">`CohortConstructor`</span> package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code 37311061.</span>
+<span id="cb71-36"><a href="#cb71-36" aria-hidden="true" tabindex="-1"></a>Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the <span class="co">[</span><span class="ot">`CohortConstructor`</span><span class="co">](https://ohdsi.github.io/CohortConstructor/)</span> package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code <span class="co">[</span><span class="ot">37311061</span><span class="co">](https://athena.ohdsi.org/search-terms/terms/37311061)</span>.</span>
 <span id="cb71-37"><a href="#cb71-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-38"><a href="#cb71-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb71-39"><a href="#cb71-39" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(<span class="at">cdm =</span> cdm, </span>
@@ -1377,7 +1378,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-59"><a href="#cb71-59" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-60"><a href="#cb71-60" aria-hidden="true" tabindex="-1"></a>In the defining the cohorts above we have needed to provide concept IDs to define our cohort. But, where do these come from?</span>
 <span id="cb71-61"><a href="#cb71-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-62"><a href="#cb71-62" aria-hidden="true" tabindex="-1"></a>We can search for codes of interest using the <span class="in">`CodelistGenerator`</span> package. This can be done using a text search with the function <span class="in">`CodelistGenerator::getCandidateCodes()`</span>. For example, we can have found the code we used above (and many others) like so:</span>
+<span id="cb71-62"><a href="#cb71-62" aria-hidden="true" tabindex="-1"></a>We can search for codes of interest using the <span class="co">[</span><span class="ot">`CodelistGenerator`</span><span class="co">](https://darwin-eu.github.io/CodelistGenerator/)</span> package. This can be done using a text search with the function <span class="co">[</span><span class="ot">`getCandidateCodes()`</span><span class="co">](https://darwin-eu.github.io/CodelistGenerator/reference/getCandidateCodes.html)</span>. For example, we can have found the code we used above (and many others) like so:</span>
 <span id="cb71-63"><a href="#cb71-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-66"><a href="#cb71-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb71-67"><a href="#cb71-67" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CodelistGenerator)</span>
@@ -1450,14 +1451,14 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-142"><a href="#cb71-142" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">attributes</span>(cdm<span class="sc">$</span>covid))</span>
 <span id="cb71-143"><a href="#cb71-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-144"><a href="#cb71-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-145"><a href="#cb71-145" aria-hidden="true" tabindex="-1"></a>In particular the <span class="in">`cohort_set`</span> (contains the <span class="in">`settings()`</span> source), <span class="in">`cohort_attrition`</span> (contains the source for <span class="in">`cohortCount()`</span> and <span class="in">`attrition()`</span>) and <span class="in">`cohort_codelist`</span> (contains the source for <span class="in">`cohortCodelist()`</span>) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table 'cdm\$covid' in fact four tables were written in the database:</span>
+<span id="cb71-145"><a href="#cb71-145" aria-hidden="true" tabindex="-1"></a>In particular the <span class="in">`cohort_set`</span> (contains the <span class="co">[</span><span class="ot">`settings()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/settings.html)</span> source), <span class="in">`cohort_attrition`</span> (contains the source for <span class="co">[</span><span class="ot">`cohortCount()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html)</span> and <span class="co">[</span><span class="ot">`attrition()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)</span>) and <span class="in">`cohort_codelist`</span> (contains the source for <span class="co">[</span><span class="ot">`cohortCodelist()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)</span>) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table 'cdm\$covid' in fact four tables were written in the database:</span>
 <span id="cb71-146"><a href="#cb71-146" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-149"><a href="#cb71-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb71-150"><a href="#cb71-150" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> https://github.com/OHDSI/omock/issues/189 </span></span>
 <span id="cb71-151"><a href="#cb71-151" aria-hidden="true" tabindex="-1"></a><span class="fu">listSourceTables</span>(<span class="at">cdm =</span> cdm)</span>
 <span id="cb71-152"><a href="#cb71-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-153"><a href="#cb71-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-154"><a href="#cb71-154" aria-hidden="true" tabindex="-1"></a>We do not have to worry about the attributes and the naming of the tables as CohortConstructor, CDMConnector and omopgenerics take care of that and if we create the cohorts with functions such as <span class="in">`conceptCohort()`</span> then we will be able to read them back with the <span class="in">`cohortTables`</span> argument of <span class="in">`cdmFromCon()`</span> or the <span class="in">`readSourceTable()`</span> function and all the attributes will be in place.</span>
+<span id="cb71-154"><a href="#cb71-154" aria-hidden="true" tabindex="-1"></a>We do not have to worry about the attributes and the naming of the tables as <span class="in">`CohortConstructor`</span>, <span class="in">`CDMConnector`</span> and <span class="in">`omopgenerics`</span> take care of that and if we create the cohorts with functions such as <span class="in">`conceptCohort()`</span> then we will be able to read them back with the <span class="in">`cohortTables`</span> argument of <span class="in">`cdmFromCon()`</span> or the <span class="in">`readSourceTable()`</span> function and all the attributes will be in place.</span>
 <span id="cb71-155"><a href="#cb71-155" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb71-156"><a href="#cb71-156" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-157"><a href="#cb71-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Applying inclusion criteria</span></span>
@@ -1630,6 +1631,8 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-336"><a href="#cb71-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
 <span id="cb71-337"><a href="#cb71-337" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-338"><a href="#cb71-338" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Cohort tables</span><span class="co">](https://darwin-eu.github.io/omopgenerics/articles/cohorts.html)</span></span>
+<span id="cb71-339"><a href="#cb71-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-340"><a href="#cb71-340" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Burn E, Català M, Mercade-Besora N, Alcalde-Herraiz M, Du M, Guo Y, Chen X, Lopez-Guell K, Rowlands E (2025). *CohortConstructor: Build and Manipulate Study Cohorts Using a Common Data Model*. R package version 0.5.0, <span class="ot">&lt;https://ohdsi.github.io/CohortConstructor/&gt;</span>.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

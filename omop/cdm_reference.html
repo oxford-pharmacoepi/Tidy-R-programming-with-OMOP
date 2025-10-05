@@ -301,8 +301,8 @@ Figure&nbsp;5.1: OMOP CDM v5.4 entity-relationship diagram retrieved from <a hre
 </section>
 <section id="creating-a-reference-to-the-omop-cdm" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="creating-a-reference-to-the-omop-cdm"><span class="header-section-number">5.2</span> Creating a reference to the OMOP CDM</h2>
-<p>As we saw in <a href="../tidy_databases/data_model.html" class="quarto-xref"><span>Chapter 4</span></a>, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipelines using the data. Luckily for us, we won’t have to create functions and methods for this ourselves. Instead, we will use the <code>omopgenerics</code> package which defines a data model for OMOP CDM data and the <code>CDMConnector</code> package which provides functions for connecting to a OMOP CDM data held in a database.</p>
-<p>To see how this works we will use the <code>omock</code> package to create example data in the format of the OMOP CDM, which we will then copy to a DuckDB database created by the <code>duckdb</code> package.</p>
+<p>As we saw in <a href="../tidy_databases/data_model.html" class="quarto-xref"><span>Chapter 4</span></a>, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipelines using the data. Luckily for us, we won’t have to create functions and methods for this ourselves. Instead, we will use the <a href="darwin-eu.github.io/omopgenerics"><code>omopgenerics</code></a> package which defines a data model for OMOP CDM data and the <a href="darwin-eu.github.io/CDMConnector"><code>CDMConnector</code></a> package which provides functions for connecting to a OMOP CDM data held in a database.</p>
+<p>To see how this works we will use the <a href="ohdsi.github.io/omock"><code>omock</code></a> package to create example data in the format of the OMOP CDM, which we will then copy to a DuckDB database created by the <a href="https://r.duckdb.org"><code>duckdb</code></a> package.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -325,7 +325,7 @@ Figure&nbsp;5.1: OMOP CDM v5.4 entity-relationship diagram retrieved from <a hre
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">insertCdmTo</span>(<span class="at">cdm =</span> cdm_local, <span class="at">to =</span> src)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note that <code>insertCdmTo()</code> output is already a <code>&lt;cdm_reference&gt;</code> object. But how we would create this cdm reference from the connection? We can use the function <code>cdmFromCon()</code> from <code>CDMConnector</code> to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we’ll have another schema where we can have write-access and where intermediate tables can be created for a given study.</p>
+<p>Note that <a href="https://darwin-eu.github.io/omopgenerics/reference/insertCdmTo.html"><code>insertCdmTo()</code></a> output is already a <code>&lt;cdm_reference&gt;</code> object. But how we would create this cdm reference from the connection? We can use the function <a href="https://darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html"><code>cdmFromCon()</code></a> from <a href="https://darwin-eu.github.io/CDMConnector/"><code>CDMConnector</code></a> to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we’ll have another schema where we can have write-access and where intermediate tables can be created for a given study.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> con, </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
@@ -388,16 +388,16 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    person_id gender_concept_id year_of_birth month_of_birth day_of_birth
        &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
- 1         1              8507          1952              6            8
- 2         2              8507          1986              9           27
- 3         3              8507          1977              4            1
- 4         4              8532          2000              1           14
- 5         5              8507          1998             11           23
- 6         6              8507          1977             11           25
- 7         7              8507          1970             10           28
- 8         8              8507          1972              2           17
- 9         9              8507          1971              9           14
-10        10              8532          1964              6           26
+ 1         1              8532          1950              7            9
+ 2         2              8507          1998              5           14
+ 3         3              8507          1994              4            4
+ 4         4              8532          1972              9            1
+ 5         5              8507          1981              6            4
+ 6         6              8532          1952              1           28
+ 7         7              8507          1959              7           12
+ 8         8              8532          1965              4           22
+ 9         9              8507          1952              9           20
+10        10              8507          1999             12            8
 # ℹ more rows
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
@@ -412,29 +412,29 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    observation_period_id person_id observation_period_s…¹ observation_period_e…²
                    &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
- 1                     1         1 1993-09-03             1994-06-15            
- 2                     2         2 2017-07-19             2018-06-09            
- 3                     3         3 2013-08-02             2017-09-11            
- 4                     4         4 2006-08-07             2017-02-04            
- 5                     5         5 2002-10-11             2014-12-09            
- 6                     6         6 2018-11-29             2019-04-20            
- 7                     7         7 2015-09-12             2016-05-09            
- 8                     8         8 1992-03-11             2013-02-18            
- 9                     9         9 2019-02-10             2019-07-16            
-10                    10        10 1971-11-05             1996-09-06            
+ 1                     1         1 1957-04-07             1992-02-04            
+ 2                     2         2 2016-08-26             2019-06-04            
+ 3                     3         3 2004-10-18             2015-04-13            
+ 4                     4         4 2019-06-23             2019-12-10            
+ 5                     5         5 1992-10-02             2006-03-05            
+ 6                     6         6 1975-07-07             2018-08-22            
+ 7                     7         7 1984-12-10             1998-03-05            
+ 8                     8         8 1980-05-26             1992-06-19            
+ 9                     9         9 2004-12-25             2011-07-13            
+10                    10        10 2011-03-25             2015-03-05            
 # ℹ more rows
 # ℹ abbreviated names: ¹​observation_period_start_date,
 #   ²​observation_period_end_date
 # ℹ 1 more variable: period_type_concept_id &lt;int&gt;</code></pre>
 </div>
 </div>
-<p>Note that here we have first created a local version of the cdm with all the tables of interest with <code>omock</code> (<code>cdm_local</code>), then copied it to a DuckDB database, and finally crated a reference to it with <code>CDMConnector</code>, so that we can work with the final <code>cdm</code> object as we normally would for one created with our own healthcare data. In that case we would directly use <code>cdmFromCon</code> with our own database information. Throughout this chapter, however, we will keep working with the mock dataset.</p>
+<p>Note that here we have first created a local version of the cdm with all the tables of interest with <a href="ohdsi.github.io/omock/"><code>omock</code></a> (<code>cdm_local</code>), then copied it to a DuckDB database, and finally crated a reference to it with <a href="darwin-eu.github.io/CDMConnector"><code>CDMConnector</code></a>, so that we can work with the final <code>cdm</code> object as we normally would for one created with our own healthcare data. In that case we would directly use <a href="darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html"><code>cdmFromCon()</code></a> with our own database information. Throughout this chapter, however, we will keep working with the mock dataset.</p>
 </section>
 <section id="cdm-attributes" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="cdm-attributes"><span class="header-section-number">5.3</span> CDM attributes</h2>
 <section id="cdm-name" class="level3" data-number="5.3.1">
 <h3 data-number="5.3.1" class="anchored" data-anchor-id="cdm-name"><span class="header-section-number">5.3.1</span> CDM name</h3>
-<p>Our cdm reference will be associated with a name. By default this name will be taken from the <code>cdm_source_name</code> field from the <code>cdm_source</code> table. We will use the function <code>cdmName</code> from <code>omopgenerics</code> to get it.</p>
+<p>Our cdm reference will be associated with a name. By default this name will be taken from the <code>cdm_source_name</code> field from the <code>cdm_source</code> table. We will use the function <a href="darwin-eu.github.io/omopgenerics/reference/cdmName.html"><code>cdmName()</code></a> from <a href="darwin-eu.github.io/omopgenerics/"><code>omopgenerics</code></a> to get it.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> con,</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
@@ -527,7 +527,7 @@ visit_occurrence, vocabulary</code></pre>
 </section>
 <section id="cdm-version" class="level3" data-number="5.3.2">
 <h3 data-number="5.3.2" class="anchored" data-anchor-id="cdm-version"><span class="header-section-number">5.3.2</span> CDM version</h3>
-<p>We can also easily check the OMOP CDM version that is being used with the function <code>cdmVersion</code> from <code>omopgenerics</code> like so:</p>
+<p>We can also easily check the OMOP CDM version that is being used with the function <a href="darwin-eu.github.io/omopgenerics/reference/cdmVersion.html"><code>cdmVersion()</code></a> from <a href="darwin-eu.github.io/omopgenerics"><code>omopgenerics</code></a> like so:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -568,7 +568,7 @@ visit_occurrence, vocabulary</code></pre>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Although as stated the <code>cdmName()</code> and <code>cdmVersion()</code> functions are defined by the omopgenerics packages, these functions are reexported in other packages and you won’t need to load omopgenerics explicitly.</p>
+<p>Although as stated the <a href="darwin-eu.github.io/omopgenerics/reference/cdmName.html"><code>cdmName()</code></a> and <a href="darwin-eu.github.io/omopgenerics/reference/cdmVersion.html"><code>cdmVersion()</code></a> functions are defined by the omopgenerics packages, these functions are reexported in other packages and you won’t need to load omopgenerics explicitly.</p>
 </div>
 </div>
 </div>
@@ -576,7 +576,7 @@ visit_occurrence, vocabulary</code></pre>
 </section>
 <section id="including-cohort-tables-in-the-cdm-reference" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="including-cohort-tables-in-the-cdm-reference"><span class="header-section-number">5.4</span> Including cohort tables in the cdm reference</h2>
-<p>A <a href="TODO citation">cohort</a> is a fundamental piece in epidemiological studies, later we’ll see how to create cohorts in more detail in <a href="creating_cohorts.html" class="quarto-xref"><span>Chapter 8</span></a>. For the moment, let’s just outline how we can include the reference to an existing cohort in our cdm reference. For this we’ll use <code>omock</code> to add a cohort to our local cdm and upload that to a DuckDB database again.</p>
+<p>A <a href="https://doi.org/10.1016/j.chest.2020.03.014">cohort</a> is a fundamental piece in epidemiological studies, later we’ll see how to create cohorts in more detail in <a href="creating_cohorts.html" class="quarto-xref"><span>Chapter 8</span></a>. For the moment, let’s just outline how we can include the reference to an existing cohort in our cdm reference. For this we’ll use <a href="ohdsi.github.io/omock"><code>omock</code></a> to add a cohort to our local cdm and upload that to a DuckDB database again.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cdm_local <span class="ot">&lt;-</span> cdm_local <span class="sc">|&gt;</span> </span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mockCohort</span>(<span class="at">name =</span> <span class="st">"my_study_cohort"</span>)</span>
@@ -601,9 +601,9 @@ visit_occurrence, vocabulary</code></pre>
 Columns: 4
 Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ subject_id           &lt;int&gt; 1, 2, 4, 6, 6, 6, 7, 8, 8, 9, 11, 11, 11, 12, 12,…
-$ cohort_start_date    &lt;date&gt; 1994-05-28, 2018-04-13, 2013-03-29, 2019-01-10, …
-$ cohort_end_date      &lt;date&gt; 1994-06-01, 2018-04-15, 2015-03-26, 2019-02-18, …</code></pre>
+$ subject_id           &lt;int&gt; 1, 2, 2, 3, 3, 6, 6, 6, 9, 9, 9, 10, 10, 10, 13, …
+$ cohort_start_date    &lt;date&gt; 1968-08-22, 2016-09-26, 2017-05-30, 2006-06-04, …
+$ cohort_end_date      &lt;date&gt; 1983-10-10, 2017-05-29, 2019-03-07, 2010-08-28, …</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -663,14 +663,14 @@ visit_occurrence, vocabulary</code></pre>
 [19] "vocabulary"               </code></pre>
 </div>
 </div>
-<p>By default only the default omop tables <code>omopTables()</code> will be included (if they exists) into the cdm_reference object.</p>
+<p>By default only the default omop tables <a href="darwin-eu.github.io/omopgenerics/reference/omopTables.html"><code>omopTables()</code></a> will be included (if they exists) into the cdm_reference object.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="including-achilles-tables-in-the-cdm-reference" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="including-achilles-tables-in-the-cdm-reference"><span class="header-section-number">5.5</span> Including achilles tables in the cdm reference</h2>
-<p>If we have the results tables from the <a href="https://ohdsi.github.io/Achilles/">Achilles R package</a> in our database, we can also include these in our cdm reference.</p>
+<p>If we have the results tables from the <a href="ohdsi.github.io/Achilles/"><code>Achilles</code></a> package in our database, we can also include these in our cdm reference.</p>
 <p>Just to show how this can be done let’s upload some empty results tables in the Achilles format.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(<span class="at">conn =</span> con, </span>
@@ -725,11 +725,11 @@ visit_occurrence, vocabulary</code></pre>
 <span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmName =</span> <span class="st">"example_data"</span>)</span>
 <span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note we specified the <code>achillesSchema</code> that in this case is the same than the <code>writeSchema</code> and <code>cdmSchema</code>, but each one of them can be different and point to a separate <a href="TODO add citation">schema</a>.</p>
+<p>Note we specified the <code>achillesSchema</code> that in this case is the same than the <code>writeSchema</code> and <code>cdmSchema</code>, but each one of them can be different and point to a separate <a href="https://www.geeksforgeeks.org/dbms/database-schemas/">schema</a> in our database.</p>
 </section>
 <section id="adding-other-tables-to-the-cdm-reference" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="adding-other-tables-to-the-cdm-reference"><span class="header-section-number">5.6</span> Adding other tables to the cdm reference</h2>
-<p>Let’s say we have some additional <strong>local</strong> data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using <code>insertTable</code> from <code>omopgenerics</code> (<code>insertTable</code> is also re-exported in <code>CDMConnector</code>). We will show this with the dataset <code>cars</code> in-built in R.</p>
+<p>Let’s say we have some additional <strong>local</strong> data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using <a href="darwin-eu.github.io/omopgenerics/reference/insertTable.html"><code>insertTable()</code></a> from <a href="darwin-eu.github.io/omopgenerics/"><code>omopgenerics</code></a> (<a href="darwin-eu.github.io/omopgenerics/reference/insertTable.html"><code>insertTable()</code></a> is also re-exported in <a href="darwin-eu.github.io/CDMConnector/"><code>CDMConnector</code></a>). We will show this with the dataset <code>cars</code> in-built in R.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>cars <span class="sc">|&gt;</span> </span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -792,7 +792,7 @@ visit_occurrence, vocabulary</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(<span class="at">conn =</span> con, <span class="at">name =</span> <span class="st">"penguins"</span>, <span class="at">value =</span> penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Once we have this table in the database, we can just read it using the <code>readSourceTable()</code> function.</p>
+<p>Once we have this table in the database, we can just read it using the <a href="darwin-eu.github.io/omopgenerics/reference/readSourceTable.html"><code>readSourceTable()</code></a> function.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">readSourceTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"penguins"</span>)</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -819,7 +819,7 @@ visit_occurrence, vocabulary</code></pre>
 <pre><code>• other tables: cars, penguins</code></pre>
 </div>
 </div>
-<p>Note that omopgenerics provide these functions readSourceTable, listSourceTables, and dropSourcTables for the easier management of the tables in the writeSchema.</p>
+<p>Note that omopgenerics provide these functions <a href="darwin-eu.github.io/omopgenerics/reference/readSourceTable.html"><code>readSourceTable()</code></a>, <a href="darwin-eu.github.io/omopgenerics/reference/listSourceTables.html"><code>listSourceTables()</code></a>, and <a href="darwin-eu.github.io/omopgenerics/reference/dropSourceTable.html"><code>dropSourceTable()</code></a> for the easier management of the tables in the writeSchema.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">listSourceTables</span>(<span class="at">cdm =</span> cdm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -866,11 +866,11 @@ visit_occurrence, vocabulary</code></pre>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li><p><code>dbWriteTable</code> is a function from the <code>DBI</code> package that writes a local R data frame to a database. You need to manually specify the schema and table name and it does not update the cdm reference object.</p></li>
-<li><p><code>insertTable</code> is a function from the <code>omopgenerics</code> package designed for use with cdm reference objects. It writes a local table to the database and adds it to the list of tables in the cdm reference. Internally, it uses <code>dbWriteTable</code> but also handles the schema and table name automatically using the writeSchema and writePrefix from the cdm reference.</p></li>
+<li><p><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html"><code>dbWriteTable()</code></a> is a function from the <code>DBI</code> package that writes a local R data frame to a database. You need to manually specify the schema and table name and it does not update the cdm reference object.</p></li>
+<li><p><a href="darwin-eu.github.io/omopgenerics/reference/insertTable.html"><code>insertTable()</code></a> is a function from the <a href="darwin-eu.github.io/omopgenerics"><code>omopgenerics</code></a> package designed for use with cdm reference objects. It writes a local table to the database and adds it to the list of tables in the cdm reference. Internally, it uses <a href="https://dbi.r-dbi.org/reference/dbWriteTable.html"><code>dbWriteTable()</code></a> but also handles the schema and table name automatically using the writeSchema and writePrefix from the cdm reference.</p></li>
 </ul>
-<p>In general, for studies using OMOP CDM data, you should use <code>insertTable</code> rather than <code>dbWriteTable.</code> It ensures the table is both written to the correct location in the database and accessible through the cdm reference object. Only use <code>dbWriteTable</code> if you are confident working directly with the database and understand its structure.</p>
-<p>Note <code>insertTable</code> would also work for a local cdm reference or any other defined cdm reference source, whereas the <code>dbWriteTable</code> is a database specific function.</p>
+<p>In general, for studies using OMOP CDM data, you should use <code>insertTable()</code> rather than <code>dbWriteTable()</code>. It ensures the table is both written to the correct location in the database and accessible through the cdm reference object. Only use <code>dbWriteTable()</code> if you are confident working directly with the database and understand its structure.</p>
+<p>Note <code>insertTable()</code> would also work for a local cdm reference or any other defined cdm reference source, whereas the <code>dbWriteTable()</code> is a database specific function.</p>
 <p>TODO reference to omopgenerics supported sources.</p>
 </div>
 </div>
@@ -890,9 +890,8 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         7              8507          1970             10           28
-2        17              8507          1970             10           20
-3        78              8532          1970              6           12
+1        34              8507          1970              3           25
+2        85              8532          1970              8            4
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -910,7 +909,7 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
       n
   &lt;dbl&gt;
-1     3</code></pre>
+1     2</code></pre>
 </div>
 </div>
 <p>The original OMOP CDM data itself however will remain unaffected. We can see that, indeed, if we create our reference again the underlying data is unchanged.</p>
@@ -1019,15 +1018,15 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   table&lt;og_001_1759397324&gt; [?? x 18]
+<pre><code># Source:   table&lt;og_001_1759688497&gt; [?? x 18]
 # Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         1              8507          1952              6            8
-2         2              8507          1986              9           27
-3         3              8507          1977              4            1
-4         4              8532          2000              1           14
-5         5              8507          1998             11           23
+1         1              8532          1950              7            9
+2         2              8507          1998              5           14
+3         3              8507          1994              4            4
+4         4              8532          1972              9            1
+5         5              8507          1981              6            4
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -1041,11 +1040,11 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 # Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         1              8507          1952              6            8
-2         2              8507          1986              9           27
-3         3              8507          1977              4            1
-4         4              8532          2000              1           14
-5         5              8507          1998             11           23
+1         1              8532          1950              7            9
+2         2              8507          1998              5           14
+3         3              8507          1994              4            4
+4         4              8532          1972              9            1
+5         5              8507          1981              6            4
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -1090,8 +1089,8 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <section id="further-reading" class="level2" data-number="5.10">
 <h2 data-number="5.10" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">5.10</span> Further reading</h2>
 <ul>
-<li><a href="https://darwin-eu.github.io/omopgenerics">omopgenerics package</a></li>
-<li><a href="https://darwin-eu.github.io/CDMConnector">CDMConnector package</a></li>
+<li>Català M, Burn E (2025). <em>omopgenerics: Methods and Classes for thecOMOP Common Data Model</em>. R package version 1.3.1, <a href="https://darwin-eu.github.io/omopgenerics/" class="uri">https://darwin-eu.github.io/omopgenerics/</a>.</li>
+<li>Black A, Gorbachev A, Burn E, Català M, Nika I (2025). CDMConnector: Connect to an OMOP Common Data Model. R package version 2.2.0, <a href="https://darwin-eu.github.io/CDMConnector/" class="uri">https://darwin-eu.github.io/CDMConnector/</a>.</li>
 <li>OmopOnPostgres (<em>in progress</em>)</li>
 <li>OmopOnSpark (<em>in progress</em>)</li>
 <li>OmopOnDuckDB (<em>in progress</em>)</li>
@@ -1576,9 +1575,9 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating a reference to the OMOP CDM</span></span>
 <span id="cb100-10"><a href="#cb100-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-11"><a href="#cb100-11" aria-hidden="true" tabindex="-1"></a>As we saw in @sec-data_model, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipelines using the data. Luckily for us, we won't have to create functions and methods for this ourselves. Instead, we will use the <span class="in">`omopgenerics`</span> package which defines a data model for OMOP CDM data and the <span class="in">`CDMConnector`</span> package which provides functions for connecting to a OMOP CDM data held in a database.</span>
+<span id="cb100-11"><a href="#cb100-11" aria-hidden="true" tabindex="-1"></a>As we saw in @sec-data_model, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipelines using the data. Luckily for us, we won't have to create functions and methods for this ourselves. Instead, we will use the <span class="co">[</span><span class="ot">`omopgenerics`</span><span class="co">](darwin-eu.github.io/omopgenerics)</span> package which defines a data model for OMOP CDM data and the <span class="co">[</span><span class="ot">`CDMConnector`</span><span class="co">](darwin-eu.github.io/CDMConnector)</span> package which provides functions for connecting to a OMOP CDM data held in a database.</span>
 <span id="cb100-12"><a href="#cb100-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-13"><a href="#cb100-13" aria-hidden="true" tabindex="-1"></a>To see how this works we will use the <span class="in">`omock`</span> package to create example data in the format of the OMOP CDM, which we will then copy to a DuckDB database created by the <span class="in">`duckdb`</span> package.</span>
+<span id="cb100-13"><a href="#cb100-13" aria-hidden="true" tabindex="-1"></a>To see how this works we will use the <span class="co">[</span><span class="ot">`omock`</span><span class="co">](ohdsi.github.io/omock)</span> package to create example data in the format of the OMOP CDM, which we will then copy to a DuckDB database created by the <span class="co">[</span><span class="ot">`duckdb`</span><span class="co">](https://r.duckdb.org)</span> package.</span>
 <span id="cb100-14"><a href="#cb100-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-15"><a href="#cb100-15" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
 <span id="cb100-16"><a href="#cb100-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
@@ -1603,7 +1602,7 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-35"><a href="#cb100-35" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">insertCdmTo</span>(<span class="at">cdm =</span> cdm_local, <span class="at">to =</span> src)</span>
 <span id="cb100-36"><a href="#cb100-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb100-37"><a href="#cb100-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-38"><a href="#cb100-38" aria-hidden="true" tabindex="-1"></a>Note that <span class="in">`insertCdmTo()`</span> output is already a <span class="in">`&lt;cdm_reference&gt;`</span> object. But how we would create this cdm reference from the connection? We can use the function <span class="in">`cdmFromCon()`</span> from <span class="in">`CDMConnector`</span> to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access and where intermediate tables can be created for a given study.</span>
+<span id="cb100-38"><a href="#cb100-38" aria-hidden="true" tabindex="-1"></a>Note that <span class="co">[</span><span class="ot">`insertCdmTo()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/insertCdmTo.html)</span> output is already a <span class="in">`&lt;cdm_reference&gt;`</span> object. But how we would create this cdm reference from the connection? We can use the function <span class="co">[</span><span class="ot">`cdmFromCon()`</span><span class="co">](https://darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html)</span> from <span class="co">[</span><span class="ot">`CDMConnector`</span><span class="co">](https://darwin-eu.github.io/CDMConnector/)</span> to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access and where intermediate tables can be created for a given study.</span>
 <span id="cb100-39"><a href="#cb100-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-40"><a href="#cb100-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo = TRUE}</span></span>
 <span id="cb100-41"><a href="#cb100-41" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> con, </span>
@@ -1640,13 +1639,13 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-74"><a href="#cb100-74" aria-hidden="true" tabindex="-1"></a>cdm[[<span class="st">"observation_period"</span>]]</span>
 <span id="cb100-75"><a href="#cb100-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb100-76"><a href="#cb100-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-77"><a href="#cb100-77" aria-hidden="true" tabindex="-1"></a>Note that here we have first created a local version of the cdm with all the tables of interest with <span class="in">`omock`</span> (<span class="in">`cdm_local`</span>), then copied it to a DuckDB database, and finally crated a reference to it with <span class="in">`CDMConnector`</span>, so that we can work with the final <span class="in">`cdm`</span> object as we normally would for one created with our own healthcare data. In that case we would directly use <span class="in">`cdmFromCon`</span> with our own database information. Throughout this chapter, however, we will keep working with the mock dataset.</span>
+<span id="cb100-77"><a href="#cb100-77" aria-hidden="true" tabindex="-1"></a>Note that here we have first created a local version of the cdm with all the tables of interest with <span class="co">[</span><span class="ot">`omock`</span><span class="co">](ohdsi.github.io/omock/)</span> (<span class="in">`cdm_local`</span>), then copied it to a DuckDB database, and finally crated a reference to it with <span class="co">[</span><span class="ot">`CDMConnector`</span><span class="co">](darwin-eu.github.io/CDMConnector)</span>, so that we can work with the final <span class="in">`cdm`</span> object as we normally would for one created with our own healthcare data. In that case we would directly use <span class="co">[</span><span class="ot">`cdmFromCon()`</span><span class="co">](darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html)</span> with our own database information. Throughout this chapter, however, we will keep working with the mock dataset.</span>
 <span id="cb100-78"><a href="#cb100-78" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-79"><a href="#cb100-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## CDM attributes</span></span>
 <span id="cb100-80"><a href="#cb100-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-81"><a href="#cb100-81" aria-hidden="true" tabindex="-1"></a><span class="fu">### CDM name</span></span>
 <span id="cb100-82"><a href="#cb100-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-83"><a href="#cb100-83" aria-hidden="true" tabindex="-1"></a>Our cdm reference will be associated with a name. By default this name will be taken from the <span class="in">`cdm_source_name`</span> field from the <span class="in">`cdm_source`</span> table. We will use the function <span class="in">`cdmName`</span> from <span class="in">`omopgenerics`</span> to get it.</span>
+<span id="cb100-83"><a href="#cb100-83" aria-hidden="true" tabindex="-1"></a>Our cdm reference will be associated with a name. By default this name will be taken from the <span class="in">`cdm_source_name`</span> field from the <span class="in">`cdm_source`</span> table. We will use the function <span class="co">[</span><span class="ot">`cdmName()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/cdmName.html)</span> from <span class="co">[</span><span class="ot">`omopgenerics`</span><span class="co">](darwin-eu.github.io/omopgenerics/)</span> to get it.</span>
 <span id="cb100-84"><a href="#cb100-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-85"><a href="#cb100-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo = TRUE}</span></span>
 <span id="cb100-86"><a href="#cb100-86" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> con,</span>
@@ -1698,7 +1697,7 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-132"><a href="#cb100-132" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-133"><a href="#cb100-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### CDM version</span></span>
 <span id="cb100-134"><a href="#cb100-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-135"><a href="#cb100-135" aria-hidden="true" tabindex="-1"></a>We can also easily check the OMOP CDM version that is being used with the function <span class="in">`cdmVersion`</span> from <span class="in">`omopgenerics`</span> like so:</span>
+<span id="cb100-135"><a href="#cb100-135" aria-hidden="true" tabindex="-1"></a>We can also easily check the OMOP CDM version that is being used with the function <span class="co">[</span><span class="ot">`cdmVersion()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/cdmVersion.html)</span> from <span class="co">[</span><span class="ot">`omopgenerics`</span><span class="co">](darwin-eu.github.io/omopgenerics)</span> like so:</span>
 <span id="cb100-136"><a href="#cb100-136" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-137"><a href="#cb100-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
 <span id="cb100-138"><a href="#cb100-138" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmVersion</span>(cdm)</span>
@@ -1717,12 +1716,12 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-153"><a href="#cb100-153" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb100-154"><a href="#cb100-154" aria-hidden="true" tabindex="-1"></a><span class="fu">### Methods functions</span></span>
 <span id="cb100-155"><a href="#cb100-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-156"><a href="#cb100-156" aria-hidden="true" tabindex="-1"></a>Although as stated the <span class="in">`cdmName()`</span> and <span class="in">`cdmVersion()`</span> functions are defined by the omopgenerics packages, these functions are reexported in other packages and you won't need to load omopgenerics explicitly.</span>
+<span id="cb100-156"><a href="#cb100-156" aria-hidden="true" tabindex="-1"></a>Although as stated the <span class="co">[</span><span class="ot">`cdmName()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/cdmName.html)</span> and <span class="co">[</span><span class="ot">`cdmVersion()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/cdmVersion.html)</span> functions are defined by the omopgenerics packages, these functions are reexported in other packages and you won't need to load omopgenerics explicitly.</span>
 <span id="cb100-157"><a href="#cb100-157" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb100-158"><a href="#cb100-158" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-159"><a href="#cb100-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Including cohort tables in the cdm reference</span></span>
 <span id="cb100-160"><a href="#cb100-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-161"><a href="#cb100-161" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">cohort</span><span class="co">](TODO%20citation)</span> is a fundamental piece in epidemiological studies, later we'll see how to create cohorts in more detail in @sec-creating_cohorts. For the moment, let's just outline how we can include the reference to an existing cohort in our cdm reference. For this we'll use <span class="in">`omock`</span> to add a cohort to our local cdm and upload that to a DuckDB database again.</span>
+<span id="cb100-161"><a href="#cb100-161" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">cohort</span><span class="co">](https://doi.org/10.1016/j.chest.2020.03.014)</span> is a fundamental piece in epidemiological studies, later we'll see how to create cohorts in more detail in @sec-creating_cohorts. For the moment, let's just outline how we can include the reference to an existing cohort in our cdm reference. For this we'll use <span class="co">[</span><span class="ot">`omock`</span><span class="co">](ohdsi.github.io/omock)</span> to add a cohort to our local cdm and upload that to a DuckDB database again.</span>
 <span id="cb100-162"><a href="#cb100-162" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-163"><a href="#cb100-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
 <span id="cb100-164"><a href="#cb100-164" aria-hidden="true" tabindex="-1"></a>cdm_local <span class="ot">&lt;-</span> cdm_local <span class="sc">|&gt;</span> </span>
@@ -1767,12 +1766,12 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-209"><a href="#cb100-209" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(<span class="at">conn =</span> con)</span>
 <span id="cb100-210"><a href="#cb100-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb100-211"><a href="#cb100-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-212"><a href="#cb100-212" aria-hidden="true" tabindex="-1"></a>By default only the default omop tables <span class="in">`omopTables()`</span> will be included (if they exists) into the cdm_reference object.</span>
+<span id="cb100-212"><a href="#cb100-212" aria-hidden="true" tabindex="-1"></a>By default only the default omop tables <span class="co">[</span><span class="ot">`omopTables()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/omopTables.html)</span> will be included (if they exists) into the cdm_reference object.</span>
 <span id="cb100-213"><a href="#cb100-213" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb100-214"><a href="#cb100-214" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-215"><a href="#cb100-215" aria-hidden="true" tabindex="-1"></a><span class="fu">## Including achilles tables in the cdm reference</span></span>
 <span id="cb100-216"><a href="#cb100-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-217"><a href="#cb100-217" aria-hidden="true" tabindex="-1"></a>If we have the results tables from the <span class="co">[</span><span class="ot">Achilles R package</span><span class="co">](https://ohdsi.github.io/Achilles/)</span> in our database, we can also include these in our cdm reference.</span>
+<span id="cb100-217"><a href="#cb100-217" aria-hidden="true" tabindex="-1"></a>If we have the results tables from the <span class="co">[</span><span class="ot">`Achilles`</span><span class="co">](ohdsi.github.io/Achilles/)</span> package in our database, we can also include these in our cdm reference.</span>
 <span id="cb100-218"><a href="#cb100-218" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-219"><a href="#cb100-219" aria-hidden="true" tabindex="-1"></a>Just to show how this can be done let's upload some empty results tables in the Achilles format.</span>
 <span id="cb100-220"><a href="#cb100-220" aria-hidden="true" tabindex="-1"></a></span>
@@ -1832,11 +1831,11 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-276"><a href="#cb100-276" aria-hidden="true" tabindex="-1"></a>cdm</span>
 <span id="cb100-277"><a href="#cb100-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb100-278"><a href="#cb100-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-279"><a href="#cb100-279" aria-hidden="true" tabindex="-1"></a>Note we specified the <span class="in">`achillesSchema`</span> that in this case is the same than the <span class="in">`writeSchema`</span> and <span class="in">`cdmSchema`</span>, but each one of them can be different and point to a separate <span class="co">[</span><span class="ot">schema</span><span class="co">](TODO%20add%20citation)</span>.</span>
+<span id="cb100-279"><a href="#cb100-279" aria-hidden="true" tabindex="-1"></a>Note we specified the <span class="in">`achillesSchema`</span> that in this case is the same than the <span class="in">`writeSchema`</span> and <span class="in">`cdmSchema`</span>, but each one of them can be different and point to a separate <span class="co">[</span><span class="ot">schema</span><span class="co">](https://www.geeksforgeeks.org/dbms/database-schemas/)</span> in our database.</span>
 <span id="cb100-280"><a href="#cb100-280" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-281"><a href="#cb100-281" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adding other tables to the cdm reference</span></span>
 <span id="cb100-282"><a href="#cb100-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-283"><a href="#cb100-283" aria-hidden="true" tabindex="-1"></a>Let's say we have some additional **local** data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using <span class="in">`insertTable`</span> from <span class="in">`omopgenerics`</span> (<span class="in">`insertTable`</span> is also re-exported in <span class="in">`CDMConnector`</span>). We will show this with the dataset <span class="in">`cars`</span> in-built in R.</span>
+<span id="cb100-283"><a href="#cb100-283" aria-hidden="true" tabindex="-1"></a>Let's say we have some additional **local** data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using <span class="co">[</span><span class="ot">`insertTable()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/insertTable.html)</span> from <span class="co">[</span><span class="ot">`omopgenerics`</span><span class="co">](darwin-eu.github.io/omopgenerics/)</span> (<span class="co">[</span><span class="ot">`insertTable()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/insertTable.html)</span> is also re-exported in <span class="co">[</span><span class="ot">`CDMConnector`</span><span class="co">](darwin-eu.github.io/CDMConnector/)</span>). We will show this with the dataset <span class="in">`cars`</span> in-built in R.</span>
 <span id="cb100-284"><a href="#cb100-284" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-285"><a href="#cb100-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
 <span id="cb100-286"><a href="#cb100-286" aria-hidden="true" tabindex="-1"></a>cars <span class="sc">|&gt;</span> </span>
@@ -1863,7 +1862,7 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-309"><a href="#cb100-309" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(<span class="at">conn =</span> con, <span class="at">name =</span> <span class="st">"penguins"</span>, <span class="at">value =</span> penguins)</span>
 <span id="cb100-310"><a href="#cb100-310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb100-311"><a href="#cb100-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-312"><a href="#cb100-312" aria-hidden="true" tabindex="-1"></a>Once we have this table in the database, we can just read it using the <span class="in">`readSourceTable()`</span> function.</span>
+<span id="cb100-312"><a href="#cb100-312" aria-hidden="true" tabindex="-1"></a>Once we have this table in the database, we can just read it using the <span class="co">[</span><span class="ot">`readSourceTable()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/readSourceTable.html)</span> function.</span>
 <span id="cb100-313"><a href="#cb100-313" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-316"><a href="#cb100-316" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb100-317"><a href="#cb100-317" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">readSourceTable</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"penguins"</span>)</span>
@@ -1871,7 +1870,7 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-319"><a href="#cb100-319" aria-hidden="true" tabindex="-1"></a>cdm</span>
 <span id="cb100-320"><a href="#cb100-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb100-321"><a href="#cb100-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-322"><a href="#cb100-322" aria-hidden="true" tabindex="-1"></a>Note that omopgenerics provide these functions readSourceTable, listSourceTables, and dropSourcTables for the easier management of the tables in the writeSchema.</span>
+<span id="cb100-322"><a href="#cb100-322" aria-hidden="true" tabindex="-1"></a>Note that omopgenerics provide these functions <span class="co">[</span><span class="ot">`readSourceTable()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/readSourceTable.html)</span>, <span class="co">[</span><span class="ot">`listSourceTables()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/listSourceTables.html)</span>, and <span class="co">[</span><span class="ot">`dropSourceTable()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/dropSourceTable.html)</span> for the easier management of the tables in the writeSchema.</span>
 <span id="cb100-323"><a href="#cb100-323" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-326"><a href="#cb100-326" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb100-327"><a href="#cb100-327" aria-hidden="true" tabindex="-1"></a><span class="fu">listSourceTables</span>(<span class="at">cdm =</span> cdm)</span>
@@ -1882,13 +1881,13 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-332"><a href="#cb100-332" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb100-333"><a href="#cb100-333" aria-hidden="true" tabindex="-1"></a><span class="fu">### Difference between `insertTable` and `dbWriteTable`</span></span>
 <span id="cb100-334"><a href="#cb100-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-335"><a href="#cb100-335" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`dbWriteTable`</span> is a function from the <span class="in">`DBI`</span> package that writes a local R data frame to a database. You need to manually specify the schema and table name and it does not update the cdm reference object.</span>
+<span id="cb100-335"><a href="#cb100-335" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`dbWriteTable()`</span><span class="co">](https://dbi.r-dbi.org/reference/dbWriteTable.html)</span> is a function from the <span class="in">`DBI`</span> package that writes a local R data frame to a database. You need to manually specify the schema and table name and it does not update the cdm reference object.</span>
 <span id="cb100-336"><a href="#cb100-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-337"><a href="#cb100-337" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`insertTable`</span> is a function from the <span class="in">`omopgenerics`</span> package designed for use with cdm reference objects. It writes a local table to the database and adds it to the list of tables in the cdm reference. Internally, it uses <span class="in">`dbWriteTable`</span> but also handles the schema and table name automatically using the writeSchema and writePrefix from the cdm reference.</span>
+<span id="cb100-337"><a href="#cb100-337" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`insertTable()`</span><span class="co">](darwin-eu.github.io/omopgenerics/reference/insertTable.html)</span> is a function from the <span class="co">[</span><span class="ot">`omopgenerics`</span><span class="co">](darwin-eu.github.io/omopgenerics)</span> package designed for use with cdm reference objects. It writes a local table to the database and adds it to the list of tables in the cdm reference. Internally, it uses <span class="co">[</span><span class="ot">`dbWriteTable()`</span><span class="co">](https://dbi.r-dbi.org/reference/dbWriteTable.html)</span> but also handles the schema and table name automatically using the writeSchema and writePrefix from the cdm reference.</span>
 <span id="cb100-338"><a href="#cb100-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-339"><a href="#cb100-339" aria-hidden="true" tabindex="-1"></a>In general, for studies using OMOP CDM data, you should use <span class="in">`insertTable`</span> rather than <span class="in">`dbWriteTable.`</span> It ensures the table is both written to the correct location in the database and accessible through the cdm reference object. Only use <span class="in">`dbWriteTable`</span> if you are confident working directly with the database and understand its structure.</span>
+<span id="cb100-339"><a href="#cb100-339" aria-hidden="true" tabindex="-1"></a>In general, for studies using OMOP CDM data, you should use <span class="in">`insertTable()`</span> rather than <span class="in">`dbWriteTable()`</span>. It ensures the table is both written to the correct location in the database and accessible through the cdm reference object. Only use <span class="in">`dbWriteTable()`</span> if you are confident working directly with the database and understand its structure.</span>
 <span id="cb100-340"><a href="#cb100-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-341"><a href="#cb100-341" aria-hidden="true" tabindex="-1"></a>Note <span class="in">`insertTable`</span> would also work for a local cdm reference or any other defined cdm reference source, whereas the <span class="in">`dbWriteTable`</span> is a database specific function.</span>
+<span id="cb100-341"><a href="#cb100-341" aria-hidden="true" tabindex="-1"></a>Note <span class="in">`insertTable()`</span> would also work for a local cdm reference or any other defined cdm reference source, whereas the <span class="in">`dbWriteTable()`</span> is a database specific function.</span>
 <span id="cb100-342"><a href="#cb100-342" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-343"><a href="#cb100-343" aria-hidden="true" tabindex="-1"></a>TODO reference to omopgenerics supported sources.</span>
 <span id="cb100-344"><a href="#cb100-344" aria-hidden="true" tabindex="-1"></a>:::</span>
@@ -2012,8 +2011,8 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-468"><a href="#cb100-468" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-469"><a href="#cb100-469" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
 <span id="cb100-470"><a href="#cb100-470" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-471"><a href="#cb100-471" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">omopgenerics package</span><span class="co">](https://darwin-eu.github.io/omopgenerics)</span></span>
-<span id="cb100-472"><a href="#cb100-472" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">CDMConnector package</span><span class="co">](https://darwin-eu.github.io/CDMConnector)</span></span>
+<span id="cb100-471"><a href="#cb100-471" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Català M, Burn E (2025). *omopgenerics: Methods and Classes for thecOMOP Common Data Model*. R package version 1.3.1, <span class="ot">&lt;https://darwin-eu.github.io/omopgenerics/&gt;</span>.</span>
+<span id="cb100-472"><a href="#cb100-472" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Black A, Gorbachev A, Burn E, Català M, Nika I (2025). CDMConnector: Connect to an OMOP Common Data Model. R package version 2.2.0, <span class="ot">&lt;https://darwin-eu.github.io/CDMConnector/&gt;</span>.</span>
 <span id="cb100-473"><a href="#cb100-473" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>OmopOnPostgres (*in progress*)</span>
 <span id="cb100-474"><a href="#cb100-474" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>OmopOnSpark (*in progress*)</span>
 <span id="cb100-475"><a href="#cb100-475" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>OmopOnDuckDB (*in progress*)</span>
