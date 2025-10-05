@@ -31,7 +31,7 @@ book:
         - omop/working_with_cohorts.qmd
     - final_remarks.qmd
 
-bibliography: references.bib
+#bibliography: references.bib
 
 format:
   html:

@@ -8,10 +8,16 @@ This book is the first of the *Tidy OMOP CDM* collection. If you like it please 
 
 -   **1** [Tidy R programing with the OMOP CDM](https://oxford-pharmacoepi.github.io/Tidy-R-programming-with-OMOP)
 
--   **2** [Development of tidy R OMOP CDM packages](https://oxford-pharmacoepi.github.io/DeveloperBook) *under construction*
+-   **2** [Tidy R packages with the OMOP CDM](https://oxford-pharmacoepi.github.io/Tidy-R-packages-with-OMOP) *under construction*
 
 -   **3** [DrugUtilisation in the OMOP CDM](https://oxford-pharmacoepi.github.io/DrugUtilisation-in-OMOP-CDM/) *under construction*
 
 ## Support us
 
 We encourage you to support this work by: either citing the book in your papers or documentation; recommending it to your colleagues; starring the [GitHub repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP); or simply letting us know how it helped you. But on top of that **use it** so it can help you and others in your research for patient benefit.
+
+## About the authors
+
+* **Edward Burn** <a href="https://www.ndorms.ox.ac.uk/team/edward-burn" class="bi bi-person profile_icon"></a> <a href="github.com/edward-burn" class="bi bi-github profile_icon"></a> <a href="mailto:edward.burn@ndorms.ox.ac.uk" class="bi bi-envelope profile_icon"></a> <a href="https://www.linkedin.com/in/edward-burn-9b1784292/" class="bi bi-linkedin profile_icon"></a>
+
+* **Martí Català** <a href="https://www.ndorms.ox.ac.uk/team/marti-catala-sabate" class="bi bi-person profile_icon"></a> <a href="github.com/catalamarti" class="bi bi-github profile_icon"></a> <a href="mailto:marti.catalasabate@ndorms.ox.ac.uk" class="bi bi-envelope profile_icon"></a> <a href="https://www.linkedin.com/in/martí-català-sabaté/" class="bi bi-linkedin profile_icon"></a>

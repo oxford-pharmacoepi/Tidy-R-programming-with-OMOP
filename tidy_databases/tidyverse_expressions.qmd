@@ -4,7 +4,7 @@ In the previous chapter, @sec-tidyverse_verbs, we saw that there are a core set 
 
 For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these pipelines get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.
 
-Let's first load the packages which these expressions come from. In addition to base R types, `bit64` adds support for integer64. The `stringr` package provides functions for working with strings, while `clock` has various functions for working with dates. Many other useful expressions will come from `dplyr` itself.
+Let's first load the packages which these expressions come from. In addition to base R types, [`bit64`](https://bit64.r-lib.org) adds support for integer64. The [`stringr`](https://stringr.tidyverse.org) package provides functions for working with strings, while [`clock`](https://clock.r-lib.org) has various functions for working with dates. Many other useful expressions will come from [`dplyr`](https://dplyr.tidyverse.org) itself.
 
 ```{r, warning=FALSE, message=FALSE, error=TRUE}
 library(duckdb)
@@ -17,9 +17,7 @@ library(clock)
 
 ## Data types
 
-Commonly used data types are consistently supported across database backends. We can use the base `as.numeric()`, `as.integer()`, `as.charater()`, `as.Date()`, and `as.POSIXct()`. We can also use `as.integer64()` from the `bit64` package to coerce to integer64, and the `as_date()` and `as_datetime()` from the `clock` package instead of `as.Date()` and `as.POSIXct()`, respectively.
-
-TODO: style code
+Commonly used data types are consistently supported across database backends. We can use the base [`as.numeric()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/numeric), [`as.integer()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/integer), [`as.charater()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/character), [`as.Date()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.Date), and [`as.POSIXct()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.POSIX*). We can also use [`as.integer64()`](https://bit64.r-lib.org/reference/as.integer64.character.html) from the [`bit64`](https://bit64.r-lib.org) package to coerce to integer64, and the [`as_date()`](https://clock.r-lib.org/reference/as_date.html) and [`as_datetime()`](https://clock.r-lib.org/reference/as_date_time.html) from the [`clock`](https://clock.r-lib.org) package instead of [`as.Date()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.Date) and [`as.POSIXct()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.POSIX*), respectively.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
