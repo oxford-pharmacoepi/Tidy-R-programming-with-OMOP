@@ -183,40 +183,40 @@ summaryQuery <- function(x) {
 ### Postgres
 
 ```{r, echo=FALSE}
-con <- simulate_postgres()
-lazy_frame(!!!args, con = con)  |>
+con2 <- simulate_postgres()
+lazy_frame(!!!args, con = con2)  |>
   summaryQuery()
 ```
 
 ### SQL Server
 
 ```{r, echo=FALSE}
-con <- simulate_mssql()
-lazy_frame(!!!args, con = con)  |>
+con2 <- simulate_mssql()
+lazy_frame(!!!args, con = con2)  |>
   summaryQuery()
 ```
 
 ### Redshift
 
 ```{r, echo=FALSE}
-con <- simulate_redshift()
-lazy_frame(!!!args, con = con)  |>
+con2 <- simulate_redshift()
+lazy_frame(!!!args, con = con2)  |>
   summaryQuery()
 ```
 
 ### Snowflake
 
 ```{r, echo=FALSE}
-con <- simulate_snowflake()
-lazy_frame(!!!args, con = con)  |>
+con2 <- simulate_snowflake()
+lazy_frame(!!!args, con = con2)  |>
   summaryQuery()
 ```
 
 ### Spark
 
 ```{r, echo=FALSE}
-con <- simulate_spark_sql()
-lazy_frame(!!!args, con = con)  |>
+con2 <- simulate_spark_sql()
+lazy_frame(!!!args, con = con2)  |>
   summaryQuery()
 ```
 
