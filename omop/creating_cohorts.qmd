@@ -33,7 +33,7 @@ cdm <- mockCdmFromDataset(datasetName = "synthea-covid19-10k", source = "duckdb"
 
 ## General concept based cohort
 
-Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the `CohortConstructor` package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code 37311061.
+Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the [`CohortConstructor`](https://ohdsi.github.io/CohortConstructor/) package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code [37311061](https://athena.ohdsi.org/search-terms/terms/37311061).
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- conceptCohort(cdm = cdm, 
@@ -59,7 +59,7 @@ cdm$not_covid <- conceptCohort(cdm = cdm,
 
 In the defining the cohorts above we have needed to provide concept IDs to define our cohort. But, where do these come from?
 
-We can search for codes of interest using the `CodelistGenerator` package. This can be done using a text search with the function `CodelistGenerator::getCandidateCodes()`. For example, we can have found the code we used above (and many others) like so:
+We can search for codes of interest using the [`CodelistGenerator`](https://darwin-eu.github.io/CodelistGenerator/) package. This can be done using a text search with the function [`getCandidateCodes()`](https://darwin-eu.github.io/CodelistGenerator/reference/getCandidateCodes.html). For example, we can have found the code we used above (and many others) like so:
 
 ```{r}
 library(CodelistGenerator)
@@ -132,14 +132,14 @@ All these attributes that we have seen are part of the attributes of the cohort_
 names(attributes(cdm$covid))
 ```
 
-In particular the `cohort_set` (contains the `settings()` source), `cohort_attrition` (contains the source for `cohortCount()` and `attrition()`) and `cohort_codelist` (contains the source for `cohortCodelist()`) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table 'cdm\$covid' in fact four tables were written in the database:
+In particular the `cohort_set` (contains the [`settings()`](https://darwin-eu.github.io/omopgenerics/reference/settings.html) source), `cohort_attrition` (contains the source for [`cohortCount()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html) and [`attrition()`](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)) and `cohort_codelist` (contains the source for [`cohortCodelist()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table 'cdm\$covid' in fact four tables were written in the database:
 
 ```{r}
 library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
 listSourceTables(cdm = cdm)
 ```
 
-We do not have to worry about the attributes and the naming of the tables as CohortConstructor, CDMConnector and omopgenerics take care of that and if we create the cohorts with functions such as `conceptCohort()` then we will be able to read them back with the `cohortTables` argument of `cdmFromCon()` or the `readSourceTable()` function and all the attributes will be in place.
+We do not have to worry about the attributes and the naming of the tables as `CohortConstructor`, `CDMConnector` and `omopgenerics` take care of that and if we create the cohorts with functions such as `conceptCohort()` then we will be able to read them back with the `cohortTables` argument of `cdmFromCon()` or the `readSourceTable()` function and all the attributes will be in place.
 :::
 
 ## Applying inclusion criteria
@@ -312,3 +312,5 @@ cdmDisconnect(cdm)
 ## Further reading
 
 -   [Cohort tables](https://darwin-eu.github.io/omopgenerics/articles/cohorts.html)
+
+- Burn E, Català M, Mercade-Besora N, Alcalde-Herraiz M, Du M, Guo Y, Chen X, Lopez-Guell K, Rowlands E (2025). *CohortConstructor: Build and Manipulate Study Cohorts Using a Common Data Model*. R package version 0.5.0, <https://ohdsi.github.io/CohortConstructor/>.
