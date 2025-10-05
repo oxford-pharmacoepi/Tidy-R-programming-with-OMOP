@@ -222,7 +222,7 @@ lazy_frame(!!!args, con = con2)  |>
 
 :::
 
-TODO symbol (i) Note that even the different SQL statements look similar, each SQL dialect has it own particularities. Using the [`dbplyr`](https://dbplyr.tidyverse.org) approach allow us to support multiple different SQL dialects and back-ends just writing R code.
+Note that even the different SQL statements look similar, each SQL dialect has its own particularities. Using the [`dbplyr`](https://dbplyr.tidyverse.org) approach allow us to support multiple different SQL dialects and back-ends just writing R code.
 :::
 
 Not having to worry about the SQL translation behind our queries allows us to interrogate the database in a simple way even for more complex questions. For instance, suppose now that we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.
@@ -303,4 +303,4 @@ dbDisconnect(conn = con)
 
 -   [Writing SQL with dbplyr](https://dbplyr.tidyverse.org/articles/sql.html)
 
--   [Data Carpentry: SQL databases and R](https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html)
+-   [Data Carpentry: SQL databases and R](https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html) TODO this link does not work

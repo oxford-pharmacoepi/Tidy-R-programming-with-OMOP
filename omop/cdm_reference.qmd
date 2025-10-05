@@ -10,7 +10,7 @@ The OMOP CDM standardises the structure of healthcare data. Data is stored acros
 
 As we saw in @sec-data_model, creating a data model in R to represent the OMOP CDM can provide a basis for analytic pipelines using the data. Luckily for us, we won't have to create functions and methods for this ourselves. Instead, we will use the [`omopgenerics`](darwin-eu.github.io/omopgenerics) package which defines a data model for OMOP CDM data and the [`CDMConnector`](darwin-eu.github.io/CDMConnector) package which provides functions for connecting to a OMOP CDM data held in a database.
 
-To see how this works we will use the [`omock`](omock.github.io/omopgenerics) package to create example data in the format of the OMOP CDM, which we will then copy to a DuckDB database created by the [`duckdb`](https://r.duckdb.org) package.
+To see how this works we will use the [`omock`](ohdsi.github.io/omock) package to create example data in the format of the OMOP CDM, which we will then copy to a DuckDB database created by the [`duckdb`](https://r.duckdb.org) package.
 
 ```{r, message=FALSE, warning=FALSE}
 library(duckdb)
@@ -35,7 +35,7 @@ src <- dbSource(con = con, writeSchema = "main")
 cdm <- insertCdmTo(cdm = cdm_local, to = src)
 ```
 
-Note that [`insertCdmTo()`](darwin-eu.github.io/omopgenerics/refernce/insertCdmTo.html) output is already a `<cdm_reference>` object. But how we would create this cdm reference from the connection? We can use the function [`cdmFromCon()`](darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html) from [`CDMConnector`](darwin-eu.github.io/CDMConnector/) to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access and where intermediate tables can be created for a given study.
+Note that [`insertCdmTo()`](https://darwin-eu.github.io/omopgenerics/reference/insertCdmTo.html) output is already a `<cdm_reference>` object. But how we would create this cdm reference from the connection? We can use the function [`cdmFromCon()`](https://darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html) from [`CDMConnector`](https://darwin-eu.github.io/CDMConnector/) to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often our OMOP CDM tables will be in a schema that we only have read-access to and we'll have another schema where we can have write-access and where intermediate tables can be created for a given study.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
 cdm <- cdmFromCon(con = con, 
@@ -199,7 +199,7 @@ Even if the cohort exists in the database:
 dbListTables(conn = con)
 ```
 
-By default only the default omop tables [`omopTables()`](darwin-eu.github.io/omopganerics/reference/omopTables.html) will be included (if they exists) into the cdm_reference object.
+By default only the default omop tables [`omopTables()`](darwin-eu.github.io/omopgenerics/reference/omopTables.html) will be included (if they exists) into the cdm_reference object.
 :::
 
 ## Including achilles tables in the cdm reference
@@ -268,7 +268,7 @@ Note we specified the `achillesSchema` that in this case is the same than the `w
 
 ## Adding other tables to the cdm reference
 
-Let's say we have some additional **local** data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using [`insertTable()`](darwin-eu.github.io/omopgenetics/reference/insertTable.html) from [`omopgenerics`](darwin-eu.github.io/omopgenerics/) ([`insertTable()`](darwin-eu.github.io/omopgenetics/reference/insertTable.html) is also re-exported in [`CDMConnector`](darwin-eu.github.io/CDMConnector/)). We will show this with the dataset `cars` in-built in R.
+Let's say we have some additional **local** data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using [`insertTable()`](darwin-eu.github.io/omopgenerics/reference/insertTable.html) from [`omopgenerics`](darwin-eu.github.io/omopgenerics/) ([`insertTable()`](darwin-eu.github.io/omopgenerics/reference/insertTable.html) is also re-exported in [`CDMConnector`](darwin-eu.github.io/CDMConnector/)). We will show this with the dataset `cars` in-built in R.
 
 ```{r, echo = TRUE}
 cars |> 
@@ -303,7 +303,7 @@ cdm <- readSourceTable(cdm = cdm, name = "penguins")
 cdm
 ```
 
-Note that omopgenerics provide these functions [`readSourceTable()`](darwin-eu.github.io/omopgenerics/reference/readSourceTable.html), [`listSourceTables()`](darwin-eu.github.io/omopgenerics/reference/listSourceTables.html), and [`dropSourcTables()`](darwin-eu.github.io/omopgenerics/reference/dropSourcTables.html) for the easier management of the tables in the writeSchema.
+Note that omopgenerics provide these functions [`readSourceTable()`](darwin-eu.github.io/omopgenerics/reference/readSourceTable.html), [`listSourceTables()`](darwin-eu.github.io/omopgenerics/reference/listSourceTables.html), and [`dropSourceTable()`](darwin-eu.github.io/omopgenerics/reference/dropSourceTable.html) for the easier management of the tables in the writeSchema.
 
 ```{r}
 listSourceTables(cdm = cdm)
