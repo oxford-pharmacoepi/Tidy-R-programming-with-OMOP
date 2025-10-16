@@ -20,7 +20,7 @@ It is beyond the scope of this book to describe all the different ways cohorts c
 
 ## Set up
 
-We'll use our the same COVID-19 synthetic dataset that we used before for demonstrating how cohorts can be constructed.
+We'll use the same Covid-19 synthetic dataset that we used before for demonstrating how cohorts can be constructed.
 
 ```{r, warning=FALSE, message=FALSE}
 library(omock)
@@ -45,7 +45,7 @@ cdm$covid
 ::: {.callout-note collapse="true"}
 ### Name consistency
 
-Note that the `name` argument determines the name of the permanent table written in the database and as we have seen before we have have to be consistent assigning the tables to the cdm object, that's my we used `name = "covid"` and then we were able to assign it to `cdm$covid`. Otherwise see this failing example:
+Note that the `name` argument determines the name of the permanent table written in the database and as we have seen before, we have to be consistent assigning the tables to the cdm object. That's why we used `name = "covid"` and then we were able to assign it to `cdm$covid`. Otherwise, see this failing example:
 
 ```{r, error = TRUE}
 cdm$not_covid <- conceptCohort(cdm = cdm, 
@@ -57,7 +57,7 @@ cdm$not_covid <- conceptCohort(cdm = cdm,
 ::: {.callout-tip collapse="true"}
 ### Finding appropriate codes
 
-In the defining the cohorts above we have needed to provide concept IDs to define our cohort. But, where do these come from?
+In defining the cohorts above, we have needed to provide concept IDs to define our cohort. But where do these come from?
 
 We can search for codes of interest using the [`CodelistGenerator`](https://darwin-eu.github.io/CodelistGenerator/) package. This can be done using a text search with the function [`getCandidateCodes()`](https://darwin-eu.github.io/CodelistGenerator/reference/getCandidateCodes.html). For example, we can have found the code we used above (and many others) like so:
 
@@ -69,7 +69,7 @@ getCandidateCodes(cdm = cdm,
                   includeDescendants = TRUE)
 ```
 
-We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of it's descendants.
+We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of its descendants.
 
 ```{r}
 getDrugIngredientCodes(cdm = cdm, name = "acetaminophen")
@@ -87,7 +87,7 @@ settings(cdm$covid) |>
   glimpse()
 ```
 
-In settings we can see the cohort name that by default is the name of the codelist used, in this case 'covid' as we used `conceptSet = list(covid = 37311061)`. Also the cdm and vocabulary versions are recorded in the settings by the CohortConstructor package.
+In settings, we can see the cohort name that by default is the name of the codelist used, in this case 'covid' as we used `conceptSet = list(covid = 37311061)`. Also, the cdm and vocabulary versions are recorded in the settings by the CohortConstructor package.
 
 Second, we can get counts of each cohort.
 
@@ -96,9 +96,9 @@ cohortCount(cdm$covid) |>
   glimpse()
 ```
 
-Where you can see the number of records and number of subjects for each cohort, in this case there are no multiple records per subject.
+Where you can see the number of records and number of subjects for each cohort. In this case, there are no multiple records per subject.
 
-An attrition can also be retrieved from any cohort.
+Attrition can also be retrieved from any cohort.
 
 ```{r, warning=FALSE, message=FALSE}
 attrition(cdm$covid) |> 
@@ -113,7 +113,7 @@ codelist
 codelist$covid
 ```
 
-Note in this case we had to provide the cohortId of the cohort of interest.
+Note that in this case, we had to provide the cohortId of the cohort of interest.
 
 All these attributes can be retrieved because it is a `cohort_table` object, a class on top of the usual `cdm_table` class that we have seen before:
 
@@ -121,7 +121,7 @@ All these attributes can be retrieved because it is a `cohort_table` object, a c
 class(cdm$covid)
 ```
 
-As we will see below these attributes of the cohorts become particularly useful as we apply further restrictions on our cohort.
+As we will see below, these attributes of the cohorts become particularly useful as we apply further restrictions on our cohort.
 
 ::: {.callout-tip collapse="true"}
 ### Behind the scenes
@@ -132,7 +132,7 @@ All these attributes that we have seen are part of the attributes of the cohort_
 names(attributes(cdm$covid))
 ```
 
-In particular the `cohort_set` (contains the [`settings()`](https://darwin-eu.github.io/omopgenerics/reference/settings.html) source), `cohort_attrition` (contains the source for [`cohortCount()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html) and [`attrition()`](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)) and `cohort_codelist` (contains the source for [`cohortCodelist()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table 'cdm\$covid' in fact four tables were written in the database:
+In particular, the `cohort_set` (contains the [`settings()`](https://darwin-eu.github.io/omopgenerics/reference/settings.html) source), `cohort_attrition` (contains the source for [`cohortCount()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html) and [`attrition()`](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)) and `cohort_codelist` (contains the source for [`cohortCodelist()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)) attributes are the ones of interest. For database back-ends, these attributes are stored in the database so when we read them again, the attributes persist. See that even though apparently we only have one table 'cdm\$covid', in fact four tables were written in the database:
 
 ```{r}
 library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
@@ -146,7 +146,7 @@ We do not have to worry about the attributes and the naming of the tables as `Co
 
 ### Only include first cohort entry per person
 
-Let's say we first want to restrict to first entry.
+Let's say we first want to restrict to the first entry.
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |> 
@@ -155,7 +155,7 @@ cdm$covid <- cdm$covid |>
 
 ### Restrict to study period
 
-Then we are interested in records only after January 1st 2020.
+Then we are interested in records only after January 1st, 2020.
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |>
@@ -164,7 +164,7 @@ cdm$covid <- cdm$covid |>
 
 ### Applying demographic inclusion criteria
 
-Finally we want to restrict our population of interest to only adult males under 65 years old. We can do that with the `requireDemographics()` function.
+Finally, we want to restrict our population of interest to only adult males under 65 years old. We can do that with the `requireDemographics()` function.
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |>
@@ -174,7 +174,7 @@ cdm$covid <- cdm$covid |>
 ::: {.callout-note collapse="true"}
 ### Similarity of naming with PatientProfiles
 
-Note that all these `require*()` functions that come from the CohortConstructor package use functionalities from PatientProfiles and the naming is consistent, for example `requireDemographics()` uses `addDemographics()`, `requirePriorObservation()` uses `addPriorObservation()` and so...
+Note that all these `require*()` functions that come from the CohortConstructor package use functionalities from PatientProfiles and the naming is consistent. For example, `requireDemographics()` uses `addDemographics()`, `requirePriorObservation()` uses `addPriorObservation()`, and so on...
 :::
 
 ### Applying cohort-based inclusion criteria
@@ -202,7 +202,7 @@ cdm$covid <- cdm$covid |>
                          intersections = 0) 
 ```
 
-Note if we had wanted to have required that individuals did have a history of a cardiac condition we would instead have set `intersections = c(1, Inf)` above.
+Note that if we had wanted to require that individuals did have a history of a cardiac condition, we would instead have set `intersections = c(1, Inf)` above.
 
 ::: {.callout-note collapse="true"}
 ### Use requireConceptIntersect
@@ -219,12 +219,12 @@ cdm$covid <- cdm$covid |>
   )
 ```
 
-In fact this approach would be more efficient unless we want to re-use the `myocardial_infarction` cohort for another inclusion criteria or analysis. Note that the intersection with the cohort table is more flexible as it can have more complicated inclusion/exclusion criteria, but you have to be more careful with the order of inclusion criteria (e.g. if we would restrict the myocaridal_infarction cohort to a certain time span when we would do the intersect we would require to not have the inclusion criteria on that time span).
+In fact, this approach would be more efficient unless we want to re-use the `myocardial_infarction` cohort for another inclusion criteria or analysis. Note that the intersection with the cohort table is more flexible as it can have more complicated inclusion/exclusion criteria, but you have to be more careful with the order of inclusion criteria (e.g., if we would restrict the myocardial_infarction cohort to a certain time span when we would do the intersect, we would require to not have the inclusion criteria on that time span).
 :::
 
 ## Cohort attributes
 
-Using the `require*()` functions th cohort attribytes have been updated to reflect the applied inclusion criteria.
+Using the `require*()` functions, the cohort attributes have been updated to reflect the applied inclusion criteria.
 
 ```{r, warning=FALSE, message=FALSE}
 settings(cdm$covid) |> 
@@ -241,19 +241,19 @@ attrition(cdm$covid) |>
   glimpse()
 ```
 
-We can visualise the attrition with the CohortCharacteristics package, we can first extract it with `summariseCohortAttrition()` and then `plotCohortAttrition` to better view the impact of applying each inclusion criteria:
+We can visualize the attrition with the CohortCharacteristics package. We can first extract it with `summarizeCohortAttrition()` and then `plotCohortAttrition` to better view the impact of applying each inclusion criteria:
 
 ```{r, warning=FALSE, message=FALSE}
 attrition_summary <- summariseCohortAttrition(cohort = cdm$covid)
 plotCohortAttrition(result = attrition_summary, type = 'png')
 ```
 
-Note that `conceptCohort()` first step lead to several rows in the attrition table, whereas any other `require*()` function always add just one record of attrition.
+Note that the `conceptCohort()` first step leads to several rows in the attrition table, whereas any other `require*()` function always adds just one record of attrition.
 
 ::: {.callout-tip collapse="true"}
 ### Cohort naming utilities
 
-As we have seen that by default the naming of the cohorts in the name of the codelist:
+As we have seen, by default the naming of the cohorts is the name of the codelist:
 
 ```{r}
 cdm$my_cohort <- conceptCohort(cdm = cdm, 
@@ -262,7 +262,7 @@ cdm$my_cohort <- conceptCohort(cdm = cdm,
 settings(cdm$my_cohort)
 ```
 
-But maybe we are interested to rename a cohort (e.g. after applying the inclusion criteria), we can do that with the `renameCohort()` utility function:
+But maybe we are interested in renaming a cohort (e.g., after applying the inclusion criteria). We can do that with the `renameCohort()` utility function:
 
 ```{r}
 cdm$my_cohort <- cdm$my_cohort |>
@@ -271,7 +271,7 @@ cdm$my_cohort <- cdm$my_cohort |>
 settings(cdm$my_cohort)
 ```
 
-Note that for arguments such as `cohortId`, `targetCohortId`, ... we are able to use the name of the cohort of interest, see for example:
+Note that for arguments such as `cohortId`, `targetCohortId`, etc., we are able to use the name of the cohort of interest. See for example:
 
 ```{r}
 cdm$my_cohort <- cdm$my_cohort |>
@@ -280,7 +280,7 @@ cdm$my_cohort <- cdm$my_cohort |>
 settings(cdm$my_cohort)
 ```
 
-This functionality also applies to other packages, such as CohortCharacteristics, PatientProfiles, DrugUtilisation, ... Finally in some cases it is useful to add the cohort_name as a column to not have to check manually the equivalence between *cohort definition id* and *cohort name*, this can be done using the PatientProfiles utility function `addCohortName()`:
+This functionality also applies to other packages, such as CohortCharacteristics, PatientProfiles, DrugUtilisation, etc. Finally, in some cases, it is useful to add the cohort_name as a column to not have to check manually the equivalence between *cohort definition id* and *cohort name*. This can be done using the PatientProfiles utility function `addCohortName()`:
 
 ```{r}
 library(PatientProfiles)

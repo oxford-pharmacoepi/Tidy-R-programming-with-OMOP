@@ -30,7 +30,7 @@ cdm$gi_bleed <- conceptCohort(
   padCohortEnd(days = 30)
 
 # drugs cohort contains records of acetaminophen using start and end dates of 
-# the drug records and collapsing record separated by less than 30 days
+# the drug records and collapsing records separated by less than 30 days
 cdm$drugs <- conceptCohort(
   cdm = cdm,
   conceptSet = list("acetaminophen" = c(
@@ -65,7 +65,7 @@ x |>
 ::: {.callout-note collapse="true"}
 ### Window naming
 
-Windows work very similarly to age groups that we have seen before, if a name is not provided an automatic name will be obtained from the values of the window limits:
+Windows work very similarly to age groups that we have seen before. If a name is not provided, an automatic name will be obtained from the values of the window limits:
 
 ```{r}
 cdm$gi_bleed |>
@@ -76,7 +76,7 @@ cdm$gi_bleed |>
   glimpse()
 ```
 
-Note that to avoid conflicts with column naming, all names will be lower case, spaces are not allowed and the `-` symbol for negative values is replaced by `m`. That's why it is usually nice to provide your own custom names:
+Note that to avoid conflicts with column naming, all names will be lower case, spaces are not allowed, and the `-` symbol for negative values is replaced by `m`. That's why it is usually nice to provide your own custom names:
 
 ```{r}
 cdm$gi_bleed |>
@@ -91,7 +91,7 @@ cdm$gi_bleed |>
 ::: {.callout-tip collapse="true"}
 ### New column naming
 
-By default the name of new columns is '{cohort_name}\_{window_name}' as we have seen in the prior examples, in some cases you only have one cohort or one window and you might want to rename the column as you please. In that case you can use the `nameStyle` argument to change the new naming of the columns:
+By default, the name of new columns is '{cohort_name}\_{window_name}' as we have seen in the prior examples. In some cases, you only have one cohort or one window and you might want to rename the column as you please. In that case, you can use the `nameStyle` argument to change the new naming of the columns:
 
 ```{r}
 cdm$gi_bleed |>
@@ -103,7 +103,7 @@ cdm$gi_bleed |>
   glimpse()
 ```
 
-If multiple windows are provided but '{window_name}' is not included in `nameStyle` then an error will prompt:
+If multiple windows are provided but '{window_name}' is not included in `nameStyle`, then an error will prompt:
 
 ```{r, error=TRUE}
 cdm$gi_bleed |>
@@ -143,11 +143,11 @@ x |>
 ```
 
 ::: {.callout-note collapse="true"}
-### Handling the obsrevation period
+### Handling the observation period
 
 Note that **only intersections in the current observation period are considered**.
 
-The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. I we see individual `2070` it has *3748* of future obsevation:
+The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. If we see individual `2070`, it has *3748* of future observation:
 
 ```{r}
 cdm$gi_bleed |>
@@ -156,7 +156,7 @@ cdm$gi_bleed |>
   glimpse()
 ```
 
-Now we will preform the intersect with the following window of interest: `c(2000, 3000), c(3000, 4000), c(4000, 5000)`.
+Now we will perform the intersect with the following window of interest: `c(2000, 3000), c(3000, 4000), c(4000, 5000)`.
 
 ```{r}
 cdm$gi_bleed |>
@@ -168,12 +168,12 @@ cdm$gi_bleed |>
 glimpse()
 ```
 
-See that for the window 2000 to 3000 where the individual is still in observation a 0 is reported, the same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window as individual is not in observation at any point of the window, NA is reported.
+See that for the window 2000 to 3000, where the individual is still in observation, a 0 is reported. The same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window, as the individual is not in observation at any point of the window, NA is reported.
 :::
 
 ### Date and times
 
-To get the date of the intersection with a cohort within a given time window, we can use `addCohortIntersectDate`. To get the number of days between the index date and intersection, we can use `addCohortIntersectDays`.
+To get the date of the intersection with a cohort within a given time window, we can use `addCohortIntersectDate()`. To get the number of days between the index date and intersection, we can use `addCohortIntersectDays()`.
 
 Both functions allow the `order` argument to specify which value to return:
 
@@ -208,7 +208,7 @@ x |>
   collect()
 ```
 
-Note that for the window in the future we used `order = "first"` and for the window in the past we used `order = "last"` as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA on the new created columns.
+Note that for the window in the future, we used `order = "first"` and for the window in the past, we used `order = "last"` as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA on the newly created columns.
 
 ## Intersection between a cohort and tables with patient data
 
