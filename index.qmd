@@ -2,13 +2,13 @@
 
 ## Is this book for me?
 
-We've written this book for anyone interested in a working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see [Tidy design principles](https://design.tidyverse.org/unifying.html) for more details on these principles).
+We've written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see [Tidy design principles](https://design.tidyverse.org/unifying.html) for more details on these principles).
 
-New to R? We recommend you to take a look to [R for data science](https://r4ds.had.co.nz/) before reading this book. We assume that you have [R](https://cran.r-project.org) installed and together with an adequate Integrated Development Environment (IDE) such as [R Studio](https://posit.co/download/rstudio-desktop/) or [positron](https://positron.posit.co). See this [tutorial](https://rstudio-education.github.io/hopr/starting.html) if you need guidance on how to get started. The book uses multiple packages, that you will need to install see the list in the [R packages](TODO) section.
+New to R? We recommend you take a look at [R for data science](https://r4ds.had.co.nz/) before reading this book. We assume that you have [R](https://cran.r-project.org) installed together with an adequate Integrated Development Environment (IDE) such as [RStudio](https://posit.co/download/rstudio-desktop/) or [Positron](https://positron.posit.co). See this [tutorial](https://rstudio-education.github.io/hopr/starting.html) if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list in the [R packages](TODO) section.
 
 New to databases? We recommend you take a look at some web tutorials on SQL, such as [SQLBolt](https://sqlbolt.com/) or [SQLZoo](https://www.sqlzoo.net/wiki/SQL_Tutorial) to have a basic understanding of how databases work.
 
-New to the OMOP CDM? We'd recommend you pare this book with [The Book of OHDSI](https://ohdsi.github.io/TheBookOfOhdsi/).
+New to the OMOP CDM? We'd recommend you pair this book with [The Book of OHDSI](https://ohdsi.github.io/TheBookOfOhdsi/).
 
 ## How is the book organised?
 
@@ -16,7 +16,7 @@ The book is divided into two parts. The first half of the book is focused on the
 
 ## Citation
 
-Please if you found this book useful help us citing it:
+If you found this book useful, please help us by citing it:
 
 ```         
 Burn E, Black A, Raventós B, Guo Y, Du M, López-Güell K, Mercadé-Besora N, 
@@ -36,7 +36,7 @@ The source code for the book can be found at this [GitHub repository](https://gi
 
 ## R Packages
 
-This book is rendered automatically though [GitHub Actions](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml) using the following version of packages:
+This book is rendered automatically through [GitHub Actions](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml) using the following version of packages:
 
 ```{r, echo=FALSE}
 explicitPkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE, recursive = TRUE) |>
@@ -72,4 +72,4 @@ explicitPkgs |>
   gt::fmt_markdown("Link")
 ```
 
-Note we only included the packages called explicitly in the book.
+Note: we only included the packages called explicitly in the book.
