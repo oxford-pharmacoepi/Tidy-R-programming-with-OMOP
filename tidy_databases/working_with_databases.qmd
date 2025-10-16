@@ -4,7 +4,7 @@
 
 *Artwork by [\@allison_horst](https://x.com/allison_horst)*
 
-Before we start thinking about working with healthcare data spread across a database using the OMOP common data model, let's first do a simpler analysis. In this case we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we'll use data from [`palmerpenguins`](https://allisonhorst.github.io/palmerpenguins/) package, which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
+Before we start working with healthcare data spread across a database using the OMOP Common Data Model, let's first do a simpler analysis. In this case, we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we'll use data from [`palmerpenguins`](https://allisonhorst.github.io/palmerpenguins/) package, which contains data on penguins collected from the [Palmer Station](https://en.wikipedia.org/wiki/Palmer_Station) in Antarctica.
 
 ## Getting set up
 
@@ -33,7 +33,7 @@ head(penguins, 5)
 
 ## Inserting data into a database
 
-By default the data provided by the package is local (allocated in the RAM memory of your computer), so let's first put it into a [DuckDB](https://duckdb.org/) database. We need to first create the database.
+By default, the data provided by the package is local (stored in memory on your computer), so let's first put it into a [DuckDB](https://duckdb.org/) database. We need to first create the database.
 
 ```{r}
 con <- dbConnect(drv = duckdb())
@@ -45,7 +45,7 @@ See that now we have created an empty DuckDB database. We can easily add the pen
 dbWriteTable(conn = con, name = "penguins", value = penguins)
 ```
 
-With the function `dbListTables()` we can list the tables of a database, in our case we it now has one table:
+With the function `dbListTables()` we can list the tables of a database. In our case, we can see it now has one table:
 
 ```{r}
 dbListTables(conn = con)
@@ -62,13 +62,13 @@ As you can see we have the same data that we had locally but now inside the data
 ::: {.callout-tip collapse="true"}
 ### Connecting to databases from R
 
-Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database specific driver packages. In the code snipets above we created a new, empty, in-process DuckDB database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like:
+Database connections from R can be made using the [DBI package](https://dbi.r-dbi.org/). The back-end for `DBI` is facilitated by database-specific driver packages. In the code snippets above, we created a new, empty, in-process DuckDB database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like:
 
 ```{r, eval = FALSE}
 con <- dbConnect(drv = duckdb(dbdir = "my_duckdb_database.ducdkb"))
 ```
 
-Note that you you point to a none existing DuckDB file, this will be created with an empty database.
+Note that if you point to a non-existing DuckDB file, this will be created with an empty database.
 
 In this book for simplicity we will mostly be working with in-process DuckDB databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like:
 
@@ -142,7 +142,7 @@ penguins_db |>
   show_query()
 ```
 
-Instead of having to write this somewhat complex SQL specific to DuckDB we can use the friendlier `dplyr` syntax that may well be more familiar if coming from an R programming background.
+Instead of having to write this somewhat complex SQL specific to DuckDB, we can use the friendlier `dplyr` syntax that will be more familiar if you're coming from an R programming background.
 
 ::: {.callout-note collapse="true"}
 ### Translation to different SQL dialects
@@ -222,10 +222,10 @@ lazy_frame(!!!args, con = con2)  |>
 
 :::
 
-Note that even the different SQL statements look similar, each SQL dialect has its own particularities. Using the [`dbplyr`](https://dbplyr.tidyverse.org) approach allow us to support multiple different SQL dialects and back-ends just writing R code.
+Note that even though the different SQL statements look similar, each SQL dialect has its own particularities. Using the [`dbplyr`](https://dbplyr.tidyverse.org) approach allows us to support multiple different SQL dialects and back-ends by just writing R code.
 :::
 
-Not having to worry about the SQL translation behind our queries allows us to interrogate the database in a simple way even for more complex questions. For instance, suppose now that we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.
+Not having to worry about the SQL translation behind our queries allows us to query the database in a simple way even for more complex questions. For instance, suppose now that we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.
 
 ```{r}
 penguins_db |>
@@ -259,7 +259,7 @@ penguins_db |>
 Now let's look at the relationship between body mass and bill depth.
 
 ```{r, warning=FALSE, message=FALSE}
-penguins |>
+penguins_db |>
   select("species", "body_mass_g", "bill_depth_mm") |> 
   collect() |>
   ggplot(aes(x = bill_depth_mm, y = body_mass_g)) +
@@ -274,7 +274,7 @@ penguins |>
 Here we see a negative correlation between body mass and bill depth which seems rather unexpected. But what about if we stratify this query by species?
 
 ```{r, warning=FALSE, message=FALSE}
-penguins |>
+penguins_db |>
   select("species", "body_mass_g", "bill_depth_mm") |>
   collect() |>
   ggplot(aes(x = bill_depth_mm, y = body_mass_g)) +
@@ -303,4 +303,4 @@ dbDisconnect(conn = con)
 
 -   [Writing SQL with dbplyr](https://dbplyr.tidyverse.org/articles/sql.html)
 
--   [Data Carpentry: SQL databases and R](https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html) TODO this link does not work
+-   [Data Carpentry: SQL databases and R](https://lessons.datacarpentry.org/R-ecology-lesson/05-r-and-databases.html)

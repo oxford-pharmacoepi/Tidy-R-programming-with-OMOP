@@ -19,9 +19,9 @@ downloadMockDataset(datasetName = "synthea-covid19-10k")
 ::: {.callout-note collapse="true"}
 ### Setup OMOP_DATA_FOLDER
 
-The `downloadMockDataset` function checks if the database has already been downloaded and if it is not is downloaded in a temporary directory. To avoid downloading the database every time that we want to use we need to set up the `OMOP_DATA_FOLDER`. To do that you need to create an environment variable named `OMOP_DATA_FOLDER`, you can add it in the r environment file (`usethis::edit_r_environ()`) or using `Sys.setenv(OMOP_DATA_FOLDER = "...")` either way `OMOP_DATA_FOLDER` should point to a folder where the dataset will be downloaded. This way the dataset will be stored permanently in your computer and you will not have to download it every time that you want to use it.
+The `downloadMockDataset` function checks if the database has already been downloaded, and if it is not, it is downloaded in a temporary directory. To avoid downloading the database every time we want to use it, we need to set up the `OMOP_DATA_FOLDER`. To do that, you need to create an environment variable named `OMOP_DATA_FOLDER`. You can add it in the R environment file (`usethis::edit_r_environ()`) or using `Sys.setenv(OMOP_DATA_FOLDER = "...")`. Either way, `OMOP_DATA_FOLDER` should point to a folder where the dataset will be downloaded. This way, the dataset will be stored permanently on your computer and you will not have to download it every time you want to use it.
 
-Note this folder is defined by omopgenerics and used also by other packages to store OMOP related data.
+Note that this folder is defined by omopgenerics and is also used by other packages to store OMOP-related data.
 :::
 
 Once the dataset is downloaded you can create the cdm reference:
@@ -39,7 +39,7 @@ cdm
 
 Note that if you call the function without downloading the database first you will be prompted to download it (or it will be downloaded directly if the session is not interactive).
 
-By default the mock cdm returns a local data set that can be inserted in any source of interest using the `insertCdmTo()` function. Populating source with `source = "duckdb"` will return you an in memory DuckDB cdm_reference with two schemas cdmSchema = "main" and writeSchema = "results".
+By default, the mock cdm returns a local dataset that can be inserted in any source of interest using the `insertCdmTo()` function. Setting the source to `source = "duckdb"` will return an in-memory DuckDB cdm_reference with two schemas: cdmSchema = "main" and writeSchema = "results".
 :::
 
 ## Counting people
@@ -87,7 +87,7 @@ More information on the vocabulary tables (as well as other tables in the OMOP C
 
 ## Summarising observation periods
 
-The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:
+The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So, say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:
 
 ```{r, echo = TRUE}
 first_observation_period <- cdm$observation_period |>
