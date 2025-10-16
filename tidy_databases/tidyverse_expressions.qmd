@@ -2,7 +2,7 @@
 
 In the previous chapter, @sec-tidyverse_verbs, we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.
 
-For more complex data pipleines we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these pipelines get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code which we want to work across different database management systems we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might wish to use.
+For more complex data pipelines, we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these pipelines get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code that we want to work across different database management systems, we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might want to use.
 
 Let's first load the packages which these expressions come from. In addition to base R types, [`bit64`](https://bit64.r-lib.org) adds support for integer64. The [`stringr`](https://stringr.tidyverse.org) package provides functions for working with strings, while [`clock`](https://clock.r-lib.org) has various functions for working with dates. Many other useful expressions will come from [`dplyr`](https://dplyr.tidyverse.org) itself.
 
@@ -17,7 +17,7 @@ library(clock)
 
 ## Data types
 
-Commonly used data types are consistently supported across database backends. We can use the base [`as.numeric()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/numeric), [`as.integer()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/integer), [`as.charater()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/character), [`as.Date()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.Date), and [`as.POSIXct()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.POSIX*). We can also use [`as.integer64()`](https://bit64.r-lib.org/reference/as.integer64.character.html) from the [`bit64`](https://bit64.r-lib.org) package to coerce to integer64, and the [`as_date()`](https://clock.r-lib.org/reference/as_date.html) and [`as_datetime()`](https://clock.r-lib.org/reference/as_date_time.html) from the [`clock`](https://clock.r-lib.org) package instead of [`as.Date()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.Date) and [`as.POSIXct()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.POSIX*), respectively.
+Commonly used data types are consistently supported across database backends. We can use the base [`as.numeric()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/numeric), [`as.integer()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/integer), [`as.character()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/character), [`as.Date()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.Date), and [`as.POSIXct()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.POSIX*). We can also use [`as.integer64()`](https://bit64.r-lib.org/reference/as.integer64.character.html) from the [`bit64`](https://bit64.r-lib.org) package to coerce to integer64, and the [`as_date()`](https://clock.r-lib.org/reference/as_date.html) and [`as_datetime()`](https://clock.r-lib.org/reference/as_date_time.html) from the [`clock`](https://clock.r-lib.org) package instead of [`as.Date()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.Date) and [`as.POSIXct()`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/as.POSIX*), respectively.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
@@ -117,7 +117,7 @@ translate_sql(as.logical(var), con = con)
 
 ## Comparison and logical operators
 
-Base R comparison operators, such as `<`, `<=`, `==`, `>=`, `>`, are also well supported in all database backends. Logical operators, such as `&` and `|` can also be used as if the data was in R.
+Base R comparison operators, such as `<`, `<=`, `==`, `>=`, `>`, are also well supported in all database backends. Logical operators, such as `&` and `|`, can also be used as if the data were in R.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
@@ -134,8 +134,8 @@ translate_sql(var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(is.na(var_1), con = con)
 translate_sql(!is.na(var_1), con = con)
-translate_sql(var_1 >= 100 & var_1  < 200, con = con)
-translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+translate_sql(var_1 >= 100 & var_1 < 200, con = con)
+translate_sql(var_1 >= 100 | var_1 < 200, con = con)
 ```
 
 ### Postgres
@@ -149,8 +149,8 @@ translate_sql(var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(is.na(var_1), con = con)
 translate_sql(!is.na(var_1), con = con)
-translate_sql(var_1 >= 100 & var_1  < 200, con = con)
-translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+translate_sql(var_1 >= 100 & var_1 < 200, con = con)
+translate_sql(var_1 >= 100 | var_1 < 200, con = con)
 ```
 
 ### SQL Server
@@ -164,8 +164,8 @@ translate_sql(var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(is.na(var_1), con = con)
 translate_sql(!is.na(var_1), con = con)
-translate_sql(var_1 >= 100 & var_1  < 200, con = con)
-translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+translate_sql(var_1 >= 100 & var_1 < 200, con = con)
+translate_sql(var_1 >= 100 | var_1 < 200, con = con)
 ```
 
 ### Redshift
@@ -179,8 +179,8 @@ translate_sql(var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(is.na(var_1), con = con)
 translate_sql(!is.na(var_1), con = con)
-translate_sql(var_1 >= 100 & var_1  < 200, con = con)
-translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+translate_sql(var_1 >= 100 & var_1 < 200, con = con)
+translate_sql(var_1 >= 100 | var_1 < 200, con = con)
 ```
 
 ### Snowflake
@@ -194,8 +194,8 @@ translate_sql(var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(is.na(var_1), con = con)
 translate_sql(!is.na(var_1), con = con)
-translate_sql(var_1 >= 100 & var_1  < 200, con = con)
-translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+translate_sql(var_1 >= 100 & var_1 < 200, con = con)
+translate_sql(var_1 >= 100 | var_1 < 200, con = con)
 ```
 
 ### Spark
@@ -209,8 +209,8 @@ translate_sql(var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(!var_1 %in% c("a", "b", "c"), con = con)
 translate_sql(is.na(var_1), con = con)
 translate_sql(!is.na(var_1), con = con)
-translate_sql(var_1 >= 100 & var_1  < 200, con = con)
-translate_sql(var_1 >= 100 | var_1  < 200, con = con)
+translate_sql(var_1 >= 100 & var_1 < 200, con = con)
+translate_sql(var_1 >= 100 | var_1 < 200, con = con)
 ```
 :::
 :::
@@ -305,7 +305,7 @@ translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, .defa
 
 ## Working with strings
 
-Compared to the previous sections, there is much more variation in support of functions to work with strings across database management systems. In particular, although various useful `stringr` functions do have translations ubiquitously it can be seen below that more translations are available for some databases compared to others.
+Compared to the previous sections, there is much more variation in support of functions to work with strings across database management systems. In particular, although various useful `stringr` functions do have translations ubiquitously, it can be seen below that more translations are available for some databases compared to others.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
@@ -683,11 +683,11 @@ lazy_frame(x = c(1, 2), con = simulate_spark_sql()) |>
 
 ## Window functions
 
-In the previous section we saw how aggregate functions can be used to perform operations across entire columns. Window functions differ in that they perform calculations across rows that are in some way related to a current row. For these we now use `mutate()` instead of using `summarise()`.
+ entire columns. Window functions differ in that they perform calculations across rows that are in some way related to a current row. For these, we now use `mutate()` instead of `summarise()`.In the previous section, we saw how aggregate functions can be used to perform operations across
 
 We can use window functions like `cumsum()` and `cummean()` to calculate running totals and averages, or `lag()` and `lead()` to help compare rows to their preceding or following rows.
 
-Given that window functions compare rows to rows before or after them, we will often use `arrange()` or `window_order()` to specify the order of rows. This will translate into a ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using `group_by()` would result in a PARTITION BY clause in the translated SQL so that window function operates on each group independently.
+Given that window functions compare rows to rows before or after them, we will often use `arrange()` or `window_order()` to specify the order of rows. This will translate into an ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using `group_by()` would result in a PARTITION BY clause in the translated SQL so that the window function operates on each group independently.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
@@ -850,14 +850,14 @@ TODO add note arrange vs window_order
 ::: {.callout-note collapse="true"}
 ### `arrange()` vs `window_order()`
 
-Although sometimes are used interchangeably
+Although they are sometimes used interchangeably
 :::
 
 ## Calculating quantiles, including the median
 
 So far we've seen that we can perform various data manipulations and calculate summary statistics for different database management systems using the same R code. Although the translated SQL has been different, the databases all supported similar approaches to perform these queries.
 
-A case where this is not the case is when we are interested in summarising distributions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately this means that for some databases quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.
+A case where this is not true is when we are interested in summarizing distributions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately, this means that for some databases, quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
