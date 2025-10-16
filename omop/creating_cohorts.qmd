@@ -241,7 +241,7 @@ attrition(cdm$covid) |>
   glimpse()
 ```
 
-We can visualize the attrition with the CohortCharacteristics package. We can first extract it with `summarizeCohortAttrition()` and then `plotCohortAttrition` to better view the impact of applying each inclusion criteria:
+We can visualize the attrition with the CohortCharacteristics package. We can first extract it with `summariseCohortAttrition()` and then `plotCohortAttrition` to better view the impact of applying each inclusion criteria:
 
 ```{r, warning=FALSE, message=FALSE}
 attrition_summary <- summariseCohortAttrition(cohort = cdm$covid)

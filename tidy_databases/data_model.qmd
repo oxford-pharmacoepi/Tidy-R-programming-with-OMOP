@@ -198,7 +198,7 @@ lahman$Pitching |>
 ```
 :::
 
-We could then use our `addBirthCountry()` function as part of a larger query to summarize the proportion of players from each country over time (based on their presence in the batting table).
+We could then use our `addBirthCountry()` function as part of a larger query to summarise the proportion of players from each country over time (based on their presence in the batting table).
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 plot_data <- lahman$Batting |>
@@ -298,7 +298,7 @@ s3_dispatch(print(lahman))
 
 ### The risk of "clean" R code
 
-Following on from the above approach, we might think it a good idea to make another function `addBirthYear()`. We can then use it along with our `addBirthCountry()` to get a summarized average salary by birth country and birth year.
+Following on from the above approach, we might think it a good idea to make another function `addBirthYear()`. We can then use it along with our `addBirthCountry()` to get a summarised average salary by birth country and birth year.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 addBirthYear <- function(lahmanTbl){
@@ -392,7 +392,7 @@ lahman$People |>
 
 ### Computing intermediate queries
 
-Let's say we want to summarize home runs in the batting table and strike outs in the pitching table by the college players attended and their birth year. We could do this like so:
+Let's say we want to summarise home runs in the batting table and strike outs in the pitching table by the college players attended and their birth year. We could do this like so:
 
 ```{r, echo = TRUE}
 players_with_college <- lahman$People |> 
