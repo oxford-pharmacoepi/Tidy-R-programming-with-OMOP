@@ -38,7 +38,7 @@ The source code for the book can be found at this [GitHub repository](https://gi
 
 This book is rendered automatically through [GitHub Actions](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml) using the following version of packages:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 explicitPkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE, recursive = TRUE) |>
   purrr::map(\(x) {
     lines <- paste0(readLines(x), collapse = " ")
