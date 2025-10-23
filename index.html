@@ -14,7 +14,7 @@
 <meta name="author" content="Kim López-Güell">
 <meta name="author" content="Núria Mercadé-Besora">
 <meta name="author" content="Martí Català">
-<meta name="dcterms.date" content="2025-10-05">
+<meta name="dcterms.date" content="2025-10-23">
 
 <title>Tidy R programming with the OMOP Common Data Model</title>
 <style>
@@ -162,7 +162,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./tidy_databases/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started with working databases from R</span></a>
+ <span class="menu-text">Getting started with databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -292,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 5, 2025</p>
+      <p class="date">October 23, 2025</p>
     </div>
   </div>
   
@@ -308,10 +308,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 class="unnumbered">Preface</h1>
 <section id="is-this-book-for-me" class="level2">
 <h2 class="anchored" data-anchor-id="is-this-book-for-me">Is this book for me?</h2>
-<p>We’ve written this book for anyone interested in a working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <a href="https://design.tidyverse.org/unifying.html">Tidy design principles</a> for more details on these principles).</p>
-<p>New to R? We recommend you to take a look to <a href="https://r4ds.had.co.nz/">R for data science</a> before reading this book. We assume that you have <a href="https://cran.r-project.org">R</a> installed and together with an adequate Integrated Development Environment (IDE) such as <a href="https://posit.co/download/rstudio-desktop/">R Studio</a> or <a href="https://positron.posit.co">positron</a>. See this <a href="https://rstudio-education.github.io/hopr/starting.html">tutorial</a> if you need guidance on how to get started. The book uses multiple packages, that you will need to install see the list in the <a href="TODO">R packages</a> section.</p>
+<p>We’ve written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <a href="https://design.tidyverse.org/unifying.html">Tidy design principles</a> for more details on these principles).</p>
+<p>New to R? We recommend you take a look at <a href="https://r4ds.had.co.nz/">R for data science</a> before reading this book. We assume that you have <a href="https://cran.r-project.org">R</a> installed together with an adequate Integrated Development Environment (IDE) such as <a href="https://posit.co/download/rstudio-desktop/">RStudio</a> or <a href="https://positron.posit.co">Positron</a>. See this <a href="https://rstudio-education.github.io/hopr/starting.html">tutorial</a> if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list in the <a href="TODO">R packages</a> section.</p>
 <p>New to databases? We recommend you take a look at some web tutorials on SQL, such as <a href="https://sqlbolt.com/">SQLBolt</a> or <a href="https://www.sqlzoo.net/wiki/SQL_Tutorial">SQLZoo</a> to have a basic understanding of how databases work.</p>
-<p>New to the OMOP CDM? We’d recommend you pare this book with <a href="https://ohdsi.github.io/TheBookOfOhdsi/">The Book of OHDSI</a>.</p>
+<p>New to the OMOP CDM? We’d recommend you pair this book with <a href="https://ohdsi.github.io/TheBookOfOhdsi/">The Book of OHDSI</a>.</p>
 </section>
 <section id="how-is-the-book-organised" class="level2">
 <h2 class="anchored" data-anchor-id="how-is-the-book-organised">How is the book organised?</h2>
@@ -319,7 +319,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="citation" class="level2">
 <h2 class="anchored" data-anchor-id="citation">Citation</h2>
-<p>Please if you found this book useful help us citing it:</p>
+<p>If you found this book useful, please help us by citing it:</p>
 <pre><code>Burn E, Black A, Raventós B, Guo Y, Du M, López-Güell K, Mercadé-Besora N, 
 Català M. Tidy R programming with the OMOP Common Data Model. GitHub; 2025.
 https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
@@ -334,29 +334,29 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
 </section>
 <section id="r-packages" class="level2">
 <h2 class="anchored" data-anchor-id="r-packages">R Packages</h2>
-<p>This book is rendered automatically though <a href="https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml">GitHub Actions</a> using the following version of packages:</p>
+<p>This book is rendered automatically through <a href="https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml">GitHub Actions</a> using the following version of packages:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Finding R package dependencies ... Done!</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="vnyzkonace" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vnyzkonace table {
+<div id="sdruzcmxfk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sdruzcmxfk table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vnyzkonace thead, #vnyzkonace tbody, #vnyzkonace tfoot, #vnyzkonace tr, #vnyzkonace td, #vnyzkonace th {
+#sdruzcmxfk thead, #sdruzcmxfk tbody, #sdruzcmxfk tfoot, #sdruzcmxfk tr, #sdruzcmxfk td, #sdruzcmxfk th {
   border-style: none;
 }
 
-#vnyzkonace p {
+#sdruzcmxfk p {
   margin: 0;
   padding: 0;
 }
 
-#vnyzkonace .gt_table {
+#sdruzcmxfk .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -382,12 +382,12 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_caption {
+#sdruzcmxfk .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vnyzkonace .gt_title {
+#sdruzcmxfk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -399,7 +399,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-bottom-width: 0;
 }
 
-#vnyzkonace .gt_subtitle {
+#sdruzcmxfk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -411,7 +411,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-top-width: 0;
 }
 
-#vnyzkonace .gt_heading {
+#sdruzcmxfk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -423,13 +423,13 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_bottom_border {
+#sdruzcmxfk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_col_headings {
+#sdruzcmxfk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -444,7 +444,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_col_heading {
+#sdruzcmxfk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -464,7 +464,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   overflow-x: hidden;
 }
 
-#vnyzkonace .gt_column_spanner_outer {
+#sdruzcmxfk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -476,15 +476,15 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   padding-right: 4px;
 }
 
-#vnyzkonace .gt_column_spanner_outer:first-child {
+#sdruzcmxfk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vnyzkonace .gt_column_spanner_outer:last-child {
+#sdruzcmxfk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vnyzkonace .gt_column_spanner {
+#sdruzcmxfk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -496,11 +496,11 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   width: 100%;
 }
 
-#vnyzkonace .gt_spanner_row {
+#sdruzcmxfk .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vnyzkonace .gt_group_heading {
+#sdruzcmxfk .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -526,7 +526,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   text-align: left;
 }
 
-#vnyzkonace .gt_empty_group_heading {
+#sdruzcmxfk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -541,15 +541,15 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   vertical-align: middle;
 }
 
-#vnyzkonace .gt_from_md > :first-child {
+#sdruzcmxfk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vnyzkonace .gt_from_md > :last-child {
+#sdruzcmxfk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vnyzkonace .gt_row {
+#sdruzcmxfk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -568,7 +568,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   overflow-x: hidden;
 }
 
-#vnyzkonace .gt_stub {
+#sdruzcmxfk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -581,7 +581,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   padding-right: 5px;
 }
 
-#vnyzkonace .gt_stub_row_group {
+#sdruzcmxfk .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -595,15 +595,15 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   vertical-align: top;
 }
 
-#vnyzkonace .gt_row_group_first td {
+#sdruzcmxfk .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vnyzkonace .gt_row_group_first th {
+#sdruzcmxfk .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vnyzkonace .gt_summary_row {
+#sdruzcmxfk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -613,16 +613,16 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   padding-right: 5px;
 }
 
-#vnyzkonace .gt_first_summary_row {
+#sdruzcmxfk .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_first_summary_row.thick {
+#sdruzcmxfk .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vnyzkonace .gt_last_summary_row {
+#sdruzcmxfk .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -632,7 +632,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_grand_summary_row {
+#sdruzcmxfk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -642,7 +642,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   padding-right: 5px;
 }
 
-#vnyzkonace .gt_first_grand_summary_row {
+#sdruzcmxfk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -652,7 +652,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_last_grand_summary_row_top {
+#sdruzcmxfk .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -662,11 +662,11 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_striped {
+#sdruzcmxfk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vnyzkonace .gt_table_body {
+#sdruzcmxfk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -675,7 +675,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_footnotes {
+#sdruzcmxfk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -689,7 +689,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_footnote {
+#sdruzcmxfk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -698,7 +698,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   padding-right: 5px;
 }
 
-#vnyzkonace .gt_sourcenotes {
+#sdruzcmxfk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -712,7 +712,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vnyzkonace .gt_sourcenote {
+#sdruzcmxfk .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -720,72 +720,72 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   padding-right: 5px;
 }
 
-#vnyzkonace .gt_left {
+#sdruzcmxfk .gt_left {
   text-align: left;
 }
 
-#vnyzkonace .gt_center {
+#sdruzcmxfk .gt_center {
   text-align: center;
 }
 
-#vnyzkonace .gt_right {
+#sdruzcmxfk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vnyzkonace .gt_font_normal {
+#sdruzcmxfk .gt_font_normal {
   font-weight: normal;
 }
 
-#vnyzkonace .gt_font_bold {
+#sdruzcmxfk .gt_font_bold {
   font-weight: bold;
 }
 
-#vnyzkonace .gt_font_italic {
+#sdruzcmxfk .gt_font_italic {
   font-style: italic;
 }
 
-#vnyzkonace .gt_super {
+#sdruzcmxfk .gt_super {
   font-size: 65%;
 }
 
-#vnyzkonace .gt_footnote_marks {
+#sdruzcmxfk .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vnyzkonace .gt_asterisk {
+#sdruzcmxfk .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vnyzkonace .gt_indent_1 {
+#sdruzcmxfk .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vnyzkonace .gt_indent_2 {
+#sdruzcmxfk .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vnyzkonace .gt_indent_3 {
+#sdruzcmxfk .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vnyzkonace .gt_indent_4 {
+#sdruzcmxfk .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vnyzkonace .gt_indent_5 {
+#sdruzcmxfk .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vnyzkonace .katex-display {
+#sdruzcmxfk .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vnyzkonace div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#sdruzcmxfk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -811,7 +811,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Package">CohortCharacteristics</td>
-<td class="gt_row gt_right" headers="Version">1.0.1</td>
+<td class="gt_row gt_right" headers="Version">1.0.2</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/CohortCharacteristics/">🔗</a></td>
 </tr>
 <tr class="even">
@@ -866,7 +866,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Package">duckdb</td>
-<td class="gt_row gt_right" headers="Version">1.4.0</td>
+<td class="gt_row gt_right" headers="Version">1.4.1</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://r.duckdb.org/">🔗</a></td>
 </tr>
 <tr class="odd">
@@ -886,7 +886,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Package">omopgenerics</td>
-<td class="gt_row gt_right" headers="Version">1.3.1</td>
+<td class="gt_row gt_right" headers="Version">1.3.2</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://darwin-eu.github.io/omopgenerics/">🔗</a></td>
 </tr>
 <tr class="odd">
@@ -920,7 +920,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
 </div>
 </div>
 </div>
-<p>Note we only included the packages called explicitly in the book.</p>
+<p>Note: we only included the packages called explicitly in the book.</p>
 
 
 <!-- -->
@@ -1384,8 +1384,8 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./tidy_databases/index.html" class="pagination-link" aria-label="Getting started with working databases from R">
-        <span class="nav-page-text">Getting started with working databases from R</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./tidy_databases/index.html" class="pagination-link" aria-label="Getting started with databases from R">
+        <span class="nav-page-text">Getting started with databases from R</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1393,13 +1393,13 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Is this book for me?</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>We've written this book for anyone interested in a working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <span class="co">[</span><span class="ot">Tidy design principles</span><span class="co">](https://design.tidyverse.org/unifying.html)</span> for more details on these principles).</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>We've written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <span class="co">[</span><span class="ot">Tidy design principles</span><span class="co">](https://design.tidyverse.org/unifying.html)</span> for more details on these principles).</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>New to R? We recommend you to take a look to <span class="co">[</span><span class="ot">R for data science</span><span class="co">](https://r4ds.had.co.nz/)</span> before reading this book. We assume that you have <span class="co">[</span><span class="ot">R</span><span class="co">](https://cran.r-project.org)</span> installed and together with an adequate Integrated Development Environment (IDE) such as <span class="co">[</span><span class="ot">R Studio</span><span class="co">](https://posit.co/download/rstudio-desktop/)</span> or <span class="co">[</span><span class="ot">positron</span><span class="co">](https://positron.posit.co)</span>. See this <span class="co">[</span><span class="ot">tutorial</span><span class="co">](https://rstudio-education.github.io/hopr/starting.html)</span> if you need guidance on how to get started. The book uses multiple packages, that you will need to install see the list in the <span class="co">[</span><span class="ot">R packages</span><span class="co">](TODO)</span> section.</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>New to R? We recommend you take a look at <span class="co">[</span><span class="ot">R for data science</span><span class="co">](https://r4ds.had.co.nz/)</span> before reading this book. We assume that you have <span class="co">[</span><span class="ot">R</span><span class="co">](https://cran.r-project.org)</span> installed together with an adequate Integrated Development Environment (IDE) such as <span class="co">[</span><span class="ot">RStudio</span><span class="co">](https://posit.co/download/rstudio-desktop/)</span> or <span class="co">[</span><span class="ot">Positron</span><span class="co">](https://positron.posit.co)</span>. See this <span class="co">[</span><span class="ot">tutorial</span><span class="co">](https://rstudio-education.github.io/hopr/starting.html)</span> if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list in the <span class="co">[</span><span class="ot">R packages</span><span class="co">](TODO)</span> section.</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>New to databases? We recommend you take a look at some web tutorials on SQL, such as <span class="co">[</span><span class="ot">SQLBolt</span><span class="co">](https://sqlbolt.com/)</span> or <span class="co">[</span><span class="ot">SQLZoo</span><span class="co">](https://www.sqlzoo.net/wiki/SQL_Tutorial)</span> to have a basic understanding of how databases work.</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>New to the OMOP CDM? We'd recommend you pare this book with <span class="co">[</span><span class="ot">The Book of OHDSI</span><span class="co">](https://ohdsi.github.io/TheBookOfOhdsi/)</span>.</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>New to the OMOP CDM? We'd recommend you pair this book with <span class="co">[</span><span class="ot">The Book of OHDSI</span><span class="co">](https://ohdsi.github.io/TheBookOfOhdsi/)</span>.</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## How is the book organised?</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
@@ -1407,7 +1407,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Citation</span></span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>Please if you found this book useful help us citing it:</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>If you found this book useful, please help us by citing it:</span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="in">Burn E, Black A, Raventós B, Guo Y, Du M, López-Güell K, Mercadé-Besora N, </span></span>
@@ -1427,7 +1427,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## R Packages</span></span>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>This book is rendered automatically though <span class="co">[</span><span class="ot">GitHub Actions</span><span class="co">](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml)</span> using the following version of packages:</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>This book is rendered automatically through <span class="co">[</span><span class="ot">GitHub Actions</span><span class="co">](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml)</span> using the following version of packages:</span>
 <span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE}</span></span>
 <span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>explicitPkgs <span class="ot">&lt;-</span> <span class="fu">list.files</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="at">pattern =</span> <span class="st">".qmd$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
@@ -1463,7 +1463,7 @@ https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP</code></pre>
 <span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_markdown</span>(<span class="st">"Link"</span>)</span>
 <span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>Note we only included the packages called explicitly in the book.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>Note: we only included the packages called explicitly in the book.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

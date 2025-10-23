@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../tidy_databases/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started with working databases from R</span></a>
+ <span class="menu-text">Getting started with databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -296,8 +296,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The <code>downloadMockDataset</code> function checks if the database has already been downloaded and if it is not is downloaded in a temporary directory. To avoid downloading the database every time that we want to use we need to set up the <code>OMOP_DATA_FOLDER</code>. To do that you need to create an environment variable named <code>OMOP_DATA_FOLDER</code>, you can add it in the r environment file (<code>usethis::edit_r_environ()</code>) or using <code>Sys.setenv(OMOP_DATA_FOLDER = "...")</code> either way <code>OMOP_DATA_FOLDER</code> should point to a folder where the dataset will be downloaded. This way the dataset will be stored permanently in your computer and you will not have to download it every time that you want to use it.</p>
-<p>Note this folder is defined by omopgenerics and used also by other packages to store OMOP related data.</p>
+<p>The <code>downloadMockDataset</code> function checks if the database has already been downloaded, and if it is not, it is downloaded in a temporary directory. To avoid downloading the database every time we want to use it, we need to set up the <code>OMOP_DATA_FOLDER</code>. To do that, you need to create an environment variable named <code>OMOP_DATA_FOLDER</code>. You can add it in the R environment file (<code>usethis::edit_r_environ()</code>) or using <code>Sys.setenv(OMOP_DATA_FOLDER = "...")</code>. Either way, <code>OMOP_DATA_FOLDER</code> should point to a folder where the dataset will be downloaded. This way, the dataset will be stored permanently on your computer and you will not have to download it every time you want to use it.</p>
+<p>Note that this folder is defined by omopgenerics and is also used by other packages to store OMOP-related data.</p>
 </div>
 </div>
 </div>
@@ -346,7 +346,7 @@ visit_detail, visit_occurrence, vocabulary</code></pre>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Note that if you call the function without downloading the database first you will be prompted to download it (or it will be downloaded directly if the session is not interactive).</p>
-<p>By default the mock cdm returns a local data set that can be inserted in any source of interest using the <code>insertCdmTo()</code> function. Populating source with <code>source = "duckdb"</code> will return you an in memory DuckDB cdm_reference with two schemas cdmSchema = “main” and writeSchema = “results”.</p>
+<p>By default, the mock cdm returns a local dataset that can be inserted in any source of interest using the <code>insertCdmTo()</code> function. Setting the source to <code>source = "duckdb"</code> will return an in-memory DuckDB cdm_reference with two schemas: cdmSchema = “main” and writeSchema = “results”.</p>
 </div>
 </div>
 </div>
@@ -358,7 +358,7 @@ visit_detail, visit_occurrence, vocabulary</code></pre>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpXOGzZ6/file37b5db93ea6.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp3tp7IY/file8b7721da5628.duckdb]
       n
   &lt;dbl&gt;
 1 10754</code></pre>
@@ -400,7 +400,7 @@ visit_detail, visit_occurrence, vocabulary</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 10
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpXOGzZ6/file37b5db93ea6.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp3tp7IY/file8b7721da5628.duckdb]
 $ concept_id       &lt;int&gt; 45756805, 45756804, 45756803, 45756802, 45756801, 457…
 $ concept_name     &lt;chr&gt; "Pediatric Cardiology", "Pediatric Anesthesiology", "…
 $ domain_id        &lt;chr&gt; "Provider", "Provider", "Provider", "Provider", "Prov…
@@ -420,7 +420,7 @@ $ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpXOGzZ6/file37b5db93ea6.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp3tp7IY/file8b7721da5628.duckdb]
 $ concept_id_1     &lt;int&gt; 35804314, 35804314, 35804314, 35804327, 35804327, 358…
 $ concept_id_2     &lt;int&gt; 912065, 42542145, 42542145, 35803584, 42542145, 42542…
 $ relationship_id  &lt;chr&gt; "Has modality", "Has accepted use", "Is current in", …
@@ -433,7 +433,7 @@ $ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 4
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpXOGzZ6/file37b5db93ea6.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp3tp7IY/file8b7721da5628.duckdb]
 $ ancestor_concept_id      &lt;int&gt; 375415, 727760, 735979, 438112, 529411, 14196…
 $ descendant_concept_id    &lt;int&gt; 4335743, 2056453, 41070383, 36566114, 4326940…
 $ min_levels_of_separation &lt;int&gt; 4, 1, 3, 2, 3, 3, 4, 3, 2, 5, 1, 3, 4, 2, 2, …
@@ -447,7 +447,7 @@ $ max_levels_of_separation &lt;int&gt; 4, 1, 5, 3, 3, 6, 12, 3, 2, 10, 1, 3, 4, 
 </section>
 <section id="summarising-observation-periods" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="summarising-observation-periods"><span class="header-section-number">6.2</span> Summarising observation periods</h2>
-<p>The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:</p>
+<p>The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So, say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>first_observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
@@ -536,7 +536,7 @@ $ max_levels_of_separation &lt;int&gt; 4, 1, 5, 3, 3, 6, 12, 3, 2, 10, 1, 3, 4, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpXOGzZ6/file37b5db93ea6.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp3tp7IY/file8b7721da5628.duckdb]
 $ min_year_of_birth    &lt;int&gt; 1923
 $ q05_year_of_birth    &lt;dbl&gt; 1927
 $ mean_year_of_birth   &lt;dbl&gt; 1971
@@ -1075,9 +1075,9 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
 <span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setup OMOP_DATA_FOLDER</span></span>
 <span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>The <span class="in">`downloadMockDataset`</span> function checks if the database has already been downloaded and if it is not is downloaded in a temporary directory. To avoid downloading the database every time that we want to use we need to set up the <span class="in">`OMOP_DATA_FOLDER`</span>. To do that you need to create an environment variable named <span class="in">`OMOP_DATA_FOLDER`</span>, you can add it in the r environment file (<span class="in">`usethis::edit_r_environ()`</span>) or using <span class="in">`Sys.setenv(OMOP_DATA_FOLDER = "...")`</span> either way <span class="in">`OMOP_DATA_FOLDER`</span> should point to a folder where the dataset will be downloaded. This way the dataset will be stored permanently in your computer and you will not have to download it every time that you want to use it.</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>The <span class="in">`downloadMockDataset`</span> function checks if the database has already been downloaded, and if it is not, it is downloaded in a temporary directory. To avoid downloading the database every time we want to use it, we need to set up the <span class="in">`OMOP_DATA_FOLDER`</span>. To do that, you need to create an environment variable named <span class="in">`OMOP_DATA_FOLDER`</span>. You can add it in the R environment file (<span class="in">`usethis::edit_r_environ()`</span>) or using <span class="in">`Sys.setenv(OMOP_DATA_FOLDER = "...")`</span>. Either way, <span class="in">`OMOP_DATA_FOLDER`</span> should point to a folder where the dataset will be downloaded. This way, the dataset will be stored permanently on your computer and you will not have to download it every time you want to use it.</span>
 <span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>Note this folder is defined by omopgenerics and used also by other packages to store OMOP related data.</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>Note that this folder is defined by omopgenerics and is also used by other packages to store OMOP-related data.</span>
 <span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>Once the dataset is downloaded you can create the cdm reference:</span>
@@ -1095,7 +1095,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
 <span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>Note that if you call the function without downloading the database first you will be prompted to download it (or it will be downloaded directly if the session is not interactive).</span>
 <span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>By default the mock cdm returns a local data set that can be inserted in any source of interest using the <span class="in">`insertCdmTo()`</span> function. Populating source with <span class="in">`source = "duckdb"`</span> will return you an in memory DuckDB cdm_reference with two schemas cdmSchema = "main" and writeSchema = "results".</span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>By default, the mock cdm returns a local dataset that can be inserted in any source of interest using the <span class="in">`insertCdmTo()`</span> function. Setting the source to <span class="in">`source = "duckdb"`</span> will return an in-memory DuckDB cdm_reference with two schemas: cdmSchema = "main" and writeSchema = "results".</span>
 <span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## Counting people</span></span>
@@ -1143,7 +1143,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
 <span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarising observation periods</span></span>
 <span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a>The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:</span>
+<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a>The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So, say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:</span>
 <span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
 <span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a>first_observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span></span>

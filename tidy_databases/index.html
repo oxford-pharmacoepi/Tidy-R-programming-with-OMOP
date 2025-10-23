@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Getting started with working databases from R – Tidy R programming with the OMOP Common Data Model</title>
+<title>Getting started with databases from R – Tidy R programming with the OMOP Common Data Model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with working databases from R</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with databases from R</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../tidy_databases/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Getting started with working databases from R</span></a>
+ <span class="menu-text">Getting started with databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -246,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Getting started with working databases from R</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Getting started with databases from R</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -263,10 +263,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In this first half of the book we will see how we can work with databases from R. In the following chapters we’ll see that when working with data held in a relational database we can leverage various open-source R packages to help us perform tidyverse-style data analyses.</p>
+<p>In this first half of the book, we will explore how to work with databases from R. In the following chapters, you’ll see that when working with data held in a relational database, we can leverage various open-source R packages to perform tidyverse-style data analyses.</p>
 <ul>
 <li>In <a href="working_with_databases.html" class="quarto-xref"><span>1&nbsp; A first analysis using data in a database</span></a> we will perform a simple data analysis from start to finish using a table in a database.</li>
-<li>In <a href="tidyverse_verbs.html" class="quarto-xref"><span>2&nbsp; Core verbs for analytic pipelines utilising a database</span></a> we will see in more detail how familiar dplyr functions can be used to combine data spread across different tables in a database into an analytic dataset which we can then bring into R for further analysis.</li>
+<li>In <a href="tidyverse_verbs.html" class="quarto-xref"><span>2&nbsp; Core verbs for analytic pipelines utilising a database</span></a> we will see in more detail how familiar dplyr functions can be used to combine data spread across different tables in a database into an analytic dataset for further analysis in R.</li>
 <li>In <a href="tidyverse_expressions.html" class="quarto-xref"><span>3&nbsp; Supported expressions for database queries</span></a> we will see how we can perform more complex data manipulation via translation of R code into SQL specific to the database management system being used.</li>
 <li>In <a href="data_model.html" class="quarto-xref"><span>4&nbsp; Building analytic pipelines for a data model</span></a> we will see how we can build data pipelines by creating a data model in R to represent the relational database we’re working with and creating functions and methods to work with it.</li>
 </ul>
@@ -739,12 +739,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Getting started with working databases from R</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Getting started with databases from R</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>In this first half of the book we will see how we can work with databases from R. In the following chapters we'll see that when working with data held in a relational database we can leverage various open-source R packages to help us perform tidyverse-style data analyses.</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>In this first half of the book, we will explore how to work with databases from R. In the following chapters, you'll see that when working with data held in a relational database, we can leverage various open-source R packages to perform tidyverse-style data analyses.</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In @sec-working_with_databases we will perform a simple data analysis from start to finish using a table in a database.</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In @sec-tidyverse_verbs we will see in more detail how familiar dplyr functions can be used to combine data spread across different tables in a database into an analytic dataset which we can then bring into R for further analysis.</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In @sec-tidyverse_verbs we will see in more detail how familiar dplyr functions can be used to combine data spread across different tables in a database into an analytic dataset for further analysis in R.</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In @sec-tidyverse_expressions we will see how we can perform more complex data manipulation via translation of R code into SQL specific to the database management system being used.</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In @sec-data_model we will see how we can build data pipelines by creating a data model in R to represent the relational database we're working with and creating functions and methods to work with it.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>

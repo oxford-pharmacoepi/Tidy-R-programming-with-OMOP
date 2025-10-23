@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with working databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/working_with_databases.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first analysis using data in a database</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/working_with_databases.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first analysis using data in a database</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../tidy_databases/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started with working databases from R</span></a>
+ <span class="menu-text">Getting started with databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -256,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with working databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/working_with_databases.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first analysis using data in a database</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/working_with_databases.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first analysis using data in a database</span></a></li></ol></nav>
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title"><span id="sec-working_with_databases" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first analysis using data in a database</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
@@ -277,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><img src="../images/lter_penguins.png" class="img-fluid" width="250"></p>
 <p><em>Artwork by <a href="https://x.com/allison_horst">@allison_horst</a></em></p>
-<p>Before we start thinking about working with healthcare data spread across a database using the OMOP common data model, let’s first do a simpler analysis. In this case we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we’ll use data from <a href="https://allisonhorst.github.io/palmerpenguins/"><code>palmerpenguins</code></a> package, which contains data on penguins collected from the <a href="https://en.wikipedia.org/wiki/Palmer_Station">Palmer Station</a> in Antarctica.</p>
+<p>Before we start working with healthcare data spread across a database using the OMOP Common Data Model, let’s first do a simpler analysis. In this case, we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we’ll use data from <a href="https://allisonhorst.github.io/palmerpenguins/"><code>palmerpenguins</code></a> package, which contains data on penguins collected from the <a href="https://en.wikipedia.org/wiki/Palmer_Station">Palmer Station</a> in Antarctica.</p>
 <section id="getting-set-up" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="getting-set-up"><span class="header-section-number">1.1</span> Getting set up</h2>
 <div class="cell">
@@ -325,7 +325,7 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </section>
 <section id="inserting-data-into-a-database" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="inserting-data-into-a-database"><span class="header-section-number">1.3</span> Inserting data into a database</h2>
-<p>By default the data provided by the package is local (allocated in the RAM memory of your computer), so let’s first put it into a <a href="https://duckdb.org/">DuckDB</a> database. We need to first create the database.</p>
+<p>By default, the data provided by the package is local (stored in memory on your computer), so let’s first put it into a <a href="https://duckdb.org/">DuckDB</a> database. We need to first create the database.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="at">drv =</span> <span class="fu">duckdb</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -333,7 +333,7 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(<span class="at">conn =</span> con, <span class="at">name =</span> <span class="st">"penguins"</span>, <span class="at">value =</span> penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>With the function <code>dbListTables()</code> we can list the tables of a database, in our case we it now has one table:</p>
+<p>With the function <code>dbListTables()</code> we can list the tables of a database. In our case, we can see it now has one table:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(<span class="at">conn =</span> con)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -371,11 +371,11 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Database connections from R can be made using the <a href="https://dbi.r-dbi.org/">DBI package</a>. The back-end for <code>DBI</code> is facilitated by database specific driver packages. In the code snipets above we created a new, empty, in-process DuckDB database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like:</p>
+<p>Database connections from R can be made using the <a href="https://dbi.r-dbi.org/">DBI package</a>. The back-end for <code>DBI</code> is facilitated by database-specific driver packages. In the code snippets above, we created a new, empty, in-process DuckDB database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="at">drv =</span> <span class="fu">duckdb</span>(<span class="at">dbdir =</span> <span class="st">"my_duckdb_database.ducdkb"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note that you you point to a none existing DuckDB file, this will be created with an empty database.</p>
+<p>Note that if you point to a non-existing DuckDB file, this will be created with an empty database.</p>
 <p>In this book for simplicity we will mostly be working with in-process DuckDB databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="at">drv =</span> <span class="fu">Postgres</span>(),</span>
@@ -397,7 +397,7 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>penguins_db</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;penguins&gt; [?? x 8]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
    &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
  1 Adelie  Torgersen           39.1          18.7               181        3750
@@ -419,7 +419,7 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins_db, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 8]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
 1 Adelie  Torgersen           39.1          18.7               181        3750
@@ -460,7 +460,7 @@ LIMIT 5</code></pre>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"mean_bill_length_mm"</span>, <span class="st">"min_max_bill_length_mm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 3]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   species   mean_bill_length_mm min_max_bill_length_mm
   &lt;fct&gt;                   &lt;dbl&gt; &lt;chr&gt;                 
 1 Adelie                   38.8 32.1 to 46.0          
@@ -501,7 +501,7 @@ FROM (
 ) q01</code></pre>
 </div>
 </div>
-<p>Instead of having to write this somewhat complex SQL specific to DuckDB we can use the friendlier <code>dplyr</code> syntax that may well be more familiar if coming from an R programming background.</p>
+<p>Instead of having to write this somewhat complex SQL specific to DuckDB, we can use the friendlier <code>dplyr</code> syntax that will be more familiar if you’re coming from an R programming background.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -625,11 +625,11 @@ FROM (
 </div>
 </div>
 </div>
-<p>Note that even the different SQL statements look similar, each SQL dialect has its own particularities. Using the <a href="https://dbplyr.tidyverse.org"><code>dbplyr</code></a> approach allow us to support multiple different SQL dialects and back-ends just writing R code.</p>
+<p>Note that even though the different SQL statements look similar, each SQL dialect has its own particularities. Using the <a href="https://dbplyr.tidyverse.org"><code>dbplyr</code></a> approach allows us to support multiple different SQL dialects and back-ends by just writing R code.</p>
 </div>
 </div>
 </div>
-<p>Not having to worry about the SQL translation behind our queries allows us to interrogate the database in a simple way even for more complex questions. For instance, suppose now that we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.</p>
+<p>Not having to worry about the SQL translation behind our queries allows us to query the database in a simple way even for more complex questions. For instance, suppose now that we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">missing_body_mass_g =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(body_mass_g), <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
@@ -637,14 +637,14 @@ FROM (
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 3]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   species   missing_body_mass_g     n
   &lt;fct&gt;                   &lt;dbl&gt; &lt;dbl&gt;
-1 Adelie                      0   151
-2 Gentoo                      0   123
-3 Adelie                      1     1
-4 Gentoo                      1     1
-5 Chinstrap                   0    68</code></pre>
+1 Adelie                      1     1
+2 Gentoo                      1     1
+3 Chinstrap                   0    68
+4 Adelie                      0   151
+5 Gentoo                      0   123</code></pre>
 </div>
 </div>
 <p>We can get the mean for each of the species (dropping those two missing records).</p>
@@ -654,7 +654,7 @@ FROM (
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_body_mass_g =</span> <span class="fu">round</span>(<span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 2]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   species   mean_body_mass_g
   &lt;fct&gt;                &lt;dbl&gt;
 1 Adelie                3701
@@ -683,7 +683,7 @@ FROM (
 </div>
 <p>Now let’s look at the relationship between body mass and bill depth.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"body_mass_g"</span>, <span class="st">"bill_depth_mm"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_depth_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
@@ -703,7 +703,7 @@ FROM (
 </div>
 <p>Here we see a negative correlation between body mass and bill depth which seems rather unexpected. But what about if we stratify this query by species?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"body_mass_g"</span>, <span class="st">"bill_depth_mm"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_depth_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
@@ -736,7 +736,7 @@ FROM (
 <ul>
 <li><p><a href="https://r4ds.hadley.nz/databases">R for Data Science (Chapter 13: Relational data)</a></p></li>
 <li><p><a href="https://dbplyr.tidyverse.org/articles/sql.html">Writing SQL with dbplyr</a></p></li>
-<li><p><a href="https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html">Data Carpentry: SQL databases and R</a> TODO this link does not work</p></li>
+<li><p><a href="https://lessons.datacarpentry.org/R-ecology-lesson/05-r-and-databases.html">Data Carpentry: SQL databases and R</a></p></li>
 </ul>
 
 
@@ -1198,8 +1198,8 @@ FROM (
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../tidy_databases/index.html" class="pagination-link" aria-label="Getting started with working databases from R">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Getting started with working databases from R</span>
+      <a href="../tidy_databases/index.html" class="pagination-link" aria-label="Getting started with databases from R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Getting started with databases from R</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -1214,7 +1214,7 @@ FROM (
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>*Artwork by [\@allison_horst](https://x.com/allison_horst)*</span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>Before we start thinking about working with healthcare data spread across a database using the OMOP common data model, let's first do a simpler analysis. In this case we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we'll use data from <span class="co">[</span><span class="ot">`palmerpenguins`</span><span class="co">](https://allisonhorst.github.io/palmerpenguins/)</span> package, which contains data on penguins collected from the <span class="co">[</span><span class="ot">Palmer Station</span><span class="co">](https://en.wikipedia.org/wiki/Palmer_Station)</span> in Antarctica.</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>Before we start working with healthcare data spread across a database using the OMOP Common Data Model, let's first do a simpler analysis. In this case, we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we'll use data from <span class="co">[</span><span class="ot">`palmerpenguins`</span><span class="co">](https://allisonhorst.github.io/palmerpenguins/)</span> package, which contains data on penguins collected from the <span class="co">[</span><span class="ot">Palmer Station</span><span class="co">](https://en.wikipedia.org/wiki/Palmer_Station)</span> in Antarctica.</span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting set up</span></span>
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -1243,7 +1243,7 @@ FROM (
 <span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Inserting data into a database</span></span>
 <span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a>By default the data provided by the package is local (allocated in the RAM memory of your computer), so let's first put it into a <span class="co">[</span><span class="ot">DuckDB</span><span class="co">](https://duckdb.org/)</span> database. We need to first create the database.</span>
+<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a>By default, the data provided by the package is local (stored in memory on your computer), so let's first put it into a <span class="co">[</span><span class="ot">DuckDB</span><span class="co">](https://duckdb.org/)</span> database. We need to first create the database.</span>
 <span id="cb37-41"><a href="#cb37-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-44"><a href="#cb37-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb37-45"><a href="#cb37-45" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="at">drv =</span> <span class="fu">duckdb</span>())</span>
@@ -1255,7 +1255,7 @@ FROM (
 <span id="cb37-53"><a href="#cb37-53" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(<span class="at">conn =</span> con, <span class="at">name =</span> <span class="st">"penguins"</span>, <span class="at">value =</span> penguins)</span>
 <span id="cb37-54"><a href="#cb37-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb37-55"><a href="#cb37-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-56"><a href="#cb37-56" aria-hidden="true" tabindex="-1"></a>With the function <span class="in">`dbListTables()`</span> we can list the tables of a database, in our case we it now has one table:</span>
+<span id="cb37-56"><a href="#cb37-56" aria-hidden="true" tabindex="-1"></a>With the function <span class="in">`dbListTables()`</span> we can list the tables of a database. In our case, we can see it now has one table:</span>
 <span id="cb37-57"><a href="#cb37-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-60"><a href="#cb37-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb37-61"><a href="#cb37-61" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(<span class="at">conn =</span> con)</span>
@@ -1272,13 +1272,13 @@ FROM (
 <span id="cb37-74"><a href="#cb37-74" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
 <span id="cb37-75"><a href="#cb37-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### Connecting to databases from R</span></span>
 <span id="cb37-76"><a href="#cb37-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-77"><a href="#cb37-77" aria-hidden="true" tabindex="-1"></a>Database connections from R can be made using the <span class="co">[</span><span class="ot">DBI package</span><span class="co">](https://dbi.r-dbi.org/)</span>. The back-end for <span class="in">`DBI`</span> is facilitated by database specific driver packages. In the code snipets above we created a new, empty, in-process DuckDB database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like:</span>
+<span id="cb37-77"><a href="#cb37-77" aria-hidden="true" tabindex="-1"></a>Database connections from R can be made using the <span class="co">[</span><span class="ot">DBI package</span><span class="co">](https://dbi.r-dbi.org/)</span>. The back-end for <span class="in">`DBI`</span> is facilitated by database-specific driver packages. In the code snippets above, we created a new, empty, in-process DuckDB database to which we then added our dataset. But we could have instead connected to an existing duckdb database. This could, for example, look like:</span>
 <span id="cb37-78"><a href="#cb37-78" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-79"><a href="#cb37-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
 <span id="cb37-80"><a href="#cb37-80" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="at">drv =</span> <span class="fu">duckdb</span>(<span class="at">dbdir =</span> <span class="st">"my_duckdb_database.ducdkb"</span>))</span>
 <span id="cb37-81"><a href="#cb37-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb37-82"><a href="#cb37-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-83"><a href="#cb37-83" aria-hidden="true" tabindex="-1"></a>Note that you you point to a none existing DuckDB file, this will be created with an empty database.</span>
+<span id="cb37-83"><a href="#cb37-83" aria-hidden="true" tabindex="-1"></a>Note that if you point to a non-existing DuckDB file, this will be created with an empty database.</span>
 <span id="cb37-84"><a href="#cb37-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-85"><a href="#cb37-85" aria-hidden="true" tabindex="-1"></a>In this book for simplicity we will mostly be working with in-process DuckDB databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like:</span>
 <span id="cb37-86"><a href="#cb37-86" aria-hidden="true" tabindex="-1"></a></span>
@@ -1352,7 +1352,7 @@ FROM (
 <span id="cb37-160"><a href="#cb37-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
 <span id="cb37-161"><a href="#cb37-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb37-162"><a href="#cb37-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-163"><a href="#cb37-163" aria-hidden="true" tabindex="-1"></a>Instead of having to write this somewhat complex SQL specific to DuckDB we can use the friendlier <span class="in">`dplyr`</span> syntax that may well be more familiar if coming from an R programming background.</span>
+<span id="cb37-163"><a href="#cb37-163" aria-hidden="true" tabindex="-1"></a>Instead of having to write this somewhat complex SQL specific to DuckDB, we can use the friendlier <span class="in">`dplyr`</span> syntax that will be more familiar if you're coming from an R programming background.</span>
 <span id="cb37-164"><a href="#cb37-164" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-165"><a href="#cb37-165" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb37-166"><a href="#cb37-166" aria-hidden="true" tabindex="-1"></a><span class="fu">### Translation to different SQL dialects</span></span>
@@ -1432,10 +1432,10 @@ FROM (
 <span id="cb37-240"><a href="#cb37-240" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-241"><a href="#cb37-241" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb37-242"><a href="#cb37-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-243"><a href="#cb37-243" aria-hidden="true" tabindex="-1"></a>Note that even the different SQL statements look similar, each SQL dialect has its own particularities. Using the <span class="co">[</span><span class="ot">`dbplyr`</span><span class="co">](https://dbplyr.tidyverse.org)</span> approach allow us to support multiple different SQL dialects and back-ends just writing R code.</span>
+<span id="cb37-243"><a href="#cb37-243" aria-hidden="true" tabindex="-1"></a>Note that even though the different SQL statements look similar, each SQL dialect has its own particularities. Using the <span class="co">[</span><span class="ot">`dbplyr`</span><span class="co">](https://dbplyr.tidyverse.org)</span> approach allows us to support multiple different SQL dialects and back-ends by just writing R code.</span>
 <span id="cb37-244"><a href="#cb37-244" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb37-245"><a href="#cb37-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-246"><a href="#cb37-246" aria-hidden="true" tabindex="-1"></a>Not having to worry about the SQL translation behind our queries allows us to interrogate the database in a simple way even for more complex questions. For instance, suppose now that we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.</span>
+<span id="cb37-246"><a href="#cb37-246" aria-hidden="true" tabindex="-1"></a>Not having to worry about the SQL translation behind our queries allows us to query the database in a simple way even for more complex questions. For instance, suppose now that we are particularly interested in the body mass variable. We can first notice that there are a couple of missing records for this.</span>
 <span id="cb37-247"><a href="#cb37-247" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-250"><a href="#cb37-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb37-251"><a href="#cb37-251" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
@@ -1469,7 +1469,7 @@ FROM (
 <span id="cb37-279"><a href="#cb37-279" aria-hidden="true" tabindex="-1"></a>Now let's look at the relationship between body mass and bill depth.</span>
 <span id="cb37-280"><a href="#cb37-280" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-281"><a href="#cb37-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
-<span id="cb37-282"><a href="#cb37-282" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb37-282"><a href="#cb37-282" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb37-283"><a href="#cb37-283" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"body_mass_g"</span>, <span class="st">"bill_depth_mm"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb37-284"><a href="#cb37-284" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
 <span id="cb37-285"><a href="#cb37-285" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_depth_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
@@ -1484,7 +1484,7 @@ FROM (
 <span id="cb37-294"><a href="#cb37-294" aria-hidden="true" tabindex="-1"></a>Here we see a negative correlation between body mass and bill depth which seems rather unexpected. But what about if we stratify this query by species?</span>
 <span id="cb37-295"><a href="#cb37-295" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-296"><a href="#cb37-296" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
-<span id="cb37-297"><a href="#cb37-297" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb37-297"><a href="#cb37-297" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb37-298"><a href="#cb37-298" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"body_mass_g"</span>, <span class="st">"bill_depth_mm"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb37-299"><a href="#cb37-299" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
 <span id="cb37-300"><a href="#cb37-300" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_depth_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
@@ -1513,7 +1513,7 @@ FROM (
 <span id="cb37-325"><a href="#cb37-325" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-326"><a href="#cb37-326" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Writing SQL with dbplyr</span><span class="co">](https://dbplyr.tidyverse.org/articles/sql.html)</span></span>
 <span id="cb37-327"><a href="#cb37-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-328"><a href="#cb37-328" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Data Carpentry: SQL databases and R</span><span class="co">](https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html)</span> TODO this link does not work</span>
+<span id="cb37-328"><a href="#cb37-328" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Data Carpentry: SQL databases and R</span><span class="co">](https://lessons.datacarpentry.org/R-ecology-lesson/05-r-and-databases.html)</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

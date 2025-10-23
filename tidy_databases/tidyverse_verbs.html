@@ -121,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with working databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/tidyverse_verbs.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/tidyverse_verbs.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../tidy_databases/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started with working databases from R</span></a>
+ <span class="menu-text">Getting started with databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -256,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with working databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/tidyverse_verbs.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/tidyverse_verbs.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></a></li></ol></nav>
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title"><span id="sec-tidyverse_verbs" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Core verbs for analytic pipelines utilising a database</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
@@ -275,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>We saw in the previous chapter that we can use familiar <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we’ll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the <a href="https://nycflights13.tidyverse.org"><code>nycflights13</code></a> data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.</p>
+<p>We saw in the previous chapter that we can use familiar <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> verbs with data held in a database. In the last chapter, we were working with just a single table which we loaded into the database. When working with databases, we will typically be working with multiple tables (as we’ll see later when working with data in the OMOP CDM format). For this chapter, we will see more tidyverse functionality that can be used with data in a database, this time using the <a href="https://nycflights13.tidyverse.org"><code>nycflights13</code></a> data. As we can see, we now have a set of related tables with data on flights departing from New York City airports in 2013.</p>
 <div id="fig-nycflights13" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nycflights13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -308,7 +308,7 @@ Figure&nbsp;2.1: <code>nycflights13</code> relational diagram from <a href="http
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 8
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 $ faa   &lt;chr&gt; "04G", "06A", "06C", "06N", "09J", "0A9", "0G6", "0G7", "0P2", "…
 $ name  &lt;chr&gt; "Lansdowne Airport", "Moton Field Municipal Airport", "Schaumbur…
 $ lat   &lt;dbl&gt; 41.13047, 32.46057, 41.98934, 41.43191, 31.07447, 36.37122, 41.4…
@@ -323,7 +323,7 @@ $ tzone &lt;chr&gt; "America/New_York", "America/Chicago", "America/Chicago", "A
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 19
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 $ year           &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2…
 $ month          &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
 $ day            &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
@@ -349,7 +349,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 10:00:00, 2013-01-01 10:00:00, 2013-01-
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 15
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 $ origin     &lt;chr&gt; "EWR", "EWR", "EWR", "EWR", "EWR", "EWR", "EWR", "EWR", "EW…
 $ year       &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013,…
 $ month      &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
@@ -371,7 +371,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 06:00:00, 2013-01-01 07:00:00, 2013-01-01 0
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 9
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 $ tailnum      &lt;chr&gt; "N10156", "N102UW", "N103US", "N104UW", "N10575", "N105UW…
 $ year         &lt;int&gt; 2004, 1998, 1999, 1999, 2002, 1999, 1999, 1999, 1999, 199…
 $ type         &lt;chr&gt; "Fixed wing multi engine", "Fixed wing multi engine", "Fi…
@@ -387,14 +387,14 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 2
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 $ carrier &lt;chr&gt; "9E", "AA", "AS", "B6", "DL", "EV", "F9", "FL", "HA", "MQ", "O…
 $ name    &lt;chr&gt; "Endeavor Air Inc.", "American Airlines Inc.", "Alaska Airline…</code></pre>
 </div>
 </div>
 <section id="tidyverse-functions" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="tidyverse-functions"><span class="header-section-number">2.1</span> Tidyverse functions</h2>
-<p>For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a>, but a couple also from the <a href="https://tidyr.tidyverse.org"><code>tidyr</code></a> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</p>
+<p>For almost all analyses, we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the tidyverse functions below (most of which come from <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a>, but a couple also from the <a href="https://tidyr.tidyverse.org"><code>tidyr</code></a> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -405,11 +405,11 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Until we use <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> or <a href="https://dplyr.tidyverse.org/reference/collect.html"><code>collect()</code></a> (or printing the first few rows of the result) all we’re doing is translating R code into SQL. Which means no code is being executed in the database side.</p>
+<p>Until we use <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> or <a href="https://dplyr.tidyverse.org/reference/collect.html"><code>collect()</code></a> (or printing the first few rows of the result), all we’re doing is translating R code into SQL. This means no code is being executed on the database side.</p>
 <ul>
 <li><p><a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> will execute the query and store it in a new table in the database.</p></li>
 <li><p><a href="https://dplyr.tidyverse.org/reference/collect.html"><code>collect()</code></a> will execute the query and bring the result back to R.</p></li>
-<li><p>printing (e.g.&nbsp;<a href="https://pillar.r-lib.org/reference/glimpse.html"><code>glimpse()</code></a> or <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/print"><code>print()</code></a>) will execute the query limiting the result to the first set of rows which leads to smaller computation time in the database side.</p></li>
+<li><p>printing (e.g.&nbsp;<a href="https://pillar.r-lib.org/reference/glimpse.html"><code>glimpse()</code></a> or <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/print"><code>print()</code></a>) will execute the query, limiting the result to the first set of rows, which leads to shorter computation time on the database side.</p></li>
 </ul>
 </div>
 </div>
@@ -489,7 +489,7 @@ Important
 <pre><code>[1] "S3"      "generic"</code></pre>
 </div>
 </div>
-<p>Among others, the references we create to tables in a database have <code>tbl_lazy</code> as a class attribute. Meanwhile, we can see that when collected into R the object changes to have different attributes, one of which being <code>data.frame</code> :</p>
+<p>Among others, the references we create to tables in a database have <code>tbl_lazy</code> as a class attribute. Meanwhile, we can see that when collected into R, the object changes to have different attributes, one of which is <code>data.frame</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(flights_db)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -543,7 +543,7 @@ Important
 <section id="getting-to-an-analytic-dataset" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="getting-to-an-analytic-dataset"><span class="header-section-number">2.2</span> Getting to an analytic dataset</h2>
 <p>To see a little more on how we can use the above functions, let’s say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.</p>
-<p>For this we’ll first use the <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> and <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>select()</code></a> <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> verbs to get the data from the flights table. Note, we’ll rename arr_delay to just delay.</p>
+<p>For this, we’ll first use the <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> and <a href="https://dplyr.tidyverse.org/reference/select.html"><code>select()</code></a> <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> verbs to get the data from the flights table. Note, we’ll rename arr_delay to just delay.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> flights_db <span class="sc">|&gt;</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arr_delay) <span class="sc">&amp;</span> origin <span class="sc">==</span> <span class="st">"JFK"</span>) <span class="sc">|&gt;</span> </span>
@@ -578,7 +578,7 @@ WHERE (NOT((arr_delay IS NULL)) AND origin = 'JFK')</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 5]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    dest  distance carrier tailnum delay
    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
  1 MIA       1089 AA      N619AA     33
@@ -638,7 +638,7 @@ INNER JOIN planes
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 6]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    dest  distance carrier tailnum delay seats
    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt;
  1 MIA       1089 AA      N619AA     33   178
@@ -654,7 +654,7 @@ INNER JOIN planes
 # ℹ more rows</code></pre>
 </div>
 </div>
-<p>Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform locally statistical analyses which might not be possible to run in a database such as plots, density distributions, regression, … anything beyond the data manipulation).</p>
+<p>This tidy dataset has been created in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and proceed from there (for example, to perform statistical analyses locally that might not be possible to run in a database, such as plots, density distributions, regression, or anything beyond data manipulation).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>
@@ -1157,7 +1157,7 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Core verbs for analytic pipelines utilising a database {#sec-tidyverse_verbs}</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>We saw in the previous chapter that we can use familiar <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span> verbs with data held in a database. In the last chapter we were working with just a single table which we loaded into the database. When working with databases we will though typically be working with multiple tables (as we'll see later when working with data in the OMOP CDM format). For this chapter we will see more tidyverse functionality that can be used with data in a database, this time using the <span class="co">[</span><span class="ot">`nycflights13`</span><span class="co">](https://nycflights13.tidyverse.org)</span> data. As we can see, now we have a set of related tables with data on flights departing from New York City airports in 2013.</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>We saw in the previous chapter that we can use familiar <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span> verbs with data held in a database. In the last chapter, we were working with just a single table which we loaded into the database. When working with databases, we will typically be working with multiple tables (as we'll see later when working with data in the OMOP CDM format). For this chapter, we will see more tidyverse functionality that can be used with data in a database, this time using the <span class="co">[</span><span class="ot">`nycflights13`</span><span class="co">](https://nycflights13.tidyverse.org)</span> data. As we can see, we now have a set of related tables with data on flights departing from New York City airports in 2013.</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="al">![`nycflights13` relational diagram from &lt;https://collinn.github.io/teaching/2023/labs/joins.html&gt;.](../images/relational-01.png)</span>{#fig-nycflights13 .lightbox}</span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -1197,16 +1197,16 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tidyverse functions</span></span>
 <span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>For almost all analyses we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the below tidyverse functions (most of which coming from <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span>, but a couple also from the <span class="co">[</span><span class="ot">`tidyr`</span><span class="co">](https://tidyr.tidyverse.org)</span> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>For almost all analyses, we want to go from having our starting data spread out across multiple tables in the database to a single tidy table containing all the data we need for the specific analysis. We can often get to our tidy analytic dataset using the tidyverse functions below (most of which come from <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span>, but a couple also from the <span class="co">[</span><span class="ot">`tidyr`</span><span class="co">](https://tidyr.tidyverse.org)</span> package). These functions all work with data in a database by generating SQL that will have the same purpose as if these functions were being run against data in R.</span>
 <span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>Until we use <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> or <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/collect.html)</span> (or printing the first few rows of the result) all we're doing is translating R code into SQL. Which means no code is being executed in the database side.</span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>Until we use <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> or <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/collect.html)</span> (or printing the first few rows of the result), all we're doing is translating R code into SQL. This means no code is being executed on the database side.</span>
 <span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> will execute the query and store it in a new table in the database.</span>
 <span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/collect.html)</span> will execute the query and bring the result back to R.</span>
 <span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>printing (e.g. <span class="co">[</span><span class="ot">`glimpse()`</span><span class="co">](https://pillar.r-lib.org/reference/glimpse.html)</span> or <span class="co">[</span><span class="ot">`print()`</span><span class="co">](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/print)</span>) will execute the query limiting the result to the first set of rows which leads to smaller computation time in the database side.</span>
+<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>printing (e.g. <span class="co">[</span><span class="ot">`glimpse()`</span><span class="co">](https://pillar.r-lib.org/reference/glimpse.html)</span> or <span class="co">[</span><span class="ot">`print()`</span><span class="co">](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/print)</span>) will execute the query, limiting the result to the first set of rows, which leads to shorter computation time on the database side.</span>
 <span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Purpose                  <span class="pp">|</span> Functions                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <span class="pp">|</span> Description                                                                             <span class="pp">|</span></span>
@@ -1231,7 +1231,7 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-74"><a href="#cb34-74" aria-hidden="true" tabindex="-1"></a><span class="fu">ftype</span>(inner_join)</span>
 <span id="cb34-75"><a href="#cb34-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-76"><a href="#cb34-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-77"><a href="#cb34-77" aria-hidden="true" tabindex="-1"></a>Among others, the references we create to tables in a database have <span class="in">`tbl_lazy`</span> as a class attribute. Meanwhile, we can see that when collected into R the object changes to have different attributes, one of which being <span class="in">`data.frame`</span> :</span>
+<span id="cb34-77"><a href="#cb34-77" aria-hidden="true" tabindex="-1"></a>Among others, the references we create to tables in a database have <span class="in">`tbl_lazy`</span> as a class attribute. Meanwhile, we can see that when collected into R, the object changes to have different attributes, one of which is <span class="in">`data.frame`</span>:</span>
 <span id="cb34-78"><a href="#cb34-78" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-79"><a href="#cb34-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
 <span id="cb34-80"><a href="#cb34-80" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(flights_db)</span>
@@ -1263,7 +1263,7 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-106"><a href="#cb34-106" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a>To see a little more on how we can use the above functions, let's say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.</span>
 <span id="cb34-108"><a href="#cb34-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a>For this we'll first use the <span class="co">[</span><span class="ot">`filter()`</span><span class="co">](https://dplyr.tidyverse.org/reference/filter.html)</span> and <span class="co">[</span><span class="ot">`select()`</span><span class="co">](https://dplyr.tidyverse.org/reference/filter.html)</span> <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span> verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.</span>
+<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a>For this, we'll first use the <span class="co">[</span><span class="ot">`filter()`</span><span class="co">](https://dplyr.tidyverse.org/reference/filter.html)</span> and <span class="co">[</span><span class="ot">`select()`</span><span class="co">](https://dplyr.tidyverse.org/reference/select.html)</span> <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span> verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.</span>
 <span id="cb34-110"><a href="#cb34-110" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
 <span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> flights_db <span class="sc">|&gt;</span> </span>
@@ -1316,7 +1316,7 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-159"><a href="#cb34-159" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span>
 <span id="cb34-160"><a href="#cb34-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-161"><a href="#cb34-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a>Getting to this tidy dataset has been done in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and go from there (for example, to perform locally statistical analyses which might not be possible to run in a database such as plots, density distributions, regression, ... anything beyond the data manipulation).</span>
+<span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a>This tidy dataset has been created in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and proceed from there (for example, to perform statistical analyses locally that might not be possible to run in a database, such as plots, density distributions, regression, or anything beyond data manipulation).</span>
 <span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-164"><a href="#cb34-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
 <span id="cb34-165"><a href="#cb34-165" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>

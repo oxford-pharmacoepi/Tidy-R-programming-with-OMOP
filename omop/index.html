@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../tidy_databases/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started with working databases from R</span></a>
+ <span class="menu-text">Getting started with databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -263,12 +263,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In this second half of the book we will focus on how we can work with data in the OMOP CDM format from R.</p>
+<p>In this second half of the book, we will focus on how we can work with data in the OMOP CDM format from R.</p>
 <ul>
 <li><p>In <a href="cdm_reference.html" class="quarto-xref"><span>5&nbsp; Creating a CDM reference</span></a> we will see how to create a cdm_reference in R, a data model that contains references to the OMOP CDM tables and provides the foundation for analysis.</p></li>
 <li><p>The OMOP CDM is a person-centric model, and the person and observation period tables are two key tables for any analysis. In <a href="exploring_the_cdm.html" class="quarto-xref"><span>6&nbsp; Exploring the OMOP CDM</span></a> we will see more on how these tables can be used as the starting point for identifying your study participants.</p></li>
-<li><p>In <a href="adding_features.html" class="quarto-xref"><span>7&nbsp; Identifying patient characteristics</span></a> we will see how to add demographics information to different tables of interest and summarise it using dplyr code. Finally we will also see how use tidyverse verbs to add some custom features.</p></li>
-<li><p>In <a href="creating_cohorts.html" class="quarto-xref"><span>8&nbsp; Adding cohorts to the CDM</span></a> we will have a look to the cohort object, how it is defined and what are their attributes. We we also see how to create some simple base cohorts and apply some inclusion criteria to them.</p></li>
+<li><p>In <a href="adding_features.html" class="quarto-xref"><span>7&nbsp; Identifying patient characteristics</span></a> we will see how to add demographics information to different tables of interest and summarise it using dplyr code. Finally, we will also see how to use tidyverse verbs to add some custom features.</p></li>
+<li><p>In <a href="creating_cohorts.html" class="quarto-xref"><span>8&nbsp; Adding cohorts to the CDM</span></a> we will have a look at the cohort object, how it is defined and what are their attributes. We will also see how to create some simple base cohorts and apply some inclusion criteria to them.</p></li>
 <li><p>Finally, in <a href="working_with_cohorts.html" class="quarto-xref"><span>9&nbsp; Working with cohorts</span></a> we will learn how to intersect cohorts with one another, extracting counts, presence indicators, specific dates, or time differences to obtain the information of interest for our study population.</p></li>
 </ul>
 
@@ -742,15 +742,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Working with the OMOP CDM from R</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>In this second half of the book we will focus on how we can work with data in the OMOP CDM format from R.</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>In this second half of the book, we will focus on how we can work with data in the OMOP CDM format from R.</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In @sec-cdm_reference we will see how to create a cdm_reference in R, a data model that contains references to the OMOP CDM tables and provides the foundation for analysis.</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The OMOP CDM is a person-centric model, and the person and observation period tables are two key tables for any analysis. In @sec-exploring_the_cdm we will see more on how these tables can be used as the starting point for identifying your study participants.</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In @sec-adding_features we will see how to add demographics information to different tables of interest and summarise it using dplyr code. Finally we will also see how use tidyverse verbs to add some custom features.</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In @sec-adding_features we will see how to add demographics information to different tables of interest and summarise it using dplyr code. Finally, we will also see how to use tidyverse verbs to add some custom features.</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In @sec-creating_cohorts we will have a look to the cohort object, how it is defined and what are their attributes. We we also see how to create some simple base cohorts and apply some inclusion criteria to them.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In @sec-creating_cohorts we will have a look at the cohort object, how it is defined and what are their attributes. We will also see how to create some simple base cohorts and apply some inclusion criteria to them.</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Finally, in @sec-working_with_cohorts we will learn how to intersect cohorts with one another, extracting counts, presence indicators, specific dates, or time differences to obtain the information of interest for our study population.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>

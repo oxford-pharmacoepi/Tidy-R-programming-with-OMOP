@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../tidy_databases/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started with working databases from R</span></a>
+ <span class="menu-text">Getting started with databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -296,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="set-up" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="set-up"><span class="header-section-number">8.2</span> Set up</h2>
-<p>We’ll use our the same COVID-19 synthetic dataset that we used before for demonstrating how cohorts can be constructed.</p>
+<p>We’ll use the same Covid-19 synthetic dataset that we used before for demonstrating how cohorts can be constructed.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omock)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CohortConstructor)</span>
@@ -316,19 +316,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_covid&gt; [?? x 4]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5e21wo/file38b330d37a2c.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpAI0gQW/file8c73194d634e.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        250 2021-01-02        2021-01-18     
- 2                    1        394 2020-04-09        2020-05-16     
- 3                    1       6755 2020-04-09        2020-05-15     
- 4                    1       7173 2020-12-02        2021-01-01     
- 5                    1      10197 2020-05-16        2020-06-04     
- 6                    1       5780 2020-11-20        2020-12-14     
- 7                    1       6601 2020-06-07        2020-06-23     
- 8                    1       7616 2020-07-30        2020-08-14     
- 9                    1       7837 2021-01-31        2021-02-21     
-10                    1       3226 2020-06-14        2020-07-11     
+ 1                    1       1827 2020-12-27        2021-01-25     
+ 2                    1       9107 2020-12-24        2021-01-02     
+ 3                    1       5788 2020-07-13        2020-08-17     
+ 4                    1       7236 2020-10-09        2020-11-14     
+ 5                    1       2192 2020-10-12        2020-11-09     
+ 6                    1       4068 2020-11-10        2020-12-17     
+ 7                    1       4750 2020-04-16        2020-05-04     
+ 8                    1       1123 2020-10-25        2020-11-03     
+ 9                    1       1828 2020-09-08        2020-10-06     
+10                    1       2951 2020-12-01        2021-01-03     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -344,7 +344,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Note that the <code>name</code> argument determines the name of the permanent table written in the database and as we have seen before we have have to be consistent assigning the tables to the cdm object, that’s my we used <code>name = "covid"</code> and then we were able to assign it to <code>cdm$covid</code>. Otherwise see this failing example:</p>
+<p>Note that the <code>name</code> argument determines the name of the permanent table written in the database and as we have seen before, we have to be consistent assigning the tables to the cdm object. That’s why we used <code>name = "covid"</code> and then we were able to assign it to <code>cdm$covid</code>. Otherwise, see this failing example:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>not_covid <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(<span class="at">cdm =</span> cdm, </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">conceptSet =</span> <span class="fu">list</span>(<span class="st">"covid"</span> <span class="ot">=</span> <span class="dv">37311061</span>), </span>
@@ -385,7 +385,7 @@ cdm[['not_covid']] &lt;- yourObject |&gt;
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>In the defining the cohorts above we have needed to provide concept IDs to define our cohort. But, where do these come from?</p>
+<p>In defining the cohorts above, we have needed to provide concept IDs to define our cohort. But where do these come from?</p>
 <p>We can search for codes of interest using the <a href="https://darwin-eu.github.io/CodelistGenerator/"><code>CodelistGenerator</code></a> package. This can be done using a text search with the function <a href="https://darwin-eu.github.io/CodelistGenerator/reference/getCandidateCodes.html"><code>getCandidateCodes()</code></a>. For example, we can have found the code we used above (and many others) like so:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CodelistGenerator)</span>
@@ -406,20 +406,20 @@ Time taken: 0 minutes and 1 seconds</code></pre>
 <pre><code># A tibble: 37 × 6
    concept_id found_from   concept_name domain_id vocabulary_id standard_concept
         &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
- 1    3656667 From initia… Cardiomyopa… Condition SNOMED        S               
- 2    3661885 From initia… Fever cause… Condition SNOMED        S               
- 3   37310286 From initia… Infection o… Condition SNOMED        S               
- 4     703447 From initia… High risk c… Condition SNOMED        S               
- 5    3661631 From initia… Lymphocytop… Condition SNOMED        S               
- 6    3661632 From initia… Thrombocyto… Condition SNOMED        S               
- 7    3655973 From initia… At increase… Condition SNOMED        S               
- 8    3661406 From initia… Acute respi… Condition SNOMED        S               
- 9   37016927 From initia… Pneumonia c… Condition SNOMED        S               
-10    1340294 From initia… Exacerbatio… Condition OMOP Extensi… S               
+ 1    1340294 From initia… Exacerbatio… Condition OMOP Extensi… S               
+ 2    3661406 From initia… Acute respi… Condition SNOMED        S               
+ 3   37016927 From initia… Pneumonia c… Condition SNOMED        S               
+ 4    3656667 From initia… Cardiomyopa… Condition SNOMED        S               
+ 5    3661885 From initia… Fever cause… Condition SNOMED        S               
+ 6   37310286 From initia… Infection o… Condition SNOMED        S               
+ 7     703447 From initia… High risk c… Condition SNOMED        S               
+ 8    3661631 From initia… Lymphocytop… Condition SNOMED        S               
+ 9    3661632 From initia… Thrombocyto… Condition SNOMED        S               
+10    3655973 From initia… At increase… Condition SNOMED        S               
 # ℹ 27 more rows</code></pre>
 </div>
 </div>
-<p>We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of it’s descendants.</p>
+<p>We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of its descendants.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getDrugIngredientCodes</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"acetaminophen"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -451,7 +451,7 @@ $ cdm_version          &lt;chr&gt; "5.3"
 $ vocabulary_version   &lt;chr&gt; "v5.0 22-JUN-22"</code></pre>
 </div>
 </div>
-<p>In settings we can see the cohort name that by default is the name of the codelist used, in this case ‘covid’ as we used <code>conceptSet = list(covid = 37311061)</code>. Also the cdm and vocabulary versions are recorded in the settings by the CohortConstructor package.</p>
+<p>In settings, we can see the cohort name that by default is the name of the codelist used, in this case ‘covid’ as we used <code>conceptSet = list(covid = 37311061)</code>. Also, the cdm and vocabulary versions are recorded in the settings by the CohortConstructor package.</p>
 <p>Second, we can get counts of each cohort.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohortCount</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
@@ -464,8 +464,8 @@ $ number_records       &lt;int&gt; 964
 $ number_subjects      &lt;int&gt; 964</code></pre>
 </div>
 </div>
-<p>Where you can see the number of records and number of subjects for each cohort, in this case there are no multiple records per subject.</p>
-<p>An attrition can also be retrieved from any cohort.</p>
+<p>Where you can see the number of records and number of subjects for each cohort. In this case, there are no multiple records per subject.</p>
+<p>Attrition can also be retrieved from any cohort.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -500,7 +500,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0</code></pre>
 <pre><code>[1] 37311061</code></pre>
 </div>
 </div>
-<p>Note in this case we had to provide the cohortId of the cohort of interest.</p>
+<p>Note that in this case, we had to provide the cohortId of the cohort of interest.</p>
 <p>All these attributes can be retrieved because it is a <code>cohort_table</code> object, a class on top of the usual <code>cdm_table</code> class that we have seen before:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>covid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -510,7 +510,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0</code></pre>
 [7] "tbl_lazy"              "tbl"                  </code></pre>
 </div>
 </div>
-<p>As we will see below these attributes of the cohorts become particularly useful as we apply further restrictions on our cohort.</p>
+<p>As we will see below, these attributes of the cohorts become particularly useful as we apply further restrictions on our cohort.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -531,7 +531,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0</code></pre>
 [5] "cohort_set"       "cohort_attrition" "cohort_codelist"  "cdm_reference"   </code></pre>
 </div>
 </div>
-<p>In particular the <code>cohort_set</code> (contains the <a href="https://darwin-eu.github.io/omopgenerics/reference/settings.html"><code>settings()</code></a> source), <code>cohort_attrition</code> (contains the source for <a href="https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html"><code>cohortCount()</code></a> and <a href="https://darwin-eu.github.io/omopgenerics/reference/attrition.html"><code>attrition()</code></a>) and <code>cohort_codelist</code> (contains the source for <a href="https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html"><code>cohortCodelist()</code></a>) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table ‘cdm$covid’ in fact four tables were written in the database:</p>
+<p>In particular, the <code>cohort_set</code> (contains the <a href="https://darwin-eu.github.io/omopgenerics/reference/settings.html"><code>settings()</code></a> source), <code>cohort_attrition</code> (contains the source for <a href="https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html"><code>cohortCount()</code></a> and <a href="https://darwin-eu.github.io/omopgenerics/reference/attrition.html"><code>attrition()</code></a>) and <code>cohort_codelist</code> (contains the source for <a href="https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html"><code>cohortCodelist()</code></a>) attributes are the ones of interest. For database back-ends, these attributes are stored in the database so when we read them again, the attributes persist. See that even though apparently we only have one table ‘cdm$covid’, in fact four tables were written in the database:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> https://github.com/OHDSI/omock/issues/189 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -557,7 +557,7 @@ Attaching package: 'omopgenerics'</code></pre>
 <h2 data-number="8.4" class="anchored" data-anchor-id="applying-inclusion-criteria"><span class="header-section-number">8.4</span> Applying inclusion criteria</h2>
 <section id="only-include-first-cohort-entry-per-person" class="level3" data-number="8.4.1">
 <h3 data-number="8.4.1" class="anchored" data-anchor-id="only-include-first-cohort-entry-per-person"><span class="header-section-number">8.4.1</span> Only include first cohort entry per person</h3>
-<p>Let’s say we first want to restrict to first entry.</p>
+<p>Let’s say we first want to restrict to the first entry.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span> </span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">requireIsFirstEntry</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -565,7 +565,7 @@ Attaching package: 'omopgenerics'</code></pre>
 </section>
 <section id="restrict-to-study-period" class="level3" data-number="8.4.2">
 <h3 data-number="8.4.2" class="anchored" data-anchor-id="restrict-to-study-period"><span class="header-section-number">8.4.2</span> Restrict to study period</h3>
-<p>Then we are interested in records only after January 1st 2020.</p>
+<p>Then we are interested in records only after January 1st, 2020.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireInDateRange</span>(<span class="at">dateRange =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>), <span class="cn">NA</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -573,7 +573,7 @@ Attaching package: 'omopgenerics'</code></pre>
 </section>
 <section id="applying-demographic-inclusion-criteria" class="level3" data-number="8.4.3">
 <h3 data-number="8.4.3" class="anchored" data-anchor-id="applying-demographic-inclusion-criteria"><span class="header-section-number">8.4.3</span> Applying demographic inclusion criteria</h3>
-<p>Finally we want to restrict our population of interest to only adult males under 65 years old. We can do that with the <code>requireDemographics()</code> function.</p>
+<p>Finally, we want to restrict our population of interest to only adult males under 65 years old. We can do that with the <code>requireDemographics()</code> function.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireDemographics</span>(<span class="at">ageRange =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">64</span>), <span class="at">sex =</span> <span class="st">"Male"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -590,7 +590,7 @@ Attaching package: 'omopgenerics'</code></pre>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Note that all these <code>require*()</code> functions that come from the CohortConstructor package use functionalities from PatientProfiles and the naming is consistent, for example <code>requireDemographics()</code> uses <code>addDemographics()</code>, <code>requirePriorObservation()</code> uses <code>addPriorObservation()</code> and so…</p>
+<p>Note that all these <code>require*()</code> functions that come from the CohortConstructor package use functionalities from PatientProfiles and the naming is consistent. For example, <code>requireDemographics()</code> uses <code>addDemographics()</code>, <code>requirePriorObservation()</code> uses <code>addPriorObservation()</code>, and so on…</p>
 </div>
 </div>
 </div>
@@ -608,19 +608,19 @@ Attaching package: 'omopgenerics'</code></pre>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_cardiac&gt; [?? x 4]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5e21wo/file38b330d37a2c.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpAI0gQW/file8c73194d634e.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        785 2021-02-12        2021-02-12     
- 2                    1       1813 1995-08-05        1995-08-05     
- 3                    1       2371 2005-07-17        2005-07-17     
- 4                    1       3384 2019-07-02        2019-07-02     
- 5                    1       3802 2020-10-03        2020-10-03     
- 6                    1       3903 2007-01-11        2007-01-11     
- 7                    1       4073 1985-01-19        1985-01-19     
- 8                    1       7094 1964-02-15        1964-02-15     
- 9                    1       7145 1987-02-02        1987-02-02     
-10                    1       7833 1958-04-02        1958-04-02     
+ 1                    1       2393 2002-10-24        2002-10-24     
+ 2                    1       3221 2016-12-29        2016-12-29     
+ 3                    1       3411 2005-06-14        2005-06-14     
+ 4                    1       3747 1990-07-09        1990-07-09     
+ 5                    1       5088 1991-10-15        1991-10-15     
+ 6                    1       5446 2016-07-04        2016-07-04     
+ 7                    1       5945 2020-08-18        2020-08-18     
+ 8                    1       6693 2020-03-10        2020-03-10     
+ 9                    1       7440 2014-11-27        2014-11-27     
+10                    1       7792 2011-04-12        2011-04-12     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -632,7 +632,7 @@ Attaching package: 'omopgenerics'</code></pre>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">window =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), </span>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">intersections =</span> <span class="dv">0</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note if we had wanted to have required that individuals did have a history of a cardiac condition we would instead have set <code>intersections = c(1, Inf)</code> above.</p>
+<p>Note that if we had wanted to require that individuals did have a history of a cardiac condition, we would instead have set <code>intersections = c(1, Inf)</code> above.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -655,7 +655,7 @@ Attaching package: 'omopgenerics'</code></pre>
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">intersections =</span> <span class="dv">0</span></span>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>In fact this approach would be more efficient unless we want to re-use the <code>myocardial_infarction</code> cohort for another inclusion criteria or analysis. Note that the intersection with the cohort table is more flexible as it can have more complicated inclusion/exclusion criteria, but you have to be more careful with the order of inclusion criteria (e.g.&nbsp;if we would restrict the myocaridal_infarction cohort to a certain time span when we would do the intersect we would require to not have the inclusion criteria on that time span).</p>
+<p>In fact, this approach would be more efficient unless we want to re-use the <code>myocardial_infarction</code> cohort for another inclusion criteria or analysis. Note that the intersection with the cohort table is more flexible as it can have more complicated inclusion/exclusion criteria, but you have to be more careful with the order of inclusion criteria (e.g., if we would restrict the myocardial_infarction cohort to a certain time span when we would do the intersect, we would require to not have the inclusion criteria on that time span).</p>
 </div>
 </div>
 </div>
@@ -663,7 +663,7 @@ Attaching package: 'omopgenerics'</code></pre>
 </section>
 <section id="cohort-attributes" class="level2" data-number="8.5">
 <h2 data-number="8.5" class="anchored" data-anchor-id="cohort-attributes"><span class="header-section-number">8.5</span> Cohort attributes</h2>
-<p>Using the <code>require*()</code> functions th cohort attribytes have been updated to reflect the applied inclusion criteria.</p>
+<p>Using the <code>require*()</code> functions, the cohort attributes have been updated to reflect the applied inclusion criteria.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -706,7 +706,7 @@ $ excluded_records     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13
 $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13</code></pre>
 </div>
 </div>
-<p>We can visualise the attrition with the CohortCharacteristics package, we can first extract it with <code>summariseCohortAttrition()</code> and then <code>plotCohortAttrition</code> to better view the impact of applying each inclusion criteria:</p>
+<p>We can visualize the attrition with the CohortCharacteristics package. We can first extract it with <code>summariseCohortAttrition()</code> and then <code>plotCohortAttrition</code> to better view the impact of applying each inclusion criteria:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>attrition_summary <span class="ot">&lt;-</span> <span class="fu">summariseCohortAttrition</span>(<span class="at">cohort =</span> cdm<span class="sc">$</span>covid)</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCohortAttrition</span>(<span class="at">result =</span> attrition_summary, <span class="at">type =</span> <span class="st">'png'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -718,7 +718,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13<
 </div>
 </div>
 </div>
-<p>Note that <code>conceptCohort()</code> first step lead to several rows in the attrition table, whereas any other <code>require*()</code> function always add just one record of attrition.</p>
+<p>Note that the <code>conceptCohort()</code> first step leads to several rows in the attrition table, whereas any other <code>require*()</code> function always adds just one record of attrition.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -731,7 +731,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13<
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>As we have seen that by default the naming of the cohorts in the name of the codelist:</p>
+<p>As we have seen, by default the naming of the cohorts is the name of the codelist:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(<span class="at">cdm =</span> cdm, </span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">conceptSet =</span> <span class="fu">list</span>(<span class="st">"concept_1"</span> <span class="ot">=</span> <span class="dv">37311061</span>L, <span class="st">"concept_2"</span> <span class="ot">=</span> <span class="dv">317576</span>L), </span>
@@ -754,7 +754,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13<
 2                    2 concept_2   5.3         v5.0 22-JUN-22    </code></pre>
 </div>
 </div>
-<p>But maybe we are interested to rename a cohort (e.g.&nbsp;after applying the inclusion criteria), we can do that with the <code>renameCohort()</code> utility function:</p>
+<p>But maybe we are interested in renaming a cohort (e.g., after applying the inclusion criteria). We can do that with the <code>renameCohort()</code> utility function:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort <span class="ot">&lt;-</span> cdm<span class="sc">$</span>my_cohort <span class="sc">|&gt;</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">requirePriorObservation</span>(<span class="at">minPriorObservation =</span> <span class="dv">365</span>, <span class="at">cohortId =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
@@ -769,7 +769,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13<
 # ℹ 1 more variable: min_prior_observation &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>Note that for arguments such as <code>cohortId</code>, <code>targetCohortId</code>, … we are able to use the name of the cohort of interest, see for example:</p>
+<p>Note that for arguments such as <code>cohortId</code>, <code>targetCohortId</code>, etc., we are able to use the name of the cohort of interest. See for example:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort <span class="ot">&lt;-</span> cdm<span class="sc">$</span>my_cohort <span class="sc">|&gt;</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">requireSex</span>(<span class="at">sex =</span> <span class="st">"Female"</span>, <span class="at">cohortId =</span> <span class="st">"concept_2"</span>) <span class="sc">|&gt;</span></span>
@@ -784,7 +784,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13<
 # ℹ 2 more variables: min_prior_observation &lt;dbl&gt;, sex &lt;chr&gt;</code></pre>
 </div>
 </div>
-<p>This functionality also applies to other packages, such as CohortCharacteristics, PatientProfiles, DrugUtilisation, … Finally in some cases it is useful to add the cohort_name as a column to not have to check manually the equivalence between <em>cohort definition id</em> and <em>cohort name</em>, this can be done using the PatientProfiles utility function <code>addCohortName()</code>:</p>
+<p>This functionality also applies to other packages, such as CohortCharacteristics, PatientProfiles, DrugUtilisation, etc. Finally, in some cases, it is useful to add the cohort_name as a column to not have to check manually the equivalence between <em>cohort definition id</em> and <em>cohort name</em>. This can be done using the PatientProfiles utility function <code>addCohortName()</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort <span class="sc">|&gt;</span></span>
@@ -793,7 +793,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 171, 430, 192, 0, 0, 13<
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 5
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5e21wo/file38b330d37a2c.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpAI0gQW/file8c73194d634e.duckdb]
 $ cohort_definition_id &lt;int&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
 $ subject_id           &lt;int&gt; 71, 82, 134, 151, 153, 183, 194, 196, 200, 215, 2…
 $ cohort_start_date    &lt;date&gt; 1936-01-24, 1997-08-04, 2001-01-09, 2022-01-13, …
@@ -1339,7 +1339,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-20"><a href="#cb71-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-21"><a href="#cb71-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Set up</span></span>
 <span id="cb71-22"><a href="#cb71-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-23"><a href="#cb71-23" aria-hidden="true" tabindex="-1"></a>We'll use our the same COVID-19 synthetic dataset that we used before for demonstrating how cohorts can be constructed.</span>
+<span id="cb71-23"><a href="#cb71-23" aria-hidden="true" tabindex="-1"></a>We'll use the same Covid-19 synthetic dataset that we used before for demonstrating how cohorts can be constructed.</span>
 <span id="cb71-24"><a href="#cb71-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-25"><a href="#cb71-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb71-26"><a href="#cb71-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omock)</span>
@@ -1364,7 +1364,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-45"><a href="#cb71-45" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb71-46"><a href="#cb71-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### Name consistency</span></span>
 <span id="cb71-47"><a href="#cb71-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-48"><a href="#cb71-48" aria-hidden="true" tabindex="-1"></a>Note that the <span class="in">`name`</span> argument determines the name of the permanent table written in the database and as we have seen before we have have to be consistent assigning the tables to the cdm object, that's my we used <span class="in">`name = "covid"`</span> and then we were able to assign it to <span class="in">`cdm$covid`</span>. Otherwise see this failing example:</span>
+<span id="cb71-48"><a href="#cb71-48" aria-hidden="true" tabindex="-1"></a>Note that the <span class="in">`name`</span> argument determines the name of the permanent table written in the database and as we have seen before, we have to be consistent assigning the tables to the cdm object. That's why we used <span class="in">`name = "covid"`</span> and then we were able to assign it to <span class="in">`cdm$covid`</span>. Otherwise, see this failing example:</span>
 <span id="cb71-49"><a href="#cb71-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-50"><a href="#cb71-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error = TRUE}</span></span>
 <span id="cb71-51"><a href="#cb71-51" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>not_covid <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(<span class="at">cdm =</span> cdm, </span>
@@ -1376,7 +1376,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-57"><a href="#cb71-57" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
 <span id="cb71-58"><a href="#cb71-58" aria-hidden="true" tabindex="-1"></a><span class="fu">### Finding appropriate codes</span></span>
 <span id="cb71-59"><a href="#cb71-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-60"><a href="#cb71-60" aria-hidden="true" tabindex="-1"></a>In the defining the cohorts above we have needed to provide concept IDs to define our cohort. But, where do these come from?</span>
+<span id="cb71-60"><a href="#cb71-60" aria-hidden="true" tabindex="-1"></a>In defining the cohorts above, we have needed to provide concept IDs to define our cohort. But where do these come from?</span>
 <span id="cb71-61"><a href="#cb71-61" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-62"><a href="#cb71-62" aria-hidden="true" tabindex="-1"></a>We can search for codes of interest using the <span class="co">[</span><span class="ot">`CodelistGenerator`</span><span class="co">](https://darwin-eu.github.io/CodelistGenerator/)</span> package. This can be done using a text search with the function <span class="co">[</span><span class="ot">`getCandidateCodes()`</span><span class="co">](https://darwin-eu.github.io/CodelistGenerator/reference/getCandidateCodes.html)</span>. For example, we can have found the code we used above (and many others) like so:</span>
 <span id="cb71-63"><a href="#cb71-63" aria-hidden="true" tabindex="-1"></a></span>
@@ -1388,7 +1388,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-71"><a href="#cb71-71" aria-hidden="true" tabindex="-1"></a>                  <span class="at">includeDescendants =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb71-72"><a href="#cb71-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-73"><a href="#cb71-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-74"><a href="#cb71-74" aria-hidden="true" tabindex="-1"></a>We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of it's descendants.</span>
+<span id="cb71-74"><a href="#cb71-74" aria-hidden="true" tabindex="-1"></a>We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of its descendants.</span>
 <span id="cb71-75"><a href="#cb71-75" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-78"><a href="#cb71-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb71-79"><a href="#cb71-79" aria-hidden="true" tabindex="-1"></a><span class="fu">getDrugIngredientCodes</span>(<span class="at">cdm =</span> cdm, <span class="at">name =</span> <span class="st">"acetaminophen"</span>)</span>
@@ -1406,7 +1406,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-91"><a href="#cb71-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb71-92"><a href="#cb71-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-93"><a href="#cb71-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-94"><a href="#cb71-94" aria-hidden="true" tabindex="-1"></a>In settings we can see the cohort name that by default is the name of the codelist used, in this case 'covid' as we used <span class="in">`conceptSet = list(covid = 37311061)`</span>. Also the cdm and vocabulary versions are recorded in the settings by the CohortConstructor package.</span>
+<span id="cb71-94"><a href="#cb71-94" aria-hidden="true" tabindex="-1"></a>In settings, we can see the cohort name that by default is the name of the codelist used, in this case 'covid' as we used <span class="in">`conceptSet = list(covid = 37311061)`</span>. Also, the cdm and vocabulary versions are recorded in the settings by the CohortConstructor package.</span>
 <span id="cb71-95"><a href="#cb71-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-96"><a href="#cb71-96" aria-hidden="true" tabindex="-1"></a>Second, we can get counts of each cohort.</span>
 <span id="cb71-97"><a href="#cb71-97" aria-hidden="true" tabindex="-1"></a></span>
@@ -1415,9 +1415,9 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-100"><a href="#cb71-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb71-101"><a href="#cb71-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-102"><a href="#cb71-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-103"><a href="#cb71-103" aria-hidden="true" tabindex="-1"></a>Where you can see the number of records and number of subjects for each cohort, in this case there are no multiple records per subject.</span>
+<span id="cb71-103"><a href="#cb71-103" aria-hidden="true" tabindex="-1"></a>Where you can see the number of records and number of subjects for each cohort. In this case, there are no multiple records per subject.</span>
 <span id="cb71-104"><a href="#cb71-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-105"><a href="#cb71-105" aria-hidden="true" tabindex="-1"></a>An attrition can also be retrieved from any cohort.</span>
+<span id="cb71-105"><a href="#cb71-105" aria-hidden="true" tabindex="-1"></a>Attrition can also be retrieved from any cohort.</span>
 <span id="cb71-106"><a href="#cb71-106" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-107"><a href="#cb71-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb71-108"><a href="#cb71-108" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
@@ -1432,7 +1432,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-119"><a href="#cb71-119" aria-hidden="true" tabindex="-1"></a>codelist<span class="sc">$</span>covid</span>
 <span id="cb71-120"><a href="#cb71-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-121"><a href="#cb71-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-122"><a href="#cb71-122" aria-hidden="true" tabindex="-1"></a>Note in this case we had to provide the cohortId of the cohort of interest.</span>
+<span id="cb71-122"><a href="#cb71-122" aria-hidden="true" tabindex="-1"></a>Note that in this case, we had to provide the cohortId of the cohort of interest.</span>
 <span id="cb71-123"><a href="#cb71-123" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-124"><a href="#cb71-124" aria-hidden="true" tabindex="-1"></a>All these attributes can be retrieved because it is a <span class="in">`cohort_table`</span> object, a class on top of the usual <span class="in">`cdm_table`</span> class that we have seen before:</span>
 <span id="cb71-125"><a href="#cb71-125" aria-hidden="true" tabindex="-1"></a></span>
@@ -1440,7 +1440,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-129"><a href="#cb71-129" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cdm<span class="sc">$</span>covid)</span>
 <span id="cb71-130"><a href="#cb71-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-131"><a href="#cb71-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-132"><a href="#cb71-132" aria-hidden="true" tabindex="-1"></a>As we will see below these attributes of the cohorts become particularly useful as we apply further restrictions on our cohort.</span>
+<span id="cb71-132"><a href="#cb71-132" aria-hidden="true" tabindex="-1"></a>As we will see below, these attributes of the cohorts become particularly useful as we apply further restrictions on our cohort.</span>
 <span id="cb71-133"><a href="#cb71-133" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-134"><a href="#cb71-134" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
 <span id="cb71-135"><a href="#cb71-135" aria-hidden="true" tabindex="-1"></a><span class="fu">### Behind the scenes</span></span>
@@ -1451,7 +1451,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-142"><a href="#cb71-142" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">attributes</span>(cdm<span class="sc">$</span>covid))</span>
 <span id="cb71-143"><a href="#cb71-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-144"><a href="#cb71-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-145"><a href="#cb71-145" aria-hidden="true" tabindex="-1"></a>In particular the <span class="in">`cohort_set`</span> (contains the <span class="co">[</span><span class="ot">`settings()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/settings.html)</span> source), <span class="in">`cohort_attrition`</span> (contains the source for <span class="co">[</span><span class="ot">`cohortCount()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html)</span> and <span class="co">[</span><span class="ot">`attrition()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)</span>) and <span class="in">`cohort_codelist`</span> (contains the source for <span class="co">[</span><span class="ot">`cohortCodelist()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)</span>) attributes are the ones of interest. For database back-ends these attributes are stored in the database so when we read them again the attributes persist. See that even apparently we only have one table 'cdm\$covid' in fact four tables were written in the database:</span>
+<span id="cb71-145"><a href="#cb71-145" aria-hidden="true" tabindex="-1"></a>In particular, the <span class="in">`cohort_set`</span> (contains the <span class="co">[</span><span class="ot">`settings()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/settings.html)</span> source), <span class="in">`cohort_attrition`</span> (contains the source for <span class="co">[</span><span class="ot">`cohortCount()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html)</span> and <span class="co">[</span><span class="ot">`attrition()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)</span>) and <span class="in">`cohort_codelist`</span> (contains the source for <span class="co">[</span><span class="ot">`cohortCodelist()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)</span>) attributes are the ones of interest. For database back-ends, these attributes are stored in the database so when we read them again, the attributes persist. See that even though apparently we only have one table 'cdm\$covid', in fact four tables were written in the database:</span>
 <span id="cb71-146"><a href="#cb71-146" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-149"><a href="#cb71-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb71-150"><a href="#cb71-150" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> https://github.com/OHDSI/omock/issues/189 </span></span>
@@ -1465,7 +1465,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-158"><a href="#cb71-158" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-159"><a href="#cb71-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### Only include first cohort entry per person</span></span>
 <span id="cb71-160"><a href="#cb71-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-161"><a href="#cb71-161" aria-hidden="true" tabindex="-1"></a>Let's say we first want to restrict to first entry.</span>
+<span id="cb71-161"><a href="#cb71-161" aria-hidden="true" tabindex="-1"></a>Let's say we first want to restrict to the first entry.</span>
 <span id="cb71-162"><a href="#cb71-162" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-163"><a href="#cb71-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb71-164"><a href="#cb71-164" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span> </span>
@@ -1474,7 +1474,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-167"><a href="#cb71-167" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-168"><a href="#cb71-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### Restrict to study period</span></span>
 <span id="cb71-169"><a href="#cb71-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-170"><a href="#cb71-170" aria-hidden="true" tabindex="-1"></a>Then we are interested in records only after January 1st 2020.</span>
+<span id="cb71-170"><a href="#cb71-170" aria-hidden="true" tabindex="-1"></a>Then we are interested in records only after January 1st, 2020.</span>
 <span id="cb71-171"><a href="#cb71-171" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-172"><a href="#cb71-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb71-173"><a href="#cb71-173" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
@@ -1483,7 +1483,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-176"><a href="#cb71-176" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-177"><a href="#cb71-177" aria-hidden="true" tabindex="-1"></a><span class="fu">### Applying demographic inclusion criteria</span></span>
 <span id="cb71-178"><a href="#cb71-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-179"><a href="#cb71-179" aria-hidden="true" tabindex="-1"></a>Finally we want to restrict our population of interest to only adult males under 65 years old. We can do that with the <span class="in">`requireDemographics()`</span> function.</span>
+<span id="cb71-179"><a href="#cb71-179" aria-hidden="true" tabindex="-1"></a>Finally, we want to restrict our population of interest to only adult males under 65 years old. We can do that with the <span class="in">`requireDemographics()`</span> function.</span>
 <span id="cb71-180"><a href="#cb71-180" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-181"><a href="#cb71-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb71-182"><a href="#cb71-182" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
@@ -1493,7 +1493,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-186"><a href="#cb71-186" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb71-187"><a href="#cb71-187" aria-hidden="true" tabindex="-1"></a><span class="fu">### Similarity of naming with PatientProfiles</span></span>
 <span id="cb71-188"><a href="#cb71-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-189"><a href="#cb71-189" aria-hidden="true" tabindex="-1"></a>Note that all these <span class="in">`require*()`</span> functions that come from the CohortConstructor package use functionalities from PatientProfiles and the naming is consistent, for example <span class="in">`requireDemographics()`</span> uses <span class="in">`addDemographics()`</span>, <span class="in">`requirePriorObservation()`</span> uses <span class="in">`addPriorObservation()`</span> and so...</span>
+<span id="cb71-189"><a href="#cb71-189" aria-hidden="true" tabindex="-1"></a>Note that all these <span class="in">`require*()`</span> functions that come from the CohortConstructor package use functionalities from PatientProfiles and the naming is consistent. For example, <span class="in">`requireDemographics()`</span> uses <span class="in">`addDemographics()`</span>, <span class="in">`requirePriorObservation()`</span> uses <span class="in">`addPriorObservation()`</span>, and so on...</span>
 <span id="cb71-190"><a href="#cb71-190" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb71-191"><a href="#cb71-191" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-192"><a href="#cb71-192" aria-hidden="true" tabindex="-1"></a><span class="fu">### Applying cohort-based inclusion criteria</span></span>
@@ -1521,7 +1521,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-214"><a href="#cb71-214" aria-hidden="true" tabindex="-1"></a>                         <span class="at">intersections =</span> <span class="dv">0</span>) </span>
 <span id="cb71-215"><a href="#cb71-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-216"><a href="#cb71-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-217"><a href="#cb71-217" aria-hidden="true" tabindex="-1"></a>Note if we had wanted to have required that individuals did have a history of a cardiac condition we would instead have set <span class="in">`intersections = c(1, Inf)`</span> above.</span>
+<span id="cb71-217"><a href="#cb71-217" aria-hidden="true" tabindex="-1"></a>Note that if we had wanted to require that individuals did have a history of a cardiac condition, we would instead have set <span class="in">`intersections = c(1, Inf)`</span> above.</span>
 <span id="cb71-218"><a href="#cb71-218" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-219"><a href="#cb71-219" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb71-220"><a href="#cb71-220" aria-hidden="true" tabindex="-1"></a><span class="fu">### Use requireConceptIntersect</span></span>
@@ -1538,12 +1538,12 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-231"><a href="#cb71-231" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb71-232"><a href="#cb71-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-233"><a href="#cb71-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-234"><a href="#cb71-234" aria-hidden="true" tabindex="-1"></a>In fact this approach would be more efficient unless we want to re-use the <span class="in">`myocardial_infarction`</span> cohort for another inclusion criteria or analysis. Note that the intersection with the cohort table is more flexible as it can have more complicated inclusion/exclusion criteria, but you have to be more careful with the order of inclusion criteria (e.g. if we would restrict the myocaridal_infarction cohort to a certain time span when we would do the intersect we would require to not have the inclusion criteria on that time span).</span>
+<span id="cb71-234"><a href="#cb71-234" aria-hidden="true" tabindex="-1"></a>In fact, this approach would be more efficient unless we want to re-use the <span class="in">`myocardial_infarction`</span> cohort for another inclusion criteria or analysis. Note that the intersection with the cohort table is more flexible as it can have more complicated inclusion/exclusion criteria, but you have to be more careful with the order of inclusion criteria (e.g., if we would restrict the myocardial_infarction cohort to a certain time span when we would do the intersect, we would require to not have the inclusion criteria on that time span).</span>
 <span id="cb71-235"><a href="#cb71-235" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb71-236"><a href="#cb71-236" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-237"><a href="#cb71-237" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cohort attributes</span></span>
 <span id="cb71-238"><a href="#cb71-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-239"><a href="#cb71-239" aria-hidden="true" tabindex="-1"></a>Using the <span class="in">`require*()`</span> functions th cohort attribytes have been updated to reflect the applied inclusion criteria.</span>
+<span id="cb71-239"><a href="#cb71-239" aria-hidden="true" tabindex="-1"></a>Using the <span class="in">`require*()`</span> functions, the cohort attributes have been updated to reflect the applied inclusion criteria.</span>
 <span id="cb71-240"><a href="#cb71-240" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-241"><a href="#cb71-241" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb71-242"><a href="#cb71-242" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
@@ -1560,19 +1560,19 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-253"><a href="#cb71-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb71-254"><a href="#cb71-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-255"><a href="#cb71-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-256"><a href="#cb71-256" aria-hidden="true" tabindex="-1"></a>We can visualise the attrition with the CohortCharacteristics package, we can first extract it with <span class="in">`summariseCohortAttrition()`</span> and then <span class="in">`plotCohortAttrition`</span> to better view the impact of applying each inclusion criteria:</span>
+<span id="cb71-256"><a href="#cb71-256" aria-hidden="true" tabindex="-1"></a>We can visualize the attrition with the CohortCharacteristics package. We can first extract it with <span class="in">`summariseCohortAttrition()`</span> and then <span class="in">`plotCohortAttrition`</span> to better view the impact of applying each inclusion criteria:</span>
 <span id="cb71-257"><a href="#cb71-257" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-258"><a href="#cb71-258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb71-259"><a href="#cb71-259" aria-hidden="true" tabindex="-1"></a>attrition_summary <span class="ot">&lt;-</span> <span class="fu">summariseCohortAttrition</span>(<span class="at">cohort =</span> cdm<span class="sc">$</span>covid)</span>
 <span id="cb71-260"><a href="#cb71-260" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCohortAttrition</span>(<span class="at">result =</span> attrition_summary, <span class="at">type =</span> <span class="st">'png'</span>)</span>
 <span id="cb71-261"><a href="#cb71-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-262"><a href="#cb71-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-263"><a href="#cb71-263" aria-hidden="true" tabindex="-1"></a>Note that <span class="in">`conceptCohort()`</span> first step lead to several rows in the attrition table, whereas any other <span class="in">`require*()`</span> function always add just one record of attrition.</span>
+<span id="cb71-263"><a href="#cb71-263" aria-hidden="true" tabindex="-1"></a>Note that the <span class="in">`conceptCohort()`</span> first step leads to several rows in the attrition table, whereas any other <span class="in">`require*()`</span> function always adds just one record of attrition.</span>
 <span id="cb71-264"><a href="#cb71-264" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-265"><a href="#cb71-265" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
 <span id="cb71-266"><a href="#cb71-266" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cohort naming utilities</span></span>
 <span id="cb71-267"><a href="#cb71-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-268"><a href="#cb71-268" aria-hidden="true" tabindex="-1"></a>As we have seen that by default the naming of the cohorts in the name of the codelist:</span>
+<span id="cb71-268"><a href="#cb71-268" aria-hidden="true" tabindex="-1"></a>As we have seen, by default the naming of the cohorts is the name of the codelist:</span>
 <span id="cb71-269"><a href="#cb71-269" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-272"><a href="#cb71-272" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb71-273"><a href="#cb71-273" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(<span class="at">cdm =</span> cdm, </span>
@@ -1581,7 +1581,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-276"><a href="#cb71-276" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>my_cohort)</span>
 <span id="cb71-277"><a href="#cb71-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-278"><a href="#cb71-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-279"><a href="#cb71-279" aria-hidden="true" tabindex="-1"></a>But maybe we are interested to rename a cohort (e.g. after applying the inclusion criteria), we can do that with the <span class="in">`renameCohort()`</span> utility function:</span>
+<span id="cb71-279"><a href="#cb71-279" aria-hidden="true" tabindex="-1"></a>But maybe we are interested in renaming a cohort (e.g., after applying the inclusion criteria). We can do that with the <span class="in">`renameCohort()`</span> utility function:</span>
 <span id="cb71-280"><a href="#cb71-280" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-283"><a href="#cb71-283" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb71-284"><a href="#cb71-284" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort <span class="ot">&lt;-</span> cdm<span class="sc">$</span>my_cohort <span class="sc">|&gt;</span></span>
@@ -1590,7 +1590,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-287"><a href="#cb71-287" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>my_cohort)</span>
 <span id="cb71-288"><a href="#cb71-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-289"><a href="#cb71-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-290"><a href="#cb71-290" aria-hidden="true" tabindex="-1"></a>Note that for arguments such as <span class="in">`cohortId`</span>, <span class="in">`targetCohortId`</span>, ... we are able to use the name of the cohort of interest, see for example:</span>
+<span id="cb71-290"><a href="#cb71-290" aria-hidden="true" tabindex="-1"></a>Note that for arguments such as <span class="in">`cohortId`</span>, <span class="in">`targetCohortId`</span>, etc., we are able to use the name of the cohort of interest. See for example:</span>
 <span id="cb71-291"><a href="#cb71-291" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-294"><a href="#cb71-294" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb71-295"><a href="#cb71-295" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>my_cohort <span class="ot">&lt;-</span> cdm<span class="sc">$</span>my_cohort <span class="sc">|&gt;</span></span>
@@ -1599,7 +1599,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb71-298"><a href="#cb71-298" aria-hidden="true" tabindex="-1"></a><span class="fu">settings</span>(cdm<span class="sc">$</span>my_cohort)</span>
 <span id="cb71-299"><a href="#cb71-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb71-300"><a href="#cb71-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-301"><a href="#cb71-301" aria-hidden="true" tabindex="-1"></a>This functionality also applies to other packages, such as CohortCharacteristics, PatientProfiles, DrugUtilisation, ... Finally in some cases it is useful to add the cohort_name as a column to not have to check manually the equivalence between *cohort definition id* and *cohort name*, this can be done using the PatientProfiles utility function <span class="in">`addCohortName()`</span>:</span>
+<span id="cb71-301"><a href="#cb71-301" aria-hidden="true" tabindex="-1"></a>This functionality also applies to other packages, such as CohortCharacteristics, PatientProfiles, DrugUtilisation, etc. Finally, in some cases, it is useful to add the cohort_name as a column to not have to check manually the equivalence between *cohort definition id* and *cohort name*. This can be done using the PatientProfiles utility function <span class="in">`addCohortName()`</span>:</span>
 <span id="cb71-302"><a href="#cb71-302" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-305"><a href="#cb71-305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb71-306"><a href="#cb71-306" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>

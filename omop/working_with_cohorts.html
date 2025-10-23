@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../tidy_databases/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started with working databases from R</span></a>
+ <span class="menu-text">Getting started with databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -306,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">padCohortEnd</span>(<span class="at">days =</span> <span class="dv">30</span>)</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># drugs cohort contains records of acetaminophen using start and end dates of </span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># the drug records and collapsing record separated by less than 30 days</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># the drug records and collapsing records separated by less than 30 days</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>drugs <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">conceptSet =</span> <span class="fu">list</span>(<span class="st">"acetaminophen"</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
@@ -353,7 +353,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Windows work very similarly to age groups that we have seen before, if a name is not provided an automatic name will be obtained from the values of the window limits:</p>
+<p>Windows work very similarly to age groups that we have seen before. If a name is not provided, an automatic name will be obtained from the values of the window limits:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
@@ -364,17 +364,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 7
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmprUA31E/file39391caa398f.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVRAoBm/file8ced1175df.duckdb]
 $ cohort_definition_id     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-$ subject_id               &lt;int&gt; 2541, 3719, 3658, 5252, 1118, 915, 3540, 5245…
-$ cohort_start_date        &lt;date&gt; 2017-12-17, 2003-11-03, 1999-09-01, 1995-12-…
-$ cohort_end_date          &lt;date&gt; 2018-01-16, 2003-12-03, 1999-10-01, 1996-01-…
-$ acetaminophen_minf_to_m1 &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ subject_id               &lt;int&gt; 2075, 3196, 4450, 5172, 2343, 4591, 1847, 186…
+$ cohort_start_date        &lt;date&gt; 2006-05-05, 2008-07-06, 2009-03-03, 1980-05-…
+$ cohort_end_date          &lt;date&gt; 2006-06-04, 2008-08-05, 2009-04-02, 1980-06-…
+$ acetaminophen_minf_to_m1 &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, …
 $ acetaminophen_0_to_0     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ acetaminophen_1_to_inf   &lt;dbl&gt; 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, …</code></pre>
+$ acetaminophen_1_to_inf   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, …</code></pre>
 </div>
 </div>
-<p>Note that to avoid conflicts with column naming, all names will be lower case, spaces are not allowed and the <code>-</code> symbol for negative values is replaced by <code>m</code>. That’s why it is usually nice to provide your own custom names:</p>
+<p>Note that to avoid conflicts with column naming, all names will be lower case, spaces are not allowed, and the <code>-</code> symbol for negative values is replaced by <code>m</code>. That’s why it is usually nice to provide your own custom names:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
@@ -385,13 +385,13 @@ $ acetaminophen_1_to_inf   &lt;dbl&gt; 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1,
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 7
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmprUA31E/file39391caa398f.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVRAoBm/file8ced1175df.duckdb]
 $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ subject_id           &lt;int&gt; 2541, 3719, 3658, 5252, 1118, 915, 3540, 5245, 27…
-$ cohort_start_date    &lt;date&gt; 2017-12-17, 2003-11-03, 1999-09-01, 1995-12-19, …
-$ cohort_end_date      &lt;date&gt; 2018-01-16, 2003-12-03, 1999-10-01, 1996-01-18, …
-$ acetaminophen_post   &lt;dbl&gt; 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ acetaminophen_prior  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ subject_id           &lt;int&gt; 2075, 3196, 4450, 5172, 2343, 4591, 1847, 1860, 2…
+$ cohort_start_date    &lt;date&gt; 2006-05-05, 2008-07-06, 2009-03-03, 1980-05-04, …
+$ cohort_end_date      &lt;date&gt; 2006-06-04, 2008-08-05, 2009-04-02, 1980-06-03, …
+$ acetaminophen_post   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1…
+$ acetaminophen_prior  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1…
 $ acetaminophen_index  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
 </div>
 </div>
@@ -410,7 +410,7 @@ $ acetaminophen_index  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>By default the name of new columns is ‘{cohort_name}_{window_name}’ as we have seen in the prior examples, in some cases you only have one cohort or one window and you might want to rename the column as you please. In that case you can use the <code>nameStyle</code> argument to change the new naming of the columns:</p>
+<p>By default, the name of new columns is ‘{cohort_name}_{window_name}’ as we have seen in the prior examples. In some cases, you only have one cohort or one window and you might want to rename the column as you please. In that case, you can use the <code>nameStyle</code> argument to change the new naming of the columns:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
@@ -422,17 +422,17 @@ $ acetaminophen_index  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 7
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmprUA31E/file39391caa398f.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVRAoBm/file8ced1175df.duckdb]
 $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ subject_id           &lt;int&gt; 2541, 3719, 3658, 5252, 1118, 915, 3540, 5245, 27…
-$ cohort_start_date    &lt;date&gt; 2017-12-17, 2003-11-03, 1999-09-01, 1995-12-19, …
-$ cohort_end_date      &lt;date&gt; 2018-01-16, 2003-12-03, 1999-10-01, 1996-01-18, …
-$ my_column_post       &lt;dbl&gt; 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ my_column_prior      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ subject_id           &lt;int&gt; 2075, 3196, 4450, 5172, 2343, 4591, 1847, 1860, 2…
+$ cohort_start_date    &lt;date&gt; 2006-05-05, 2008-07-06, 2009-03-03, 1980-05-04, …
+$ cohort_end_date      &lt;date&gt; 2006-06-04, 2008-08-05, 2009-04-02, 1980-06-03, …
+$ my_column_post       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1…
+$ my_column_prior      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1…
 $ my_column_index      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
 </div>
 </div>
-<p>If multiple windows are provided but ‘{window_name}’ is not included in <code>nameStyle</code> then an error will prompt:</p>
+<p>If multiple windows are provided but ‘{window_name}’ is not included in <code>nameStyle</code>, then an error will prompt:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
@@ -485,14 +485,14 @@ $ my_column_index      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Handling the obsrevation period
+<span class="screen-reader-only">Note</span>Handling the observation period
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Note that <strong>only intersections in the current observation period are considered</strong>.</p>
-<p>The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. I we see individual <code>2070</code> it has <em>3748</em> of future obsevation:</p>
+<p>The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. If we see individual <code>2070</code>, it has <em>3748</em> of future observation:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subject_id <span class="sc">==</span> <span class="dv">2070</span>) <span class="sc">|&gt;</span></span>
@@ -501,7 +501,7 @@ $ my_column_index      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 5
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmprUA31E/file39391caa398f.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVRAoBm/file8ced1175df.duckdb]
 $ cohort_definition_id &lt;int&gt; 1
 $ subject_id           &lt;int&gt; 2070
 $ cohort_start_date    &lt;date&gt; 2008-08-15
@@ -509,7 +509,7 @@ $ cohort_end_date      &lt;date&gt; 2008-09-14
 $ future_observation   &lt;int&gt; 3748</code></pre>
 </div>
 </div>
-<p>Now we will preform the intersect with the following window of interest: <code>c(2000, 3000), c(3000, 4000), c(4000, 5000)</code>.</p>
+<p>Now we will perform the intersect with the following window of interest: <code>c(2000, 3000), c(3000, 4000), c(4000, 5000)</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subject_id <span class="sc">==</span> <span class="dv">2070</span>) <span class="sc">|&gt;</span></span>
@@ -521,7 +521,7 @@ $ future_observation   &lt;int&gt; 3748</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 7
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmprUA31E/file39391caa398f.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVRAoBm/file8ced1175df.duckdb]
 $ cohort_definition_id       &lt;int&gt; 1
 $ subject_id                 &lt;int&gt; 2070
 $ cohort_start_date          &lt;date&gt; 2008-08-15
@@ -531,14 +531,14 @@ $ acetaminophen_3000_to_4000 &lt;dbl&gt; 0
 $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 </div>
 </div>
-<p>See that for the window 2000 to 3000 where the individual is still in observation a 0 is reported, the same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window as individual is not in observation at any point of the window, NA is reported.</p>
+<p>See that for the window 2000 to 3000, where the individual is still in observation, a 0 is reported. The same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window, as the individual is not in observation at any point of the window, NA is reported.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="date-and-times" class="level3" data-number="9.2.3">
 <h3 data-number="9.2.3" class="anchored" data-anchor-id="date-and-times"><span class="header-section-number">9.2.3</span> Date and times</h3>
-<p>To get the date of the intersection with a cohort within a given time window, we can use <code>addCohortIntersectDate</code>. To get the number of days between the index date and intersection, we can use <code>addCohortIntersectDays</code>.</p>
+<p>To get the date of the intersection with a cohort within a given time window, we can use <code>addCohortIntersectDate()</code>. To get the number of days between the index date and intersection, we can use <code>addCohortIntersectDays()</code>.</p>
 <p>Both functions allow the <code>order</code> argument to specify which value to return:</p>
 <ul>
 <li><p><code>first</code> returns the first date/days that satisfy the window</p></li>
@@ -580,7 +580,7 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 1               -3159</code></pre>
 </div>
 </div>
-<p>Note that for the window in the future we used <code>order = "first"</code> and for the window in the past we used <code>order = "last"</code> as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA on the new created columns.</p>
+<p>Note that for the window in the future, we used <code>order = "first"</code> and for the window in the past, we used <code>order = "last"</code> as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA on the newly created columns.</p>
 </section>
 </section>
 <section id="intersection-between-a-cohort-and-tables-with-patient-data" class="level2" data-number="9.3">
@@ -1118,7 +1118,7 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">padCohortEnd</span>(<span class="at">days =</span> <span class="dv">30</span>)</span>
 <span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a><span class="co"># drugs cohort contains records of acetaminophen using start and end dates of </span></span>
-<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="co"># the drug records and collapsing record separated by less than 30 days</span></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="co"># the drug records and collapsing records separated by less than 30 days</span></span>
 <span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>drugs <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(</span>
 <span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
 <span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">conceptSet =</span> <span class="fu">list</span>(<span class="st">"acetaminophen"</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
@@ -1153,7 +1153,7 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-65"><a href="#cb25-65" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a><span class="fu">### Window naming</span></span>
 <span id="cb25-67"><a href="#cb25-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-68"><a href="#cb25-68" aria-hidden="true" tabindex="-1"></a>Windows work very similarly to age groups that we have seen before, if a name is not provided an automatic name will be obtained from the values of the window limits:</span>
+<span id="cb25-68"><a href="#cb25-68" aria-hidden="true" tabindex="-1"></a>Windows work very similarly to age groups that we have seen before. If a name is not provided, an automatic name will be obtained from the values of the window limits:</span>
 <span id="cb25-69"><a href="#cb25-69" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-72"><a href="#cb25-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
@@ -1164,7 +1164,7 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-80"><a href="#cb25-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a>Note that to avoid conflicts with column naming, all names will be lower case, spaces are not allowed and the <span class="in">`-`</span> symbol for negative values is replaced by <span class="in">`m`</span>. That's why it is usually nice to provide your own custom names:</span>
+<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a>Note that to avoid conflicts with column naming, all names will be lower case, spaces are not allowed, and the <span class="in">`-`</span> symbol for negative values is replaced by <span class="in">`m`</span>. That's why it is usually nice to provide your own custom names:</span>
 <span id="cb25-82"><a href="#cb25-82" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-85"><a href="#cb25-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb25-86"><a href="#cb25-86" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
@@ -1179,7 +1179,7 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
 <span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a><span class="fu">### New column naming</span></span>
 <span id="cb25-97"><a href="#cb25-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a>By default the name of new columns is '{cohort_name}<span class="sc">\_</span>{window_name}' as we have seen in the prior examples, in some cases you only have one cohort or one window and you might want to rename the column as you please. In that case you can use the <span class="in">`nameStyle`</span> argument to change the new naming of the columns:</span>
+<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a>By default, the name of new columns is '{cohort_name}<span class="sc">\_</span>{window_name}' as we have seen in the prior examples. In some cases, you only have one cohort or one window and you might want to rename the column as you please. In that case, you can use the <span class="in">`nameStyle`</span> argument to change the new naming of the columns:</span>
 <span id="cb25-99"><a href="#cb25-99" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-102"><a href="#cb25-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb25-103"><a href="#cb25-103" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
@@ -1191,7 +1191,7 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-109"><a href="#cb25-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb25-110"><a href="#cb25-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-111"><a href="#cb25-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-112"><a href="#cb25-112" aria-hidden="true" tabindex="-1"></a>If multiple windows are provided but '{window_name}' is not included in <span class="in">`nameStyle`</span> then an error will prompt:</span>
+<span id="cb25-112"><a href="#cb25-112" aria-hidden="true" tabindex="-1"></a>If multiple windows are provided but '{window_name}' is not included in <span class="in">`nameStyle`</span>, then an error will prompt:</span>
 <span id="cb25-113"><a href="#cb25-113" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-114"><a href="#cb25-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
 <span id="cb25-115"><a href="#cb25-115" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
@@ -1231,11 +1231,11 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-149"><a href="#cb25-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-150"><a href="#cb25-150" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-151"><a href="#cb25-151" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb25-152"><a href="#cb25-152" aria-hidden="true" tabindex="-1"></a><span class="fu">### Handling the obsrevation period</span></span>
+<span id="cb25-152"><a href="#cb25-152" aria-hidden="true" tabindex="-1"></a><span class="fu">### Handling the observation period</span></span>
 <span id="cb25-153"><a href="#cb25-153" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-154"><a href="#cb25-154" aria-hidden="true" tabindex="-1"></a>Note that **only intersections in the current observation period are considered**.</span>
 <span id="cb25-155"><a href="#cb25-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-156"><a href="#cb25-156" aria-hidden="true" tabindex="-1"></a>The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. I we see individual <span class="in">`2070`</span> it has *3748* of future obsevation:</span>
+<span id="cb25-156"><a href="#cb25-156" aria-hidden="true" tabindex="-1"></a>The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. If we see individual <span class="in">`2070`</span>, it has *3748* of future observation:</span>
 <span id="cb25-157"><a href="#cb25-157" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-160"><a href="#cb25-160" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb25-161"><a href="#cb25-161" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
@@ -1244,7 +1244,7 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-164"><a href="#cb25-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb25-165"><a href="#cb25-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-166"><a href="#cb25-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-167"><a href="#cb25-167" aria-hidden="true" tabindex="-1"></a>Now we will preform the intersect with the following window of interest: <span class="in">`c(2000, 3000), c(3000, 4000), c(4000, 5000)`</span>.</span>
+<span id="cb25-167"><a href="#cb25-167" aria-hidden="true" tabindex="-1"></a>Now we will perform the intersect with the following window of interest: <span class="in">`c(2000, 3000), c(3000, 4000), c(4000, 5000)`</span>.</span>
 <span id="cb25-168"><a href="#cb25-168" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-171"><a href="#cb25-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb25-172"><a href="#cb25-172" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
@@ -1256,12 +1256,12 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-178"><a href="#cb25-178" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>()</span>
 <span id="cb25-179"><a href="#cb25-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-180"><a href="#cb25-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-181"><a href="#cb25-181" aria-hidden="true" tabindex="-1"></a>See that for the window 2000 to 3000 where the individual is still in observation a 0 is reported, the same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window as individual is not in observation at any point of the window, NA is reported.</span>
+<span id="cb25-181"><a href="#cb25-181" aria-hidden="true" tabindex="-1"></a>See that for the window 2000 to 3000, where the individual is still in observation, a 0 is reported. The same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window, as the individual is not in observation at any point of the window, NA is reported.</span>
 <span id="cb25-182"><a href="#cb25-182" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb25-183"><a href="#cb25-183" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-184"><a href="#cb25-184" aria-hidden="true" tabindex="-1"></a><span class="fu">### Date and times</span></span>
 <span id="cb25-185"><a href="#cb25-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-186"><a href="#cb25-186" aria-hidden="true" tabindex="-1"></a>To get the date of the intersection with a cohort within a given time window, we can use <span class="in">`addCohortIntersectDate`</span>. To get the number of days between the index date and intersection, we can use <span class="in">`addCohortIntersectDays`</span>.</span>
+<span id="cb25-186"><a href="#cb25-186" aria-hidden="true" tabindex="-1"></a>To get the date of the intersection with a cohort within a given time window, we can use <span class="in">`addCohortIntersectDate()`</span>. To get the number of days between the index date and intersection, we can use <span class="in">`addCohortIntersectDays()`</span>.</span>
 <span id="cb25-187"><a href="#cb25-187" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-188"><a href="#cb25-188" aria-hidden="true" tabindex="-1"></a>Both functions allow the <span class="in">`order`</span> argument to specify which value to return:</span>
 <span id="cb25-189"><a href="#cb25-189" aria-hidden="true" tabindex="-1"></a></span>
@@ -1296,7 +1296,7 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-218"><a href="#cb25-218" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
 <span id="cb25-219"><a href="#cb25-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-220"><a href="#cb25-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-221"><a href="#cb25-221" aria-hidden="true" tabindex="-1"></a>Note that for the window in the future we used <span class="in">`order = "first"`</span> and for the window in the past we used <span class="in">`order = "last"`</span> as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA on the new created columns.</span>
+<span id="cb25-221"><a href="#cb25-221" aria-hidden="true" tabindex="-1"></a>Note that for the window in the future, we used <span class="in">`order = "first"`</span> and for the window in the past, we used <span class="in">`order = "last"`</span> as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA on the newly created columns.</span>
 <span id="cb25-222"><a href="#cb25-222" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-223"><a href="#cb25-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Intersection between a cohort and tables with patient data</span></span>
 <span id="cb25-224"><a href="#cb25-224" aria-hidden="true" tabindex="-1"></a></span>

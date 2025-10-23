@@ -121,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with working databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/data_model.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/data_model.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../tidy_databases/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting started with working databases from R</span></a>
+ <span class="menu-text">Getting started with databases from R</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with working databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/data_model.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tidy_databases/index.html">Getting started with databases from R</a></li><li class="breadcrumb-item"><a href="../tidy_databases/data_model.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></a></li></ol></nav>
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title"><span id="sec-data_model" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Building analytic pipelines for a data model</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
@@ -280,8 +280,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In the previous chapters we’ve seen that after connecting to a database we can create references to the various tables we’ve interested in it and write bespoke analytic code to query them. However, if we are working with the same database over and over again we are likely to want to build some tooling for tasks we are often performing.</p>
-<p>To see how we can develop a data model with associated methods and functions we’ll use the Lahman baseball data. We can see below how the data is stored across various related tables.</p>
+<p>In the previous chapters, we’ve seen that after connecting to a database, we can create references to the various tables we’re interested in and write custom analytic code to query them. However, if we are working with the same database over and over again, we are likely to want to build some tooling for tasks we often perform.</p>
+<p>To see how we can develop a data model with associated methods and functions, we’ll use the Lahman baseball data. The data is stored across various related tables.</p>
 <div id="fig-lahman" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lahman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -364,7 +364,7 @@ Figure&nbsp;4.1: Lahman’s Baseball Dabatase schema from <a href="https://cdalz
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 26
-Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 $ playerID     &lt;chr&gt; "aardsda01", "aaronha01", "aaronto01", "aasedo01", "abada…
 $ birthYear    &lt;int&gt; 1981, 1934, 1939, 1954, 1972, 1985, 1850, 1877, 1869, 186…
 $ birthMonth   &lt;int&gt; 12, 2, 8, 9, 8, 12, 11, 4, 11, 10, 6, 9, 3, 10, 2, 8, 9, …
@@ -413,7 +413,7 @@ $ birthDate    &lt;date&gt; 1981-12-27, 1934-02-05, 1939-08-05, 1954-09-08, 1972
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>lahman_dm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Table source ────────────────────────────────────────────────────────────────
-src:  DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+src:  DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 ── Metadata ────────────────────────────────────────────────────────────────────
 Tables: `batting`, `people`
 Columns: 48
@@ -430,7 +430,7 @@ Foreign keys: 0</code></pre>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>lahman_dm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Table source ────────────────────────────────────────────────────────────────
-src:  DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+src:  DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 ── Metadata ────────────────────────────────────────────────────────────────────
 Tables: `batting`, `people`
 Columns: 48
@@ -471,12 +471,12 @@ Foreign keys: 1</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Babe Ruth"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   name            
   &lt;chr&gt;           
-1 Boston Red Sox  
-2 New York Yankees
-3 Boston Braves   </code></pre>
+1 Boston Braves   
+2 Boston Red Sox  
+3 New York Yankees</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -525,11 +525,11 @@ FROM (
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   name                
   &lt;chr&gt;               
-1 Pittsburgh Pirates  
-2 San Francisco Giants</code></pre>
+1 San Francisco Giants
+2 Pittsburgh Pirates  </code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -586,7 +586,7 @@ FROM (
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The function <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>collect()</code></a> brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our <code>getTeams()</code> function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case we could also use <a href="https://dplyr.tidyverse.org/reference/pull.html"><code>pull()</code></a> to get our result out as a vector rather that a data frame.</p>
+<p>The function <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>collect()</code></a> brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our <code>getTeams()</code> function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case, we could also use <a href="https://dplyr.tidyverse.org/reference/pull.html"><code>pull()</code></a> to get our result out as a vector rather than a data frame.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -594,8 +594,8 @@ FROM (
 <pre><code># A tibble: 2 × 1
   name                
   &lt;chr&gt;               
-1 Pittsburgh Pirates  
-2 San Francisco Giants</code></pre>
+1 San Francisco Giants
+2 Pittsburgh Pirates  </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -607,7 +607,7 @@ FROM (
 </div>
 </div>
 </div>
-<p>Similarly we could make a function to add the a player’s year of birth to a table.</p>
+<p>Similarly, we could make a function to add a player’s year of birth to a table.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>addBirthCountry <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">|&gt;</span> </span>
@@ -623,7 +623,7 @@ FROM (
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 23]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    playerID  yearID stint teamID lgID      G    AB     R     H   X2B   X3B    HR
    &lt;chr&gt;      &lt;int&gt; &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
  1 aardsda01   2004     1 SFN    NL       11     0     0     0     0     0     0
@@ -670,7 +670,7 @@ LEFT JOIN People
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 31]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    playerID  yearID stint teamID lgID      W     L     G    GS    CG   SHO    SV
    &lt;chr&gt;      &lt;int&gt; &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
  1 aardsda01   2004     1 SFN    NL        1     0    11     0     0     0     0
@@ -862,7 +862,7 @@ Salaries, Schools, SeriesPost, Teams, TeamsFranchises, TeamsHalf</code></pre>
 <h2 data-number="4.3" class="anchored" data-anchor-id="building-efficient-analytic-pipelines"><span class="header-section-number">4.3</span> Building efficient analytic pipelines</h2>
 <section id="the-risk-of-clean-r-code" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="the-risk-of-clean-r-code"><span class="header-section-number">4.3.1</span> The risk of “clean” R code</h3>
-<p>Following on from the above approach, we might think it a good idea to make another function <code>addBirthYear()</code>. We can then use it along with our <code>addBirthCountry()</code> to get a summarise average salary by birth country and birth year.</p>
+<p>Following on from the above approach, we might think it a good idea to make another function <code>addBirthYear()</code>. We can then use it along with our <code>addBirthCountry()</code> to get a summarised average salary by birth country and birth year.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>addBirthYear <span class="ot">&lt;-</span> <span class="cf">function</span>(lahmanTbl){</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  lahmanTbl <span class="sc">|&gt;</span> </span>
@@ -880,19 +880,19 @@ Salaries, Schools, SeriesPost, Teams, TeamsFranchises, TeamsHalf</code></pre>
 <span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 3]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    birthCountry birthYear average_salary
    &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
- 1 USA               1954        860729.
- 2 USA               1967       1833526.
- 3 D.R.              1977       2724606.
- 4 Mexico            1970        783395.
- 5 USA               1958        960490.
- 6 D.R.              1991        582794.
- 7 USA               1971       1547025.
- 8 USA               1963       1585150.
- 9 USA               1962       1303970.
-10 P.R.              1982       4261730.
+ 1 USA               1966       1761151.
+ 2 Venezuela         1974       4269365.
+ 3 D.R.              1984       2924854.
+ 4 Mexico            1982       1174912.
+ 5 Panama            1981        555833.
+ 6 USA               1978       3133596.
+ 7 P.R.              1959        297786.
+ 8 USA               1961        811250.
+ 9 USA               1990        728740.
+10 USA               1950        625076.
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -947,19 +947,19 @@ GROUP BY birthCountry, birthYear</code></pre>
 <span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 3]
-# Database: DuckDB 1.4.0 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    birthCountry birthYear average_salary
    &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
- 1 USA               1966       1761151.
- 2 Venezuela         1974       4269365.
- 3 D.R.              1984       2924854.
- 4 Mexico            1982       1174912.
- 5 Panama            1981        555833.
- 6 USA               1978       3133596.
- 7 P.R.              1959        297786.
- 8 USA               1961        811250.
- 9 USA               1990        728740.
-10 USA               1950        625076.
+ 1 USA               1954        860729.
+ 2 USA               1967       1833526.
+ 3 D.R.              1977       2724606.
+ 4 Mexico            1970        783395.
+ 5 USA               1958        960490.
+ 6 D.R.              1991        582794.
+ 7 USA               1971       1547025.
+ 8 USA               1963       1585150.
+ 9 USA               1962       1303970.
+10 P.R.              1982       4261730.
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1036,7 +1036,7 @@ FROM (
 </section>
 <section id="computing-intermediate-queries" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="computing-intermediate-queries"><span class="header-section-number">4.3.3</span> Computing intermediate queries</h3>
-<p>Let’s say we want to summarise home runs in the batting table and stike outs in the pitching table by the college players attended and their birth year. We could do this like so:</p>
+<p>Let’s say we want to summarise home runs in the batting table and strike outs in the pitching table by the college players attended and their birth year. We could do this like so:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>players_with_college <span class="ot">&lt;-</span> lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthYear"</span>) <span class="sc">|&gt;</span> </span>
@@ -1077,20 +1077,20 @@ FROM (
 <pre><code># A tibble: 3,663 × 3
    schoolID   birthYear strike_outs
    &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 illinoisst      1981         205
- 2 lehigh          1901           1
- 3 tamukvill       1978         409
- 4 byu             1961        1030
- 5 kentucky        1985          91
- 6 txsjjcn         1983         571
- 7 stanford        1961           0
- 8 bethanywv       1922           2
- 9 tulane          1968          59
-10 nmnmjco         1972         232
+ 1 rice            1981         340
+ 2 ucsd            1968         124
+ 3 cacerri         1971         327
+ 4 usc             1947         275
+ 5 pepperdine      1969           4
+ 6 lsu             1978         162
+ 7 miamidade       1982          56
+ 8 upperiowa       1918          11
+ 9 jamesmad        1966           4
+10 flinternat      1971         133
 # ℹ 3,653 more rows</code></pre>
 </div>
 </div>
-<p>Looking at the SQL we can see, however, that there is some duplication, because as part of each full query we have run our players_with_college query.</p>
+<p>Looking at the SQL, we can see, however, that there is some duplication, because as part of each full query, we have run our players_with_college query.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1160,7 +1160,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
-FROM dbplyr_noUztVPIuV</code></pre>
+FROM dbplyr_C3O0xDWAKo</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1173,16 +1173,16 @@ FROM dbplyr_noUztVPIuV</code></pre>
 <pre><code># A tibble: 6,205 × 3
    schoolID   birthYear home_runs
    &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
- 1 vermont         1869        38
- 2 michigan        1967         2
- 3 nmstate         1968         0
- 4 cacerri         1971         3
- 5 chicago         1874         2
- 6 byu             1961        28
- 7 pepperdine      1969         1
- 8 lsu             1978         2
- 9 miamidade       1982         0
-10 stanford        1961      1611
+ 1 pennst          1981         0
+ 2 gamiddl         1972         2
+ 3 flgateway       1980        86
+ 4 swesterntx      1883         0
+ 5 ilparkl         1970         6
+ 6 texas           1958        10
+ 7 okstate         1936      1022
+ 8 virginia        1987        27
+ 9 sprngfldma      1947       452
+10 sliprock        1988       624
 # ℹ 6,195 more rows</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
@@ -1192,18 +1192,18 @@ FROM dbplyr_noUztVPIuV</code></pre>
 <span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3,663 × 3
-   schoolID  birthYear strike_outs
-   &lt;chr&gt;         &lt;int&gt;       &lt;dbl&gt;
- 1 longbeach      1968         273
- 2 elon           1921          13
- 3 lehigh         1901           1
- 4 usc            1947         275
- 5 tamukvill      1978         409
- 6 stanford       1972         218
- 7 upenn          1964          14
- 8 arkansas       1962         537
- 9 kentucky       1985          91
-10 txsjjcn        1983         571
+   schoolID   birthYear strike_outs
+   &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
+ 1 vermont         1869         161
+ 2 michigan        1967         888
+ 3 nmstate         1968          98
+ 4 cacerri         1971         327
+ 5 byu             1961        1030
+ 6 pepperdine      1969           4
+ 7 lsu             1978         162
+ 8 miamidade       1982          56
+ 9 stanford        1961           0
+10 incante         1893         526
 # ℹ 3,653 more rows</code></pre>
 </div>
 </div>
@@ -1226,8 +1226,8 @@ SELECT schoolID, birthYear, SUM(H) AS home_runs
 FROM (
   SELECT Batting.*, birthYear, schoolID
   FROM Batting
-  LEFT JOIN dbplyr_noUztVPIuV
-    ON (Batting.playerID = dbplyr_noUztVPIuV.playerID)
+  LEFT JOIN dbplyr_C3O0xDWAKo
+    ON (Batting.playerID = dbplyr_C3O0xDWAKo.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1237,8 +1237,8 @@ SELECT schoolID, birthYear, SUM(SO) AS strike_outs
 FROM (
   SELECT Pitching.*, birthYear, schoolID
   FROM Pitching
-  LEFT JOIN dbplyr_noUztVPIuV
-    ON (Pitching.playerID = dbplyr_noUztVPIuV.playerID)
+  LEFT JOIN dbplyr_C3O0xDWAKo
+    ON (Pitching.playerID = dbplyr_C3O0xDWAKo.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1246,7 +1246,7 @@ GROUP BY schoolID, birthYear</code></pre>
 </div>
 </div>
 </div>
-<p>In this case the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore although we don’t want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.</p>
+<p>In this case, the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore, although we don’t want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1259,7 +1259,7 @@ GROUP BY schoolID, birthYear</code></pre>
 </div>
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Some SQL dialects use indexes for more efficient ‘joins’ performance. Briefly speaking indexes store the location of the different values of a column. Every time that you create a new table with <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> the indexes won’t be carried over, so if you want your new table to keep some indexes you will have to add them manually. That’s why sometimes it won’t be more efficient to add a <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> in between because the new table generated won’t have the indexes that make your query to be executed faster.</p>
+<p>Some SQL dialects use indexes for more efficient ‘joins’ performance. Briefly speaking, indexes store the location of the different values of a column. Every time that you create a new table with <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a>, the indexes won’t be carried over, so if you want your new table to keep some indexes, you will have to add them manually. That’s why sometimes it won’t be more efficient to add a <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> in between, because the new table generated won’t have the indexes that make your query to be executed faster.</p>
 </div>
 </div>
 </div>
@@ -1743,9 +1743,9 @@ GROUP BY schoolID, birthYear</code></pre>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Building analytic pipelines for a data model {#sec-data_model}</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>In the previous chapters we've seen that after connecting to a database we can create references to the various tables we've interested in it and write bespoke analytic code to query them. However, if we are working with the same database over and over again we are likely to want to build some tooling for tasks we are often performing.</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>In the previous chapters, we've seen that after connecting to a database, we can create references to the various tables we're interested in and write custom analytic code to query them. However, if we are working with the same database over and over again, we are likely to want to build some tooling for tasks we often perform.</span>
 <span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>To see how we can develop a data model with associated methods and functions we'll use the Lahman baseball data. We can see below how the data is stored across various related tables.</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>To see how we can develop a data model with associated methods and functions, we'll use the Lahman baseball data. The data is stored across various related tables.</span>
 <span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="al">![Lahman's Baseball Dabatase schema from &lt;https://cdalzell.github.io/Lahman/&gt;.](../images/lahman.jpg)</span>{#fig-lahman .lightbox}</span>
 <span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -1885,7 +1885,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <span id="cb69-144"><a href="#cb69-144" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
 <span id="cb69-145"><a href="#cb69-145" aria-hidden="true" tabindex="-1"></a><span class="fu">### Choosing the right time to collect data into R</span></span>
 <span id="cb69-146"><a href="#cb69-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-147"><a href="#cb69-147" aria-hidden="true" tabindex="-1"></a>The function <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our <span class="in">`getTeams()`</span> function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case we could also use <span class="co">[</span><span class="ot">`pull()`</span><span class="co">](https://dplyr.tidyverse.org/reference/pull.html)</span> to get our result out as a vector rather that a data frame.</span>
+<span id="cb69-147"><a href="#cb69-147" aria-hidden="true" tabindex="-1"></a>The function <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our <span class="in">`getTeams()`</span> function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case, we could also use <span class="co">[</span><span class="ot">`pull()`</span><span class="co">](https://dplyr.tidyverse.org/reference/pull.html)</span> to get our result out as a vector rather than a data frame.</span>
 <span id="cb69-148"><a href="#cb69-148" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-149"><a href="#cb69-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
 <span id="cb69-150"><a href="#cb69-150" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
@@ -1898,7 +1898,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <span id="cb69-157"><a href="#cb69-157" aria-hidden="true" tabindex="-1"></a>In other cases however we may need to collect data so as to perform further analysis steps that are not possible using SQL. This might be the case for plotting or for other analytic steps like fitting statistical models. In such cases we should try to only bring out the data that we need (as we will likely have much less memory available on our local computer than is available for the database).</span>
 <span id="cb69-158"><a href="#cb69-158" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb69-159"><a href="#cb69-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-160"><a href="#cb69-160" aria-hidden="true" tabindex="-1"></a>Similarly we could make a function to add the a player's year of birth to a table.</span>
+<span id="cb69-160"><a href="#cb69-160" aria-hidden="true" tabindex="-1"></a>Similarly, we could make a function to add a player's year of birth to a table.</span>
 <span id="cb69-161"><a href="#cb69-161" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-162"><a href="#cb69-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
 <span id="cb69-163"><a href="#cb69-163" aria-hidden="true" tabindex="-1"></a>addBirthCountry <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
@@ -2041,7 +2041,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <span id="cb69-300"><a href="#cb69-300" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-301"><a href="#cb69-301" aria-hidden="true" tabindex="-1"></a><span class="fu">### The risk of "clean" R code</span></span>
 <span id="cb69-302"><a href="#cb69-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-303"><a href="#cb69-303" aria-hidden="true" tabindex="-1"></a>Following on from the above approach, we might think it a good idea to make another function <span class="in">`addBirthYear()`</span>. We can then use it along with our <span class="in">`addBirthCountry()`</span> to get a summarise average salary by birth country and birth year.</span>
+<span id="cb69-303"><a href="#cb69-303" aria-hidden="true" tabindex="-1"></a>Following on from the above approach, we might think it a good idea to make another function <span class="in">`addBirthYear()`</span>. We can then use it along with our <span class="in">`addBirthCountry()`</span> to get a summarised average salary by birth country and birth year.</span>
 <span id="cb69-304"><a href="#cb69-304" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-305"><a href="#cb69-305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
 <span id="cb69-306"><a href="#cb69-306" aria-hidden="true" tabindex="-1"></a>addBirthYear <span class="ot">&lt;-</span> <span class="cf">function</span>(lahmanTbl){</span>
@@ -2135,7 +2135,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <span id="cb69-394"><a href="#cb69-394" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-395"><a href="#cb69-395" aria-hidden="true" tabindex="-1"></a><span class="fu">### Computing intermediate queries</span></span>
 <span id="cb69-396"><a href="#cb69-396" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-397"><a href="#cb69-397" aria-hidden="true" tabindex="-1"></a>Let's say we want to summarise home runs in the batting table and stike outs in the pitching table by the college players attended and their birth year. We could do this like so:</span>
+<span id="cb69-397"><a href="#cb69-397" aria-hidden="true" tabindex="-1"></a>Let's say we want to summarise home runs in the batting table and strike outs in the pitching table by the college players attended and their birth year. We could do this like so:</span>
 <span id="cb69-398"><a href="#cb69-398" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-399"><a href="#cb69-399" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
 <span id="cb69-400"><a href="#cb69-400" aria-hidden="true" tabindex="-1"></a>players_with_college <span class="ot">&lt;-</span> lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
@@ -2160,7 +2160,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <span id="cb69-419"><a href="#cb69-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
 <span id="cb69-420"><a href="#cb69-420" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-421"><a href="#cb69-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-422"><a href="#cb69-422" aria-hidden="true" tabindex="-1"></a>Looking at the SQL we can see, however, that there is some duplication, because as part of each full query we have run our players_with_college query.</span>
+<span id="cb69-422"><a href="#cb69-422" aria-hidden="true" tabindex="-1"></a>Looking at the SQL, we can see, however, that there is some duplication, because as part of each full query, we have run our players_with_college query.</span>
 <span id="cb69-423"><a href="#cb69-423" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-424"><a href="#cb69-424" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb69-425"><a href="#cb69-425" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
@@ -2226,12 +2226,12 @@ GROUP BY schoolID, birthYear</code></pre>
 <span id="cb69-485"><a href="#cb69-485" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-486"><a href="#cb69-486" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb69-487"><a href="#cb69-487" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-488"><a href="#cb69-488" aria-hidden="true" tabindex="-1"></a>In this case the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore although we don't want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.</span>
+<span id="cb69-488"><a href="#cb69-488" aria-hidden="true" tabindex="-1"></a>In this case, the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore, although we don't want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.</span>
 <span id="cb69-489"><a href="#cb69-489" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-490"><a href="#cb69-490" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb69-491"><a href="#cb69-491" aria-hidden="true" tabindex="-1"></a><span class="fu">### Indexes</span></span>
 <span id="cb69-492"><a href="#cb69-492" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-493"><a href="#cb69-493" aria-hidden="true" tabindex="-1"></a>Some SQL dialects use indexes for more efficient 'joins' performance. Briefly speaking indexes store the location of the different values of a column. Every time that you create a new table with <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> the indexes won't be carried over, so if you want your new table to keep some indexes you will have to add them manually. That's why sometimes it won't be more efficient to add a <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> in between because the new table generated won't have the indexes that make your query to be executed faster.</span>
+<span id="cb69-493"><a href="#cb69-493" aria-hidden="true" tabindex="-1"></a>Some SQL dialects use indexes for more efficient 'joins' performance. Briefly speaking, indexes store the location of the different values of a column. Every time that you create a new table with <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span>, the indexes won't be carried over, so if you want your new table to keep some indexes, you will have to add them manually. That's why sometimes it won't be more efficient to add a <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> in between, because the new table generated won't have the indexes that make your query to be executed faster.</span>
 <span id="cb69-494"><a href="#cb69-494" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb69-495"><a href="#cb69-495" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-496"><a href="#cb69-496" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting from the database</span></span>
