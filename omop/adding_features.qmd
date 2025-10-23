@@ -71,12 +71,12 @@ cdm$condition_occurrence |>
   show_query()
 ```
 
-The difference between [`addSexQuery()`](https://darwin-eu.github.io/PatientProfiles/reference/addSexQuery.html) and [`addSex()`](https://darwin-eu.github.io/PatientProfiles/reference/addSex.html) is explained in the next tip chunk.
+The difference between [`addSexQuery()`](https://darwin-eu.github.io/PatientProfiles/reference/addSexQuery.html) and [`addSex()`](https://darwin-eu.github.io/PatientProfiles/reference/addSex.html) will be explained in the next tip chunk.
 :::
 
 ## Adding multiple demographics simultaneously
 
-We've now seen individual functions from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) that add specific patient characteristics such as age and sex. The package also includes functions to add other characteristics, such as the number of days of prior observation in the database (rather unimaginatively named [`addPriorObservation()`](https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html)). In addition to these individual functions, the package also provides a more general function that retrieves all of these characteristics at the same time.[^adding_features-3]
+We've now seen individual functions from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) that add specific patient characteristics, such as age and sex. The package also includes functions to add other characteristics, such as the number of days of prior observation in the database (rather unimaginatively named [`addPriorObservation()`](https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html)). In addition to these individual functions, the package also provides a more general function that retrieves all of these characteristics at the same time.[^adding_features-3]
 
 [^adding_features-3]: This function also provides a more time-efficient method than getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables, and so can be identified simultaneously.
 
@@ -197,7 +197,10 @@ cdm$condition_occurrence |>
 
 ## Adding custom variables
 
-While [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) provides a range of functions that can help you add characteristics of interest, you may also want to add other features. Obviously, we can't cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.
+While [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) provides a range of functions that can help you add characteristics of interest, you may also want to add other features. Obviously, the package can't cover all the possible custom characteristics you may wish to add. However, we will see two common groups of custom variables you may want to add: 
+
+- variables derived from existing columns within the same table, 
+- variables obtained from other tables and joined to our table of interest.
 
 In the first case, where we want to add a new variable derived from existing variables within our table, we'll typically use [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) (from the [`dplyr`](https://dplyr.tidyverse.org) package). For example, perhaps we just want to add a new variable to our observation period table that contains the year of each individual’s observation period start date. This is rather straightforward.
 
