@@ -273,7 +273,7 @@ result <- databaseCharacteristics(cdm = cdm)
 
 Note this process can take several hours or even days depending on the size of the database. Later you can visualise all the results in a Shiny App such as the one shown at the beginning of this chapter.
 
-```{r}
+```{r, eval=FALSE}
 shinyCharacteristics(result = result, directory = getwd())
 ```
 :::
