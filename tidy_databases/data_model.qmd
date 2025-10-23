@@ -424,7 +424,7 @@ lahman$Batting |>
 lahman$Pitching |> 
   left_join(
     players_with_college, 
-    y = "playerID"
+    by = "playerID"
   ) |> 
   group_by(schoolID, birthYear) |>
   summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop")|> 
