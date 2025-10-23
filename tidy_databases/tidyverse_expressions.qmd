@@ -866,7 +866,7 @@ In conclusion, for all dialects, `arrange()` changes the output row order, while
 
 So far we've seen that we can perform various data manipulations and calculate summary statistics for different database management systems using the same R code. Although the translated SQL has been different, the databases all supported similar approaches to perform these queries.
 
-A case where this is not true is when we are interested in summarizing distributions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately, this means that for some databases, quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.
+A case where this is not true is when we are interested in summarising distributions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately, this means that for some databases, quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.
 
 ::: {.callout-tip collapse="true"}
 ### Show SQL
