@@ -304,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 18
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0904B7/file315c3bda6f22.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpfMptlk/file31624cceb00c.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
 $ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
@@ -332,7 +332,7 @@ $ age                           &lt;int&gt; 57, 25, 97, 2, 2, 2, 2, 75, 77, 57, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 18
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0904B7/file315c3bda6f22.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpfMptlk/file31624cceb00c.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
 $ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
@@ -407,7 +407,7 @@ $ age                           &lt;int&gt; 57, 25, 97, 2, 2, 2, 2, 75, 77, 57, 
 <pre><code>&lt;SQL&gt;
 SELECT
   condition_occurrence_id,
-  og_002_1761234178.person_id AS person_id,
+  og_002_1761234226.person_id AS person_id,
   condition_concept_id,
   condition_start_date,
   condition_start_datetime,
@@ -424,7 +424,7 @@ SELECT
   condition_status_source_value,
   age,
   RHS.sex AS sex
-FROM og_002_1761234178
+FROM og_002_1761234226
 LEFT JOIN (
   SELECT
     person_id,
@@ -435,17 +435,17 @@ ELSE 'None'
 END AS sex
   FROM person
 ) RHS
-  ON (og_002_1761234178.person_id = RHS.person_id)</code></pre>
+  ON (og_002_1761234226.person_id = RHS.person_id)</code></pre>
 </div>
 </div>
-<p>The difference between <a href="https://darwin-eu.github.io/PatientProfiles/reference/addSexQuery.html"><code>addSexQuery()</code></a> and <a href="https://darwin-eu.github.io/PatientProfiles/reference/addSex.html"><code>addSex()</code></a> is explained in the next tip chunk.</p>
+<p>The difference between <a href="https://darwin-eu.github.io/PatientProfiles/reference/addSexQuery.html"><code>addSexQuery()</code></a> and <a href="https://darwin-eu.github.io/PatientProfiles/reference/addSex.html"><code>addSex()</code></a> will be explained in the next tip chunk.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="adding-multiple-demographics-simultaneously" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="adding-multiple-demographics-simultaneously"><span class="header-section-number">7.2</span> Adding multiple demographics simultaneously</h2>
-<p>We’ve now seen individual functions from <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> that add specific patient characteristics such as age and sex. The package also includes functions to add other characteristics, such as the number of days of prior observation in the database (rather unimaginatively named <a href="https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html"><code>addPriorObservation()</code></a>). In addition to these individual functions, the package also provides a more general function that retrieves all of these characteristics at the same time.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>We’ve now seen individual functions from <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> that add specific patient characteristics, such as age and sex. The package also includes functions to add other characteristics, such as the number of days of prior observation in the database (rather unimaginatively named <a href="https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html"><code>addPriorObservation()</code></a>). In addition to these individual functions, the package also provides a more general function that retrieves all of these characteristics at the same time.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>drug_exposure <span class="ot">&lt;-</span> cdm<span class="sc">$</span>drug_exposure <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addDemographics</span>(</span>
@@ -462,15 +462,15 @@ END AS sex
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 28
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0904B7/file315c3bda6f22.duckdb]
-$ drug_exposure_id             &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13…
-$ person_id                    &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-$ drug_concept_id              &lt;int&gt; 40213260, 40213260, 40213260, 40213260, 4…
-$ drug_exposure_start_date     &lt;date&gt; 2021-04-30, 2020-04-24, 2021-04-30, 2020…
-$ drug_exposure_start_datetime &lt;dttm&gt; 2021-04-30 16:49:39, 2020-04-24 16:49:39…
-$ drug_exposure_end_date       &lt;date&gt; 2021-04-30, 2020-04-24, 2021-04-30, 2020…
-$ drug_exposure_end_datetime   &lt;dttm&gt; 2021-04-30 16:49:39, 2020-04-24 16:49:39…
-$ verbatim_end_date            &lt;date&gt; 2021-04-30, 2020-04-24, 2021-04-30, 2020…
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpfMptlk/file31624cceb00c.duckdb]
+$ drug_exposure_id             &lt;int&gt; 245761, 245762, 245763, 245764, 245765, 2…
+$ person_id                    &lt;int&gt; 7764, 7764, 7764, 7764, 7764, 7764, 7764,…
+$ drug_concept_id              &lt;int&gt; 40213227, 40213201, 40213198, 40213154, 4…
+$ drug_exposure_start_date     &lt;date&gt; 2015-02-08, 2010-01-10, 2010-01-10, 2017…
+$ drug_exposure_start_datetime &lt;dttm&gt; 2015-02-08 22:40:04, 2010-01-10 22:40:04…
+$ drug_exposure_end_date       &lt;date&gt; 2015-02-08, 2010-01-10, 2010-01-10, 2017…
+$ drug_exposure_end_datetime   &lt;dttm&gt; 2015-02-08 22:40:04, 2010-01-10 22:40:04…
+$ verbatim_end_date            &lt;date&gt; 2015-02-08, 2010-01-10, 2010-01-10, 2017…
 $ drug_type_concept_id         &lt;int&gt; 32869, 32869, 32869, 32869, 32869, 32869,…
 $ stop_reason                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 $ refills                      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
@@ -479,18 +479,18 @@ $ days_supply                  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 $ sig                          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 $ route_concept_id             &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
 $ lot_number                   &lt;chr&gt; "0", "0", "0", "0", "0", "0", "0", "0", "…
-$ provider_id                  &lt;int&gt; 12357, 12357, 12356, 12356, 12357, 12356,…
-$ visit_occurrence_id          &lt;int&gt; 6, 8, 6, 8, 6, 6, 7, 2, 6, 8, 9, 1, 7, 2,…
-$ visit_detail_id              &lt;int&gt; 1000006, 1000008, 1000006, 1000008, 10000…
-$ drug_source_value            &lt;chr&gt; "121", "121", "121", "121", "113", "113",…
-$ drug_source_concept_id       &lt;int&gt; 40213260, 40213260, 40213260, 40213260, 4…
+$ provider_id                  &lt;int&gt; 14656, 14656, 14656, 14656, 14656, 14656,…
+$ visit_occurrence_id          &lt;int&gt; 80896, 80891, 80891, 80892, 80895, 80896,…
+$ visit_detail_id              &lt;int&gt; 1080896, 1080891, 1080891, 1080892, 10808…
+$ drug_source_value            &lt;chr&gt; "113", "33", "133", "140", "140", "140", …
+$ drug_source_concept_id       &lt;int&gt; 40213227, 40213201, 40213198, 40213154, 4…
 $ route_source_value           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 $ dose_unit_source_value       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ age                          &lt;int&gt; 51, 50, 51, 50, 51, 51, 53, 52, 51, 50, 4…
-$ sex                          &lt;chr&gt; "Female", "Female", "Female", "Female", "…
-$ prior_observation            &lt;int&gt; 2548, 2177, 2548, 2177, 2548, 2548, 3290,…
-$ future_observation           &lt;int&gt; 742, 1113, 742, 1113, 742, 742, 0, 371, 7…
-$ date_of_birth                &lt;date&gt; 1970-04-24, 1970-04-24, 1970-04-24, 1970…</code></pre>
+$ age                          &lt;int&gt; 71, 66, 66, 73, 72, 71, 69, 67, 65, 70, 6…
+$ sex                          &lt;chr&gt; "Male", "Male", "Male", "Male", "Male", "…
+$ prior_observation            &lt;int&gt; 2597, 742, 742, 3339, 2968, 2597, 1855, 1…
+$ future_observation           &lt;int&gt; 896, 2751, 2751, 154, 525, 896, 1638, 238…
+$ date_of_birth                &lt;date&gt; 1943-10-10, 1943-10-10, 1943-10-10, 1943…</code></pre>
 </div>
 </div>
 <p>With these characteristics added, we can now calculate mean age, prior observation (the number of days have passed since each individual’s most recent observation start date), and future observation (the number of days until the individual’s nearest observation end date) at drug exposure start date, stratified by sex.</p>
@@ -529,8 +529,8 @@ $ date_of_birth                &lt;date&gt; 1970-04-24, 1970-04-24, 1970-04-24, 
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
-SELECT og_004_1761234180.*
-FROM og_004_1761234180
+SELECT og_004_1761234229.*
+FROM og_004_1761234229
 WHERE (sex = 'Male')</code></pre>
 </div>
 </div>
@@ -660,7 +660,7 @@ WHERE (sex = 'Male')</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 20
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0904B7/file315c3bda6f22.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpfMptlk/file31624cceb00c.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
 $ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
@@ -686,7 +686,11 @@ $ prior_observation_group       &lt;chr&gt; "365 or above", "365 or above", "365
 </section>
 <section id="adding-custom-variables" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="adding-custom-variables"><span class="header-section-number">7.4</span> Adding custom variables</h2>
-<p>While <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> provides a range of functions that can help you add characteristics of interest, you may also want to add other features. Obviously, we can’t cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.</p>
+<p>While <a href="https://darwin-eu.github.io/PatientProfiles/"><code>PatientProfiles</code></a> provides a range of functions that can help you add characteristics of interest, you may also want to add other features. Obviously, the package can’t cover all the possible custom characteristics you may wish to add. However, we will see two common groups of custom variables you may want to add:</p>
+<ul>
+<li>variables derived from existing columns within the same table,</li>
+<li>variables obtained from other tables and joined to our table of interest.</li>
+</ul>
 <p>In the first case, where we want to add a new variable derived from existing variables within our table, we’ll typically use <a href="https://dplyr.tidyverse.org/reference/mutate.html"><code>mutate()</code></a> (from the <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> package). For example, perhaps we just want to add a new variable to our observation period table that contains the year of each individual’s observation period start date. This is rather straightforward.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span> </span>
@@ -697,7 +701,7 @@ $ prior_observation_group       &lt;chr&gt; "365 or above", "365 or above", "365
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0904B7/file315c3bda6f22.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpfMptlk/file31624cceb00c.duckdb]
 $ observation_period_id         &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ observation_period_start_date &lt;date&gt; 2014-05-09, 1977-04-11, 2014-04-19, 201…
@@ -725,7 +729,7 @@ $ observation_period_start_year &lt;dbl&gt; 2014, 1977, 2014, 2014, 2013, 2013, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 2
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0904B7/file315c3bda6f22.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpfMptlk/file31624cceb00c.duckdb]
 $ person_id                    &lt;int&gt; 2, 6, 7, 8, 16, 18, 25, 36, 40, 42, 44, 4…
 $ condition_occurrence_records &lt;dbl&gt; 1, 1, 1, 4, 2, 2, 1, 4, 1, 3, 2, 5, 1, 3,…</code></pre>
 </div>
@@ -753,7 +757,7 @@ FROM (
   FROM person
   LEFT JOIN (
     SELECT person_id, COUNT(*) AS condition_occurrence_records
-    FROM og_002_1761234178
+    FROM og_002_1761234226
     GROUP BY person_id
   ) RHS
     ON (person.person_id = RHS.person_id)
@@ -780,7 +784,7 @@ FROM (
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0904B7/file315c3bda6f22.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpfMptlk/file31624cceb00c.duckdb]
       n
   &lt;dbl&gt;
 1  9967</code></pre>
@@ -789,7 +793,7 @@ FROM (
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0904B7/file315c3bda6f22.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpfMptlk/file31624cceb00c.duckdb]
        n
    &lt;dbl&gt;
 1 337509</code></pre>
@@ -804,7 +808,7 @@ FROM (
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0904B7/file315c3bda6f22.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpfMptlk/file31624cceb00c.duckdb]
        n
    &lt;dbl&gt;
 1 410683</code></pre>
@@ -1377,12 +1381,12 @@ FROM (
 <span id="cb42-83"><a href="#cb42-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
 <span id="cb42-84"><a href="#cb42-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-85"><a href="#cb42-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-86"><a href="#cb42-86" aria-hidden="true" tabindex="-1"></a>The difference between <span class="co">[</span><span class="ot">`addSexQuery()`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/reference/addSexQuery.html)</span> and <span class="co">[</span><span class="ot">`addSex()`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/reference/addSex.html)</span> is explained in the next tip chunk.</span>
+<span id="cb42-86"><a href="#cb42-86" aria-hidden="true" tabindex="-1"></a>The difference between <span class="co">[</span><span class="ot">`addSexQuery()`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/reference/addSexQuery.html)</span> and <span class="co">[</span><span class="ot">`addSex()`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/reference/addSex.html)</span> will be explained in the next tip chunk.</span>
 <span id="cb42-87"><a href="#cb42-87" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb42-88"><a href="#cb42-88" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-89"><a href="#cb42-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adding multiple demographics simultaneously</span></span>
 <span id="cb42-90"><a href="#cb42-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-91"><a href="#cb42-91" aria-hidden="true" tabindex="-1"></a>We've now seen individual functions from <span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> that add specific patient characteristics such as age and sex. The package also includes functions to add other characteristics, such as the number of days of prior observation in the database (rather unimaginatively named <span class="co">[</span><span class="ot">`addPriorObservation()`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html)</span>). In addition to these individual functions, the package also provides a more general function that retrieves all of these characteristics at the same time.<span class="ot">[^adding_features-3]</span></span>
+<span id="cb42-91"><a href="#cb42-91" aria-hidden="true" tabindex="-1"></a>We've now seen individual functions from <span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> that add specific patient characteristics, such as age and sex. The package also includes functions to add other characteristics, such as the number of days of prior observation in the database (rather unimaginatively named <span class="co">[</span><span class="ot">`addPriorObservation()`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html)</span>). In addition to these individual functions, the package also provides a more general function that retrieves all of these characteristics at the same time.<span class="ot">[^adding_features-3]</span></span>
 <span id="cb42-92"><a href="#cb42-92" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-93"><a href="#cb42-93" aria-hidden="true" tabindex="-1"></a><span class="ot">[^adding_features-3]: </span>This function also provides a more time-efficient method than getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables, and so can be identified simultaneously.</span>
 <span id="cb42-94"><a href="#cb42-94" aria-hidden="true" tabindex="-1"></a></span>
@@ -1503,89 +1507,92 @@ FROM (
 <span id="cb42-219"><a href="#cb42-219" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-220"><a href="#cb42-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adding custom variables</span></span>
 <span id="cb42-221"><a href="#cb42-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-222"><a href="#cb42-222" aria-hidden="true" tabindex="-1"></a>While <span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> provides a range of functions that can help you add characteristics of interest, you may also want to add other features. Obviously, we can't cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.</span>
+<span id="cb42-222"><a href="#cb42-222" aria-hidden="true" tabindex="-1"></a>While <span class="co">[</span><span class="ot">`PatientProfiles`</span><span class="co">](https://darwin-eu.github.io/PatientProfiles/)</span> provides a range of functions that can help you add characteristics of interest, you may also want to add other features. Obviously, the package can't cover all the possible custom characteristics you may wish to add. However, we will see two common groups of custom variables you may want to add: </span>
 <span id="cb42-223"><a href="#cb42-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-224"><a href="#cb42-224" aria-hidden="true" tabindex="-1"></a>In the first case, where we want to add a new variable derived from existing variables within our table, we'll typically use <span class="co">[</span><span class="ot">`mutate()`</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate.html)</span> (from the <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span> package). For example, perhaps we just want to add a new variable to our observation period table that contains the year of each individual’s observation period start date. This is rather straightforward.</span>
-<span id="cb42-225"><a href="#cb42-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-228"><a href="#cb42-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-229"><a href="#cb42-229" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span> </span>
-<span id="cb42-230"><a href="#cb42-230" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year =</span> <span class="fu">get_year</span>(observation_period_start_date))</span>
-<span id="cb42-231"><a href="#cb42-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-232"><a href="#cb42-232" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span> </span>
-<span id="cb42-233"><a href="#cb42-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb42-234"><a href="#cb42-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-235"><a href="#cb42-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-236"><a href="#cb42-236" aria-hidden="true" tabindex="-1"></a>The second case is usually a more complex task, as adding a new variable involves joining to some other table following a certain logic. This table may have been created by some intermediate query that we wrote to derive the variable of interest. For example, let's say we want to add the number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). To do this, we will need to perform a join between the person and condition occurrence tables (as some people might not have any records in the condition occurrence table). Here we'll create a table containing just the information we're interested in and compute it to a temporary table.</span>
-<span id="cb42-237"><a href="#cb42-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-240"><a href="#cb42-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-241"><a href="#cb42-241" aria-hidden="true" tabindex="-1"></a>condition_summary <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb42-242"><a href="#cb42-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb42-243"><a href="#cb42-243" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb42-244"><a href="#cb42-244" aria-hidden="true" tabindex="-1"></a>    cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
-<span id="cb42-245"><a href="#cb42-245" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
-<span id="cb42-246"><a href="#cb42-246" aria-hidden="true" tabindex="-1"></a>      <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
-<span id="cb42-247"><a href="#cb42-247" aria-hidden="true" tabindex="-1"></a>    <span class="at">by=</span><span class="st">"person_id"</span></span>
-<span id="cb42-248"><a href="#cb42-248" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb42-249"><a href="#cb42-249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>, <span class="st">"condition_occurrence_records"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb42-250"><a href="#cb42-250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">coalesce</span>(condition_occurrence_records, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb42-251"><a href="#cb42-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>()</span>
-<span id="cb42-252"><a href="#cb42-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-253"><a href="#cb42-253" aria-hidden="true" tabindex="-1"></a>condition_summary <span class="sc">|&gt;</span> </span>
-<span id="cb42-254"><a href="#cb42-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb42-255"><a href="#cb42-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-256"><a href="#cb42-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-257"><a href="#cb42-257" aria-hidden="true" tabindex="-1"></a>We can see what goes on behind the scenes by viewing the associated SQL.</span>
-<span id="cb42-258"><a href="#cb42-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-261"><a href="#cb42-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-262"><a href="#cb42-262" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb42-263"><a href="#cb42-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb42-264"><a href="#cb42-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb42-265"><a href="#cb42-265" aria-hidden="true" tabindex="-1"></a>    cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
-<span id="cb42-266"><a href="#cb42-266" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
-<span id="cb42-267"><a href="#cb42-267" aria-hidden="true" tabindex="-1"></a>      <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
-<span id="cb42-268"><a href="#cb42-268" aria-hidden="true" tabindex="-1"></a>    <span class="at">by=</span><span class="st">"person_id"</span></span>
-<span id="cb42-269"><a href="#cb42-269" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb42-270"><a href="#cb42-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>, <span class="st">"condition_occurrence_records"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb42-271"><a href="#cb42-271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">coalesce</span>(condition_occurrence_records, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb42-272"><a href="#cb42-272" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb42-273"><a href="#cb42-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-274"><a href="#cb42-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-275"><a href="#cb42-275" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
-<span id="cb42-276"><a href="#cb42-276" aria-hidden="true" tabindex="-1"></a><span class="fu">### Taking care with joins</span></span>
+<span id="cb42-224"><a href="#cb42-224" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>variables derived from existing columns within the same table, </span>
+<span id="cb42-225"><a href="#cb42-225" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>variables obtained from other tables and joined to our table of interest.</span>
+<span id="cb42-226"><a href="#cb42-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-227"><a href="#cb42-227" aria-hidden="true" tabindex="-1"></a>In the first case, where we want to add a new variable derived from existing variables within our table, we'll typically use <span class="co">[</span><span class="ot">`mutate()`</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate.html)</span> (from the <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span> package). For example, perhaps we just want to add a new variable to our observation period table that contains the year of each individual’s observation period start date. This is rather straightforward.</span>
+<span id="cb42-228"><a href="#cb42-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-231"><a href="#cb42-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-232"><a href="#cb42-232" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span> </span>
+<span id="cb42-233"><a href="#cb42-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year =</span> <span class="fu">get_year</span>(observation_period_start_date))</span>
+<span id="cb42-234"><a href="#cb42-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-235"><a href="#cb42-235" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span> </span>
+<span id="cb42-236"><a href="#cb42-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb42-237"><a href="#cb42-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-238"><a href="#cb42-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-239"><a href="#cb42-239" aria-hidden="true" tabindex="-1"></a>The second case is usually a more complex task, as adding a new variable involves joining to some other table following a certain logic. This table may have been created by some intermediate query that we wrote to derive the variable of interest. For example, let's say we want to add the number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). To do this, we will need to perform a join between the person and condition occurrence tables (as some people might not have any records in the condition occurrence table). Here we'll create a table containing just the information we're interested in and compute it to a temporary table.</span>
+<span id="cb42-240"><a href="#cb42-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-243"><a href="#cb42-243" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-244"><a href="#cb42-244" aria-hidden="true" tabindex="-1"></a>condition_summary <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb42-245"><a href="#cb42-245" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb42-246"><a href="#cb42-246" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb42-247"><a href="#cb42-247" aria-hidden="true" tabindex="-1"></a>    cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
+<span id="cb42-248"><a href="#cb42-248" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
+<span id="cb42-249"><a href="#cb42-249" aria-hidden="true" tabindex="-1"></a>      <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
+<span id="cb42-250"><a href="#cb42-250" aria-hidden="true" tabindex="-1"></a>    <span class="at">by=</span><span class="st">"person_id"</span></span>
+<span id="cb42-251"><a href="#cb42-251" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb42-252"><a href="#cb42-252" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>, <span class="st">"condition_occurrence_records"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb42-253"><a href="#cb42-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">coalesce</span>(condition_occurrence_records, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb42-254"><a href="#cb42-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>()</span>
+<span id="cb42-255"><a href="#cb42-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-256"><a href="#cb42-256" aria-hidden="true" tabindex="-1"></a>condition_summary <span class="sc">|&gt;</span> </span>
+<span id="cb42-257"><a href="#cb42-257" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb42-258"><a href="#cb42-258" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-259"><a href="#cb42-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-260"><a href="#cb42-260" aria-hidden="true" tabindex="-1"></a>We can see what goes on behind the scenes by viewing the associated SQL.</span>
+<span id="cb42-261"><a href="#cb42-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-264"><a href="#cb42-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-265"><a href="#cb42-265" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb42-266"><a href="#cb42-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb42-267"><a href="#cb42-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb42-268"><a href="#cb42-268" aria-hidden="true" tabindex="-1"></a>    cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
+<span id="cb42-269"><a href="#cb42-269" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
+<span id="cb42-270"><a href="#cb42-270" aria-hidden="true" tabindex="-1"></a>      <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
+<span id="cb42-271"><a href="#cb42-271" aria-hidden="true" tabindex="-1"></a>    <span class="at">by=</span><span class="st">"person_id"</span></span>
+<span id="cb42-272"><a href="#cb42-272" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb42-273"><a href="#cb42-273" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"person_id"</span>, <span class="st">"condition_occurrence_records"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb42-274"><a href="#cb42-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">coalesce</span>(condition_occurrence_records, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb42-275"><a href="#cb42-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb42-276"><a href="#cb42-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-277"><a href="#cb42-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-278"><a href="#cb42-278" aria-hidden="true" tabindex="-1"></a>When adding variables through joins we need to pay particular attention to the dimensions of the resulting table. While sometimes we may want to have additional rows added as well as new columns, this is often not desired. For example, if we have a table with one row per person, performing a left join to another table containing multiple rows per person will result in multiple rows per person in the output.</span>
-<span id="cb42-279"><a href="#cb42-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-280"><a href="#cb42-280" aria-hidden="true" tabindex="-1"></a>Examples where to be careful include when joining to the observation period table, as individuals can have multiple observation periods, and when working with cohorts (which are the focus of the next chapter) as individuals can also enter the same study cohort multiple times.</span>
-<span id="cb42-281"><a href="#cb42-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-282"><a href="#cb42-282" aria-hidden="true" tabindex="-1"></a>Just to underline how problematic joins can become if we don't take care, here we join the condition occurrence table and the drug exposure table, both of which have multiple records per person. Even with our small synthetic dataset, this produces an extremely large table. When working with real patient data, which is oftentimes much, much larger, this would be extremely problematic (and would unlikely be needed to answer any research question). In other words, don't try this at home!</span>
-<span id="cb42-283"><a href="#cb42-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-286"><a href="#cb42-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-287"><a href="#cb42-287" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
-<span id="cb42-288"><a href="#cb42-288" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
-<span id="cb42-289"><a href="#cb42-289" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>drug_exposure <span class="sc">|&gt;</span> </span>
-<span id="cb42-290"><a href="#cb42-290" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
-<span id="cb42-291"><a href="#cb42-291" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
-<span id="cb42-292"><a href="#cb42-292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(person_id, condition_start_date) <span class="sc">|&gt;</span> </span>
-<span id="cb42-293"><a href="#cb42-293" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb42-294"><a href="#cb42-294" aria-hidden="true" tabindex="-1"></a>    cdm<span class="sc">$</span>drug_exposure <span class="sc">|&gt;</span> </span>
-<span id="cb42-295"><a href="#cb42-295" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(person_id, drug_exposure_start_date), </span>
-<span id="cb42-296"><a href="#cb42-296" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"person_id"</span></span>
-<span id="cb42-297"><a href="#cb42-297" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb42-298"><a href="#cb42-298" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
-<span id="cb42-299"><a href="#cb42-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-300"><a href="#cb42-300" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb42-301"><a href="#cb42-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-302"><a href="#cb42-302" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting</span></span>
-<span id="cb42-303"><a href="#cb42-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-304"><a href="#cb42-304" aria-hidden="true" tabindex="-1"></a>Once we have finished our analysis we can close our connection to the database behind our cdm reference.</span>
-<span id="cb42-305"><a href="#cb42-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-308"><a href="#cb42-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-309"><a href="#cb42-309" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span>
-<span id="cb42-310"><a href="#cb42-310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-311"><a href="#cb42-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-312"><a href="#cb42-312" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
-<span id="cb42-313"><a href="#cb42-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-314"><a href="#cb42-314" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Català M, Guo Y, Du M, Lopez-Guell K, Burn E, Mercade-Besora N (2025). *PatientProfiles: Identify Characteristics of Patients in the OMOP Common Data Model*. R package version 1.4.3, <span class="ot">&lt;https://darwin-eu.github.io/PatientProfiles/&gt;</span>.</span>
+<span id="cb42-278"><a href="#cb42-278" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
+<span id="cb42-279"><a href="#cb42-279" aria-hidden="true" tabindex="-1"></a><span class="fu">### Taking care with joins</span></span>
+<span id="cb42-280"><a href="#cb42-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-281"><a href="#cb42-281" aria-hidden="true" tabindex="-1"></a>When adding variables through joins we need to pay particular attention to the dimensions of the resulting table. While sometimes we may want to have additional rows added as well as new columns, this is often not desired. For example, if we have a table with one row per person, performing a left join to another table containing multiple rows per person will result in multiple rows per person in the output.</span>
+<span id="cb42-282"><a href="#cb42-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-283"><a href="#cb42-283" aria-hidden="true" tabindex="-1"></a>Examples where to be careful include when joining to the observation period table, as individuals can have multiple observation periods, and when working with cohorts (which are the focus of the next chapter) as individuals can also enter the same study cohort multiple times.</span>
+<span id="cb42-284"><a href="#cb42-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-285"><a href="#cb42-285" aria-hidden="true" tabindex="-1"></a>Just to underline how problematic joins can become if we don't take care, here we join the condition occurrence table and the drug exposure table, both of which have multiple records per person. Even with our small synthetic dataset, this produces an extremely large table. When working with real patient data, which is oftentimes much, much larger, this would be extremely problematic (and would unlikely be needed to answer any research question). In other words, don't try this at home!</span>
+<span id="cb42-286"><a href="#cb42-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-289"><a href="#cb42-289" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-290"><a href="#cb42-290" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
+<span id="cb42-291"><a href="#cb42-291" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
+<span id="cb42-292"><a href="#cb42-292" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>drug_exposure <span class="sc">|&gt;</span> </span>
+<span id="cb42-293"><a href="#cb42-293" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
+<span id="cb42-294"><a href="#cb42-294" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
+<span id="cb42-295"><a href="#cb42-295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(person_id, condition_start_date) <span class="sc">|&gt;</span> </span>
+<span id="cb42-296"><a href="#cb42-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb42-297"><a href="#cb42-297" aria-hidden="true" tabindex="-1"></a>    cdm<span class="sc">$</span>drug_exposure <span class="sc">|&gt;</span> </span>
+<span id="cb42-298"><a href="#cb42-298" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(person_id, drug_exposure_start_date), </span>
+<span id="cb42-299"><a href="#cb42-299" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"person_id"</span></span>
+<span id="cb42-300"><a href="#cb42-300" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb42-301"><a href="#cb42-301" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
+<span id="cb42-302"><a href="#cb42-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-303"><a href="#cb42-303" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb42-304"><a href="#cb42-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-305"><a href="#cb42-305" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting</span></span>
+<span id="cb42-306"><a href="#cb42-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-307"><a href="#cb42-307" aria-hidden="true" tabindex="-1"></a>Once we have finished our analysis we can close our connection to the database behind our cdm reference.</span>
+<span id="cb42-308"><a href="#cb42-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-311"><a href="#cb42-311" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-312"><a href="#cb42-312" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span>
+<span id="cb42-313"><a href="#cb42-313" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-314"><a href="#cb42-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-315"><a href="#cb42-315" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
+<span id="cb42-316"><a href="#cb42-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-317"><a href="#cb42-317" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Català M, Guo Y, Du M, Lopez-Guell K, Burn E, Mercade-Besora N (2025). *PatientProfiles: Identify Characteristics of Patients in the OMOP Common Data Model*. R package version 1.4.3, <span class="ot">&lt;https://darwin-eu.github.io/PatientProfiles/&gt;</span>.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
