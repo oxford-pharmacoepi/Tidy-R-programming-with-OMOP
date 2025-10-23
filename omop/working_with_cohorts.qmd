@@ -15,11 +15,11 @@ library(omock)
 library(dplyr)
 library(PatientProfiles)
 library(CohortConstructor)
-library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
+library(omopgenerics) 
 
 cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
 
-# gi_bleed contains all records of gi bleed, end date is 30 days after index 
+# gi_bleed contains all records of GiBbleed, end date is 30 days after index 
 # date
 cdm$gi_bleed <- conceptCohort(
   cdm = cdm,
@@ -42,9 +42,10 @@ cdm$drugs <- conceptCohort(
   collapseCohorts(gap = 30)
 ```
 
-The `PatientProfiles` package contains functions to obtain the intersection flag, count, date, or number of days between cohorts. To get a binary indicator showing the presence of an intersection between the cohorts within a given time window, we can use `addCohortIntersectFlag()`.
+The `PatientProfiles` package contains functions to obtain the intersection flag, count, date, or number of days between cohorts. 
 
 ### Flag
+To get a binary indicator showing the presence of an intersection between the cohorts within a given time window, we can use `addCohortIntersectFlag()`.
 
 ```{r, warning=FALSE, message=FALSE}
 x <- cdm$gi_bleed |>
@@ -115,7 +116,7 @@ cdm$gi_bleed |>
   glimpse()
 ```
 
-Many functions that create new columns (usually start with `add*()`) have this `nameStyle` functionality that allows you to control the naming of the new columns created.
+Many functions that create new columns (usually functions that start with `add*()`) have this `nameStyle` functionality that allows you to control the naming of the new columns created.
 :::
 
 ### Count
@@ -147,7 +148,7 @@ x |>
 
 Note that **only intersections in the current observation period are considered**.
 
-The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. If we see individual `2070`, it has *3748* of future observation:
+The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. If we see individual `2070`, it has *3748* days of future observation:
 
 ```{r}
 cdm$gi_bleed |>
