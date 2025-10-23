@@ -1,6 +1,6 @@
 # Exploring the OMOP CDM {#sec-exploring_the_cdm}
 
-For this chapter, we'll use a synthetic COVID-19 dataset (`"synthea-covid19-10k"`). A characterisation of this dataset can be found [here](https://dpa-pde-oxford.shinyapps.io/OmopSketchCharacterisation/).
+For this chapter, we'll use a synthetic COVID-19 dataset (`"synthea-covid19-10k"`) that can be downloaded with the [**omock**](https://ohdsi.github.io/omock/) package. A characterisation of this dataset to better understant its content can be found in the following Shiny App <https://dpa-pde-oxford.shinyapps.io/OmopSketchCharacterisation/>.
 
 ```{r, warning=FALSE, message=FALSE}
 library(dplyr)
@@ -8,6 +8,8 @@ library(omock)
 library(ggplot2)
 library(clock)
 library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
+library(PatientProfiles)
+library(OmopSketch)
 ```
 
 You can download the dataset using the function `downloadMockDataset()`:
@@ -51,7 +53,7 @@ cdm$person |>
   count()
 ```
 
-The person table also contains some demographic information, including a gender concept for each person. We can get a count grouped by this variable, but as this uses a concept we'll also need to join to the concept table to get the corresponding concept name for each concept id.
+The person table also contains some demographic information, including a gender concept for each person. We can easily get a count grouped by this variable. As the concept id is just a number it is more useful to get the concept name, this can be done with a join to the concept table.
 
 ```{r, echo = TRUE}
 cdm$person |> 
@@ -85,9 +87,31 @@ cdm$concept_ancestor |>
 More information on the vocabulary tables (as well as other tables in the OMOP CDM version 5.3) can be found at <https://ohdsi.github.io/CommonDataModel/cdm53.html#Vocabulary_Tables>.
 :::
 
+::: {.callout-tip collapse="true"}
+### `addConceptName()`
+
+The PatientProfiles package has a utility function that helps you to add concept names to a table. By default, any column that ends in `concept_id` will be used to join to the *concept* table and add a `concept_name` column:
+
+```{r}
+cdm$person |>
+  addConceptName() |>
+  glimpse()
+```
+
+Note you can edit the arguments to only use one desired column or edit the concept name column.
+
+```{r}
+cdm$person |>
+  addConceptName(column = "gender_concept_id", nameStyle = "sex") |>
+  glimpse()
+```
+:::
+
 ## Summarising observation periods
 
-The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table. Someone can potentially have multiple observation periods. So, say we wanted a count of people grouped by the year during which their first observation period started. We could do this like so:
+The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table (see [formal definition](https://ohdsi.github.io/CommonDataModel/cdm54.html#observation_period)). Someone can potentially have multiple observation periods. So, say we wanted a count of people grouped by the year during which their first observation period started.
+
+To do this first we would need to get the first observation period per person:
 
 ```{r, echo = TRUE}
 first_observation_period <- cdm$observation_period |>
@@ -95,14 +119,21 @@ first_observation_period <- cdm$observation_period |>
   arrange(observation_period_start_date) |>
   filter(row_number() == 1) |> 
   compute()
+```
 
+Now we can add this to the person table to make sure that all individuals defined in the observation period table are also defined the person table. Later we can extract the *observation_period_start_year* and count the number of records associated in each year:
+```{r}
 first_records_per_year <- cdm$person |> 
   left_join(first_observation_period, by = "person_id") |> 
   mutate(observation_period_start_year = get_year(observation_period_start_date)) |> 
   group_by(observation_period_start_year) |> 
   count() |> 
   collect()
+```
 
+Finally we can plot the counts with ggplot2.
+
+```{r}
 ggplot(first_records_per_year) +
   geom_col(mapping = aes(x = observation_period_start_year, y = n)) +
   theme_bw()
@@ -133,12 +164,12 @@ ggplot(number_condition_occurrence_records) +
 How about we were interested in getting record counts for some specific concepts related to Covid-19 symptoms?
 
 ```{r, echo = TRUE}
+codes <- c(437663, 437390, 31967, 4289517, 4223659, 312437, 434490, 254761, 77074)
 symptoms_records <- cdm$condition_occurrence |> 
-  filter(condition_concept_id %in% c(437663, 437390, 31967, 4289517, 4223659, 
-                                     312437, 434490, 254761, 77074)) |> 
+  filter(condition_concept_id %in% codes) |> 
   group_by(condition_concept_id) |> 
   count() |> 
-  left_join(cdm$concept, by = c("condition_concept_id" = "concept_id")) |> 
+  addConceptName(column = "condition_concept_id", nameStyle = "concept_name") |>
   collect()
 
 ggplot(symptoms_records) +
@@ -188,6 +219,65 @@ grouped_summary |>
 
 ```
 
+## The **OmopSketch** package
+
+The [**OmopSketch**](https://OHDSI.github.io/OmopSketch/) R package aims to characterise and visualise an OMOP CDM instance to asses if it meets the necessary criteria to answer a specific clinical question and conduct a certain study. It can be very useful to conduct some of the analyses that we were conducting in the previous sections with bespoke code. For example, you can quickly summarise and visualise the observation period table as:
+
+```{r}
+result <- summariseObservationPeriod(cdm$observation_period)
+tableObservationPeriod(result = result)
+```
+
+With this table we can see that only one pbservation period is defined by person and that individuals have a median follow up of ~ 9 years.
+
+We can also visualise how many individuals are in observation per year:
+
+```{r}
+result <- summariseInObservation(
+  cdm$observation_period,
+  interval = "years",
+  output = "person", 
+  dateRange = c("2000-01-01", "2023-12-31")
+)
+plotInObservation(result = result)
+```
+
+Or even the median age of the individuals in observation stratified by sex:
+
+```{r}
+result <- summariseInObservation(
+  cdm$observation_period,
+  interval = "years",
+  output = "age", 
+  sex = TRUE, 
+  dateRange = c("2000-01-01", "2023-12-31")
+)
+plotInObservation(result = result, colour = "sex")
+```
+
+The package also provides functions to characterise the clinical tables to show percentage of records in observation, domains recorded or the source vocabularies:
+
+```{r}
+result <- summariseClinicalRecords(cdm = cdm, omopTableName = "drug_exposure")
+tableClinicalRecords(result = result)
+```
+
+::: {.callout-tip collapse="true"}
+### Database characterisation
+
+When you start using a database characterising it is probably a good idea to know what information is recorded in the database and explore the studies that are feasible. You can perform a database characterisation using *OmopSketch* as:
+
+```{r, eval=FALSE}
+result <- databaseCharacteristics(cdm = cdm)
+```
+
+Note this process can take several hours or even days depending on the size of the database. Later you can visualise all the results in a Shiny App such as the one shown at the beginning of this chapter.
+
+```{r, eval=FALSE}
+shinyCharacteristics(result = result, directory = getwd())
+```
+:::
+
 ## Disconnecting
 
 Once we have finished our analysis we can close our connection to the database behind our cdm reference.
@@ -195,3 +285,7 @@ Once we have finished our analysis we can close our connection to the database b
 ```{r}
 cdmDisconnect(cdm) 
 ```
+
+## Further reading
+
+- Alcalde-Herraiz M, Lopez-Guell K, Rowlands E, Campanile C, Burn E, Català M (2025). *OmopSketch: Characterise Tables of an OMOP Common Data Model Instance*. R package version 0.5.1, <https://OHDSI.github.io/OmopSketch/>.
