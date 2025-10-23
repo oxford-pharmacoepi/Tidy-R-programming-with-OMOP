@@ -1,8 +1,10 @@
 # Supported expressions for database queries {#sec-tidyverse_expressions}
 
-In the previous chapter, @sec-tidyverse_verbs, we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter would be the same for all database management systems, with only joins and variable selection being used.
+In the previous chapter, @sec-tidyverse_verbs, we saw that there are a core set of tidyverse functions that can be used with databases to extract data for analysis. The SQL code used in the previous chapter is consistent across database management systems, since it only involves basic operations such as joins and variable selection.
 
-For more complex data pipelines, we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the SQL these pipelines get translated to can vary. Moreover, some expressions may only be supported for some subset of databases. When writing code that we want to work across different database management systems, we therefore need to keep in mind what is supported where. To help with this, the sections below show the available translations for common expressions we might want to use.
+For more complex data pipelines, we will, however, often need to incorporate additional expressions within these functions. Because of differences across database management systems, the translated SQL can vary. Moreover, some expressions are only supported for some databases. 
+
+When writing code that should work across different database management systems, we need to keep in mind which expressions are supported where. To help with this, the sections below show the available SQL translations for common expressions we might want to use.
 
 Let's first load the packages which these expressions come from. In addition to base R types, [`bit64`](https://bit64.r-lib.org) adds support for integer64. The [`stringr`](https://stringr.tidyverse.org) package provides functions for working with strings, while [`clock`](https://clock.r-lib.org) has various functions for working with dates. Many other useful expressions will come from [`dplyr`](https://dplyr.tidyverse.org) itself.
 
@@ -683,9 +685,9 @@ lazy_frame(x = c(1, 2), con = simulate_spark_sql()) |>
 
 ## Window functions
 
- entire columns. Window functions differ in that they perform calculations across rows that are in some way related to a current row. For these, we now use `mutate()` instead of `summarise()`.In the previous section, we saw how aggregate functions can be used to perform operations across
+Window functions differ from data aggregation functions in that they perform calculations across rows that are related to the current row, rather than collapsing multiple rows into a single result. For these operations, we use `mutate()` instead of `summarise()`.
 
-We can use window functions like `cumsum()` and `cummean()` to calculate running totals and averages, or `lag()` and `lead()` to help compare rows to their preceding or following rows.
+For instance, we can use window functions like `cumsum()` and `cummean()` to calculate running totals and averages, or `lag()` and `lead()` to help compare rows to their preceding or following rows.
 
 Given that window functions compare rows to rows before or after them, we will often use `arrange()` or `window_order()` to specify the order of rows. This will translate into an ORDER BY clause in the SQL. In addition, we may well also want to apply window functions within some specific groupings in our data. Using `group_by()` would result in a PARTITION BY clause in the translated SQL so that the window function operates on each group independently.
 
@@ -850,7 +852,14 @@ TODO add note arrange vs window_order
 ::: {.callout-note collapse="true"}
 ### `arrange()` vs `window_order()`
 
-Although they are sometimes used interchangeably
+Although `arrange()` and `window_order()` both involve ordering, they serve different purposes.
+
+- **`arrange()`:** changes the order of the final output of a table, by ordering it as the user specified. 
+
+- **`window_order()`:** defines the order within window functions. It controlls how functions (e.g., `lag()`, `lead()`, `rank()`, `cumsum()`) are applied across rows.
+
+In conclusion, for all dialects, `arrange()` changes the output row order, while `window_order()` changes how window functions calculate values.
+
 :::
 
 ## Calculating quantiles, including the median
