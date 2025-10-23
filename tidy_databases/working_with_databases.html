@@ -277,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><img src="../images/lter_penguins.png" class="img-fluid" width="250"></p>
 <p><em>Artwork by <a href="https://x.com/allison_horst">@allison_horst</a></em></p>
-<p>Before we start working with healthcare data spread across a database using the OMOP Common Data Model, let’s first do a simpler analysis. In this case, we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we’ll use data from <a href="https://allisonhorst.github.io/palmerpenguins/"><code>palmerpenguins</code></a> package, which contains data on penguins collected from the <a href="https://en.wikipedia.org/wiki/Palmer_Station">Palmer Station</a> in Antarctica.</p>
+<p>Before we start working with healthcare data spread across a database using the OMOP Common Data Model, let’s first do a simpler analysis. In this case, we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we’ll use data from the <a href="https://allisonhorst.github.io/palmerpenguins/"><code>palmerpenguins</code></a> package, which contains data on penguins collected from the <a href="https://en.wikipedia.org/wiki/Palmer_Station">Palmer Station</a> in Antarctica.</p>
 <section id="getting-set-up" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="getting-set-up"><span class="header-section-number">1.1</span> Getting set up</h2>
 <div class="cell">
@@ -340,7 +340,7 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <pre><code>[1] "penguins"</code></pre>
 </div>
 </div>
-<p>And now that the data is in a database we could use SQL to get the first rows that we saw before.</p>
+<p>And now that the data is in a database we could use SQL directly to get the first rows that we saw before.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbGetQuery</span>(<span class="at">conn =</span> con, <span class="at">statement =</span> <span class="st">"SELECT * FROM penguins LIMIT 5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -358,7 +358,7 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 5 female 2007</code></pre>
 </div>
 </div>
-<p>As you can see we have the same data that we had locally but now inside the database.</p>
+<p>As you can see we have the same data that we had locally but now it’s located inside the DuckDB database we created.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -377,7 +377,7 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="at">drv =</span> <span class="fu">duckdb</span>(<span class="at">dbdir =</span> <span class="st">"my_duckdb_database.ducdkb"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note that if you point to a non-existing DuckDB file, this will be created with an empty database.</p>
-<p>In this book for simplicity we will mostly be working with in-process DuckDB databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the <code>RPostgres</code> R package and look something like:</p>
+<p>In this book, for simplicity, we will mostly be working with in-process DuckDB databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like this:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RPostgres)</span>
@@ -658,7 +658,7 @@ FROM (
 5 Chinstrap                   0    68</code></pre>
 </div>
 </div>
-<p>We can get the mean for each of the species (dropping those two missing records).</p>
+<p>We can get the mean for each of the species, first dropping those two missing records:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
@@ -673,7 +673,7 @@ FROM (
 3 Gentoo                5076</code></pre>
 </div>
 </div>
-<p>We could also make a histogram of values for each of the species using the ggplot2 package. Here we would bring our data back into R before creating our plot with the <a href="https://dplyr.tidyverse.org/reference/collect.html"><code>collect()</code></a> function.</p>
+<p>We could also make a histogram of values for each of the species using the <code>ggplot2</code> package. Here we would bring our data back into R before creating our plot with the <a href="https://dplyr.tidyverse.org/reference/collect.html"><code>collect()</code></a> function.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"body_mass_g"</span>) <span class="sc">|&gt;</span> </span>
@@ -712,7 +712,7 @@ FROM (
 </div>
 </div>
 </div>
-<p>Here we see a negative correlation between body mass and bill depth which seems rather unexpected. But what about if we stratify this query by species?</p>
+<p>We see a negative correlation between body mass and bill depth, which seems rather unexpected. But what about if we stratify this query by species?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"species"</span>, <span class="st">"body_mass_g"</span>, <span class="st">"bill_depth_mm"</span>) <span class="sc">|&gt;</span></span>
@@ -1225,7 +1225,7 @@ FROM (
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>*Artwork by [\@allison_horst](https://x.com/allison_horst)*</span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>Before we start working with healthcare data spread across a database using the OMOP Common Data Model, let's first do a simpler analysis. In this case, we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we'll use data from <span class="co">[</span><span class="ot">`palmerpenguins`</span><span class="co">](https://allisonhorst.github.io/palmerpenguins/)</span> package, which contains data on penguins collected from the <span class="co">[</span><span class="ot">Palmer Station</span><span class="co">](https://en.wikipedia.org/wiki/Palmer_Station)</span> in Antarctica.</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>Before we start working with healthcare data spread across a database using the OMOP Common Data Model, let's first do a simpler analysis. In this case, we will do a quick data analysis with R using a simple dataset held in a database to understand the general approach. For this we'll use data from the <span class="co">[</span><span class="ot">`palmerpenguins`</span><span class="co">](https://allisonhorst.github.io/palmerpenguins/)</span> package, which contains data on penguins collected from the <span class="co">[</span><span class="ot">Palmer Station</span><span class="co">](https://en.wikipedia.org/wiki/Palmer_Station)</span> in Antarctica.</span>
 <span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting set up</span></span>
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -1272,13 +1272,13 @@ FROM (
 <span id="cb38-61"><a href="#cb38-61" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(<span class="at">conn =</span> con)</span>
 <span id="cb38-62"><a href="#cb38-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb38-63"><a href="#cb38-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-64"><a href="#cb38-64" aria-hidden="true" tabindex="-1"></a>And now that the data is in a database we could use SQL to get the first rows that we saw before.</span>
+<span id="cb38-64"><a href="#cb38-64" aria-hidden="true" tabindex="-1"></a>And now that the data is in a database we could use SQL directly to get the first rows that we saw before.</span>
 <span id="cb38-65"><a href="#cb38-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-68"><a href="#cb38-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb38-69"><a href="#cb38-69" aria-hidden="true" tabindex="-1"></a><span class="fu">dbGetQuery</span>(<span class="at">conn =</span> con, <span class="at">statement =</span> <span class="st">"SELECT * FROM penguins LIMIT 5"</span>)</span>
 <span id="cb38-70"><a href="#cb38-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb38-71"><a href="#cb38-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-72"><a href="#cb38-72" aria-hidden="true" tabindex="-1"></a>As you can see we have the same data that we had locally but now inside the database.</span>
+<span id="cb38-72"><a href="#cb38-72" aria-hidden="true" tabindex="-1"></a>As you can see we have the same data that we had locally but now it's located inside the DuckDB database we created.</span>
 <span id="cb38-73"><a href="#cb38-73" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-74"><a href="#cb38-74" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
 <span id="cb38-75"><a href="#cb38-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### Connecting to databases from R</span></span>
@@ -1293,7 +1293,7 @@ FROM (
 <span id="cb38-84"><a href="#cb38-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-85"><a href="#cb38-85" aria-hidden="true" tabindex="-1"></a>Note that if you point to a non-existing DuckDB file, this will be created with an empty database.</span>
 <span id="cb38-86"><a href="#cb38-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-87"><a href="#cb38-87" aria-hidden="true" tabindex="-1"></a>In this book for simplicity we will mostly be working with in-process DuckDB databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the <span class="in">`RPostgres`</span> R package and look something like:</span>
+<span id="cb38-87"><a href="#cb38-87" aria-hidden="true" tabindex="-1"></a>In this book, for simplicity, we will mostly be working with in-process DuckDB databases with synthetic data. However, when analysing real patient data we will be more often working with client-server databases, where we are connecting from our computer to a central server with the database or working with data held in the cloud. The approaches shown throughout this book will work in the same way for these other types of database management systems, but the way to connect to the database will be different (although still using DBI). In general, creating connections is supported by associated back-end packages. For example a connection to a Postgres database would use the RPostgres R package and look something like this:</span>
 <span id="cb38-88"><a href="#cb38-88" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-89"><a href="#cb38-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
 <span id="cb38-90"><a href="#cb38-90" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
@@ -1468,7 +1468,7 @@ FROM (
 <span id="cb38-267"><a href="#cb38-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
 <span id="cb38-268"><a href="#cb38-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb38-269"><a href="#cb38-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-270"><a href="#cb38-270" aria-hidden="true" tabindex="-1"></a>We can get the mean for each of the species (dropping those two missing records).</span>
+<span id="cb38-270"><a href="#cb38-270" aria-hidden="true" tabindex="-1"></a>We can get the mean for each of the species, first dropping those two missing records:</span>
 <span id="cb38-271"><a href="#cb38-271" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-272"><a href="#cb38-272" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb38-273"><a href="#cb38-273" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
@@ -1476,7 +1476,7 @@ FROM (
 <span id="cb38-275"><a href="#cb38-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_body_mass_g =</span> <span class="fu">round</span>(<span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span>
 <span id="cb38-276"><a href="#cb38-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb38-277"><a href="#cb38-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-278"><a href="#cb38-278" aria-hidden="true" tabindex="-1"></a>We could also make a histogram of values for each of the species using the ggplot2 package. Here we would bring our data back into R before creating our plot with the <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/collect.html)</span> function.</span>
+<span id="cb38-278"><a href="#cb38-278" aria-hidden="true" tabindex="-1"></a>We could also make a histogram of values for each of the species using the <span class="in">`ggplot2`</span> package. Here we would bring our data back into R before creating our plot with the <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/collect.html)</span> function.</span>
 <span id="cb38-279"><a href="#cb38-279" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-280"><a href="#cb38-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb38-281"><a href="#cb38-281" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
@@ -1505,7 +1505,7 @@ FROM (
 <span id="cb38-304"><a href="#cb38-304" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
 <span id="cb38-305"><a href="#cb38-305" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb38-306"><a href="#cb38-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-307"><a href="#cb38-307" aria-hidden="true" tabindex="-1"></a>Here we see a negative correlation between body mass and bill depth which seems rather unexpected. But what about if we stratify this query by species?</span>
+<span id="cb38-307"><a href="#cb38-307" aria-hidden="true" tabindex="-1"></a>We see a negative correlation between body mass and bill depth, which seems rather unexpected. But what about if we stratify this query by species?</span>
 <span id="cb38-308"><a href="#cb38-308" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-309"><a href="#cb38-309" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb38-310"><a href="#cb38-310" aria-hidden="true" tabindex="-1"></a>penguins_db <span class="sc">|&gt;</span></span>
