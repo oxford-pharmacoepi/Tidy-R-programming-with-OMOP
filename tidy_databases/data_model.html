@@ -280,8 +280,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In the previous chapters, we’ve seen that after connecting to a database, we can create references to the various tables we’re interested in and write custom analytic code to query them. However, if we are working with the same database over and over again, we are likely to want to build some tooling for tasks we often perform.</p>
-<p>To see how we can develop a data model with associated methods and functions, we’ll use the Lahman baseball data. The data is stored across various related tables.</p>
+<p>In the previous chapters, we’ve seen that after connecting to a database, we can create references to the various tables we’re interested in and write custom analytic code to query them. However, if we are working with the same database over and over again, we might want to build some tooling for tasks we often perform.</p>
+<p>To see how we can develop a data model with associated methods and functions, we will use the Lahman baseball data. The data is stored across various related tables.</p>
 <div id="fig-lahman" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lahman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -318,7 +318,7 @@ Figure&nbsp;4.1: Lahman’s Baseball Dabatase schema from <a href="https://cdalz
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The <code>copy_lahman()</code> function inserts all the different tables in the connection, it works similarly as we have done before with the for loop and the <code>dbWriteTable()</code> function.</p>
+<p>The <code>copy_lahman()</code> function inserts all the different tables in the connection. It works in the same way as we have done before with the for loop and the <code>dbWriteTable()</code> function.</p>
 <p>See that there are 28 new tables inserted in our DuckDB database:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(<span class="at">conn =</span> con)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -338,24 +338,25 @@ Figure&nbsp;4.1: Lahman’s Baseball Dabatase schema from <a href="https://cdalz
 </div>
 </div>
 </div>
-<p>Instead of manually creating references to tables of interest as we go, we will write a function to create a single reference to the Lahman data.</p>
+<p>Instead of manually creating references for each one of the tables (so we can access them easily), we will write a function to create a single reference to the Lahman data.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lahmanFromCon <span class="ot">&lt;-</span> <span class="cf">function</span>(con) {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  lahmanRef <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  lahmanRef <span class="ot">&lt;-</span> <span class="fu">set_names</span>(<span class="fu">c</span>(</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AllstarFull"</span>, <span class="st">"Appearances"</span>, <span class="st">"AwardsManagers"</span>, <span class="st">"AwardsPlayers"</span>, <span class="st">"AwardsManagers"</span>,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AwardsShareManagers"</span>, <span class="st">"Batting"</span>, <span class="st">"BattingPost"</span>, <span class="st">"CollegePlaying"</span>, <span class="st">"Fielding"</span>,</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FieldingOF"</span>, <span class="st">"FieldingOFsplit"</span>, <span class="st">"FieldingPost"</span>, <span class="st">"HallOfFame"</span>, <span class="st">"HomeGames"</span>,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LahmanData"</span>, <span class="st">"Managers"</span>, <span class="st">"ManagersHalf"</span>, <span class="st">"Parks"</span>, <span class="st">"People"</span>, <span class="st">"Pitching"</span>,</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PitchingPost"</span>, <span class="st">"Salaries"</span>, <span class="st">"Schools"</span>, <span class="st">"SeriesPost"</span>, <span class="st">"Teams"</span>, <span class="st">"TeamsFranchises"</span>,</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"TeamsHalf"</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(\(x) <span class="fu">tbl</span>(<span class="at">src =</span> con, <span class="at">from =</span> x))</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(lahmanRef) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lahman_ref"</span>, <span class="fu">class</span>(lahmanRef))</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  lahmanRef</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  lahmanRef <span class="ot">&lt;-</span> <span class="fu">map</span>(lahmanRef, \(x) <span class="fu">tbl</span>(<span class="at">src =</span> con, <span class="at">from =</span> x))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(lahmanRef) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lahman_ref"</span>, <span class="fu">class</span>(lahmanRef))</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(lahmanRef)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>With this function we can now easily get references to all our lahman tables in one go using our <code>lahmanFromCon()</code> function.</p>
+<p>With this function we can now easily get references to all our Lahman tables in one go using our <code>lahmanFromCon()</code> function.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lahman <span class="ot">&lt;-</span> <span class="fu">lahmanFromCon</span>(<span class="at">con =</span> con)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -449,8 +450,8 @@ Foreign keys: 1</code></pre>
 </section>
 <section id="creating-functions-for-the-data-model" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="creating-functions-for-the-data-model"><span class="header-section-number">4.2</span> Creating functions for the data model</h2>
-<p>We can also now make various functions specific to our Lahman data model to facilitate data analyses. Given we know the structure of the data, we can build a set of functions that abstract away some of the complexities of working with data in a database.</p>
-<p>Let’s start by making a small function to get the teams players have played for. We can see that the code we use follows on from the last couple of chapters.</p>
+<p>Given that we know the structure of the data, we can build a set of functions tailored to the Lahman data model to simplify data analyses.</p>
+<p>Let’s start by creating a simple function that returns the teams each player has played for. We can see that the code we use follows on from the last couple of chapters.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>getTeams <span class="ot">&lt;-</span> <span class="cf">function</span>(lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) {</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
@@ -462,11 +463,13 @@ Foreign keys: 1</code></pre>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"playerID"</span></span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(teamID, yearID) <span class="sc">|&gt;</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(lahman<span class="sc">$</span>Teams, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"teamID"</span>, <span class="st">"yearID"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(name)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>      lahman<span class="sc">$</span>Teams, </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"teamID"</span>, <span class="st">"yearID"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(name)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Now we can easily get the different teams a player represented. We can see how changing the player name changes the SQL that is getting run behind the scenes.</p>
+<p>Now we can easily get which teams a player has represented. We can see how changing the player name changes the SQL that is run behind the scenes.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Babe Ruth"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -474,9 +477,9 @@ Foreign keys: 1</code></pre>
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   name            
   &lt;chr&gt;           
-1 Boston Braves   
-2 Boston Red Sox  
-3 New York Yankees</code></pre>
+1 Boston Red Sox  
+2 New York Yankees
+3 Boston Braves   </code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -586,7 +589,7 @@ FROM (
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The function <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>collect()</code></a> brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our <code>getTeams()</code> function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case, we could also use <a href="https://dplyr.tidyverse.org/reference/pull.html"><code>pull()</code></a> to get our result out as a vector rather than a data frame.</p>
+<p>The function <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>collect()</code></a> brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our <code>getTeams()</code> function, for example, everything is done on the database side. Collecting the result will bring the result of the teams the person played for out of the database. In this case, we could also use <a href="https://dplyr.tidyverse.org/reference/pull.html"><code>pull()</code></a> to get our result out as a vector rather than a data frame.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -603,11 +606,11 @@ FROM (
 <pre><code>[1] "San Francisco Giants" "Pittsburgh Pirates"  </code></pre>
 </div>
 </div>
-<p>In other cases however we may need to collect data so as to perform further analysis steps that are not possible using SQL. This might be the case for plotting or for other analytic steps like fitting statistical models. In such cases we should try to only bring out the data that we need (as we will likely have much less memory available on our local computer than is available for the database).</p>
+<p>However, in other cases we may need to collect the data to perform analyses that can not be done in SQL. This might be the case for plotting or for other analytic steps(i.e., fitting statistical models). In such cases, it is important to only bring out the data that we need (as our local computer will typically have far less memory available than the database system).</p>
 </div>
 </div>
 </div>
-<p>Similarly, we could make a function to add a player’s year of birth to a table.</p>
+<p>Similarly, we can make a function to add a player’s year of birth to another Lahman table.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>addBirthCountry <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">|&gt;</span> </span>
@@ -714,7 +717,7 @@ LEFT JOIN People
 </div>
 </div>
 </div>
-<p>We could then use our <code>addBirthCountry()</code> function as part of a larger query to summarise the proportion of players from each country over time (based on their presence in the batting table).</p>
+<p>We can then use our <code>addBirthCountry()</code> function as part of a larger query to summarise and plot the proportion of players from each country over time (based on their presence in the batting table).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"yearID"</span>) <span class="sc">|&gt;</span> </span>
@@ -788,9 +791,15 @@ END AS birthCountry
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>plot_data <span class="sc">|&gt;</span> </span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(yearID, percentage, <span class="at">fill =</span> birthCountry), <span class="at">width =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(), <span class="at">legend.position =</span> <span class="st">"top"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(yearID, percentage, <span class="at">fill =</span> birthCountry), </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">1</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -811,7 +820,7 @@ END AS birthCountry
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>As part of our <code>lahmanFromCon()</code> function our data model object has the class “lahman_ref”. Therefore as well as creating user-facing functions to work with our lahman data model, we can also define methods for this object.</p>
+<p>As part of our <code>lahmanFromCon()</code> function, our data model object has the class “lahman_ref”. Therefore, apart from creating user-friendly functions to work with our Lahman data model, we can also define methods for this object.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(lahman)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -827,7 +836,7 @@ END AS birthCountry
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(x)</span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Now we can see a summary of our lahman data model when we print the object.</p>
+<p>Now we can see a summary of our Lahman data model when we print the object.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>lahman</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -862,7 +871,7 @@ Salaries, Schools, SeriesPost, Teams, TeamsFranchises, TeamsHalf</code></pre>
 <h2 data-number="4.3" class="anchored" data-anchor-id="building-efficient-analytic-pipelines"><span class="header-section-number">4.3</span> Building efficient analytic pipelines</h2>
 <section id="the-risk-of-clean-r-code" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="the-risk-of-clean-r-code"><span class="header-section-number">4.3.1</span> The risk of “clean” R code</h3>
-<p>Following on from the above approach, we might think it a good idea to make another function <code>addBirthYear()</code>. We can then use it along with our <code>addBirthCountry()</code> to get a summarised average salary by birth country and birth year.</p>
+<p>Following on from the above approach, we might think it is a good idea to make another function <code>addBirthYear()</code>. We can then use it along with our <code>addBirthCountry()</code> to get a summarised average salary by birth country and birth year.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>addBirthYear <span class="ot">&lt;-</span> <span class="cf">function</span>(lahmanTbl){</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  lahmanTbl <span class="sc">|&gt;</span> </span>
@@ -896,7 +905,7 @@ Salaries, Schools, SeriesPost, Teams, TeamsFranchises, TeamsHalf</code></pre>
 # ℹ more rows</code></pre>
 </div>
 </div>
-<p>Although the R code on the face of it looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.</p>
+<p>Although the R code looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -930,7 +939,7 @@ GROUP BY birthCountry, birthYear</code></pre>
 </div>
 </div>
 </div>
-<p>To improve performance, we could instead have a single function to get both of these, birth country and birth year, at the same time.</p>
+<p>To improve the performance of the code, we can build a single function to get simultaneously the birth country and birth year, so only one join is done.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>addCharacteristics <span class="ot">&lt;-</span> <span class="cf">function</span>(lahmanTbl){</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  lahmanTbl <span class="sc">|&gt;</span> </span>
@@ -991,11 +1000,11 @@ GROUP BY birthCountry, birthYear</code></pre>
 </div>
 </div>
 </div>
-<p>Now this query outputs the same result but is simpler than the previous one, thus lowering the computational cost of the analysis. All this is to show that when working with databases we should keep in mind what is going on behind the scenes in terms of the SQL code actually being executed.</p>
+<p>This query produces the same result but is simpler than the previous one, thus reducing the computational cost of the analysis. This shows the importance of being aware of the SQL code being executed when working in R with databases.</p>
 </section>
 <section id="piping-and-sql" class="level3" data-number="4.3.2">
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="piping-and-sql"><span class="header-section-number">4.3.2</span> Piping and SQL</h3>
-<p>Although piping functions has little impact on performance when using R with data in memory, when working with a database the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.</p>
+<p>Piping functions has little impact on performance when using R with data in memory. However, when working with a database, the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.</p>
 <p>For example, a single mutate function creating two new variables would generate the below SQL.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
@@ -1036,7 +1045,7 @@ FROM (
 </section>
 <section id="computing-intermediate-queries" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="computing-intermediate-queries"><span class="header-section-number">4.3.3</span> Computing intermediate queries</h3>
-<p>Let’s say we want to summarise home runs in the batting table and strike outs in the pitching table by the college players attended and their birth year. We could do this like so:</p>
+<p>Let’s now summarise home runs (Batting table) and strike outs (Pitching table) by college player and their birth year. We can do this like so:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>players_with_college <span class="ot">&lt;-</span> lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthYear"</span>) <span class="sc">|&gt;</span> </span>
@@ -1048,49 +1057,55 @@ FROM (
 <span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
-<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>    players_with_college,</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"playerID"</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6,205 × 3
    schoolID   birthYear home_runs
    &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
- 1 gamiddl         1972         2
- 2 illinoisst      1981         1
- 3 lehigh          1901         1
- 4 tamukvill       1978         0
- 5 chicago         1874         2
- 6 capalom         1963        15
- 7 hawaiipac       1971       299
- 8 bostonuniv      1929       135
- 9 byu             1961        28
-10 kentucky        1985         1
+ 1 rice            1981         0
+ 2 virginia        1987        27
+ 3 cacerri         1971         3
+ 4 usc             1947        11
+ 5 lsu             1927      1832
+ 6 wake            1915        72
+ 7 pepperdine      1969         1
+ 8 lsu             1978         2
+ 9 miamidade       1982         0
+10 cincy           1950         5
 # ℹ 6,195 more rows</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)<span class="sc">|&gt;</span> </span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    players_with_college, </span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"playerID"</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)<span class="sc">|&gt;</span> </span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3,663 × 3
    schoolID   birthYear strike_outs
    &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 vermont         1869         161
- 2 longbeach       1968         273
- 3 elon            1921          13
- 4 swesterntx      1883          41
- 5 ilparkl         1970         350
- 6 okstate         1977          81
- 7 casequo         1940         404
- 8 highpoint       1988         593
- 9 rhodestn        1888         457
-10 longbeach       1982        1626
+ 1 illinoisst      1981         205
+ 2 lehigh          1901           1
+ 3 tamukvill       1978         409
+ 4 byu             1961        1030
+ 5 kentucky        1985          91
+ 6 txsjjcn         1983         571
+ 7 stanford        1961           0
+ 8 bethanywv       1922           2
+ 9 tulane          1968          59
+10 nmnmjco         1972         232
 # ℹ 3,653 more rows</code></pre>
 </div>
 </div>
-<p>Looking at the SQL, we can see, however, that there is some duplication, because as part of each full query, we have run our players_with_college query.</p>
+<p>If we look at the SQL code we will realise that there is code duplication, because as part of each full query, we have run our players_with_college query.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1148,7 +1163,7 @@ GROUP BY schoolID, birthYear</code></pre>
 </div>
 </div>
 </div>
-<p>To avoid this we could instead make use of the <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> function to force the computation of this first, intermediate, query to a temporary table in the database.</p>
+<p>To avoid this, we can make use of the <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> function to force the computation of the players_with_college query to a temporary table in the database.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>players_with_college <span class="ot">&lt;-</span> players_with_college <span class="sc">|&gt;</span> </span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1160,7 +1175,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
-FROM dbplyr_N51iV2zAat</code></pre>
+FROM dbplyr_CStCZsxlYA</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1171,18 +1186,18 @@ FROM dbplyr_N51iV2zAat</code></pre>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6,205 × 3
-   schoolID  birthYear home_runs
-   &lt;chr&gt;         &lt;int&gt;     &lt;dbl&gt;
- 1 kentucky       1972       157
- 2 longbeach      1968        19
- 3 elon           1921         1
- 4 lehigh         1901         1
- 5 ucla           1952       306
- 6 usc            1947        11
- 7 tamukvill      1978         0
- 8 stanford       1972        55
- 9 lsu            1927      1832
-10 wake           1915        72
+   schoolID   birthYear home_runs
+   &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
+ 1 illinoisst      1981         1
+ 2 unc             1988       518
+ 3 unc             1980       218
+ 4 utah            1898       101
+ 5 sillinois       1959        34
+ 6 capalom         1963        15
+ 7 bostonuniv      1929       135
+ 8 scstate         1954       675
+ 9 casequo         1940         7
+10 upperiowa       1918         0
 # ℹ 6,195 more rows</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
@@ -1192,18 +1207,18 @@ FROM dbplyr_N51iV2zAat</code></pre>
 <span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3,663 × 3
-   schoolID   birthYear strike_outs
-   &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 vermont         1869         161
- 2 michigan        1967         888
- 3 nmstate         1968          98
- 4 cacerri         1971         327
- 5 byu             1961        1030
- 6 pepperdine      1969           4
- 7 lsu             1978         162
- 8 miamidade       1982          56
- 9 stanford        1961           0
-10 incante         1893         526
+   schoolID  birthYear strike_outs
+   &lt;chr&gt;         &lt;int&gt;       &lt;dbl&gt;
+ 1 longbeach      1968         273
+ 2 elon           1921          13
+ 3 lehigh         1901           1
+ 4 usc            1947         275
+ 5 tamukvill      1978         409
+ 6 stanford       1972         218
+ 7 upenn          1964          14
+ 8 arkansas       1962         537
+ 9 kentucky       1985          91
+10 txsjjcn        1983         571
 # ℹ 3,653 more rows</code></pre>
 </div>
 </div>
@@ -1226,8 +1241,8 @@ SELECT schoolID, birthYear, SUM(H) AS home_runs
 FROM (
   SELECT Batting.*, birthYear, schoolID
   FROM Batting
-  LEFT JOIN dbplyr_N51iV2zAat
-    ON (Batting.playerID = dbplyr_N51iV2zAat.playerID)
+  LEFT JOIN dbplyr_CStCZsxlYA
+    ON (Batting.playerID = dbplyr_CStCZsxlYA.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1237,8 +1252,8 @@ SELECT schoolID, birthYear, SUM(SO) AS strike_outs
 FROM (
   SELECT Pitching.*, birthYear, schoolID
   FROM Pitching
-  LEFT JOIN dbplyr_N51iV2zAat
-    ON (Pitching.playerID = dbplyr_N51iV2zAat.playerID)
+  LEFT JOIN dbplyr_CStCZsxlYA
+    ON (Pitching.playerID = dbplyr_CStCZsxlYA.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1246,7 +1261,7 @@ GROUP BY schoolID, birthYear</code></pre>
 </div>
 </div>
 </div>
-<p>In this case, the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore, although we don’t want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.</p>
+<p>In this example, the SQL code of the intermediate table, players_with_college, was quite simple. However, in some cases, the SQL associated code can become very complicated and unmanageable, resulting with inefficient code. Therefore, although we do not want to overuse computation of intermediate queries, it is often useful when creating our analytic pipelines.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1259,7 +1274,7 @@ GROUP BY schoolID, birthYear</code></pre>
 </div>
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Some SQL dialects use indexes for more efficient ‘joins’ performance. Briefly speaking, indexes store the location of the different values of a column. Every time that you create a new table with <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a>, the indexes won’t be carried over, so if you want your new table to keep some indexes, you will have to add them manually. That’s why sometimes it won’t be more efficient to add a <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> in between, because the new table generated won’t have the indexes that make your query to be executed faster.</p>
+<p>Some SQL dialects use indexes for more efficient ‘joins’ performance. Briefly speaking, indexes store the location of the different values of a column. Every time that you create a new table with <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a>, the indexes will not be carried over. Hence, if you want your new table to keep some indexes, you will have to add them manually. That is why sometimes it will not be more efficient to add a <a href="https://dplyr.tidyverse.org/reference/compute.html"><code>compute()</code></a> in between, because the new table generated will not have the indexes that make your query to be executed faster.</p>
 </div>
 </div>
 </div>
@@ -1267,7 +1282,7 @@ GROUP BY schoolID, birthYear</code></pre>
 </section>
 <section id="disconnecting-from-the-database" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="disconnecting-from-the-database"><span class="header-section-number">4.4</span> Disconnecting from the database</h2>
-<p>Now that we’ve reached the end of this example, we can close our connection to the database.</p>
+<p>Now that we have reached the end of this example, we can close our connection to the database.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(<span class="at">conn =</span> con)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -1743,9 +1758,9 @@ GROUP BY schoolID, birthYear</code></pre>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Building analytic pipelines for a data model {#sec-data_model}</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>In the previous chapters, we've seen that after connecting to a database, we can create references to the various tables we're interested in and write custom analytic code to query them. However, if we are working with the same database over and over again, we are likely to want to build some tooling for tasks we often perform.</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>In the previous chapters, we've seen that after connecting to a database, we can create references to the various tables we're interested in and write custom analytic code to query them. However, if we are working with the same database over and over again, we might want to build some tooling for tasks we often perform.</span>
 <span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>To see how we can develop a data model with associated methods and functions, we'll use the Lahman baseball data. The data is stored across various related tables.</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>To see how we can develop a data model with associated methods and functions, we will use the Lahman baseball data. The data is stored across various related tables.</span>
 <span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="al">![Lahman's Baseball Dabatase schema from &lt;https://cdalzell.github.io/Lahman/&gt;.](../images/lahman.jpg)</span>{#fig-lahman .lightbox}</span>
 <span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -1767,7 +1782,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <span id="cb69-24"><a href="#cb69-24" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
 <span id="cb69-25"><a href="#cb69-25" aria-hidden="true" tabindex="-1"></a><span class="fu">### copy_lahman</span></span>
 <span id="cb69-26"><a href="#cb69-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-27"><a href="#cb69-27" aria-hidden="true" tabindex="-1"></a>The <span class="in">`copy_lahman()`</span> function inserts all the different tables in the connection, it works similarly as we have done before with the for loop and the <span class="in">`dbWriteTable()`</span> function.</span>
+<span id="cb69-27"><a href="#cb69-27" aria-hidden="true" tabindex="-1"></a>The <span class="in">`copy_lahman()`</span> function inserts all the different tables in the connection. It works in the same way as we have done before with the for loop and the <span class="in">`dbWriteTable()`</span> function.</span>
 <span id="cb69-28"><a href="#cb69-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-29"><a href="#cb69-29" aria-hidden="true" tabindex="-1"></a>See that there are 28 new tables inserted in our DuckDB database:</span>
 <span id="cb69-30"><a href="#cb69-30" aria-hidden="true" tabindex="-1"></a></span>
@@ -1776,471 +1791,485 @@ GROUP BY schoolID, birthYear</code></pre>
 <span id="cb69-35"><a href="#cb69-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-36"><a href="#cb69-36" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb69-37"><a href="#cb69-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-38"><a href="#cb69-38" aria-hidden="true" tabindex="-1"></a>Instead of manually creating references to tables of interest as we go, we will write a function to create a single reference to the Lahman data.</span>
+<span id="cb69-38"><a href="#cb69-38" aria-hidden="true" tabindex="-1"></a>Instead of manually creating references for each one of the tables (so we can access them easily), we will write a function to create a single reference to the Lahman data.</span>
 <span id="cb69-39"><a href="#cb69-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-40"><a href="#cb69-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo = TRUE}</span></span>
 <span id="cb69-41"><a href="#cb69-41" aria-hidden="true" tabindex="-1"></a>lahmanFromCon <span class="ot">&lt;-</span> <span class="cf">function</span>(con) {</span>
-<span id="cb69-42"><a href="#cb69-42" aria-hidden="true" tabindex="-1"></a>  lahmanRef <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb69-42"><a href="#cb69-42" aria-hidden="true" tabindex="-1"></a>  lahmanRef <span class="ot">&lt;-</span> <span class="fu">set_names</span>(<span class="fu">c</span>(</span>
 <span id="cb69-43"><a href="#cb69-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AllstarFull"</span>, <span class="st">"Appearances"</span>, <span class="st">"AwardsManagers"</span>, <span class="st">"AwardsPlayers"</span>, <span class="st">"AwardsManagers"</span>,</span>
 <span id="cb69-44"><a href="#cb69-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AwardsShareManagers"</span>, <span class="st">"Batting"</span>, <span class="st">"BattingPost"</span>, <span class="st">"CollegePlaying"</span>, <span class="st">"Fielding"</span>,</span>
 <span id="cb69-45"><a href="#cb69-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FieldingOF"</span>, <span class="st">"FieldingOFsplit"</span>, <span class="st">"FieldingPost"</span>, <span class="st">"HallOfFame"</span>, <span class="st">"HomeGames"</span>,</span>
 <span id="cb69-46"><a href="#cb69-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LahmanData"</span>, <span class="st">"Managers"</span>, <span class="st">"ManagersHalf"</span>, <span class="st">"Parks"</span>, <span class="st">"People"</span>, <span class="st">"Pitching"</span>,</span>
 <span id="cb69-47"><a href="#cb69-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PitchingPost"</span>, <span class="st">"Salaries"</span>, <span class="st">"Schools"</span>, <span class="st">"SeriesPost"</span>, <span class="st">"Teams"</span>, <span class="st">"TeamsFranchises"</span>,</span>
 <span id="cb69-48"><a href="#cb69-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"TeamsHalf"</span></span>
-<span id="cb69-49"><a href="#cb69-49" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb69-50"><a href="#cb69-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb69-51"><a href="#cb69-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(\(x) <span class="fu">tbl</span>(<span class="at">src =</span> con, <span class="at">from =</span> x))</span>
-<span id="cb69-52"><a href="#cb69-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(lahmanRef) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lahman_ref"</span>, <span class="fu">class</span>(lahmanRef))</span>
-<span id="cb69-53"><a href="#cb69-53" aria-hidden="true" tabindex="-1"></a>  lahmanRef</span>
-<span id="cb69-54"><a href="#cb69-54" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb69-55"><a href="#cb69-55" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-56"><a href="#cb69-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-57"><a href="#cb69-57" aria-hidden="true" tabindex="-1"></a>With this function we can now easily get references to all our lahman tables in one go using our <span class="in">`lahmanFromCon()`</span> function.</span>
-<span id="cb69-58"><a href="#cb69-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-59"><a href="#cb69-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb69-60"><a href="#cb69-60" aria-hidden="true" tabindex="-1"></a>lahman <span class="ot">&lt;-</span> <span class="fu">lahmanFromCon</span>(<span class="at">con =</span> con)</span>
-<span id="cb69-61"><a href="#cb69-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-62"><a href="#cb69-62" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>People <span class="sc">|&gt;</span></span>
-<span id="cb69-63"><a href="#cb69-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb69-64"><a href="#cb69-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-65"><a href="#cb69-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-66"><a href="#cb69-66" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-67"><a href="#cb69-67" aria-hidden="true" tabindex="-1"></a><span class="fu">### The dm package</span></span>
-<span id="cb69-68"><a href="#cb69-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-69"><a href="#cb69-69" aria-hidden="true" tabindex="-1"></a>In this chapter we will be creating a bespoke data model for our database. This approach can be further extended using the <span class="co">[</span><span class="ot">`dm`</span><span class="co">](https://dm.cynkra.com/)</span> package, which also provides various helpful functions for creating a data model and working with it.</span>
-<span id="cb69-70"><a href="#cb69-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-71"><a href="#cb69-71" aria-hidden="true" tabindex="-1"></a>Similar to above, we can use <span class="co">[</span><span class="ot">`dm()`</span><span class="co">](https://dm.cynkra.com/reference/dm.html)</span> to create a single object to access our database tables.</span>
-<span id="cb69-72"><a href="#cb69-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-73"><a href="#cb69-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb69-74"><a href="#cb69-74" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dm)</span>
-<span id="cb69-75"><a href="#cb69-75" aria-hidden="true" tabindex="-1"></a>lahman_dm <span class="ot">&lt;-</span> <span class="fu">dm</span>(<span class="at">batting =</span> <span class="fu">tbl</span>(con, <span class="st">"Batting"</span>), <span class="at">people =</span> <span class="fu">tbl</span>(con, <span class="st">"People"</span>))</span>
-<span id="cb69-76"><a href="#cb69-76" aria-hidden="true" tabindex="-1"></a>lahman_dm</span>
-<span id="cb69-77"><a href="#cb69-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-78"><a href="#cb69-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-79"><a href="#cb69-79" aria-hidden="true" tabindex="-1"></a>Using this approach, we can make use of various utility functions. For example here we specify <span class="co">[</span><span class="ot">primary and foreign keys</span><span class="co">](https://www.geeksforgeeks.org/dbms/difference-between-primary-key-and-foreign-key/)</span> and then check that the key constraints are satisfied.</span>
-<span id="cb69-80"><a href="#cb69-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-81"><a href="#cb69-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=TRUE}</span></span>
-<span id="cb69-82"><a href="#cb69-82" aria-hidden="true" tabindex="-1"></a>lahman_dm <span class="ot">&lt;-</span> lahman_dm <span class="sc">|&gt;</span></span>
-<span id="cb69-83"><a href="#cb69-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_pk</span>(<span class="at">table =</span> <span class="st">"people"</span>, <span class="at">columns =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb69-84"><a href="#cb69-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_fk</span>(<span class="at">table =</span> <span class="st">"batting"</span>, <span class="at">columns =</span> <span class="st">"playerID"</span>, <span class="at">ref_table =</span> <span class="st">"people"</span>) </span>
-<span id="cb69-85"><a href="#cb69-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-86"><a href="#cb69-86" aria-hidden="true" tabindex="-1"></a>lahman_dm</span>
-<span id="cb69-87"><a href="#cb69-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-88"><a href="#cb69-88" aria-hidden="true" tabindex="-1"></a><span class="fu">dm_examine_constraints</span>(<span class="at">.dm =</span> lahman_dm)</span>
-<span id="cb69-89"><a href="#cb69-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-90"><a href="#cb69-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-91"><a href="#cb69-91" aria-hidden="true" tabindex="-1"></a>For more information on the dm package see <span class="ot">&lt;https://dm.cynkra.com/index.html&gt;</span></span>
-<span id="cb69-92"><a href="#cb69-92" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-93"><a href="#cb69-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-94"><a href="#cb69-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating functions for the data model</span></span>
-<span id="cb69-95"><a href="#cb69-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-96"><a href="#cb69-96" aria-hidden="true" tabindex="-1"></a>We can also now make various functions specific to our Lahman data model to facilitate data analyses. Given we know the structure of the data, we can build a set of functions that abstract away some of the complexities of working with data in a database.</span>
-<span id="cb69-97"><a href="#cb69-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-98"><a href="#cb69-98" aria-hidden="true" tabindex="-1"></a>Let's start by making a small function to get the teams players have played for. We can see that the code we use follows on from the last couple of chapters.</span>
-<span id="cb69-99"><a href="#cb69-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-100"><a href="#cb69-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-101"><a href="#cb69-101" aria-hidden="true" tabindex="-1"></a>getTeams <span class="ot">&lt;-</span> <span class="cf">function</span>(lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) {</span>
-<span id="cb69-102"><a href="#cb69-102" aria-hidden="true" tabindex="-1"></a>  lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
-<span id="cb69-103"><a href="#cb69-103" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
-<span id="cb69-104"><a href="#cb69-104" aria-hidden="true" tabindex="-1"></a>      lahman<span class="sc">$</span>People <span class="sc">|&gt;</span></span>
-<span id="cb69-105"><a href="#cb69-105" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">full_name =</span> <span class="fu">paste0</span>(nameFirst, <span class="st">" "</span>, nameLast)) <span class="sc">|&gt;</span></span>
-<span id="cb69-106"><a href="#cb69-106" aria-hidden="true" tabindex="-1"></a>        <span class="fu">filter</span>(full_name <span class="sc">%in%</span> name) <span class="sc">|&gt;</span></span>
-<span id="cb69-107"><a href="#cb69-107" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">"playerID"</span>),</span>
-<span id="cb69-108"><a href="#cb69-108" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"playerID"</span></span>
-<span id="cb69-109"><a href="#cb69-109" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb69-110"><a href="#cb69-110" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(teamID, yearID) <span class="sc">|&gt;</span></span>
-<span id="cb69-111"><a href="#cb69-111" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(lahman<span class="sc">$</span>Teams, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"teamID"</span>, <span class="st">"yearID"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb69-112"><a href="#cb69-112" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(name)</span>
-<span id="cb69-113"><a href="#cb69-113" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb69-114"><a href="#cb69-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-115"><a href="#cb69-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-116"><a href="#cb69-116" aria-hidden="true" tabindex="-1"></a>Now we can easily get the different teams a player represented. We can see how changing the player name changes the SQL that is getting run behind the scenes.</span>
-<span id="cb69-117"><a href="#cb69-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-118"><a href="#cb69-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-119"><a href="#cb69-119" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Babe Ruth"</span>)</span>
-<span id="cb69-120"><a href="#cb69-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-121"><a href="#cb69-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-122"><a href="#cb69-122" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-123"><a href="#cb69-123" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-49"><a href="#cb69-49" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb69-50"><a href="#cb69-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb69-51"><a href="#cb69-51" aria-hidden="true" tabindex="-1"></a>  lahmanRef <span class="ot">&lt;-</span> <span class="fu">map</span>(lahmanRef, \(x) <span class="fu">tbl</span>(<span class="at">src =</span> con, <span class="at">from =</span> x))</span>
+<span id="cb69-52"><a href="#cb69-52" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb69-53"><a href="#cb69-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(lahmanRef) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lahman_ref"</span>, <span class="fu">class</span>(lahmanRef))</span>
+<span id="cb69-54"><a href="#cb69-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(lahmanRef)</span>
+<span id="cb69-55"><a href="#cb69-55" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb69-56"><a href="#cb69-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-57"><a href="#cb69-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-58"><a href="#cb69-58" aria-hidden="true" tabindex="-1"></a>With this function we can now easily get references to all our Lahman tables in one go using our <span class="in">`lahmanFromCon()`</span> function.</span>
+<span id="cb69-59"><a href="#cb69-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-60"><a href="#cb69-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb69-61"><a href="#cb69-61" aria-hidden="true" tabindex="-1"></a>lahman <span class="ot">&lt;-</span> <span class="fu">lahmanFromCon</span>(<span class="at">con =</span> con)</span>
+<span id="cb69-62"><a href="#cb69-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-63"><a href="#cb69-63" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>People <span class="sc">|&gt;</span></span>
+<span id="cb69-64"><a href="#cb69-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb69-65"><a href="#cb69-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-66"><a href="#cb69-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-67"><a href="#cb69-67" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-68"><a href="#cb69-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### The dm package</span></span>
+<span id="cb69-69"><a href="#cb69-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-70"><a href="#cb69-70" aria-hidden="true" tabindex="-1"></a>In this chapter we will be creating a bespoke data model for our database. This approach can be further extended using the <span class="co">[</span><span class="ot">`dm`</span><span class="co">](https://dm.cynkra.com/)</span> package, which also provides various helpful functions for creating a data model and working with it.</span>
+<span id="cb69-71"><a href="#cb69-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-72"><a href="#cb69-72" aria-hidden="true" tabindex="-1"></a>Similar to above, we can use <span class="co">[</span><span class="ot">`dm()`</span><span class="co">](https://dm.cynkra.com/reference/dm.html)</span> to create a single object to access our database tables.</span>
+<span id="cb69-73"><a href="#cb69-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-74"><a href="#cb69-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb69-75"><a href="#cb69-75" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dm)</span>
+<span id="cb69-76"><a href="#cb69-76" aria-hidden="true" tabindex="-1"></a>lahman_dm <span class="ot">&lt;-</span> <span class="fu">dm</span>(<span class="at">batting =</span> <span class="fu">tbl</span>(con, <span class="st">"Batting"</span>), <span class="at">people =</span> <span class="fu">tbl</span>(con, <span class="st">"People"</span>))</span>
+<span id="cb69-77"><a href="#cb69-77" aria-hidden="true" tabindex="-1"></a>lahman_dm</span>
+<span id="cb69-78"><a href="#cb69-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-79"><a href="#cb69-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-80"><a href="#cb69-80" aria-hidden="true" tabindex="-1"></a>Using this approach, we can make use of various utility functions. For example here we specify <span class="co">[</span><span class="ot">primary and foreign keys</span><span class="co">](https://www.geeksforgeeks.org/dbms/difference-between-primary-key-and-foreign-key/)</span> and then check that the key constraints are satisfied.</span>
+<span id="cb69-81"><a href="#cb69-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-82"><a href="#cb69-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=TRUE}</span></span>
+<span id="cb69-83"><a href="#cb69-83" aria-hidden="true" tabindex="-1"></a>lahman_dm <span class="ot">&lt;-</span> lahman_dm <span class="sc">|&gt;</span></span>
+<span id="cb69-84"><a href="#cb69-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_pk</span>(<span class="at">table =</span> <span class="st">"people"</span>, <span class="at">columns =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb69-85"><a href="#cb69-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dm_add_fk</span>(<span class="at">table =</span> <span class="st">"batting"</span>, <span class="at">columns =</span> <span class="st">"playerID"</span>, <span class="at">ref_table =</span> <span class="st">"people"</span>) </span>
+<span id="cb69-86"><a href="#cb69-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-87"><a href="#cb69-87" aria-hidden="true" tabindex="-1"></a>lahman_dm</span>
+<span id="cb69-88"><a href="#cb69-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-89"><a href="#cb69-89" aria-hidden="true" tabindex="-1"></a><span class="fu">dm_examine_constraints</span>(<span class="at">.dm =</span> lahman_dm)</span>
+<span id="cb69-90"><a href="#cb69-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-91"><a href="#cb69-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-92"><a href="#cb69-92" aria-hidden="true" tabindex="-1"></a>For more information on the dm package see <span class="ot">&lt;https://dm.cynkra.com/index.html&gt;</span></span>
+<span id="cb69-93"><a href="#cb69-93" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-94"><a href="#cb69-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-95"><a href="#cb69-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating functions for the data model</span></span>
+<span id="cb69-96"><a href="#cb69-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-97"><a href="#cb69-97" aria-hidden="true" tabindex="-1"></a>Given that we know the structure of the data, we can build a set of functions tailored to the Lahman data model to simplify data analyses.</span>
+<span id="cb69-98"><a href="#cb69-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-99"><a href="#cb69-99" aria-hidden="true" tabindex="-1"></a>Let's start by creating a simple function that returns the teams each player has played for. We can see that the code we use follows on from the last couple of chapters.</span>
+<span id="cb69-100"><a href="#cb69-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-101"><a href="#cb69-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-102"><a href="#cb69-102" aria-hidden="true" tabindex="-1"></a>getTeams <span class="ot">&lt;-</span> <span class="cf">function</span>(lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) {</span>
+<span id="cb69-103"><a href="#cb69-103" aria-hidden="true" tabindex="-1"></a>  lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
+<span id="cb69-104"><a href="#cb69-104" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(</span>
+<span id="cb69-105"><a href="#cb69-105" aria-hidden="true" tabindex="-1"></a>      lahman<span class="sc">$</span>People <span class="sc">|&gt;</span></span>
+<span id="cb69-106"><a href="#cb69-106" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">full_name =</span> <span class="fu">paste0</span>(nameFirst, <span class="st">" "</span>, nameLast)) <span class="sc">|&gt;</span></span>
+<span id="cb69-107"><a href="#cb69-107" aria-hidden="true" tabindex="-1"></a>        <span class="fu">filter</span>(full_name <span class="sc">%in%</span> name) <span class="sc">|&gt;</span></span>
+<span id="cb69-108"><a href="#cb69-108" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">"playerID"</span>),</span>
+<span id="cb69-109"><a href="#cb69-109" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"playerID"</span></span>
+<span id="cb69-110"><a href="#cb69-110" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb69-111"><a href="#cb69-111" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(teamID, yearID) <span class="sc">|&gt;</span></span>
+<span id="cb69-112"><a href="#cb69-112" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
+<span id="cb69-113"><a href="#cb69-113" aria-hidden="true" tabindex="-1"></a>      lahman<span class="sc">$</span>Teams, </span>
+<span id="cb69-114"><a href="#cb69-114" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"teamID"</span>, <span class="st">"yearID"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb69-115"><a href="#cb69-115" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(name)</span>
+<span id="cb69-116"><a href="#cb69-116" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb69-117"><a href="#cb69-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-118"><a href="#cb69-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-119"><a href="#cb69-119" aria-hidden="true" tabindex="-1"></a>Now we can easily get which teams a player has represented. We can see how changing the player name changes the SQL that is run behind the scenes.</span>
+<span id="cb69-120"><a href="#cb69-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-121"><a href="#cb69-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-122"><a href="#cb69-122" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Babe Ruth"</span>)</span>
+<span id="cb69-123"><a href="#cb69-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-124"><a href="#cb69-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-125"><a href="#cb69-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb69-126"><a href="#cb69-126" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Babe Ruth"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb69-127"><a href="#cb69-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-128"><a href="#cb69-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-129"><a href="#cb69-129" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-130"><a href="#cb69-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-131"><a href="#cb69-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-132"><a href="#cb69-132" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>)</span>
-<span id="cb69-133"><a href="#cb69-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-134"><a href="#cb69-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-135"><a href="#cb69-135" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-136"><a href="#cb69-136" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-125"><a href="#cb69-125" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-126"><a href="#cb69-126" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-127"><a href="#cb69-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-128"><a href="#cb69-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb69-129"><a href="#cb69-129" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Babe Ruth"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb69-130"><a href="#cb69-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-131"><a href="#cb69-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-132"><a href="#cb69-132" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-133"><a href="#cb69-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-134"><a href="#cb69-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-135"><a href="#cb69-135" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>)</span>
+<span id="cb69-136"><a href="#cb69-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-137"><a href="#cb69-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-138"><a href="#cb69-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb69-139"><a href="#cb69-139" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb69-140"><a href="#cb69-140" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-141"><a href="#cb69-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-142"><a href="#cb69-142" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-143"><a href="#cb69-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-144"><a href="#cb69-144" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
-<span id="cb69-145"><a href="#cb69-145" aria-hidden="true" tabindex="-1"></a><span class="fu">### Choosing the right time to collect data into R</span></span>
+<span id="cb69-138"><a href="#cb69-138" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-139"><a href="#cb69-139" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-140"><a href="#cb69-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-141"><a href="#cb69-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb69-142"><a href="#cb69-142" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb69-143"><a href="#cb69-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-144"><a href="#cb69-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-145"><a href="#cb69-145" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb69-146"><a href="#cb69-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-147"><a href="#cb69-147" aria-hidden="true" tabindex="-1"></a>The function <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our <span class="in">`getTeams()`</span> function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case, we could also use <span class="co">[</span><span class="ot">`pull()`</span><span class="co">](https://dplyr.tidyverse.org/reference/pull.html)</span> to get our result out as a vector rather than a data frame.</span>
-<span id="cb69-148"><a href="#cb69-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-149"><a href="#cb69-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb69-150"><a href="#cb69-150" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb69-151"><a href="#cb69-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb69-152"><a href="#cb69-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-147"><a href="#cb69-147" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
+<span id="cb69-148"><a href="#cb69-148" aria-hidden="true" tabindex="-1"></a><span class="fu">### Choosing the right time to collect data into R</span></span>
+<span id="cb69-149"><a href="#cb69-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-150"><a href="#cb69-150" aria-hidden="true" tabindex="-1"></a>The function <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our <span class="in">`getTeams()`</span> function, for example, everything is done on the database side. Collecting the result will bring the result of the teams the person played for out of the database. In this case, we could also use <span class="co">[</span><span class="ot">`pull()`</span><span class="co">](https://dplyr.tidyverse.org/reference/pull.html)</span> to get our result out as a vector rather than a data frame.</span>
+<span id="cb69-151"><a href="#cb69-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-152"><a href="#cb69-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
 <span id="cb69-153"><a href="#cb69-153" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb69-154"><a href="#cb69-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span>
-<span id="cb69-155"><a href="#cb69-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-156"><a href="#cb69-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-157"><a href="#cb69-157" aria-hidden="true" tabindex="-1"></a>In other cases however we may need to collect data so as to perform further analysis steps that are not possible using SQL. This might be the case for plotting or for other analytic steps like fitting statistical models. In such cases we should try to only bring out the data that we need (as we will likely have much less memory available on our local computer than is available for the database).</span>
-<span id="cb69-158"><a href="#cb69-158" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-154"><a href="#cb69-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb69-155"><a href="#cb69-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-156"><a href="#cb69-156" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb69-157"><a href="#cb69-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span>
+<span id="cb69-158"><a href="#cb69-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-159"><a href="#cb69-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-160"><a href="#cb69-160" aria-hidden="true" tabindex="-1"></a>Similarly, we could make a function to add a player's year of birth to a table.</span>
-<span id="cb69-161"><a href="#cb69-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-162"><a href="#cb69-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-163"><a href="#cb69-163" aria-hidden="true" tabindex="-1"></a>addBirthCountry <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb69-164"><a href="#cb69-164" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">|&gt;</span> </span>
-<span id="cb69-165"><a href="#cb69-165" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
-<span id="cb69-166"><a href="#cb69-166" aria-hidden="true" tabindex="-1"></a>      lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
-<span id="cb69-167"><a href="#cb69-167" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthCountry"</span>),</span>
-<span id="cb69-168"><a href="#cb69-168" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"playerID"</span></span>
-<span id="cb69-169"><a href="#cb69-169" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb69-170"><a href="#cb69-170" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb69-171"><a href="#cb69-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-172"><a href="#cb69-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-173"><a href="#cb69-173" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-174"><a href="#cb69-174" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
-<span id="cb69-175"><a href="#cb69-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>()</span>
-<span id="cb69-176"><a href="#cb69-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-177"><a href="#cb69-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-178"><a href="#cb69-178" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-179"><a href="#cb69-179" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-160"><a href="#cb69-160" aria-hidden="true" tabindex="-1"></a>However, in other cases we may need to collect the data to perform analyses that can not be done in SQL. This might be the case for plotting or for other analytic steps(i.e., fitting statistical models). In such cases, it is important to only bring out the data that we need (as our local computer will typically have far less memory available than the database system).</span>
+<span id="cb69-161"><a href="#cb69-161" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-162"><a href="#cb69-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-163"><a href="#cb69-163" aria-hidden="true" tabindex="-1"></a>Similarly, we can make a function to add a player's year of birth to another Lahman table.</span>
+<span id="cb69-164"><a href="#cb69-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-165"><a href="#cb69-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-166"><a href="#cb69-166" aria-hidden="true" tabindex="-1"></a>addBirthCountry <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb69-167"><a href="#cb69-167" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">|&gt;</span> </span>
+<span id="cb69-168"><a href="#cb69-168" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
+<span id="cb69-169"><a href="#cb69-169" aria-hidden="true" tabindex="-1"></a>      lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
+<span id="cb69-170"><a href="#cb69-170" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthCountry"</span>),</span>
+<span id="cb69-171"><a href="#cb69-171" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"playerID"</span></span>
+<span id="cb69-172"><a href="#cb69-172" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb69-173"><a href="#cb69-173" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb69-174"><a href="#cb69-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-175"><a href="#cb69-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-176"><a href="#cb69-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-177"><a href="#cb69-177" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
+<span id="cb69-178"><a href="#cb69-178" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>()</span>
+<span id="cb69-179"><a href="#cb69-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-180"><a href="#cb69-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-181"><a href="#cb69-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb69-182"><a href="#cb69-182" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
-<span id="cb69-183"><a href="#cb69-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span></span>
-<span id="cb69-184"><a href="#cb69-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-185"><a href="#cb69-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-186"><a href="#cb69-186" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-187"><a href="#cb69-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-188"><a href="#cb69-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-189"><a href="#cb69-189" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span></span>
-<span id="cb69-190"><a href="#cb69-190" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>()</span>
-<span id="cb69-191"><a href="#cb69-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-192"><a href="#cb69-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-193"><a href="#cb69-193" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-194"><a href="#cb69-194" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-181"><a href="#cb69-181" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-182"><a href="#cb69-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-183"><a href="#cb69-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-184"><a href="#cb69-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb69-185"><a href="#cb69-185" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
+<span id="cb69-186"><a href="#cb69-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb69-187"><a href="#cb69-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-188"><a href="#cb69-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-189"><a href="#cb69-189" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-190"><a href="#cb69-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-191"><a href="#cb69-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-192"><a href="#cb69-192" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span></span>
+<span id="cb69-193"><a href="#cb69-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>()</span>
+<span id="cb69-194"><a href="#cb69-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-195"><a href="#cb69-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-196"><a href="#cb69-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb69-197"><a href="#cb69-197" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span></span>
-<span id="cb69-198"><a href="#cb69-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span></span>
-<span id="cb69-199"><a href="#cb69-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-200"><a href="#cb69-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-201"><a href="#cb69-201" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-202"><a href="#cb69-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-203"><a href="#cb69-203" aria-hidden="true" tabindex="-1"></a>We could then use our <span class="in">`addBirthCountry()`</span> function as part of a larger query to summarise the proportion of players from each country over time (based on their presence in the batting table).</span>
-<span id="cb69-204"><a href="#cb69-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-205"><a href="#cb69-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-206"><a href="#cb69-206" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
-<span id="cb69-207"><a href="#cb69-207" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"yearID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-208"><a href="#cb69-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span></span>
-<span id="cb69-209"><a href="#cb69-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;</span> <span class="dv">1960</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-210"><a href="#cb69-210" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">birthCountry =</span> <span class="fu">case_when</span>(</span>
-<span id="cb69-211"><a href="#cb69-211" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"USA"</span> <span class="sc">~</span> <span class="st">"USA"</span>,</span>
-<span id="cb69-212"><a href="#cb69-212" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"D.R."</span> <span class="sc">~</span> <span class="st">"Dominican Republic"</span>,</span>
-<span id="cb69-213"><a href="#cb69-213" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Venezuela"</span> <span class="sc">~</span> <span class="st">"Venezuela"</span>,</span>
-<span id="cb69-214"><a href="#cb69-214" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"P.R."</span> <span class="sc">~</span> <span class="st">"Puerto Rico "</span>,</span>
-<span id="cb69-215"><a href="#cb69-215" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Cuba"</span> <span class="sc">~</span> <span class="st">"Cuba"</span>,</span>
-<span id="cb69-216"><a href="#cb69-216" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"CAN"</span> <span class="sc">~</span> <span class="st">"Canada"</span>,</span>
-<span id="cb69-217"><a href="#cb69-217" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Mexico"</span> <span class="sc">~</span> <span class="st">"Mexico"</span>,</span>
-<span id="cb69-218"><a href="#cb69-218" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> <span class="st">"Other"</span></span>
-<span id="cb69-219"><a href="#cb69-219" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> </span>
-<span id="cb69-220"><a href="#cb69-220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, birthCountry) <span class="sc">|&gt;</span></span>
-<span id="cb69-221"><a href="#cb69-221" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-222"><a href="#cb69-222" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">|&gt;</span></span>
-<span id="cb69-223"><a href="#cb69-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percentage =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-224"><a href="#cb69-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb69-225"><a href="#cb69-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb69-226"><a href="#cb69-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-227"><a href="#cb69-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-228"><a href="#cb69-228" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-229"><a href="#cb69-229" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-196"><a href="#cb69-196" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-197"><a href="#cb69-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-198"><a href="#cb69-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-199"><a href="#cb69-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb69-200"><a href="#cb69-200" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span></span>
+<span id="cb69-201"><a href="#cb69-201" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb69-202"><a href="#cb69-202" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-203"><a href="#cb69-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-204"><a href="#cb69-204" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-205"><a href="#cb69-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-206"><a href="#cb69-206" aria-hidden="true" tabindex="-1"></a>We can then use our <span class="in">`addBirthCountry()`</span> function as part of a larger query to summarise and plot the proportion of players from each country over time (based on their presence in the batting table). </span>
+<span id="cb69-207"><a href="#cb69-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-208"><a href="#cb69-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-209"><a href="#cb69-209" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
+<span id="cb69-210"><a href="#cb69-210" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"yearID"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-211"><a href="#cb69-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb69-212"><a href="#cb69-212" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;</span> <span class="dv">1960</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-213"><a href="#cb69-213" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">birthCountry =</span> <span class="fu">case_when</span>(</span>
+<span id="cb69-214"><a href="#cb69-214" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"USA"</span> <span class="sc">~</span> <span class="st">"USA"</span>,</span>
+<span id="cb69-215"><a href="#cb69-215" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"D.R."</span> <span class="sc">~</span> <span class="st">"Dominican Republic"</span>,</span>
+<span id="cb69-216"><a href="#cb69-216" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Venezuela"</span> <span class="sc">~</span> <span class="st">"Venezuela"</span>,</span>
+<span id="cb69-217"><a href="#cb69-217" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"P.R."</span> <span class="sc">~</span> <span class="st">"Puerto Rico "</span>,</span>
+<span id="cb69-218"><a href="#cb69-218" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Cuba"</span> <span class="sc">~</span> <span class="st">"Cuba"</span>,</span>
+<span id="cb69-219"><a href="#cb69-219" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"CAN"</span> <span class="sc">~</span> <span class="st">"Canada"</span>,</span>
+<span id="cb69-220"><a href="#cb69-220" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Mexico"</span> <span class="sc">~</span> <span class="st">"Mexico"</span>,</span>
+<span id="cb69-221"><a href="#cb69-221" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> <span class="st">"Other"</span></span>
+<span id="cb69-222"><a href="#cb69-222" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> </span>
+<span id="cb69-223"><a href="#cb69-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, birthCountry) <span class="sc">|&gt;</span></span>
+<span id="cb69-224"><a href="#cb69-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-225"><a href="#cb69-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">|&gt;</span></span>
+<span id="cb69-226"><a href="#cb69-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percentage =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-227"><a href="#cb69-227" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb69-228"><a href="#cb69-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb69-229"><a href="#cb69-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-230"><a href="#cb69-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-231"><a href="#cb69-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb69-232"><a href="#cb69-232" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
-<span id="cb69-233"><a href="#cb69-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID) <span class="sc">|&gt;</span> </span>
-<span id="cb69-234"><a href="#cb69-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span></span>
-<span id="cb69-235"><a href="#cb69-235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;</span> <span class="dv">1960</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-236"><a href="#cb69-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">birthCountry =</span> <span class="fu">case_when</span>(</span>
-<span id="cb69-237"><a href="#cb69-237" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"USA"</span> <span class="sc">~</span> <span class="st">"USA"</span>,</span>
-<span id="cb69-238"><a href="#cb69-238" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"D.R."</span> <span class="sc">~</span> <span class="st">"Dominican Republic"</span>,</span>
-<span id="cb69-239"><a href="#cb69-239" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Venezuela"</span> <span class="sc">~</span> <span class="st">"Venezuela"</span>,</span>
-<span id="cb69-240"><a href="#cb69-240" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"P.R."</span> <span class="sc">~</span> <span class="st">"Puerto Rico "</span>,</span>
-<span id="cb69-241"><a href="#cb69-241" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Cuba"</span> <span class="sc">~</span> <span class="st">"Cuba"</span>,</span>
-<span id="cb69-242"><a href="#cb69-242" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"CAN"</span> <span class="sc">~</span> <span class="st">"Canada"</span>,</span>
-<span id="cb69-243"><a href="#cb69-243" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Mexico"</span> <span class="sc">~</span> <span class="st">"Mexico"</span>,</span>
-<span id="cb69-244"><a href="#cb69-244" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> <span class="st">"Other"</span></span>
-<span id="cb69-245"><a href="#cb69-245" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> </span>
-<span id="cb69-246"><a href="#cb69-246" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, birthCountry) <span class="sc">|&gt;</span></span>
-<span id="cb69-247"><a href="#cb69-247" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-248"><a href="#cb69-248" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">|&gt;</span></span>
-<span id="cb69-249"><a href="#cb69-249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percentage =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-250"><a href="#cb69-250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb69-251"><a href="#cb69-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-252"><a href="#cb69-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-253"><a href="#cb69-253" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-254"><a href="#cb69-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-255"><a href="#cb69-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-256"><a href="#cb69-256" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb69-257"><a href="#cb69-257" aria-hidden="true" tabindex="-1"></a>plot_data <span class="sc">|&gt;</span> </span>
-<span id="cb69-258"><a href="#cb69-258" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb69-259"><a href="#cb69-259" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(yearID, percentage, <span class="at">fill =</span> birthCountry), <span class="at">width =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb69-260"><a href="#cb69-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb69-261"><a href="#cb69-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(), <span class="at">legend.position =</span> <span class="st">"top"</span>)</span>
-<span id="cb69-262"><a href="#cb69-262" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb69-263"><a href="#cb69-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-264"><a href="#cb69-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-265"><a href="#cb69-265" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-266"><a href="#cb69-266" aria-hidden="true" tabindex="-1"></a><span class="fu">### Defining methods for the data model</span></span>
-<span id="cb69-267"><a href="#cb69-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-268"><a href="#cb69-268" aria-hidden="true" tabindex="-1"></a>As part of our <span class="in">`lahmanFromCon()`</span> function our data model object has the class "lahman_ref". Therefore as well as creating user-facing functions to work with our lahman data model, we can also define methods for this object.</span>
-<span id="cb69-269"><a href="#cb69-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-270"><a href="#cb69-270" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb69-271"><a href="#cb69-271" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(lahman)</span>
-<span id="cb69-272"><a href="#cb69-272" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-273"><a href="#cb69-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-274"><a href="#cb69-274" aria-hidden="true" tabindex="-1"></a>With this we can make some specific methods for a "lahman_ref" object. For example, we can define a print method like so:</span>
+<span id="cb69-231"><a href="#cb69-231" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-232"><a href="#cb69-232" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-233"><a href="#cb69-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-234"><a href="#cb69-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb69-235"><a href="#cb69-235" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span></span>
+<span id="cb69-236"><a href="#cb69-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(playerID, yearID) <span class="sc">|&gt;</span> </span>
+<span id="cb69-237"><a href="#cb69-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb69-238"><a href="#cb69-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;</span> <span class="dv">1960</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-239"><a href="#cb69-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">birthCountry =</span> <span class="fu">case_when</span>(</span>
+<span id="cb69-240"><a href="#cb69-240" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"USA"</span> <span class="sc">~</span> <span class="st">"USA"</span>,</span>
+<span id="cb69-241"><a href="#cb69-241" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"D.R."</span> <span class="sc">~</span> <span class="st">"Dominican Republic"</span>,</span>
+<span id="cb69-242"><a href="#cb69-242" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Venezuela"</span> <span class="sc">~</span> <span class="st">"Venezuela"</span>,</span>
+<span id="cb69-243"><a href="#cb69-243" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"P.R."</span> <span class="sc">~</span> <span class="st">"Puerto Rico "</span>,</span>
+<span id="cb69-244"><a href="#cb69-244" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Cuba"</span> <span class="sc">~</span> <span class="st">"Cuba"</span>,</span>
+<span id="cb69-245"><a href="#cb69-245" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"CAN"</span> <span class="sc">~</span> <span class="st">"Canada"</span>,</span>
+<span id="cb69-246"><a href="#cb69-246" aria-hidden="true" tabindex="-1"></a>    birthCountry <span class="sc">==</span> <span class="st">"Mexico"</span> <span class="sc">~</span> <span class="st">"Mexico"</span>,</span>
+<span id="cb69-247"><a href="#cb69-247" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> <span class="st">"Other"</span></span>
+<span id="cb69-248"><a href="#cb69-248" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> </span>
+<span id="cb69-249"><a href="#cb69-249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, birthCountry) <span class="sc">|&gt;</span></span>
+<span id="cb69-250"><a href="#cb69-250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-251"><a href="#cb69-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">|&gt;</span></span>
+<span id="cb69-252"><a href="#cb69-252" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percentage =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-253"><a href="#cb69-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb69-254"><a href="#cb69-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-255"><a href="#cb69-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-256"><a href="#cb69-256" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-257"><a href="#cb69-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-258"><a href="#cb69-258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-259"><a href="#cb69-259" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb69-260"><a href="#cb69-260" aria-hidden="true" tabindex="-1"></a>plot_data <span class="sc">|&gt;</span> </span>
+<span id="cb69-261"><a href="#cb69-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb69-262"><a href="#cb69-262" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(</span>
+<span id="cb69-263"><a href="#cb69-263" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(yearID, percentage, <span class="at">fill =</span> birthCountry), </span>
+<span id="cb69-264"><a href="#cb69-264" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">1</span></span>
+<span id="cb69-265"><a href="#cb69-265" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb69-266"><a href="#cb69-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb69-267"><a href="#cb69-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb69-268"><a href="#cb69-268" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb69-269"><a href="#cb69-269" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
+<span id="cb69-270"><a href="#cb69-270" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb69-271"><a href="#cb69-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-272"><a href="#cb69-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-273"><a href="#cb69-273" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-274"><a href="#cb69-274" aria-hidden="true" tabindex="-1"></a><span class="fu">### Defining methods for the data model</span></span>
 <span id="cb69-275"><a href="#cb69-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-276"><a href="#cb69-276" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb69-277"><a href="#cb69-277" aria-hidden="true" tabindex="-1"></a>print.lahman_ref <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb69-278"><a href="#cb69-278" aria-hidden="true" tabindex="-1"></a>  len <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">names</span>(x))</span>
-<span id="cb69-279"><a href="#cb69-279" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cli_h1</span>(<span class="st">"# Lahman reference - {len} tables"</span>)</span>
-<span id="cb69-280"><a href="#cb69-280" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cli_li</span>(<span class="fu">paste</span>(<span class="st">"{.strong tables:}"</span>, <span class="fu">paste</span>(<span class="fu">names</span>(x), <span class="at">collapse =</span> <span class="st">", "</span>)))</span>
-<span id="cb69-281"><a href="#cb69-281" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(x)</span>
-<span id="cb69-282"><a href="#cb69-282" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb69-283"><a href="#cb69-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-284"><a href="#cb69-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-285"><a href="#cb69-285" aria-hidden="true" tabindex="-1"></a>Now we can see a summary of our lahman data model when we print the object.</span>
-<span id="cb69-286"><a href="#cb69-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-287"><a href="#cb69-287" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb69-288"><a href="#cb69-288" aria-hidden="true" tabindex="-1"></a>lahman</span>
-<span id="cb69-289"><a href="#cb69-289" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-290"><a href="#cb69-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-291"><a href="#cb69-291" aria-hidden="true" tabindex="-1"></a>And we can see that this print is being done by the method we defined.</span>
+<span id="cb69-276"><a href="#cb69-276" aria-hidden="true" tabindex="-1"></a>As part of our <span class="in">`lahmanFromCon()`</span> function, our data model object has the class "lahman_ref". Therefore, apart from creating user-friendly functions to work with our Lahman data model, we can also define methods for this object.</span>
+<span id="cb69-277"><a href="#cb69-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-278"><a href="#cb69-278" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb69-279"><a href="#cb69-279" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(lahman)</span>
+<span id="cb69-280"><a href="#cb69-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-281"><a href="#cb69-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-282"><a href="#cb69-282" aria-hidden="true" tabindex="-1"></a>With this we can make some specific methods for a "lahman_ref" object. For example, we can define a print method like so:</span>
+<span id="cb69-283"><a href="#cb69-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-284"><a href="#cb69-284" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb69-285"><a href="#cb69-285" aria-hidden="true" tabindex="-1"></a>print.lahman_ref <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb69-286"><a href="#cb69-286" aria-hidden="true" tabindex="-1"></a>  len <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">names</span>(x))</span>
+<span id="cb69-287"><a href="#cb69-287" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cli_h1</span>(<span class="st">"# Lahman reference - {len} tables"</span>)</span>
+<span id="cb69-288"><a href="#cb69-288" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cli_li</span>(<span class="fu">paste</span>(<span class="st">"{.strong tables:}"</span>, <span class="fu">paste</span>(<span class="fu">names</span>(x), <span class="at">collapse =</span> <span class="st">", "</span>)))</span>
+<span id="cb69-289"><a href="#cb69-289" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(x)</span>
+<span id="cb69-290"><a href="#cb69-290" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb69-291"><a href="#cb69-291" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-292"><a href="#cb69-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-293"><a href="#cb69-293" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-294"><a href="#cb69-294" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sloop)</span>
-<span id="cb69-295"><a href="#cb69-295" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">print</span>(lahman))</span>
-<span id="cb69-296"><a href="#cb69-296" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-297"><a href="#cb69-297" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-293"><a href="#cb69-293" aria-hidden="true" tabindex="-1"></a>Now we can see a summary of our Lahman data model when we print the object.</span>
+<span id="cb69-294"><a href="#cb69-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-295"><a href="#cb69-295" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb69-296"><a href="#cb69-296" aria-hidden="true" tabindex="-1"></a>lahman</span>
+<span id="cb69-297"><a href="#cb69-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-298"><a href="#cb69-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-299"><a href="#cb69-299" aria-hidden="true" tabindex="-1"></a><span class="fu">## Building efficient analytic pipelines</span></span>
+<span id="cb69-299"><a href="#cb69-299" aria-hidden="true" tabindex="-1"></a>And we can see that this print is being done by the method we defined.</span>
 <span id="cb69-300"><a href="#cb69-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-301"><a href="#cb69-301" aria-hidden="true" tabindex="-1"></a><span class="fu">### The risk of "clean" R code</span></span>
-<span id="cb69-302"><a href="#cb69-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-303"><a href="#cb69-303" aria-hidden="true" tabindex="-1"></a>Following on from the above approach, we might think it a good idea to make another function <span class="in">`addBirthYear()`</span>. We can then use it along with our <span class="in">`addBirthCountry()`</span> to get a summarised average salary by birth country and birth year.</span>
-<span id="cb69-304"><a href="#cb69-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-305"><a href="#cb69-305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-306"><a href="#cb69-306" aria-hidden="true" tabindex="-1"></a>addBirthYear <span class="ot">&lt;-</span> <span class="cf">function</span>(lahmanTbl){</span>
-<span id="cb69-307"><a href="#cb69-307" aria-hidden="true" tabindex="-1"></a>  lahmanTbl <span class="sc">|&gt;</span> </span>
-<span id="cb69-308"><a href="#cb69-308" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
-<span id="cb69-309"><a href="#cb69-309" aria-hidden="true" tabindex="-1"></a>      lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
-<span id="cb69-310"><a href="#cb69-310" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthYear"</span>),</span>
-<span id="cb69-311"><a href="#cb69-311" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"playerID"</span></span>
-<span id="cb69-312"><a href="#cb69-312" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb69-313"><a href="#cb69-313" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb69-314"><a href="#cb69-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-315"><a href="#cb69-315" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Salaries <span class="sc">|&gt;</span> </span>
-<span id="cb69-316"><a href="#cb69-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb69-317"><a href="#cb69-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthYear</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb69-318"><a href="#cb69-318" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birthCountry, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-319"><a href="#cb69-319" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb69-320"><a href="#cb69-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-321"><a href="#cb69-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-322"><a href="#cb69-322" aria-hidden="true" tabindex="-1"></a>Although the R code on the face of it looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.</span>
-<span id="cb69-323"><a href="#cb69-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-324"><a href="#cb69-324" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-325"><a href="#cb69-325" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
-<span id="cb69-326"><a href="#cb69-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-327"><a href="#cb69-327" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb69-328"><a href="#cb69-328" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Salaries <span class="sc">|&gt;</span> </span>
-<span id="cb69-329"><a href="#cb69-329" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb69-330"><a href="#cb69-330" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthYear</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb69-331"><a href="#cb69-331" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birthCountry, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-332"><a href="#cb69-332" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-333"><a href="#cb69-333" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-334"><a href="#cb69-334" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-335"><a href="#cb69-335" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-336"><a href="#cb69-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-337"><a href="#cb69-337" aria-hidden="true" tabindex="-1"></a>To improve performance, we could instead have a single function to get both of these, birth country and birth year, at the same time.</span>
-<span id="cb69-338"><a href="#cb69-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-339"><a href="#cb69-339" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
-<span id="cb69-340"><a href="#cb69-340" aria-hidden="true" tabindex="-1"></a>addCharacteristics <span class="ot">&lt;-</span> <span class="cf">function</span>(lahmanTbl){</span>
-<span id="cb69-341"><a href="#cb69-341" aria-hidden="true" tabindex="-1"></a>  lahmanTbl <span class="sc">|&gt;</span> </span>
-<span id="cb69-342"><a href="#cb69-342" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
-<span id="cb69-343"><a href="#cb69-343" aria-hidden="true" tabindex="-1"></a>      lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
-<span id="cb69-344"><a href="#cb69-344" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthYear"</span>, <span class="st">"birthCountry"</span>),</span>
-<span id="cb69-345"><a href="#cb69-345" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"playerID"</span></span>
-<span id="cb69-346"><a href="#cb69-346" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb69-347"><a href="#cb69-347" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb69-348"><a href="#cb69-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-349"><a href="#cb69-349" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Salaries <span class="sc">|&gt;</span> </span>
-<span id="cb69-350"><a href="#cb69-350" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCharacteristics</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb69-351"><a href="#cb69-351" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birthCountry, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-352"><a href="#cb69-352" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb69-353"><a href="#cb69-353" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-354"><a href="#cb69-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-355"><a href="#cb69-355" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-356"><a href="#cb69-356" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
-<span id="cb69-357"><a href="#cb69-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-358"><a href="#cb69-358" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb69-359"><a href="#cb69-359" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Salaries <span class="sc">|&gt;</span> </span>
-<span id="cb69-360"><a href="#cb69-360" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCharacteristics</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb69-361"><a href="#cb69-361" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birthCountry, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-362"><a href="#cb69-362" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-363"><a href="#cb69-363" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-364"><a href="#cb69-364" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-365"><a href="#cb69-365" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-366"><a href="#cb69-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-367"><a href="#cb69-367" aria-hidden="true" tabindex="-1"></a>Now this query outputs the same result but is simpler than the previous one, thus lowering the computational cost of the analysis. All this is to show that when working with databases we should keep in mind what is going on behind the scenes in terms of the SQL code actually being executed.</span>
-<span id="cb69-368"><a href="#cb69-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-369"><a href="#cb69-369" aria-hidden="true" tabindex="-1"></a><span class="fu">### Piping and SQL</span></span>
-<span id="cb69-370"><a href="#cb69-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-371"><a href="#cb69-371" aria-hidden="true" tabindex="-1"></a>Although piping functions has little impact on performance when using R with data in memory, when working with a database the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.</span>
-<span id="cb69-372"><a href="#cb69-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-373"><a href="#cb69-373" aria-hidden="true" tabindex="-1"></a>For example, a single mutate function creating two new variables would generate the below SQL.</span>
+<span id="cb69-301"><a href="#cb69-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-302"><a href="#cb69-302" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sloop)</span>
+<span id="cb69-303"><a href="#cb69-303" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">print</span>(lahman))</span>
+<span id="cb69-304"><a href="#cb69-304" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-305"><a href="#cb69-305" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-306"><a href="#cb69-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-307"><a href="#cb69-307" aria-hidden="true" tabindex="-1"></a><span class="fu">## Building efficient analytic pipelines</span></span>
+<span id="cb69-308"><a href="#cb69-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-309"><a href="#cb69-309" aria-hidden="true" tabindex="-1"></a><span class="fu">### The risk of "clean" R code</span></span>
+<span id="cb69-310"><a href="#cb69-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-311"><a href="#cb69-311" aria-hidden="true" tabindex="-1"></a>Following on from the above approach, we might think it is a good idea to make another function <span class="in">`addBirthYear()`</span>. We can then use it along with our <span class="in">`addBirthCountry()`</span> to get a summarised average salary by birth country and birth year.</span>
+<span id="cb69-312"><a href="#cb69-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-313"><a href="#cb69-313" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-314"><a href="#cb69-314" aria-hidden="true" tabindex="-1"></a>addBirthYear <span class="ot">&lt;-</span> <span class="cf">function</span>(lahmanTbl){</span>
+<span id="cb69-315"><a href="#cb69-315" aria-hidden="true" tabindex="-1"></a>  lahmanTbl <span class="sc">|&gt;</span> </span>
+<span id="cb69-316"><a href="#cb69-316" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
+<span id="cb69-317"><a href="#cb69-317" aria-hidden="true" tabindex="-1"></a>      lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
+<span id="cb69-318"><a href="#cb69-318" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthYear"</span>),</span>
+<span id="cb69-319"><a href="#cb69-319" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"playerID"</span></span>
+<span id="cb69-320"><a href="#cb69-320" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb69-321"><a href="#cb69-321" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb69-322"><a href="#cb69-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-323"><a href="#cb69-323" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Salaries <span class="sc">|&gt;</span> </span>
+<span id="cb69-324"><a href="#cb69-324" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb69-325"><a href="#cb69-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthYear</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb69-326"><a href="#cb69-326" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birthCountry, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-327"><a href="#cb69-327" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb69-328"><a href="#cb69-328" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-329"><a href="#cb69-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-330"><a href="#cb69-330" aria-hidden="true" tabindex="-1"></a>Although the R code looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.</span>
+<span id="cb69-331"><a href="#cb69-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-332"><a href="#cb69-332" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-333"><a href="#cb69-333" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-334"><a href="#cb69-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-335"><a href="#cb69-335" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb69-336"><a href="#cb69-336" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Salaries <span class="sc">|&gt;</span> </span>
+<span id="cb69-337"><a href="#cb69-337" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthCountry</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb69-338"><a href="#cb69-338" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addBirthYear</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb69-339"><a href="#cb69-339" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birthCountry, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-340"><a href="#cb69-340" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-341"><a href="#cb69-341" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-342"><a href="#cb69-342" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-343"><a href="#cb69-343" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-344"><a href="#cb69-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-345"><a href="#cb69-345" aria-hidden="true" tabindex="-1"></a>To improve the performance of the code, we can build a single function to get simultaneously the birth country and birth year, so only one join is done.</span>
+<span id="cb69-346"><a href="#cb69-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-347"><a href="#cb69-347" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE, warning = FALSE, echo = TRUE}</span></span>
+<span id="cb69-348"><a href="#cb69-348" aria-hidden="true" tabindex="-1"></a>addCharacteristics <span class="ot">&lt;-</span> <span class="cf">function</span>(lahmanTbl){</span>
+<span id="cb69-349"><a href="#cb69-349" aria-hidden="true" tabindex="-1"></a>  lahmanTbl <span class="sc">|&gt;</span> </span>
+<span id="cb69-350"><a href="#cb69-350" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
+<span id="cb69-351"><a href="#cb69-351" aria-hidden="true" tabindex="-1"></a>      lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
+<span id="cb69-352"><a href="#cb69-352" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthYear"</span>, <span class="st">"birthCountry"</span>),</span>
+<span id="cb69-353"><a href="#cb69-353" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"playerID"</span></span>
+<span id="cb69-354"><a href="#cb69-354" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb69-355"><a href="#cb69-355" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb69-356"><a href="#cb69-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-357"><a href="#cb69-357" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Salaries <span class="sc">|&gt;</span> </span>
+<span id="cb69-358"><a href="#cb69-358" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCharacteristics</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb69-359"><a href="#cb69-359" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birthCountry, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-360"><a href="#cb69-360" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb69-361"><a href="#cb69-361" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-362"><a href="#cb69-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-363"><a href="#cb69-363" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-364"><a href="#cb69-364" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-365"><a href="#cb69-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-366"><a href="#cb69-366" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb69-367"><a href="#cb69-367" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Salaries <span class="sc">|&gt;</span> </span>
+<span id="cb69-368"><a href="#cb69-368" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCharacteristics</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb69-369"><a href="#cb69-369" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birthCountry, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-370"><a href="#cb69-370" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">average_salary =</span> <span class="fu">mean</span>(salary), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-371"><a href="#cb69-371" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-372"><a href="#cb69-372" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-373"><a href="#cb69-373" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb69-374"><a href="#cb69-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-375"><a href="#cb69-375" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb69-376"><a href="#cb69-376" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
-<span id="cb69-377"><a href="#cb69-377" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb69-378"><a href="#cb69-378" aria-hidden="true" tabindex="-1"></a>    <span class="at">birthDatePlus1 =</span> <span class="fu">add_years</span>(<span class="at">x =</span> birthDate, <span class="at">n =</span> <span class="dv">1</span>L),</span>
-<span id="cb69-379"><a href="#cb69-379" aria-hidden="true" tabindex="-1"></a>    <span class="at">birthDatePlus10 =</span> <span class="fu">add_years</span>(<span class="at">x =</span> birthDate, <span class="at">n =</span> <span class="dv">10</span>L)</span>
-<span id="cb69-380"><a href="#cb69-380" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb69-381"><a href="#cb69-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthDatePlus1"</span>, <span class="st">"birthDatePlus10"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-382"><a href="#cb69-382" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-383"><a href="#cb69-383" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-384"><a href="#cb69-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-385"><a href="#cb69-385" aria-hidden="true" tabindex="-1"></a>Whereas the SQL will be different if these were created using multiple mutate calls (with now one being created in a sub-query).</span>
-<span id="cb69-386"><a href="#cb69-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-387"><a href="#cb69-387" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb69-388"><a href="#cb69-388" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
-<span id="cb69-389"><a href="#cb69-389" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">birthDatePlus1 =</span> <span class="fu">add_years</span>(<span class="at">x =</span> birthDate, <span class="at">n =</span> <span class="dv">1</span>L)) <span class="sc">|&gt;</span> </span>
-<span id="cb69-390"><a href="#cb69-390" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">birthDatePlus10 =</span> <span class="fu">add_years</span>(<span class="at">x =</span> birthDate, <span class="at">n =</span> <span class="dv">10</span>L)) <span class="sc">|&gt;</span> </span>
-<span id="cb69-391"><a href="#cb69-391" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthDatePlus1"</span>, <span class="st">"birthDatePlus10"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-392"><a href="#cb69-392" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-393"><a href="#cb69-393" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-375"><a href="#cb69-375" aria-hidden="true" tabindex="-1"></a>This query produces the same result but is simpler than the previous one, thus reducing the computational cost of the analysis. This shows the importance of being aware of the SQL code being executed when working in R with databases.</span>
+<span id="cb69-376"><a href="#cb69-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-377"><a href="#cb69-377" aria-hidden="true" tabindex="-1"></a><span class="fu">### Piping and SQL</span></span>
+<span id="cb69-378"><a href="#cb69-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-379"><a href="#cb69-379" aria-hidden="true" tabindex="-1"></a>Piping functions has little impact on performance when using R with data in memory. However, when working with a database, the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.</span>
+<span id="cb69-380"><a href="#cb69-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-381"><a href="#cb69-381" aria-hidden="true" tabindex="-1"></a>For example, a single mutate function creating two new variables would generate the below SQL.</span>
+<span id="cb69-382"><a href="#cb69-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-383"><a href="#cb69-383" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb69-384"><a href="#cb69-384" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
+<span id="cb69-385"><a href="#cb69-385" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb69-386"><a href="#cb69-386" aria-hidden="true" tabindex="-1"></a>    <span class="at">birthDatePlus1 =</span> <span class="fu">add_years</span>(<span class="at">x =</span> birthDate, <span class="at">n =</span> <span class="dv">1</span>L),</span>
+<span id="cb69-387"><a href="#cb69-387" aria-hidden="true" tabindex="-1"></a>    <span class="at">birthDatePlus10 =</span> <span class="fu">add_years</span>(<span class="at">x =</span> birthDate, <span class="at">n =</span> <span class="dv">10</span>L)</span>
+<span id="cb69-388"><a href="#cb69-388" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb69-389"><a href="#cb69-389" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthDatePlus1"</span>, <span class="st">"birthDatePlus10"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-390"><a href="#cb69-390" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-391"><a href="#cb69-391" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-392"><a href="#cb69-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-393"><a href="#cb69-393" aria-hidden="true" tabindex="-1"></a>Whereas the SQL will be different if these were created using multiple mutate calls (with now one being created in a sub-query).</span>
 <span id="cb69-394"><a href="#cb69-394" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-395"><a href="#cb69-395" aria-hidden="true" tabindex="-1"></a><span class="fu">### Computing intermediate queries</span></span>
-<span id="cb69-396"><a href="#cb69-396" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-397"><a href="#cb69-397" aria-hidden="true" tabindex="-1"></a>Let's say we want to summarise home runs in the batting table and strike outs in the pitching table by the college players attended and their birth year. We could do this like so:</span>
-<span id="cb69-398"><a href="#cb69-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-399"><a href="#cb69-399" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb69-400"><a href="#cb69-400" aria-hidden="true" tabindex="-1"></a>players_with_college <span class="ot">&lt;-</span> lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
-<span id="cb69-401"><a href="#cb69-401" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthYear"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-402"><a href="#cb69-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
-<span id="cb69-403"><a href="#cb69-403" aria-hidden="true" tabindex="-1"></a>    lahman<span class="sc">$</span>CollegePlaying <span class="sc">|&gt;</span> </span>
-<span id="cb69-404"><a href="#cb69-404" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(schoolID)) <span class="sc">|&gt;</span> </span>
-<span id="cb69-405"><a href="#cb69-405" aria-hidden="true" tabindex="-1"></a>      <span class="fu">distinct</span>(playerID, schoolID),</span>
-<span id="cb69-406"><a href="#cb69-406" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"playerID"</span></span>
-<span id="cb69-407"><a href="#cb69-407" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb69-408"><a href="#cb69-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-409"><a href="#cb69-409" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
-<span id="cb69-410"><a href="#cb69-410" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-411"><a href="#cb69-411" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-412"><a href="#cb69-412" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-413"><a href="#cb69-413" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb69-414"><a href="#cb69-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-415"><a href="#cb69-415" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
-<span id="cb69-416"><a href="#cb69-416" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-417"><a href="#cb69-417" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-418"><a href="#cb69-418" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)<span class="sc">|&gt;</span> </span>
-<span id="cb69-419"><a href="#cb69-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb69-420"><a href="#cb69-420" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-421"><a href="#cb69-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-422"><a href="#cb69-422" aria-hidden="true" tabindex="-1"></a>Looking at the SQL, we can see, however, that there is some duplication, because as part of each full query, we have run our players_with_college query.</span>
-<span id="cb69-423"><a href="#cb69-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-424"><a href="#cb69-424" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-425"><a href="#cb69-425" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
-<span id="cb69-426"><a href="#cb69-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-427"><a href="#cb69-427" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb69-428"><a href="#cb69-428" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
-<span id="cb69-429"><a href="#cb69-429" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-430"><a href="#cb69-430" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-431"><a href="#cb69-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-432"><a href="#cb69-432" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-433"><a href="#cb69-433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-434"><a href="#cb69-434" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
-<span id="cb69-435"><a href="#cb69-435" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb69-436"><a href="#cb69-436" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-437"><a href="#cb69-437" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-438"><a href="#cb69-438" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-439"><a href="#cb69-439" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-440"><a href="#cb69-440" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-441"><a href="#cb69-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-442"><a href="#cb69-442" aria-hidden="true" tabindex="-1"></a>To avoid this we could instead make use of the <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> function to force the computation of this first, intermediate, query to a temporary table in the database.</span>
-<span id="cb69-443"><a href="#cb69-443" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-444"><a href="#cb69-444" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb69-445"><a href="#cb69-445" aria-hidden="true" tabindex="-1"></a>players_with_college <span class="ot">&lt;-</span> players_with_college <span class="sc">|&gt;</span> </span>
-<span id="cb69-446"><a href="#cb69-446" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>()</span>
-<span id="cb69-447"><a href="#cb69-447" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-448"><a href="#cb69-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-449"><a href="#cb69-449" aria-hidden="true" tabindex="-1"></a>Now we have a temporary table with the result of our players_with_college query, and we can use this in both of our aggregation queries.</span>
-<span id="cb69-450"><a href="#cb69-450" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-451"><a href="#cb69-451" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb69-452"><a href="#cb69-452" aria-hidden="true" tabindex="-1"></a>players_with_college <span class="sc">|&gt;</span> </span>
-<span id="cb69-453"><a href="#cb69-453" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-454"><a href="#cb69-454" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-395"><a href="#cb69-395" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb69-396"><a href="#cb69-396" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
+<span id="cb69-397"><a href="#cb69-397" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">birthDatePlus1 =</span> <span class="fu">add_years</span>(<span class="at">x =</span> birthDate, <span class="at">n =</span> <span class="dv">1</span>L)) <span class="sc">|&gt;</span> </span>
+<span id="cb69-398"><a href="#cb69-398" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">birthDatePlus10 =</span> <span class="fu">add_years</span>(<span class="at">x =</span> birthDate, <span class="at">n =</span> <span class="dv">10</span>L)) <span class="sc">|&gt;</span> </span>
+<span id="cb69-399"><a href="#cb69-399" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthDatePlus1"</span>, <span class="st">"birthDatePlus10"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-400"><a href="#cb69-400" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-401"><a href="#cb69-401" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-402"><a href="#cb69-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-403"><a href="#cb69-403" aria-hidden="true" tabindex="-1"></a><span class="fu">### Computing intermediate queries</span></span>
+<span id="cb69-404"><a href="#cb69-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-405"><a href="#cb69-405" aria-hidden="true" tabindex="-1"></a>Let's now summarise home runs (Batting table) and strike outs (Pitching table) by college player and their birth year. We can do this like so:</span>
+<span id="cb69-406"><a href="#cb69-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-407"><a href="#cb69-407" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb69-408"><a href="#cb69-408" aria-hidden="true" tabindex="-1"></a>players_with_college <span class="ot">&lt;-</span> lahman<span class="sc">$</span>People <span class="sc">|&gt;</span> </span>
+<span id="cb69-409"><a href="#cb69-409" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"playerID"</span>, <span class="st">"birthYear"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-410"><a href="#cb69-410" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb69-411"><a href="#cb69-411" aria-hidden="true" tabindex="-1"></a>    lahman<span class="sc">$</span>CollegePlaying <span class="sc">|&gt;</span> </span>
+<span id="cb69-412"><a href="#cb69-412" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(schoolID)) <span class="sc">|&gt;</span> </span>
+<span id="cb69-413"><a href="#cb69-413" aria-hidden="true" tabindex="-1"></a>      <span class="fu">distinct</span>(playerID, schoolID),</span>
+<span id="cb69-414"><a href="#cb69-414" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"playerID"</span></span>
+<span id="cb69-415"><a href="#cb69-415" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb69-416"><a href="#cb69-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-417"><a href="#cb69-417" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
+<span id="cb69-418"><a href="#cb69-418" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb69-419"><a href="#cb69-419" aria-hidden="true" tabindex="-1"></a>    players_with_college,</span>
+<span id="cb69-420"><a href="#cb69-420" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"playerID"</span></span>
+<span id="cb69-421"><a href="#cb69-421" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb69-422"><a href="#cb69-422" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-423"><a href="#cb69-423" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-424"><a href="#cb69-424" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb69-425"><a href="#cb69-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-426"><a href="#cb69-426" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
+<span id="cb69-427"><a href="#cb69-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb69-428"><a href="#cb69-428" aria-hidden="true" tabindex="-1"></a>    players_with_college, </span>
+<span id="cb69-429"><a href="#cb69-429" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"playerID"</span></span>
+<span id="cb69-430"><a href="#cb69-430" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb69-431"><a href="#cb69-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-432"><a href="#cb69-432" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)<span class="sc">|&gt;</span> </span>
+<span id="cb69-433"><a href="#cb69-433" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb69-434"><a href="#cb69-434" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-435"><a href="#cb69-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-436"><a href="#cb69-436" aria-hidden="true" tabindex="-1"></a>If we look at the SQL code we will realise that there is code duplication, because as part of each full query, we have run our players_with_college query.</span>
+<span id="cb69-437"><a href="#cb69-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-438"><a href="#cb69-438" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-439"><a href="#cb69-439" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-440"><a href="#cb69-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-441"><a href="#cb69-441" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb69-442"><a href="#cb69-442" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
+<span id="cb69-443"><a href="#cb69-443" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-444"><a href="#cb69-444" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-445"><a href="#cb69-445" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-446"><a href="#cb69-446" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-447"><a href="#cb69-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-448"><a href="#cb69-448" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
+<span id="cb69-449"><a href="#cb69-449" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb69-450"><a href="#cb69-450" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-451"><a href="#cb69-451" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-452"><a href="#cb69-452" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-453"><a href="#cb69-453" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-454"><a href="#cb69-454" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb69-455"><a href="#cb69-455" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-456"><a href="#cb69-456" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb69-457"><a href="#cb69-457" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
-<span id="cb69-458"><a href="#cb69-458" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-459"><a href="#cb69-459" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-460"><a href="#cb69-460" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-461"><a href="#cb69-461" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb69-456"><a href="#cb69-456" aria-hidden="true" tabindex="-1"></a>To avoid this, we can make use of the <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> function to force the computation of the players_with_college query to a temporary table in the database.</span>
+<span id="cb69-457"><a href="#cb69-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-458"><a href="#cb69-458" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb69-459"><a href="#cb69-459" aria-hidden="true" tabindex="-1"></a>players_with_college <span class="ot">&lt;-</span> players_with_college <span class="sc">|&gt;</span> </span>
+<span id="cb69-460"><a href="#cb69-460" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>()</span>
+<span id="cb69-461"><a href="#cb69-461" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-462"><a href="#cb69-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-463"><a href="#cb69-463" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
-<span id="cb69-464"><a href="#cb69-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-465"><a href="#cb69-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-466"><a href="#cb69-466" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-467"><a href="#cb69-467" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb69-463"><a href="#cb69-463" aria-hidden="true" tabindex="-1"></a>Now we have a temporary table with the result of our players_with_college query, and we can use this in both of our aggregation queries.</span>
+<span id="cb69-464"><a href="#cb69-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-465"><a href="#cb69-465" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb69-466"><a href="#cb69-466" aria-hidden="true" tabindex="-1"></a>players_with_college <span class="sc">|&gt;</span> </span>
+<span id="cb69-467"><a href="#cb69-467" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
 <span id="cb69-468"><a href="#cb69-468" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb69-469"><a href="#cb69-469" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-470"><a href="#cb69-470" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-471"><a href="#cb69-471" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
-<span id="cb69-472"><a href="#cb69-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-473"><a href="#cb69-473" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb69-474"><a href="#cb69-474" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
-<span id="cb69-475"><a href="#cb69-475" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb69-476"><a href="#cb69-476" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-477"><a href="#cb69-477" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-478"><a href="#cb69-478" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-479"><a href="#cb69-479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-480"><a href="#cb69-480" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
-<span id="cb69-481"><a href="#cb69-481" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-482"><a href="#cb69-482" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
-<span id="cb69-483"><a href="#cb69-483" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb69-484"><a href="#cb69-484" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb69-485"><a href="#cb69-485" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb69-486"><a href="#cb69-486" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-487"><a href="#cb69-487" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-488"><a href="#cb69-488" aria-hidden="true" tabindex="-1"></a>In this case, the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore, although we don't want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.</span>
-<span id="cb69-489"><a href="#cb69-489" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-490"><a href="#cb69-490" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb69-491"><a href="#cb69-491" aria-hidden="true" tabindex="-1"></a><span class="fu">### Indexes</span></span>
-<span id="cb69-492"><a href="#cb69-492" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-493"><a href="#cb69-493" aria-hidden="true" tabindex="-1"></a>Some SQL dialects use indexes for more efficient 'joins' performance. Briefly speaking, indexes store the location of the different values of a column. Every time that you create a new table with <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span>, the indexes won't be carried over, so if you want your new table to keep some indexes, you will have to add them manually. That's why sometimes it won't be more efficient to add a <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> in between, because the new table generated won't have the indexes that make your query to be executed faster.</span>
-<span id="cb69-494"><a href="#cb69-494" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb69-495"><a href="#cb69-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-496"><a href="#cb69-496" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting from the database</span></span>
-<span id="cb69-497"><a href="#cb69-497" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-498"><a href="#cb69-498" aria-hidden="true" tabindex="-1"></a>Now that we've reached the end of this example, we can close our connection to the database.</span>
-<span id="cb69-499"><a href="#cb69-499" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-502"><a href="#cb69-502" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb69-503"><a href="#cb69-503" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(<span class="at">conn =</span> con)</span>
-<span id="cb69-504"><a href="#cb69-504" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-470"><a href="#cb69-470" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb69-471"><a href="#cb69-471" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
+<span id="cb69-472"><a href="#cb69-472" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-473"><a href="#cb69-473" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-474"><a href="#cb69-474" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-475"><a href="#cb69-475" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb69-476"><a href="#cb69-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-477"><a href="#cb69-477" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
+<span id="cb69-478"><a href="#cb69-478" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-479"><a href="#cb69-479" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-480"><a href="#cb69-480" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-481"><a href="#cb69-481" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb69-482"><a href="#cb69-482" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-483"><a href="#cb69-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-484"><a href="#cb69-484" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-485"><a href="#cb69-485" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
+<span id="cb69-486"><a href="#cb69-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-487"><a href="#cb69-487" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb69-488"><a href="#cb69-488" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Batting <span class="sc">|&gt;</span> </span>
+<span id="cb69-489"><a href="#cb69-489" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb69-490"><a href="#cb69-490" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-491"><a href="#cb69-491" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">home_runs =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-492"><a href="#cb69-492" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-493"><a href="#cb69-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-494"><a href="#cb69-494" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
+<span id="cb69-495"><a href="#cb69-495" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(players_with_college, <span class="at">by =</span> <span class="st">"playerID"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-496"><a href="#cb69-496" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolID, birthYear) <span class="sc">|&gt;</span></span>
+<span id="cb69-497"><a href="#cb69-497" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">strike_outs =</span> <span class="fu">sum</span>(SO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-498"><a href="#cb69-498" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb69-499"><a href="#cb69-499" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb69-500"><a href="#cb69-500" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-501"><a href="#cb69-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-502"><a href="#cb69-502" aria-hidden="true" tabindex="-1"></a>In this example, the SQL code of the intermediate table, players_with_college, was quite simple. However, in some cases, the SQL associated code can become very complicated and unmanageable, resulting with inefficient code. Therefore, although we do not want to overuse computation of intermediate queries, it is often useful when creating our analytic pipelines.</span>
+<span id="cb69-503"><a href="#cb69-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-504"><a href="#cb69-504" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb69-505"><a href="#cb69-505" aria-hidden="true" tabindex="-1"></a><span class="fu">### Indexes</span></span>
+<span id="cb69-506"><a href="#cb69-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-507"><a href="#cb69-507" aria-hidden="true" tabindex="-1"></a>Some SQL dialects use indexes for more efficient 'joins' performance. Briefly speaking, indexes store the location of the different values of a column. Every time that you create a new table with <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span>, the indexes will not be carried over. Hence, if you want your new table to keep some indexes, you will have to add them manually. That is why sometimes it will not be more efficient to add a <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> in between, because the new table generated will not have the indexes that make your query to be executed faster.</span>
+<span id="cb69-508"><a href="#cb69-508" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb69-509"><a href="#cb69-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-510"><a href="#cb69-510" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting from the database</span></span>
+<span id="cb69-511"><a href="#cb69-511" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-512"><a href="#cb69-512" aria-hidden="true" tabindex="-1"></a>Now that we have reached the end of this example, we can close our connection to the database.</span>
+<span id="cb69-513"><a href="#cb69-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-516"><a href="#cb69-516" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb69-517"><a href="#cb69-517" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(<span class="at">conn =</span> con)</span>
+<span id="cb69-518"><a href="#cb69-518" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
