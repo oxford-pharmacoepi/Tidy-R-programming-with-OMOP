@@ -291,11 +291,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CohortConstructor)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> https://github.com/OHDSI/omock/issues/189 </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) </span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">mockCdmFromDataset</span>(<span class="at">datasetName =</span> <span class="st">"GiBleed"</span>, <span class="at">source =</span> <span class="st">"duckdb"</span>)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># gi_bleed contains all records of gi bleed, end date is 30 days after index </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># gi_bleed contains all records of GiBbleed, end date is 30 days after index </span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># date</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
@@ -317,9 +317,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collapseCohorts</span>(<span class="at">gap =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The <code>PatientProfiles</code> package contains functions to obtain the intersection flag, count, date, or number of days between cohorts. To get a binary indicator showing the presence of an intersection between the cohorts within a given time window, we can use <code>addCohortIntersectFlag()</code>.</p>
+<p>The <code>PatientProfiles</code> package contains functions to obtain the intersection flag, count, date, or number of days between cohorts.</p>
 <section id="flag" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="flag"><span class="header-section-number">9.2.1</span> Flag</h3>
+<p>To get a binary indicator showing the presence of an intersection between the cohorts within a given time window, we can use <code>addCohortIntersectFlag()</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
@@ -364,14 +365,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 7
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpTcFwjV/file423c28cea35c.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVFqgU4/file424246be8e16.duckdb]
 $ cohort_definition_id     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-$ subject_id               &lt;int&gt; 1737, 3843, 4855, 2834, 2556, 3675, 3820, 549…
-$ cohort_start_date        &lt;date&gt; 1950-09-18, 2008-06-27, 2014-08-22, 1972-03-…
-$ cohort_end_date          &lt;date&gt; 1950-10-18, 2008-07-27, 2014-09-21, 1972-04-…
-$ acetaminophen_minf_to_m1 &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ subject_id               &lt;int&gt; 3115, 3117, 4333, 4529, 236, 5207, 3578, 2160…
+$ cohort_start_date        &lt;date&gt; 2006-05-28, 2008-05-11, 1994-08-13, 1997-09-…
+$ cohort_end_date          &lt;date&gt; 2006-06-27, 2008-06-10, 1994-09-12, 1997-10-…
+$ acetaminophen_minf_to_m1 &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, …
 $ acetaminophen_0_to_0     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ acetaminophen_1_to_inf   &lt;dbl&gt; 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, …</code></pre>
+$ acetaminophen_1_to_inf   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, …</code></pre>
 </div>
 </div>
 <p>Note that to avoid conflicts with column naming, all names will be lower case, spaces are not allowed, and the <code>-</code> symbol for negative values is replaced by <code>m</code>. That’s why it is usually nice to provide your own custom names:</p>
@@ -385,13 +386,13 @@ $ acetaminophen_1_to_inf   &lt;dbl&gt; 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0,
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 7
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpTcFwjV/file423c28cea35c.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVFqgU4/file424246be8e16.duckdb]
 $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ subject_id           &lt;int&gt; 1737, 3843, 4855, 2834, 2556, 3675, 3820, 549, 10…
-$ cohort_start_date    &lt;date&gt; 1950-09-18, 2008-06-27, 2014-08-22, 1972-03-16, …
-$ cohort_end_date      &lt;date&gt; 1950-10-18, 2008-07-27, 2014-09-21, 1972-04-15, …
-$ acetaminophen_post   &lt;dbl&gt; 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0…
-$ acetaminophen_prior  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ subject_id           &lt;int&gt; 3115, 3117, 4333, 4529, 236, 5207, 3578, 2160, 40…
+$ cohort_start_date    &lt;date&gt; 2006-05-28, 2008-05-11, 1994-08-13, 1997-09-09, …
+$ cohort_end_date      &lt;date&gt; 2006-06-27, 2008-06-10, 1994-09-12, 1997-10-09, …
+$ acetaminophen_post   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1…
+$ acetaminophen_prior  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1…
 $ acetaminophen_index  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
 </div>
 </div>
@@ -422,13 +423,13 @@ $ acetaminophen_index  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 7
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpTcFwjV/file423c28cea35c.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVFqgU4/file424246be8e16.duckdb]
 $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ subject_id           &lt;int&gt; 1737, 3843, 4855, 2834, 2556, 3675, 3820, 549, 10…
-$ cohort_start_date    &lt;date&gt; 1950-09-18, 2008-06-27, 2014-08-22, 1972-03-16, …
-$ cohort_end_date      &lt;date&gt; 1950-10-18, 2008-07-27, 2014-09-21, 1972-04-15, …
-$ my_column_post       &lt;dbl&gt; 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0…
-$ my_column_prior      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ subject_id           &lt;int&gt; 3115, 3117, 4333, 4529, 236, 5207, 3578, 2160, 40…
+$ cohort_start_date    &lt;date&gt; 2006-05-28, 2008-05-11, 1994-08-13, 1997-09-09, …
+$ cohort_end_date      &lt;date&gt; 2006-06-27, 2008-06-10, 1994-09-12, 1997-10-09, …
+$ my_column_post       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1…
+$ my_column_prior      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1…
 $ my_column_index      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
 </div>
 </div>
@@ -447,7 +448,7 @@ $ my_column_index      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 • {window_name}</code></pre>
 </div>
 </div>
-<p>Many functions that create new columns (usually start with <code>add*()</code>) have this <code>nameStyle</code> functionality that allows you to control the naming of the new columns created.</p>
+<p>Many functions that create new columns (usually functions that start with <code>add*()</code>) have this <code>nameStyle</code> functionality that allows you to control the naming of the new columns created.</p>
 </div>
 </div>
 </div>
@@ -492,7 +493,7 @@ $ my_column_index      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Note that <strong>only intersections in the current observation period are considered</strong>.</p>
-<p>The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. If we see individual <code>2070</code>, it has <em>3748</em> of future observation:</p>
+<p>The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. If we see individual <code>2070</code>, it has <em>3748</em> days of future observation:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subject_id <span class="sc">==</span> <span class="dv">2070</span>) <span class="sc">|&gt;</span></span>
@@ -501,7 +502,7 @@ $ my_column_index      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 5
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpTcFwjV/file423c28cea35c.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVFqgU4/file424246be8e16.duckdb]
 $ cohort_definition_id &lt;int&gt; 1
 $ subject_id           &lt;int&gt; 2070
 $ cohort_start_date    &lt;date&gt; 2008-08-15
@@ -521,7 +522,7 @@ $ future_observation   &lt;int&gt; 3748</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 7
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpTcFwjV/file423c28cea35c.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpVFqgU4/file424246be8e16.duckdb]
 $ cohort_definition_id       &lt;int&gt; 1
 $ subject_id                 &lt;int&gt; 2070
 $ cohort_start_date          &lt;date&gt; 2008-08-15
@@ -1103,11 +1104,11 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CohortConstructor)</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> https://github.com/OHDSI/omock/issues/189 </span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) </span>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">mockCdmFromDataset</span>(<span class="at">datasetName =</span> <span class="st">"GiBleed"</span>, <span class="at">source =</span> <span class="st">"duckdb"</span>)</span>
 <span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="co"># gi_bleed contains all records of gi bleed, end date is 30 days after index </span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="co"># gi_bleed contains all records of GiBbleed, end date is 30 days after index </span></span>
 <span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="co"># date</span></span>
 <span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="ot">&lt;-</span> <span class="fu">conceptCohort</span>(</span>
 <span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
@@ -1130,205 +1131,206 @@ $ acetaminophen_4000_to_5000 &lt;dbl&gt; NA</code></pre>
 <span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collapseCohorts</span>(<span class="at">gap =</span> <span class="dv">30</span>)</span>
 <span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>The <span class="in">`PatientProfiles`</span> package contains functions to obtain the intersection flag, count, date, or number of days between cohorts. To get a binary indicator showing the presence of an intersection between the cohorts within a given time window, we can use <span class="in">`addCohortIntersectFlag()`</span>.</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>The <span class="in">`PatientProfiles`</span> package contains functions to obtain the intersection flag, count, date, or number of days between cohorts. </span>
 <span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a><span class="fu">### Flag</span></span>
-<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
-<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
-<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
-<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="st">"index"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>))</span>
-<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
-<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">acetaminophen_prior =</span> <span class="fu">sum</span>(acetaminophen_prior, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">acetaminophen_index =</span> <span class="fu">sum</span>(acetaminophen_index, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">acetaminophen_post =</span> <span class="fu">sum</span>(acetaminophen_post, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb25-62"><a href="#cb25-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb25-63"><a href="#cb25-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-64"><a href="#cb25-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-65"><a href="#cb25-65" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a><span class="fu">### Window naming</span></span>
-<span id="cb25-67"><a href="#cb25-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-68"><a href="#cb25-68" aria-hidden="true" tabindex="-1"></a>Windows work very similarly to age groups that we have seen before. If a name is not provided, an automatic name will be obtained from the values of the window limits:</span>
-<span id="cb25-69"><a href="#cb25-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-72"><a href="#cb25-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-74"><a href="#cb25-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
-<span id="cb25-75"><a href="#cb25-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
-<span id="cb25-76"><a href="#cb25-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>))</span>
-<span id="cb25-77"><a href="#cb25-77" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-80"><a href="#cb25-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a>Note that to avoid conflicts with column naming, all names will be lower case, spaces are not allowed, and the <span class="in">`-`</span> symbol for negative values is replaced by <span class="in">`m`</span>. That's why it is usually nice to provide your own custom names:</span>
-<span id="cb25-82"><a href="#cb25-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-85"><a href="#cb25-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-86"><a href="#cb25-86" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-87"><a href="#cb25-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
-<span id="cb25-88"><a href="#cb25-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
-<span id="cb25-89"><a href="#cb25-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="st">"index"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>))</span>
-<span id="cb25-90"><a href="#cb25-90" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb25-91"><a href="#cb25-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb25-92"><a href="#cb25-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-93"><a href="#cb25-93" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-94"><a href="#cb25-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
-<span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a><span class="fu">### New column naming</span></span>
-<span id="cb25-97"><a href="#cb25-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a>By default, the name of new columns is '{cohort_name}<span class="sc">\_</span>{window_name}' as we have seen in the prior examples. In some cases, you only have one cohort or one window and you might want to rename the column as you please. In that case, you can use the <span class="in">`nameStyle`</span> argument to change the new naming of the columns:</span>
-<span id="cb25-99"><a href="#cb25-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-102"><a href="#cb25-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-103"><a href="#cb25-103" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-104"><a href="#cb25-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
-<span id="cb25-105"><a href="#cb25-105" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
-<span id="cb25-106"><a href="#cb25-106" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="st">"index"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)),</span>
-<span id="cb25-107"><a href="#cb25-107" aria-hidden="true" tabindex="-1"></a>    <span class="at">nameStyle =</span> <span class="st">"my_column_{window_name}"</span></span>
-<span id="cb25-108"><a href="#cb25-108" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb25-109"><a href="#cb25-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb25-110"><a href="#cb25-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-111"><a href="#cb25-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-112"><a href="#cb25-112" aria-hidden="true" tabindex="-1"></a>If multiple windows are provided but '{window_name}' is not included in <span class="in">`nameStyle`</span>, then an error will prompt:</span>
-<span id="cb25-113"><a href="#cb25-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-114"><a href="#cb25-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
-<span id="cb25-115"><a href="#cb25-115" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-116"><a href="#cb25-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
-<span id="cb25-117"><a href="#cb25-117" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
-<span id="cb25-118"><a href="#cb25-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="st">"index"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)),</span>
-<span id="cb25-119"><a href="#cb25-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">nameStyle =</span> <span class="st">"my_new_column"</span></span>
-<span id="cb25-120"><a href="#cb25-120" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb25-121"><a href="#cb25-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb25-122"><a href="#cb25-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-123"><a href="#cb25-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-124"><a href="#cb25-124" aria-hidden="true" tabindex="-1"></a>Many functions that create new columns (usually start with <span class="in">`add*()`</span>) have this <span class="in">`nameStyle`</span> functionality that allows you to control the naming of the new columns created.</span>
-<span id="cb25-125"><a href="#cb25-125" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-126"><a href="#cb25-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-127"><a href="#cb25-127" aria-hidden="true" tabindex="-1"></a><span class="fu">### Count</span></span>
-<span id="cb25-128"><a href="#cb25-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-129"><a href="#cb25-129" aria-hidden="true" tabindex="-1"></a>To get the count of occurrences of intersection between two cohorts, we can use <span class="in">`addCohortIntersectCount()`</span>:</span>
-<span id="cb25-130"><a href="#cb25-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-131"><a href="#cb25-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
-<span id="cb25-132"><a href="#cb25-132" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-133"><a href="#cb25-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectCount</span>(</span>
-<span id="cb25-134"><a href="#cb25-134" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
-<span id="cb25-135"><a href="#cb25-135" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="st">"index"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)),</span>
-<span id="cb25-136"><a href="#cb25-136" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb25-137"><a href="#cb25-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-138"><a href="#cb25-138" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
-<span id="cb25-139"><a href="#cb25-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb25-140"><a href="#cb25-140" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_prior =</span> <span class="fu">sum</span>(acetaminophen_prior, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb25-141"><a href="#cb25-141" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_prior =</span> <span class="fu">mean</span>(acetaminophen_prior, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb25-142"><a href="#cb25-142" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_index =</span> <span class="fu">sum</span>(acetaminophen_index, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb25-143"><a href="#cb25-143" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_index =</span> <span class="fu">mean</span>(acetaminophen_index, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb25-144"><a href="#cb25-144" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_post =</span> <span class="fu">sum</span>(acetaminophen_post, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb25-145"><a href="#cb25-145" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_post =</span> <span class="fu">mean</span>(acetaminophen_post, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb25-146"><a href="#cb25-146" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb25-147"><a href="#cb25-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb25-148"><a href="#cb25-148" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb25-149"><a href="#cb25-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-150"><a href="#cb25-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-151"><a href="#cb25-151" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb25-152"><a href="#cb25-152" aria-hidden="true" tabindex="-1"></a><span class="fu">### Handling the observation period</span></span>
-<span id="cb25-153"><a href="#cb25-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-154"><a href="#cb25-154" aria-hidden="true" tabindex="-1"></a>Note that **only intersections in the current observation period are considered**.</span>
-<span id="cb25-155"><a href="#cb25-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-156"><a href="#cb25-156" aria-hidden="true" tabindex="-1"></a>The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. If we see individual <span class="in">`2070`</span>, it has *3748* of future observation:</span>
-<span id="cb25-157"><a href="#cb25-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-160"><a href="#cb25-160" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-161"><a href="#cb25-161" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-162"><a href="#cb25-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subject_id <span class="sc">==</span> <span class="dv">2070</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-163"><a href="#cb25-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addFutureObservation</span>() <span class="sc">|&gt;</span></span>
-<span id="cb25-164"><a href="#cb25-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb25-165"><a href="#cb25-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-166"><a href="#cb25-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-167"><a href="#cb25-167" aria-hidden="true" tabindex="-1"></a>Now we will perform the intersect with the following window of interest: <span class="in">`c(2000, 3000), c(3000, 4000), c(4000, 5000)`</span>.</span>
-<span id="cb25-168"><a href="#cb25-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-171"><a href="#cb25-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-172"><a href="#cb25-172" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-173"><a href="#cb25-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subject_id <span class="sc">==</span> <span class="dv">2070</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-174"><a href="#cb25-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectCount</span>(</span>
-<span id="cb25-175"><a href="#cb25-175" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
-<span id="cb25-176"><a href="#cb25-176" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2000</span>, <span class="dv">3000</span>), <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">4000</span>), <span class="fu">c</span>(<span class="dv">4000</span>, <span class="dv">5000</span>)),</span>
-<span id="cb25-177"><a href="#cb25-177" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb25-178"><a href="#cb25-178" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>()</span>
-<span id="cb25-179"><a href="#cb25-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-180"><a href="#cb25-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-181"><a href="#cb25-181" aria-hidden="true" tabindex="-1"></a>See that for the window 2000 to 3000, where the individual is still in observation, a 0 is reported. The same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window, as the individual is not in observation at any point of the window, NA is reported.</span>
-<span id="cb25-182"><a href="#cb25-182" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-183"><a href="#cb25-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-184"><a href="#cb25-184" aria-hidden="true" tabindex="-1"></a><span class="fu">### Date and times</span></span>
-<span id="cb25-185"><a href="#cb25-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-186"><a href="#cb25-186" aria-hidden="true" tabindex="-1"></a>To get the date of the intersection with a cohort within a given time window, we can use <span class="in">`addCohortIntersectDate()`</span>. To get the number of days between the index date and intersection, we can use <span class="in">`addCohortIntersectDays()`</span>.</span>
-<span id="cb25-187"><a href="#cb25-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-188"><a href="#cb25-188" aria-hidden="true" tabindex="-1"></a>Both functions allow the <span class="in">`order`</span> argument to specify which value to return:</span>
-<span id="cb25-189"><a href="#cb25-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-190"><a href="#cb25-190" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`first`</span> returns the first date/days that satisfy the window</span>
-<span id="cb25-191"><a href="#cb25-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-192"><a href="#cb25-192" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`last`</span> returns the last date/days that satisfy the window</span>
-<span id="cb25-193"><a href="#cb25-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-194"><a href="#cb25-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
-<span id="cb25-195"><a href="#cb25-195" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-196"><a href="#cb25-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectDate</span>(</span>
-<span id="cb25-197"><a href="#cb25-197" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
-<span id="cb25-198"><a href="#cb25-198" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)),</span>
-<span id="cb25-199"><a href="#cb25-199" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="st">"first"</span></span>
-<span id="cb25-200"><a href="#cb25-200" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb25-201"><a href="#cb25-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-202"><a href="#cb25-202" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
-<span id="cb25-203"><a href="#cb25-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">acetaminophen_post =</span> <span class="fu">median</span>(acetaminophen_post, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb25-204"><a href="#cb25-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb25-205"><a href="#cb25-205" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb25-206"><a href="#cb25-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-207"><a href="#cb25-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-208"><a href="#cb25-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
-<span id="cb25-209"><a href="#cb25-209" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-210"><a href="#cb25-210" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectDays</span>(</span>
-<span id="cb25-211"><a href="#cb25-211" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
-<span id="cb25-212"><a href="#cb25-212" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>)),</span>
-<span id="cb25-213"><a href="#cb25-213" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="st">"last"</span></span>
-<span id="cb25-214"><a href="#cb25-214" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb25-215"><a href="#cb25-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-216"><a href="#cb25-216" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
-<span id="cb25-217"><a href="#cb25-217" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">acetaminophen_prior =</span> <span class="fu">median</span>(acetaminophen_prior, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb25-218"><a href="#cb25-218" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb25-219"><a href="#cb25-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-220"><a href="#cb25-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-221"><a href="#cb25-221" aria-hidden="true" tabindex="-1"></a>Note that for the window in the future, we used <span class="in">`order = "first"`</span> and for the window in the past, we used <span class="in">`order = "last"`</span> as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA on the newly created columns.</span>
-<span id="cb25-222"><a href="#cb25-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-223"><a href="#cb25-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Intersection between a cohort and tables with patient data</span></span>
-<span id="cb25-224"><a href="#cb25-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-225"><a href="#cb25-225" aria-hidden="true" tabindex="-1"></a>Sometimes we might want to get the intersection between a cohort and another OMOP table. <span class="in">`PatientProfiles`</span> also includes several <span class="in">`addTableIntersect*`</span> functions to obtain intersection flags, counts, days, or dates between a cohort and clinical tables.</span>
-<span id="cb25-226"><a href="#cb25-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-227"><a href="#cb25-227" aria-hidden="true" tabindex="-1"></a>For example, if we want to get the number of general practitioner (GP) visits for individuals in the cohort, we can use the <span class="in">`visit_occurrence`</span> table:</span>
-<span id="cb25-228"><a href="#cb25-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-229"><a href="#cb25-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
-<span id="cb25-230"><a href="#cb25-230" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
-<span id="cb25-231"><a href="#cb25-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTableIntersectCount</span>(</span>
-<span id="cb25-232"><a href="#cb25-232" aria-hidden="true" tabindex="-1"></a>    <span class="at">tableName =</span> <span class="st">"visit_occurrence"</span>,</span>
-<span id="cb25-233"><a href="#cb25-233" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>)),</span>
-<span id="cb25-234"><a href="#cb25-234" aria-hidden="true" tabindex="-1"></a>    <span class="at">nameStyle =</span> <span class="st">"number_visits"</span></span>
-<span id="cb25-235"><a href="#cb25-235" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb25-236"><a href="#cb25-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-237"><a href="#cb25-237" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
-<span id="cb25-238"><a href="#cb25-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">visit_occurrence_prior =</span> <span class="fu">median</span>(number_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb25-239"><a href="#cb25-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb25-240"><a href="#cb25-240" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb25-241"><a href="#cb25-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-242"><a href="#cb25-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-243"><a href="#cb25-243" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting</span></span>
-<span id="cb25-244"><a href="#cb25-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-245"><a href="#cb25-245" aria-hidden="true" tabindex="-1"></a>Once we have finished our analysis we can close our connection to the database behind our cdm reference.</span>
-<span id="cb25-246"><a href="#cb25-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-249"><a href="#cb25-249" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-250"><a href="#cb25-250" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span>
-<span id="cb25-251"><a href="#cb25-251" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-252"><a href="#cb25-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-253"><a href="#cb25-253" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
-<span id="cb25-254"><a href="#cb25-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-255"><a href="#cb25-255" aria-hidden="true" tabindex="-1"></a>Full details on the intersection functions in <span class="in">`PatientProfiles`</span> can be found on the package website: <span class="ot">&lt;https://darwin-eu.github.io/PatientProfiles/&gt;</span>.</span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>To get a binary indicator showing the presence of an intersection between the cohorts within a given time window, we can use <span class="in">`addCohortIntersectFlag()`</span>.</span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="st">"index"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>))</span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">acetaminophen_prior =</span> <span class="fu">sum</span>(acetaminophen_prior, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">acetaminophen_index =</span> <span class="fu">sum</span>(acetaminophen_index, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">acetaminophen_post =</span> <span class="fu">sum</span>(acetaminophen_post, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-62"><a href="#cb25-62" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-63"><a href="#cb25-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb25-64"><a href="#cb25-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-65"><a href="#cb25-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb25-67"><a href="#cb25-67" aria-hidden="true" tabindex="-1"></a><span class="fu">### Window naming</span></span>
+<span id="cb25-68"><a href="#cb25-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-69"><a href="#cb25-69" aria-hidden="true" tabindex="-1"></a>Windows work very similarly to age groups that we have seen before. If a name is not provided, an automatic name will be obtained from the values of the window limits:</span>
+<span id="cb25-70"><a href="#cb25-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-74"><a href="#cb25-74" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-75"><a href="#cb25-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
+<span id="cb25-76"><a href="#cb25-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
+<span id="cb25-77"><a href="#cb25-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>))</span>
+<span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb25-80"><a href="#cb25-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-82"><a href="#cb25-82" aria-hidden="true" tabindex="-1"></a>Note that to avoid conflicts with column naming, all names will be lower case, spaces are not allowed, and the <span class="in">`-`</span> symbol for negative values is replaced by <span class="in">`m`</span>. That's why it is usually nice to provide your own custom names:</span>
+<span id="cb25-83"><a href="#cb25-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-86"><a href="#cb25-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-87"><a href="#cb25-87" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-88"><a href="#cb25-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
+<span id="cb25-89"><a href="#cb25-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
+<span id="cb25-90"><a href="#cb25-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="st">"index"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>))</span>
+<span id="cb25-91"><a href="#cb25-91" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-92"><a href="#cb25-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb25-93"><a href="#cb25-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-94"><a href="#cb25-94" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
+<span id="cb25-97"><a href="#cb25-97" aria-hidden="true" tabindex="-1"></a><span class="fu">### New column naming</span></span>
+<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-99"><a href="#cb25-99" aria-hidden="true" tabindex="-1"></a>By default, the name of new columns is '{cohort_name}<span class="sc">\_</span>{window_name}' as we have seen in the prior examples. In some cases, you only have one cohort or one window and you might want to rename the column as you please. In that case, you can use the <span class="in">`nameStyle`</span> argument to change the new naming of the columns:</span>
+<span id="cb25-100"><a href="#cb25-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-103"><a href="#cb25-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-104"><a href="#cb25-104" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-105"><a href="#cb25-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
+<span id="cb25-106"><a href="#cb25-106" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
+<span id="cb25-107"><a href="#cb25-107" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="st">"index"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)),</span>
+<span id="cb25-108"><a href="#cb25-108" aria-hidden="true" tabindex="-1"></a>    <span class="at">nameStyle =</span> <span class="st">"my_column_{window_name}"</span></span>
+<span id="cb25-109"><a href="#cb25-109" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-110"><a href="#cb25-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb25-111"><a href="#cb25-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-112"><a href="#cb25-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-113"><a href="#cb25-113" aria-hidden="true" tabindex="-1"></a>If multiple windows are provided but '{window_name}' is not included in <span class="in">`nameStyle`</span>, then an error will prompt:</span>
+<span id="cb25-114"><a href="#cb25-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-115"><a href="#cb25-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
+<span id="cb25-116"><a href="#cb25-116" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-117"><a href="#cb25-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectFlag</span>(</span>
+<span id="cb25-118"><a href="#cb25-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
+<span id="cb25-119"><a href="#cb25-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="st">"index"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)),</span>
+<span id="cb25-120"><a href="#cb25-120" aria-hidden="true" tabindex="-1"></a>    <span class="at">nameStyle =</span> <span class="st">"my_new_column"</span></span>
+<span id="cb25-121"><a href="#cb25-121" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-122"><a href="#cb25-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb25-123"><a href="#cb25-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-124"><a href="#cb25-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-125"><a href="#cb25-125" aria-hidden="true" tabindex="-1"></a>Many functions that create new columns (usually functions that start with <span class="in">`add*()`</span>) have this <span class="in">`nameStyle`</span> functionality that allows you to control the naming of the new columns created.</span>
+<span id="cb25-126"><a href="#cb25-126" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb25-127"><a href="#cb25-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-128"><a href="#cb25-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### Count</span></span>
+<span id="cb25-129"><a href="#cb25-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-130"><a href="#cb25-130" aria-hidden="true" tabindex="-1"></a>To get the count of occurrences of intersection between two cohorts, we can use <span class="in">`addCohortIntersectCount()`</span>:</span>
+<span id="cb25-131"><a href="#cb25-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-132"><a href="#cb25-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
+<span id="cb25-133"><a href="#cb25-133" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-134"><a href="#cb25-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectCount</span>(</span>
+<span id="cb25-135"><a href="#cb25-135" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
+<span id="cb25-136"><a href="#cb25-136" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="st">"index"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)),</span>
+<span id="cb25-137"><a href="#cb25-137" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-138"><a href="#cb25-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-139"><a href="#cb25-139" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb25-140"><a href="#cb25-140" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb25-141"><a href="#cb25-141" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_prior =</span> <span class="fu">sum</span>(acetaminophen_prior, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-142"><a href="#cb25-142" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_prior =</span> <span class="fu">mean</span>(acetaminophen_prior, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-143"><a href="#cb25-143" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_index =</span> <span class="fu">sum</span>(acetaminophen_index, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-144"><a href="#cb25-144" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_index =</span> <span class="fu">mean</span>(acetaminophen_index, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-145"><a href="#cb25-145" aria-hidden="true" tabindex="-1"></a>    <span class="at">sum_post =</span> <span class="fu">sum</span>(acetaminophen_post, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-146"><a href="#cb25-146" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_post =</span> <span class="fu">mean</span>(acetaminophen_post, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-147"><a href="#cb25-147" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-148"><a href="#cb25-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb25-149"><a href="#cb25-149" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-150"><a href="#cb25-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-151"><a href="#cb25-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-152"><a href="#cb25-152" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb25-153"><a href="#cb25-153" aria-hidden="true" tabindex="-1"></a><span class="fu">### Handling the observation period</span></span>
+<span id="cb25-154"><a href="#cb25-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-155"><a href="#cb25-155" aria-hidden="true" tabindex="-1"></a>Note that **only intersections in the current observation period are considered**.</span>
+<span id="cb25-156"><a href="#cb25-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-157"><a href="#cb25-157" aria-hidden="true" tabindex="-1"></a>The count and flag new columns can also have NA values meaning that the individual was not in observation in that window of interest. If we see individual <span class="in">`2070`</span>, it has *3748* days of future observation:</span>
+<span id="cb25-158"><a href="#cb25-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-161"><a href="#cb25-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-162"><a href="#cb25-162" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-163"><a href="#cb25-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subject_id <span class="sc">==</span> <span class="dv">2070</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-164"><a href="#cb25-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addFutureObservation</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-165"><a href="#cb25-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb25-166"><a href="#cb25-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-167"><a href="#cb25-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-168"><a href="#cb25-168" aria-hidden="true" tabindex="-1"></a>Now we will perform the intersect with the following window of interest: <span class="in">`c(2000, 3000), c(3000, 4000), c(4000, 5000)`</span>.</span>
+<span id="cb25-169"><a href="#cb25-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-172"><a href="#cb25-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-173"><a href="#cb25-173" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-174"><a href="#cb25-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subject_id <span class="sc">==</span> <span class="dv">2070</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-175"><a href="#cb25-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectCount</span>(</span>
+<span id="cb25-176"><a href="#cb25-176" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
+<span id="cb25-177"><a href="#cb25-177" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2000</span>, <span class="dv">3000</span>), <span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">4000</span>), <span class="fu">c</span>(<span class="dv">4000</span>, <span class="dv">5000</span>)),</span>
+<span id="cb25-178"><a href="#cb25-178" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-179"><a href="#cb25-179" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>()</span>
+<span id="cb25-180"><a href="#cb25-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-181"><a href="#cb25-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-182"><a href="#cb25-182" aria-hidden="true" tabindex="-1"></a>See that for the window 2000 to 3000, where the individual is still in observation, a 0 is reported. The same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window, as the individual is not in observation at any point of the window, NA is reported.</span>
+<span id="cb25-183"><a href="#cb25-183" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb25-184"><a href="#cb25-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-185"><a href="#cb25-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### Date and times</span></span>
+<span id="cb25-186"><a href="#cb25-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-187"><a href="#cb25-187" aria-hidden="true" tabindex="-1"></a>To get the date of the intersection with a cohort within a given time window, we can use <span class="in">`addCohortIntersectDate()`</span>. To get the number of days between the index date and intersection, we can use <span class="in">`addCohortIntersectDays()`</span>.</span>
+<span id="cb25-188"><a href="#cb25-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-189"><a href="#cb25-189" aria-hidden="true" tabindex="-1"></a>Both functions allow the <span class="in">`order`</span> argument to specify which value to return:</span>
+<span id="cb25-190"><a href="#cb25-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-191"><a href="#cb25-191" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`first`</span> returns the first date/days that satisfy the window</span>
+<span id="cb25-192"><a href="#cb25-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-193"><a href="#cb25-193" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`last`</span> returns the last date/days that satisfy the window</span>
+<span id="cb25-194"><a href="#cb25-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-195"><a href="#cb25-195" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
+<span id="cb25-196"><a href="#cb25-196" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-197"><a href="#cb25-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectDate</span>(</span>
+<span id="cb25-198"><a href="#cb25-198" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
+<span id="cb25-199"><a href="#cb25-199" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"post"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">Inf</span>)),</span>
+<span id="cb25-200"><a href="#cb25-200" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="st">"first"</span></span>
+<span id="cb25-201"><a href="#cb25-201" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-202"><a href="#cb25-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-203"><a href="#cb25-203" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb25-204"><a href="#cb25-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">acetaminophen_post =</span> <span class="fu">median</span>(acetaminophen_post, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb25-205"><a href="#cb25-205" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb25-206"><a href="#cb25-206" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-207"><a href="#cb25-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-208"><a href="#cb25-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-209"><a href="#cb25-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
+<span id="cb25-210"><a href="#cb25-210" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-211"><a href="#cb25-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCohortIntersectDays</span>(</span>
+<span id="cb25-212"><a href="#cb25-212" aria-hidden="true" tabindex="-1"></a>    <span class="at">targetCohortTable =</span> <span class="st">"drugs"</span>,</span>
+<span id="cb25-213"><a href="#cb25-213" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="st">"prior"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>)),</span>
+<span id="cb25-214"><a href="#cb25-214" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="st">"last"</span></span>
+<span id="cb25-215"><a href="#cb25-215" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-216"><a href="#cb25-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-217"><a href="#cb25-217" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb25-218"><a href="#cb25-218" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">acetaminophen_prior =</span> <span class="fu">median</span>(acetaminophen_prior, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb25-219"><a href="#cb25-219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb25-220"><a href="#cb25-220" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-221"><a href="#cb25-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-222"><a href="#cb25-222" aria-hidden="true" tabindex="-1"></a>Note that for the window in the future, we used <span class="in">`order = "first"`</span> and for the window in the past, we used <span class="in">`order = "last"`</span> as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA on the newly created columns.</span>
+<span id="cb25-223"><a href="#cb25-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-224"><a href="#cb25-224" aria-hidden="true" tabindex="-1"></a><span class="fu">## Intersection between a cohort and tables with patient data</span></span>
+<span id="cb25-225"><a href="#cb25-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-226"><a href="#cb25-226" aria-hidden="true" tabindex="-1"></a>Sometimes we might want to get the intersection between a cohort and another OMOP table. <span class="in">`PatientProfiles`</span> also includes several <span class="in">`addTableIntersect*`</span> functions to obtain intersection flags, counts, days, or dates between a cohort and clinical tables.</span>
+<span id="cb25-227"><a href="#cb25-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-228"><a href="#cb25-228" aria-hidden="true" tabindex="-1"></a>For example, if we want to get the number of general practitioner (GP) visits for individuals in the cohort, we can use the <span class="in">`visit_occurrence`</span> table:</span>
+<span id="cb25-229"><a href="#cb25-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-230"><a href="#cb25-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
+<span id="cb25-231"><a href="#cb25-231" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> cdm<span class="sc">$</span>gi_bleed <span class="sc">|&gt;</span></span>
+<span id="cb25-232"><a href="#cb25-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTableIntersectCount</span>(</span>
+<span id="cb25-233"><a href="#cb25-233" aria-hidden="true" tabindex="-1"></a>    <span class="at">tableName =</span> <span class="st">"visit_occurrence"</span>,</span>
+<span id="cb25-234"><a href="#cb25-234" aria-hidden="true" tabindex="-1"></a>    <span class="at">window =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">1</span>)),</span>
+<span id="cb25-235"><a href="#cb25-235" aria-hidden="true" tabindex="-1"></a>    <span class="at">nameStyle =</span> <span class="st">"number_visits"</span></span>
+<span id="cb25-236"><a href="#cb25-236" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-237"><a href="#cb25-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-238"><a href="#cb25-238" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span></span>
+<span id="cb25-239"><a href="#cb25-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">visit_occurrence_prior =</span> <span class="fu">median</span>(number_visits, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb25-240"><a href="#cb25-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb25-241"><a href="#cb25-241" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-242"><a href="#cb25-242" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-243"><a href="#cb25-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-244"><a href="#cb25-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting</span></span>
+<span id="cb25-245"><a href="#cb25-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-246"><a href="#cb25-246" aria-hidden="true" tabindex="-1"></a>Once we have finished our analysis we can close our connection to the database behind our cdm reference.</span>
+<span id="cb25-247"><a href="#cb25-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-250"><a href="#cb25-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-251"><a href="#cb25-251" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span>
+<span id="cb25-252"><a href="#cb25-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-253"><a href="#cb25-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-254"><a href="#cb25-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
+<span id="cb25-255"><a href="#cb25-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-256"><a href="#cb25-256" aria-hidden="true" tabindex="-1"></a>Full details on the intersection functions in <span class="in">`PatientProfiles`</span> can be found on the package website: <span class="ot">&lt;https://darwin-eu.github.io/PatientProfiles/&gt;</span>.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
