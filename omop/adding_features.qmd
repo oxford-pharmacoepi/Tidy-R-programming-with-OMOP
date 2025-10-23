@@ -24,7 +24,7 @@ The [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) package ma
 
 [^adding_features-2]: Although these manipulations can seem quite simple on the face of it, their implementation across different database platforms with different data granularity (for example, whether day of birth has been filled in for all patients or not) presents challenges that the [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) package solves for us.
 
-Let's say we are interested in individuals' age and sex at time of diagnosis with COVID-19. We can add these variables to the table like so (noting that, because age is time-varying, we have to specify the variable with the date for which we want to calculate age relative to).
+Let’s say we’re interested in individuals’ age and sex at the time of COVID-19 diagnosis. We can add these variables to the table as follows (noting that, since age is time-varying, we need to specify the date relative to which it should be calculated).
 
 ```{r}
 cdm$condition_occurrence <- cdm$condition_occurrence |> 
@@ -35,14 +35,14 @@ cdm$condition_occurrence |>
   glimpse()
 ```
 
-We now have two variables added containing values for age and sex.
+We have now added two variables containing values for age and sex.
 
 ```{r}
 cdm$condition_occurrence |> 
   glimpse()
 ```
 
-And with these now added, it is straightforward to calculate mean age at condition start date by sex or even plot the distribution of age at diagnosis by sex.
+With these now added, it is straightforward to calculate the mean age at condition start date by sex or even plot the distribution of age at diagnosis by sex.
 
 ```{r}
 cdm$condition_occurrence |>
@@ -76,7 +76,7 @@ The difference between [`addSexQuery()`](https://darwin-eu.github.io/PatientProf
 
 ## Adding multiple demographics simultaneously
 
-We've now seen individual functions from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) to add age and sex, and the package has others to add other characteristics like days of prior observation in the database (rather unimaginatively named [`addPriorObservation()`](https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html)). In addition to these individual functions, the package also provides a more general function to get all of these characteristics at the same time.[^adding_features-3]
+We've now seen individual functions from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) that add specific patient characteristics such as age and sex. The package also includes functions to add other characteristics, such as the number of days of prior observation in the database (rather unimaginatively named [`addPriorObservation()`](https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html)). In addition to these individual functions, the package also provides a more general function that retrieves all of these characteristics at the same time.[^adding_features-3]
 
 [^adding_features-3]: This function also provides a more time-efficient method than getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables, and so can be identified simultaneously.
 
@@ -95,7 +95,7 @@ cdm$drug_exposure |>
   glimpse()
 ```
 
-With these characteristics now all added, we can now calculate mean age, prior observation (how many days have passed since the individual's most recent observation start date), and future observation (how many days until the individual's nearest observation end date) at drug exposure start date by sex.
+With these characteristics added, we can now calculate mean age, prior observation (the number of days have passed since each individual's most recent observation start date), and future observation (the number of days until the individual's nearest observation end date) at drug exposure start date, stratified by sex.
 
 ```{r}
 cdm$drug_exposure |>
@@ -109,7 +109,7 @@ cdm$drug_exposure |>
 ::: {.callout-tip collapse="true"}
 ### Returning a query from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) rather than the result
 
-In the above examples, the functions from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) will execute queries with the results written to a table in the database (either temporary if no name is provided or a permanent table if one is given). We might instead want to just get the underlying query back so that we have more control over how and when the query will be executed.
+In the above examples, the functions from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) execute queries and write the results to a table in the database (either a temporary table if no name is provided when calling the function, or a permanent table). We might instead want to just get the underlying query back so that we have more control over how and when the query is executed.
 
 ```{r, echo = TRUE}
 cdm$visit_occurrence |> 
@@ -137,7 +137,7 @@ Query functions can be useful in some contexts where you don't want to generate 
 
 ## Creating categories
 
-When we add age, either via addAge or addDemographics, we can also add another variable containing age groups. These age groups are specified in a list of vectors, each of which contain the lower and upper bounds.
+When adding age, either via [addAge](https://darwin-eu.github.io/PatientProfiles/reference/addAge.html) or [addDemographics](https://darwin-eu.github.io/PatientProfiles/reference/addDemographics.html), we can also include an additional variable that groups individuals into age categories. These age groups must be specified in a list of vectors, each of which containing the lower and upper bounds.
 
 ```{r}
 cdm$visit_occurrence <- cdm$visit_occurrence |>
@@ -161,7 +161,7 @@ cdm$visit_occurrence |>
 ::: {.callout-tip collapse="true"}
 ### Naming age groups
 
-As we have seen, the age groups have been named using their lower and upper bounds ('0 to 17', '18 to 64' and '65 or above'). But we can customize those labels by naming the age group:
+As we have seen, by default the age groups are named according to their lower and upper bounds (‘0 to 17’, ‘18 to 64’, and ‘65 or above’). However, we can customise these labels by assigning names to the list of age groups:
 
 ```{r}
 cdm$condition_occurrence |>
@@ -178,7 +178,7 @@ cdm$condition_occurrence |>
   theme_bw()
 ```
 
-If you take a close look at the documentation of the function, you will see that you can also add multiple age groups and control the name of the new column that, as we have seen, by default is 'age_group'.
+If you take a close look at the documentation of the function, you’ll see that it also allows you to add multiple age groups and to control the name of the new column, which by default is ‘age_group’.
 :::
 
 [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) also provides a more general function for adding categories. Can you guess its name? That's right, we have [`addCategories()`](https://darwin-eu.github.io/PatientProfiles/reference/addCategories.html) for this.
@@ -197,9 +197,9 @@ cdm$condition_occurrence |>
 
 ## Adding custom variables
 
-While [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) provides a range of functions that can help add characteristics of interest, you may also want to add other features. Obviously, we can't cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.
+While [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) provides a range of functions that can help you add characteristics of interest, you may also want to add other features. Obviously, we can't cover here all possible custom characteristics you may wish to add. However, two common groups of custom features are those that are derived from other variables in the same table and others that are taken from other tables and joined to our particular table of interest.
 
-In the first case, where we want to add a new variable derived from other variables in our table, we'll typically be using [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) (from the [`dplyr`](https://dplyr.tidyverse.org) package). For example, perhaps we just want to add a new variable to our observation period table containing the year of individuals' observation period start dates. This is rather straightforward.
+In the first case, where we want to add a new variable derived from existing variables within our table, we'll typically use [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) (from the [`dplyr`](https://dplyr.tidyverse.org) package). For example, perhaps we just want to add a new variable to our observation period table that contains the year of each individual’s observation period start date. This is rather straightforward.
 
 ```{r}
 cdm$observation_period <- cdm$observation_period |> 
@@ -209,7 +209,7 @@ cdm$observation_period |>
   glimpse()
 ```
 
-The second case is normally a more complex task where adding a new variable involves joining to some other table following a certain logic. This table may well have been created by some intermediate query that we wrote to derive the variable of interest. For example, let's say we want to add each number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). For this, we will need to do a join between the person and condition occurrence tables (as some people might not have any records in the condition occurrence table). Here we'll create a table containing just the information we're interested in and compute it to a temporary table.
+The second case is usually a more complex task, as adding a new variable involves joining to some other table following a certain logic. This table may have been created by some intermediate query that we wrote to derive the variable of interest. For example, let's say we want to add the number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). To do this, we will need to perform a join between the person and condition occurrence tables (as some people might not have any records in the condition occurrence table). Here we'll create a table containing just the information we're interested in and compute it to a temporary table.
 
 ```{r}
 condition_summary <- cdm$person |> 
@@ -247,11 +247,11 @@ cdm$person |>
 ::: {.callout-tip collapse="true"}
 ### Taking care with joins
 
-When adding variables through joins we need to pay particular attention to the dimensions of the resulting table. While sometimes we may want to have additional rows added as well as new columns, this is often not desired. If we, for example, have a table with one row per person then a left join to a table with multiple rows per person can then result in a table with multiple rows per person.
+When adding variables through joins we need to pay particular attention to the dimensions of the resulting table. While sometimes we may want to have additional rows added as well as new columns, this is often not desired. For example, if we have a table with one row per person, performing a left join to another table containing multiple rows per person will result in multiple rows per person in the output.
 
 Examples where to be careful include when joining to the observation period table, as individuals can have multiple observation periods, and when working with cohorts (which are the focus of the next chapter) as individuals can also enter the same study cohort multiple times.
 
-Just to underline how problematic joins can become if we don't take care, here we join the condition occurrence table and the drug exposure table, both of which have multiple records per person. Remember this is just with our small synthetic data, so when working with real patient data, which is oftentimes much, much larger, this would be extremely problematic (and would unlikely be needed to answer any research question). In other words, don't try this at home!
+Just to underline how problematic joins can become if we don't take care, here we join the condition occurrence table and the drug exposure table, both of which have multiple records per person. Even with our small synthetic dataset, this produces an extremely large table. When working with real patient data, which is oftentimes much, much larger, this would be extremely problematic (and would unlikely be needed to answer any research question). In other words, don't try this at home!
 
 ```{r}
 cdm$condition_occurrence |> 
