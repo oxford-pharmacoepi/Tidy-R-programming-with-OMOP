@@ -4,15 +4,6 @@ project:
 
 book:
   title: "Tidy R programming with the OMOP Common Data Model"
-  author:
-    - name: Edward Burn
-    - name: Adam Black
-    - name: Berta Raventós
-    - name: Yuchen Guo
-    - name: Mike Du
-    - name: Kim López-Güell
-    - name: Núria Mercadé-Besora
-    - name: Martí Català
   date: today
   chapters:
     - index.qmd
