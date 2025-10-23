@@ -1,8 +1,8 @@
 # Building analytic pipelines for a data model {#sec-data_model}
 
-In the previous chapters, we've seen that after connecting to a database, we can create references to the various tables we're interested in and write custom analytic code to query them. However, if we are working with the same database over and over again, we are likely to want to build some tooling for tasks we often perform.
+In the previous chapters, we've seen that after connecting to a database, we can create references to the various tables we're interested in and write custom analytic code to query them. However, if we are working with the same database over and over again, we might want to build some tooling for tasks we often perform.
 
-To see how we can develop a data model with associated methods and functions, we'll use the Lahman baseball data. The data is stored across various related tables.
+To see how we can develop a data model with associated methods and functions, we will use the Lahman baseball data. The data is stored across various related tables.
 
 ![Lahman's Baseball Dabatase schema from <https://cdalzell.github.io/Lahman/>.](../images/lahman.jpg){#fig-lahman .lightbox}
 
@@ -24,7 +24,7 @@ copy_lahman(con = con)
 ::: {.callout-note collapse="true"}
 ### copy_lahman
 
-The `copy_lahman()` function inserts all the different tables in the connection, it works similarly as we have done before with the for loop and the `dbWriteTable()` function.
+The `copy_lahman()` function inserts all the different tables in the connection. It works in the same way as we have done before with the for loop and the `dbWriteTable()` function.
 
 See that there are 28 new tables inserted in our DuckDB database:
 
@@ -33,26 +33,27 @@ dbListTables(conn = con)
 ```
 :::
 
-Instead of manually creating references to tables of interest as we go, we will write a function to create a single reference to the Lahman data.
+Instead of manually creating references for each one of the tables (so we can access them easily), we will write a function to create a single reference to the Lahman data.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
 lahmanFromCon <- function(con) {
-  lahmanRef <- c(
+  lahmanRef <- set_names(c(
     "AllstarFull", "Appearances", "AwardsManagers", "AwardsPlayers", "AwardsManagers",
     "AwardsShareManagers", "Batting", "BattingPost", "CollegePlaying", "Fielding",
     "FieldingOF", "FieldingOFsplit", "FieldingPost", "HallOfFame", "HomeGames",
     "LahmanData", "Managers", "ManagersHalf", "Parks", "People", "Pitching",
     "PitchingPost", "Salaries", "Schools", "SeriesPost", "Teams", "TeamsFranchises",
     "TeamsHalf"
-  ) |>
-    set_names() |> 
-    map(\(x) tbl(src = con, from = x))
+  ))
+  
+  lahmanRef <- map(lahmanRef, \(x) tbl(src = con, from = x))
+  
   class(lahmanRef) <- c("lahman_ref", class(lahmanRef))
-  lahmanRef
+  return(lahmanRef)
 }
 ```
 
-With this function we can now easily get references to all our lahman tables in one go using our `lahmanFromCon()` function.
+With this function we can now easily get references to all our Lahman tables in one go using our `lahmanFromCon()` function.
 
 ```{r, message=FALSE, warning=FALSE}
 lahman <- lahmanFromCon(con = con)
@@ -91,9 +92,9 @@ For more information on the dm package see <https://dm.cynkra.com/index.html>
 
 ## Creating functions for the data model
 
-We can also now make various functions specific to our Lahman data model to facilitate data analyses. Given we know the structure of the data, we can build a set of functions that abstract away some of the complexities of working with data in a database.
+Given that we know the structure of the data, we can build a set of functions tailored to the Lahman data model to simplify data analyses.
 
-Let's start by making a small function to get the teams players have played for. We can see that the code we use follows on from the last couple of chapters.
+Let's start by creating a simple function that returns the teams each player has played for. We can see that the code we use follows on from the last couple of chapters.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 getTeams <- function(lahman, name = "Barry Bonds") {
@@ -106,12 +107,14 @@ getTeams <- function(lahman, name = "Barry Bonds") {
       by = "playerID"
     ) |>
     distinct(teamID, yearID) |>
-    left_join(lahman$Teams, by = c("teamID", "yearID")) |>
+    left_join(
+      lahman$Teams, 
+      by = c("teamID", "yearID")) |>
     distinct(name)
 }
 ```
 
-Now we can easily get the different teams a player represented. We can see how changing the player name changes the SQL that is getting run behind the scenes.
+Now we can easily get which teams a player has represented. We can see how changing the player name changes the SQL that is run behind the scenes.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 getTeams(lahman = lahman, name = "Babe Ruth")
@@ -142,7 +145,7 @@ getTeams(lahman = lahman, name = "Barry Bonds") |>
 ::: {.callout-tip collapse="true"}
 ### Choosing the right time to collect data into R
 
-The function [`collect()`](https://dplyr.tidyverse.org/reference/compute.html) brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our `getTeams()` function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case, we could also use [`pull()`](https://dplyr.tidyverse.org/reference/pull.html) to get our result out as a vector rather than a data frame.
+The function [`collect()`](https://dplyr.tidyverse.org/reference/compute.html) brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our `getTeams()` function, for example, everything is done on the database side. Collecting the result will bring the result of the teams the person played for out of the database. In this case, we could also use [`pull()`](https://dplyr.tidyverse.org/reference/pull.html) to get our result out as a vector rather than a data frame.
 
 ```{r, message=FALSE, warning=FALSE}
 getTeams(lahman = lahman, name = "Barry Bonds") |>
@@ -152,10 +155,10 @@ getTeams(lahman = lahman, name = "Barry Bonds") |>
   pull()
 ```
 
-In other cases however we may need to collect data so as to perform further analysis steps that are not possible using SQL. This might be the case for plotting or for other analytic steps like fitting statistical models. In such cases we should try to only bring out the data that we need (as we will likely have much less memory available on our local computer than is available for the database).
+However, in other cases we may need to collect the data to perform analyses that can not be done in SQL. This might be the case for plotting or for other analytic steps(i.e., fitting statistical models). In such cases, it is important to only bring out the data that we need (as our local computer will typically have far less memory available than the database system).
 :::
 
-Similarly, we could make a function to add a player's year of birth to a table.
+Similarly, we can make a function to add a player's year of birth to another Lahman table.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 addBirthCountry <- function(x){
@@ -198,7 +201,7 @@ lahman$Pitching |>
 ```
 :::
 
-We could then use our `addBirthCountry()` function as part of a larger query to summarise the proportion of players from each country over time (based on their presence in the batting table).
+We can then use our `addBirthCountry()` function as part of a larger query to summarise and plot the proportion of players from each country over time (based on their presence in the batting table). 
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 plot_data <- lahman$Batting |>
@@ -254,16 +257,21 @@ lahman$Batting |>
 library(ggplot2)
 plot_data |> 
   ggplot() +
-  geom_col(mapping = aes(yearID, percentage, fill = birthCountry), width = 1) + 
+  geom_col(
+    mapping = aes(yearID, percentage, fill = birthCountry), 
+    width = 1
+  ) + 
   theme_minimal() + 
-  theme(legend.title = element_blank(), legend.position = "top")
-    
+  theme(
+    legend.title = element_blank(), 
+    legend.position = "top"
+  )
 ```
 
 ::: {.callout-note collapse="true"}
 ### Defining methods for the data model
 
-As part of our `lahmanFromCon()` function our data model object has the class "lahman_ref". Therefore as well as creating user-facing functions to work with our lahman data model, we can also define methods for this object.
+As part of our `lahmanFromCon()` function, our data model object has the class "lahman_ref". Therefore, apart from creating user-friendly functions to work with our Lahman data model, we can also define methods for this object.
 
 ```{r, message=FALSE, warning=FALSE}
 class(lahman)
@@ -280,7 +288,7 @@ print.lahman_ref <- function(x, ...) {
 }
 ```
 
-Now we can see a summary of our lahman data model when we print the object.
+Now we can see a summary of our Lahman data model when we print the object.
 
 ```{r, echo = TRUE}
 lahman
@@ -298,7 +306,7 @@ s3_dispatch(print(lahman))
 
 ### The risk of "clean" R code
 
-Following on from the above approach, we might think it a good idea to make another function `addBirthYear()`. We can then use it along with our `addBirthCountry()` to get a summarised average salary by birth country and birth year.
+Following on from the above approach, we might think it is a good idea to make another function `addBirthYear()`. We can then use it along with our `addBirthCountry()` to get a summarised average salary by birth country and birth year.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 addBirthYear <- function(lahmanTbl){
@@ -317,7 +325,7 @@ lahman$Salaries |>
   summarise(average_salary = mean(salary), .groups = "drop")
 ```
 
-Although the R code on the face of it looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.
+Although the R code looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.
 
 ::: {.callout-note collapse="true"}
 ### Show query
@@ -332,7 +340,7 @@ lahman$Salaries |>
 ```
 :::
 
-To improve performance, we could instead have a single function to get both of these, birth country and birth year, at the same time.
+To improve the performance of the code, we can build a single function to get simultaneously the birth country and birth year, so only one join is done.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 addCharacteristics <- function(lahmanTbl){
@@ -362,11 +370,11 @@ lahman$Salaries |>
 ```
 :::
 
-Now this query outputs the same result but is simpler than the previous one, thus lowering the computational cost of the analysis. All this is to show that when working with databases we should keep in mind what is going on behind the scenes in terms of the SQL code actually being executed.
+This query produces the same result but is simpler than the previous one, thus reducing the computational cost of the analysis. This shows the importance of being aware of the SQL code being executed when working in R with databases.
 
 ### Piping and SQL
 
-Although piping functions has little impact on performance when using R with data in memory, when working with a database the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.
+Piping functions has little impact on performance when using R with data in memory. However, when working with a database, the SQL generated will differ when using multiple function calls (with a separate operation specified in each) instead of multiple operations within a single function call.
 
 For example, a single mutate function creating two new variables would generate the below SQL.
 
@@ -392,7 +400,7 @@ lahman$People |>
 
 ### Computing intermediate queries
 
-Let's say we want to summarise home runs in the batting table and strike outs in the pitching table by the college players attended and their birth year. We could do this like so:
+Let's now summarise home runs (Batting table) and strike outs (Pitching table) by college player and their birth year. We can do this like so:
 
 ```{r, echo = TRUE}
 players_with_college <- lahman$People |> 
@@ -405,19 +413,25 @@ players_with_college <- lahman$People |>
   )
 
 lahman$Batting |> 
-  left_join(players_with_college, by = "playerID") |> 
+  left_join(
+    players_with_college,
+    by = "playerID"
+  ) |> 
   group_by(schoolID, birthYear) |>
   summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |> 
   collect()
 
 lahman$Pitching |> 
-  left_join(players_with_college, by = "playerID") |> 
+  left_join(
+    players_with_college, 
+    y = "playerID"
+  ) |> 
   group_by(schoolID, birthYear) |>
   summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop")|> 
   collect()
 ```
 
-Looking at the SQL, we can see, however, that there is some duplication, because as part of each full query, we have run our players_with_college query.
+If we look at the SQL code we will realise that there is code duplication, because as part of each full query, we have run our players_with_college query.
 
 ::: {.callout-note collapse="true"}
 ### Show query
@@ -437,7 +451,7 @@ lahman$Pitching |>
 ```
 :::
 
-To avoid this we could instead make use of the [`compute()`](https://dplyr.tidyverse.org/reference/compute.html) function to force the computation of this first, intermediate, query to a temporary table in the database.
+To avoid this, we can make use of the [`compute()`](https://dplyr.tidyverse.org/reference/compute.html) function to force the computation of the players_with_college query to a temporary table in the database.
 
 ```{r, echo = TRUE}
 players_with_college <- players_with_college |> 
@@ -483,17 +497,17 @@ lahman$Pitching |>
 ```
 :::
 
-In this case, the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore, although we don't want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.
+In this example, the SQL code of the intermediate table, players_with_college, was quite simple. However, in some cases, the SQL associated code can become very complicated and unmanageable, resulting with inefficient code. Therefore, although we do not want to overuse computation of intermediate queries, it is often useful when creating our analytic pipelines.
 
 ::: {.callout-note collapse="true"}
 ### Indexes
 
-Some SQL dialects use indexes for more efficient 'joins' performance. Briefly speaking, indexes store the location of the different values of a column. Every time that you create a new table with [`compute()`](https://dplyr.tidyverse.org/reference/compute.html), the indexes won't be carried over, so if you want your new table to keep some indexes, you will have to add them manually. That's why sometimes it won't be more efficient to add a [`compute()`](https://dplyr.tidyverse.org/reference/compute.html) in between, because the new table generated won't have the indexes that make your query to be executed faster.
+Some SQL dialects use indexes for more efficient 'joins' performance. Briefly speaking, indexes store the location of the different values of a column. Every time that you create a new table with [`compute()`](https://dplyr.tidyverse.org/reference/compute.html), the indexes will not be carried over. Hence, if you want your new table to keep some indexes, you will have to add them manually. That is why sometimes it will not be more efficient to add a [`compute()`](https://dplyr.tidyverse.org/reference/compute.html) in between, because the new table generated will not have the indexes that make your query to be executed faster.
 :::
 
 ## Disconnecting from the database
 
-Now that we've reached the end of this example, we can close our connection to the database.
+Now that we have reached the end of this example, we can close our connection to the database.
 
 ```{r}
 dbDisconnect(conn = con)
