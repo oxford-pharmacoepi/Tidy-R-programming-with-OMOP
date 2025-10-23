@@ -1,8 +1,8 @@
 # Building analytic pipelines for a data model {#sec-data_model}
 
-In the previous chapters we've seen that after connecting to a database we can create references to the various tables we've interested in it and write bespoke analytic code to query them. However, if we are working with the same database over and over again we are likely to want to build some tooling for tasks we are often performing.
+In the previous chapters, we've seen that after connecting to a database, we can create references to the various tables we're interested in and write custom analytic code to query them. However, if we are working with the same database over and over again, we are likely to want to build some tooling for tasks we often perform.
 
-To see how we can develop a data model with associated methods and functions we'll use the Lahman baseball data. We can see below how the data is stored across various related tables.
+To see how we can develop a data model with associated methods and functions, we'll use the Lahman baseball data. The data is stored across various related tables.
 
 ![Lahman's Baseball Dabatase schema from <https://cdalzell.github.io/Lahman/>.](../images/lahman.jpg){#fig-lahman .lightbox}
 
@@ -142,7 +142,7 @@ getTeams(lahman = lahman, name = "Barry Bonds") |>
 ::: {.callout-tip collapse="true"}
 ### Choosing the right time to collect data into R
 
-The function [`collect()`](https://dplyr.tidyverse.org/reference/compute.html) brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our `getTeams()` function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case we could also use [`pull()`](https://dplyr.tidyverse.org/reference/pull.html) to get our result out as a vector rather that a data frame.
+The function [`collect()`](https://dplyr.tidyverse.org/reference/compute.html) brings data out of the database and into R. When working with large datasets, as is often the case when interacting with a database, we typically want to keep as much computation as possible on the database side. In the case of our `getTeams()` function, for example, it does everything on the database side and so collecting will just bring out the result of the teams the person played for. In this case, we could also use [`pull()`](https://dplyr.tidyverse.org/reference/pull.html) to get our result out as a vector rather than a data frame.
 
 ```{r, message=FALSE, warning=FALSE}
 getTeams(lahman = lahman, name = "Barry Bonds") |>
@@ -155,7 +155,7 @@ getTeams(lahman = lahman, name = "Barry Bonds") |>
 In other cases however we may need to collect data so as to perform further analysis steps that are not possible using SQL. This might be the case for plotting or for other analytic steps like fitting statistical models. In such cases we should try to only bring out the data that we need (as we will likely have much less memory available on our local computer than is available for the database).
 :::
 
-Similarly we could make a function to add the a player's year of birth to a table.
+Similarly, we could make a function to add a player's year of birth to a table.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 addBirthCountry <- function(x){
@@ -298,7 +298,7 @@ s3_dispatch(print(lahman))
 
 ### The risk of "clean" R code
 
-Following on from the above approach, we might think it a good idea to make another function `addBirthYear()`. We can then use it along with our `addBirthCountry()` to get a summarise average salary by birth country and birth year.
+Following on from the above approach, we might think it a good idea to make another function `addBirthYear()`. We can then use it along with our `addBirthCountry()` to get a summarised average salary by birth country and birth year.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 addBirthYear <- function(lahmanTbl){
@@ -392,7 +392,7 @@ lahman$People |>
 
 ### Computing intermediate queries
 
-Let's say we want to summarise home runs in the batting table and stike outs in the pitching table by the college players attended and their birth year. We could do this like so:
+Let's say we want to summarise home runs in the batting table and strike outs in the pitching table by the college players attended and their birth year. We could do this like so:
 
 ```{r, echo = TRUE}
 players_with_college <- lahman$People |> 
@@ -417,7 +417,7 @@ lahman$Pitching |>
   collect()
 ```
 
-Looking at the SQL we can see, however, that there is some duplication, because as part of each full query we have run our players_with_college query.
+Looking at the SQL, we can see, however, that there is some duplication, because as part of each full query, we have run our players_with_college query.
 
 ::: {.callout-note collapse="true"}
 ### Show query
@@ -483,12 +483,12 @@ lahman$Pitching |>
 ```
 :::
 
-In this case the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore although we don't want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.
+In this case, the SQL from our initial approach was not so complicated. However, you can imagine that without using computation to intermediate tables, the SQL associated with a series of data manipulations could quickly become unmanageable. Moreover, we can end up with inefficient code that repeatedly gets the same result as part of a larger query. Therefore, although we don't want to overuse computation of intermediate queries, it is often a necessity when creating our analytic pipelines.
 
 ::: {.callout-note collapse="true"}
 ### Indexes
 
-Some SQL dialects use indexes for more efficient 'joins' performance. Briefly speaking indexes store the location of the different values of a column. Every time that you create a new table with [`compute()`](https://dplyr.tidyverse.org/reference/compute.html) the indexes won't be carried over, so if you want your new table to keep some indexes you will have to add them manually. That's why sometimes it won't be more efficient to add a [`compute()`](https://dplyr.tidyverse.org/reference/compute.html) in between because the new table generated won't have the indexes that make your query to be executed faster.
+Some SQL dialects use indexes for more efficient 'joins' performance. Briefly speaking, indexes store the location of the different values of a column. Every time that you create a new table with [`compute()`](https://dplyr.tidyverse.org/reference/compute.html), the indexes won't be carried over, so if you want your new table to keep some indexes, you will have to add them manually. That's why sometimes it won't be more efficient to add a [`compute()`](https://dplyr.tidyverse.org/reference/compute.html) in between, because the new table generated won't have the indexes that make your query to be executed faster.
 :::
 
 ## Disconnecting from the database
