@@ -1,11 +1,15 @@
+```{=html}
+<div style="display: flex; width:100%; gap: 20px; align-items: center; justify-content: right;">
+    <img src="images/clipboard-1076731304.png" style="max-width: 20%;" alt="OHDSI">
+    <img src="images/clipboard-577771444.png" style="max-width: 15%;" alt="OHDSI UK">
+    <img src="images/clipboard-3013093500.png" style="max-width: 15%;" alt="HDS">
+</div>
+```
+
 # Welcome {.unnumbered}
 
-::: {style="display: flex; width:100%; gap: 20px; align-items: center; justify-content: center;"}
-![](images/clipboard-3013093500.png){style="max-width: 20%;"} ![](images/clipboard-1076731304.png){style="max-width: 25%;"}
-:::
-  
 ## Is this book for me?
-  
+
 We've written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see [Tidy design principles](https://design.tidyverse.org/unifying.html) for more details on these principles).
 
 New to R? We recommend you take a look at [R for data science](https://r4ds.had.co.nz/) before reading this book. We assume that you have [R](https://cran.r-project.org) installed together with an adequate Integrated Development Environment (IDE) such as [RStudio](https://posit.co/download/rstudio-desktop/) or [Positron](https://positron.posit.co). See this [tutorial](https://rstudio-education.github.io/hopr/starting.html) if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list in the [R packages](TODO) section.
@@ -20,15 +24,15 @@ The book is divided into two parts. The first half of the book is focused on the
 
 ## Contributors {.unnumbered}
 
-**Authors**: [Edward Burn](https://github.com/edward-burn), [Martí Català Sabaté](https://github.com/catalamarti)
+**Authors**: Edward Burn <a href="https://www.ndorms.ox.ac.uk/team/edward-burn" class="bi bi-person profile_icon"></a> <a href="github.com/edward-burn" class="bi bi-github profile_icon"></a> <a href="mailto:edward.burn@ndorms.ox.ac.uk" class="bi bi-envelope profile_icon"></a> <a href="https://www.linkedin.com/in/edward-burn-9b1784292/" class="bi bi-linkedin profile_icon"></a>, Martí Català <a href="https://www.ndorms.ox.ac.uk/team/marti-catala-sabate" class="bi bi-person profile_icon"></a> <a href="github.com/catalamarti" class="bi bi-github profile_icon"></a> <a href="mailto:marti.catalasabate@ndorms.ox.ac.uk" class="bi bi-envelope profile_icon"></a> <a href="https://www.linkedin.com/in/martí-català-sabaté/" class="bi bi-linkedin profile_icon"></a>
 
 **Reviewers**: [Adam Black](https://github.com/ablack3), [Berta Raventós](https://github.com/Braventos), [Cecilia Campanile](https://github.com/cecicampanile), [Daniel Prieto-Alhambra](https://github.com/daniprietoalhambra), [Elin Rowlands](https://github.com/elinrow), [Núria Mercadé-Besora](https://github.com/nmercadeb), [Markus Haug](https://github.com/haugmarkus), [Marta Alcalde](https://github.com/martaalcalde), [Mike Du](https://github.com/ilovemane), [Kim López-Güell](https://github.com/KimLopezGuell), [Yuchen Guo](https://github.com/MimiYuchenGuo)
 
 ## Citation
 
 If you found this book useful, please help us by citing it:
-  
-```         
+
+```{r, eval=FALSE}
 Burn E, Català M. Tidy R programming with the OMOP Common Data Model. GitHub; 
 2025. https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP
 ```
@@ -46,7 +50,7 @@ The source code for the book can be found at this [GitHub repository](https://gi
 ## R Packages
 
 This book is rendered automatically through [GitHub Actions](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml) using the following version of packages:
-  
+
 ```{r, echo=FALSE, message=FALSE}
 explicitPkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE, recursive = TRUE) |>
   purrr::map(\(x) {
