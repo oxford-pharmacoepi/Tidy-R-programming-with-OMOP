@@ -2,7 +2,11 @@
 
 *Tidy R programming with the OMOP Common Data Model* aims to (1) explain the main principles for working with databases from R and (2) how to apply these principles and use them with the OMOP CDM. Hopefully, after reading this book, you can understand how the dplyr and dbplyr packages interact with the databases, in particular with data formatted to the OMOP CDM; how the cdm_reference object can be used to extract and identify your population of interest; and add the desired features to your dataset. Note that in this book we always worked with relatively small synthetic data with unrealistic performance. Any analysis conducted with real-world data and big databases will take more time, that's why we would always recommend you test your code against synthetic data or subsets of your data to ensure good performance. Be careful, especially while writing custom code using join functions that can create some ugly SQL.
 
-## Tidy R in OMOP collection
+## Tidy R in OMOP OHDSI working group
+
+The authors want to acknowledge the **Tidy R in OMOP** OHDSI working group that helped to review the book and to tune its scope. The working group adopted this book as part of the Tidy R in OMOP collection.
+
+### Tidy R in OMOP collection
 
 This book is the first of the *Tidy OMOP CDM* collection. If you like it, please take a look at the full collection:
 
@@ -12,12 +16,22 @@ This book is the first of the *Tidy OMOP CDM* collection. If you like it, please
 
 -   **3** [DrugUtilisation in the OMOP CDM](https://oxford-pharmacoepi.github.io/DrugUtilisation-in-OMOP-CDM/) *under construction*
 
+### Join the journey
+
+If you are interested to join the working group please email [Martí Català](mailto:catalasabate@ohdsi.org) or [Raivo Kolde](mailto:kolde@ohdsi.org). We meet the first Wednesday of every month to define and find the appropriate ways to better support users working in the Tidy R OMOP space.
+
+In particular the Tidy R in OMOP OHDSI working group aims to:
+
+(1) Create and promote a unified set of resources to guide Tidy R development in OMOP and support the OHDSI community.
+
+(2) Establish an overview of available packages relevant to Tidy R programming in OMOP (tidyverse style packages).
+
 ## Support us
 
 We encourage you to support this work by either citing the book in your papers or documentation, recommending it to your colleagues, or starring the [GitHub repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP), or simply letting us know how it helped you. But on top of that, **use it** so it can help you and others in your research for patient benefit.
 
 ## About the authors
 
-* **Edward Burn** <a href="https://www.ndorms.ox.ac.uk/team/edward-burn" class="bi bi-person profile_icon"></a> <a href="github.com/edward-burn" class="bi bi-github profile_icon"></a> <a href="mailto:edward.burn@ndorms.ox.ac.uk" class="bi bi-envelope profile_icon"></a> <a href="https://www.linkedin.com/in/edward-burn-9b1784292/" class="bi bi-linkedin profile_icon"></a>
+-   **Edward Burn** <a href="https://www.ndorms.ox.ac.uk/team/edward-burn" class="bi bi-person profile_icon"></a> <a href="github.com/edward-burn" class="bi bi-github profile_icon"></a> <a href="mailto:edward.burn@ndorms.ox.ac.uk" class="bi bi-envelope profile_icon"></a> <a href="https://www.linkedin.com/in/edward-burn-9b1784292/" class="bi bi-linkedin profile_icon"></a>
 
-* **Martí Català** <a href="https://www.ndorms.ox.ac.uk/team/marti-catala-sabate" class="bi bi-person profile_icon"></a> <a href="github.com/catalamarti" class="bi bi-github profile_icon"></a> <a href="mailto:marti.catalasabate@ndorms.ox.ac.uk" class="bi bi-envelope profile_icon"></a> <a href="https://www.linkedin.com/in/martí-català-sabaté/" class="bi bi-linkedin profile_icon"></a>
+-   **Martí Català** <a href="https://www.ndorms.ox.ac.uk/team/marti-catala-sabate" class="bi bi-person profile_icon"></a> <a href="github.com/catalamarti" class="bi bi-github profile_icon"></a> <a href="mailto:marti.catalasabate@ndorms.ox.ac.uk" class="bi bi-envelope profile_icon"></a> <a href="https://www.linkedin.com/in/martí-català-sabaté/" class="bi bi-linkedin profile_icon"></a>
