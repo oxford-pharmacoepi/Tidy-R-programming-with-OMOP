@@ -474,9 +474,9 @@ Foreign keys: 1</code></pre>
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   name            
   &lt;chr&gt;           
-1 Boston Braves   
-2 Boston Red Sox  
-3 New York Yankees</code></pre>
+1 Boston Red Sox  
+2 New York Yankees
+3 Boston Braves   </code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -950,16 +950,16 @@ GROUP BY birthCountry, birthYear</code></pre>
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    birthCountry birthYear average_salary
    &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
- 1 USA               1966       1761151.
- 2 Venezuela         1974       4269365.
- 3 D.R.              1984       2924854.
- 4 Mexico            1982       1174912.
- 5 Panama            1981        555833.
- 6 USA               1978       3133596.
- 7 P.R.              1959        297786.
- 8 USA               1961        811250.
- 9 USA               1990        728740.
-10 USA               1950        625076.
+ 1 USA               1969       1496593.
+ 2 USA               1968       2180316.
+ 3 USA               1980       3564986.
+ 4 USA               1977       2804277.
+ 5 USA               1986       2007402.
+ 6 CAN               1985        501000 
+ 7 USA               1979       3234779.
+ 8 P.R.              1958        671191.
+ 9 D.R.              1971       3461094 
+10 D.R.              1989       1113683.
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1160,7 +1160,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
-FROM dbplyr_oHXnnP9DNo</code></pre>
+FROM dbplyr_znCrv0B6In</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1171,18 +1171,18 @@ FROM dbplyr_oHXnnP9DNo</code></pre>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6,205 × 3
-   schoolID  birthYear home_runs
-   &lt;chr&gt;         &lt;int&gt;     &lt;dbl&gt;
- 1 kentucky       1972       157
- 2 longbeach      1968        19
- 3 elon           1921         1
- 4 lehigh         1901         1
- 5 ucla           1952       306
- 6 usc            1947        11
- 7 tamukvill      1978         0
- 8 stanford       1972        55
- 9 lsu            1927      1832
-10 wake           1915        72
+   schoolID   birthYear home_runs
+   &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
+ 1 vermont         1869        38
+ 2 michigan        1967         2
+ 3 nmstate         1968         0
+ 4 cacerri         1971         3
+ 5 chicago         1874         2
+ 6 byu             1961        28
+ 7 pepperdine      1969         1
+ 8 lsu             1978         2
+ 9 miamidade       1982         0
+10 stanford        1961      1611
 # ℹ 6,195 more rows</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
@@ -1226,8 +1226,8 @@ SELECT schoolID, birthYear, SUM(H) AS home_runs
 FROM (
   SELECT Batting.*, birthYear, schoolID
   FROM Batting
-  LEFT JOIN dbplyr_oHXnnP9DNo
-    ON (Batting.playerID = dbplyr_oHXnnP9DNo.playerID)
+  LEFT JOIN dbplyr_znCrv0B6In
+    ON (Batting.playerID = dbplyr_znCrv0B6In.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1237,8 +1237,8 @@ SELECT schoolID, birthYear, SUM(SO) AS strike_outs
 FROM (
   SELECT Pitching.*, birthYear, schoolID
   FROM Pitching
-  LEFT JOIN dbplyr_oHXnnP9DNo
-    ON (Pitching.playerID = dbplyr_oHXnnP9DNo.playerID)
+  LEFT JOIN dbplyr_znCrv0B6In
+    ON (Pitching.playerID = dbplyr_znCrv0B6In.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
