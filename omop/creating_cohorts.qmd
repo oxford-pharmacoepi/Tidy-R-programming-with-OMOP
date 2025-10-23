@@ -2,19 +2,19 @@
 
 ## What is a cohort?
 
-When performing research with the OMOP CDM we often want to identify groups of individuals who share some set of characteristics. The criteria for including individuals can range from the seemingly simple (e.g. people diagnosed with asthma) to the much more complicated (e.g. adults diagnosed with asthma who had a year of prior observation time in the database prior to their diagnosis, had no prior history of chronic obstructive pulmonary disease, and no history of use of short-acting beta-antagonists).
+When conducting research using the OMOP Common Data Model (CDM), we often aim to identify groups of individuals who share specific characteristics. The inclusion criteria for these groups can range from relatively simple (e.g. people diagnosed with asthma) to highly complex (e.g. adults diagnosed with asthma who had at least one year of prior observation in the database before their diagnosis, no prior history of chronic obstructive pulmonary disease (COPD), and no history of using short-acting beta-antagonists).
 
-The set of people we identify are cohorts, and the OMOP CDM has a specific structure by which they can be represented, with a cohort table having four required fields:
+The groups of individuals we identify are called cohorts. In the OMOP CDM, cohorts are represented using a specific structure: a cohort table with four required fields:
 
-1)  *Cohort definition id* a unique identifier for each cohort (multiple cohorts can be defined in the same cohort table)
+1)  *Cohort definition id* a unique identifier for each cohort (multiple cohorts can be defined in the same cohort table).
 
-2)  *Subject id* a foreign key to the subject in the cohort - typically referring to records in the person table
+2)  *Subject id* a foreign key linking the subject in the cohort to the person table.
 
-3)  *Cohort start date* date that indicates the start date of the record.
+3)  *Cohort start date* date indicating the beginning of the cohort record.
 
-4)  *Cohort end date* date that indicates the end date of the record.
+4)  *Cohort end date* date indicating the end of the cohort record.
 
-Individuals must be defined in the person table and have an ongoing record in the observation period table to be part of a cohort. Individuals can enter a cohort multiple times, but the time periods in which they are in the cohort cannot overlap.
+Individuals must be defined in the person table and must be under observation(i.e. have an ongoing record in the observation period table) to be part of a cohort. Individuals can enter a cohort multiple times, but the time periods in which they are in the cohort cannot overlap.
 
 It is beyond the scope of this book to describe all the different ways cohorts could be created, however in this chapter we provide a summary of some of the key building blocks for cohort creation. Cohort-building pipelines can be created following these principles to create a wide range of study cohorts.
 
@@ -57,7 +57,7 @@ cdm$not_covid <- conceptCohort(cdm = cdm,
 ::: {.callout-tip collapse="true"}
 ### Finding appropriate codes
 
-In defining the cohorts above, we have needed to provide concept IDs to define our cohort. But where do these come from?
+In defining the cohorts above, we have needed to provide concept IDs for our outcomes of interest. But where do these come from?
 
 We can search for codes of interest using the [`CodelistGenerator`](https://darwin-eu.github.io/CodelistGenerator/) package. This can be done using a text search with the function [`getCandidateCodes()`](https://darwin-eu.github.io/CodelistGenerator/reference/getCandidateCodes.html). For example, we can have found the code we used above (and many others) like so:
 
@@ -72,10 +72,17 @@ getCandidateCodes(cdm = cdm,
 We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of its descendants.
 
 ```{r}
-getDrugIngredientCodes(cdm = cdm, name = "acetaminophen")
+codes <- getDrugIngredientCodes(cdm = cdm, name = "acetaminophen")
+
+codes
 ```
 
-Note that in practice clinical expertise is vital in the identification of appropriate codes so as to decide which the codes are in line with the clinical idea at hand.
+Note that in practice clinical expertise is vital in the identification of appropriate codes so as to decide which the codes are in line with the clinical idea at hand. Additionally, not all codes may be used in the database. To check for this, we can use the function [`subsetToCodesInUse()`](https://darwin-eu.github.io/CodelistGenerator/reference/subsetToCodesInUse.html).
+
+```{r, eval = FALSE, echo = TRUE}
+usedCodes <- subsetToCodesInUse(list("acet" = codes[[1]]),
+                                cdm = cdm)
+```
 :::
 
 We can see that as well as having the cohort entries above, our cohort table is associated with several attributes.
@@ -132,7 +139,7 @@ All these attributes that we have seen are part of the attributes of the cohort_
 names(attributes(cdm$covid))
 ```
 
-In particular, the `cohort_set` (contains the [`settings()`](https://darwin-eu.github.io/omopgenerics/reference/settings.html) source), `cohort_attrition` (contains the source for [`cohortCount()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html) and [`attrition()`](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)) and `cohort_codelist` (contains the source for [`cohortCodelist()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)) attributes are the ones of interest. For database back-ends, these attributes are stored in the database so when we read them again, the attributes persist. See that even though apparently we only have one table 'cdm\$covid', in fact four tables were written in the database:
+In particular, the `cohort_set` (contains the [`settings()`](https://darwin-eu.github.io/omopgenerics/reference/settings.html) source), `cohort_attrition` (contains the source for [`cohortCount()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html) and [`attrition()`](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)) and `cohort_codelist` (contains the source for [`cohortCodelist()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)) attributes are the ones of interest. For database backends, these attributes are stored directly in the database so that they persist for when we read them again. Note that although it may appear that there is only one table—cdm\$covid—in fact, four tables are written to the database:
 
 ```{r}
 library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
@@ -146,7 +153,7 @@ We do not have to worry about the attributes and the naming of the tables as `Co
 
 ### Only include first cohort entry per person
 
-Let's say we first want to restrict to the first entry.
+Let's say we first want to restrict our cohort to only include the first record for each person. This can be done by using the funtion [`requireIsFirstEntry()`](https://ohdsi.github.io/CohortConstructor/reference/requireIsFirstEntry.html):
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |> 
@@ -155,11 +162,11 @@ cdm$covid <- cdm$covid |>
 
 ### Restrict to study period
 
-Then we are interested in records only after January 1st, 2020.
+Then we are only interested in records from January 1st, 2020 onwards.
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |>
-   requireInDateRange(dateRange = c(as.Date("2020-09-01"), NA))
+   requireInDateRange(dateRange = c(as.Date("2020-01-01"), NA))
 ```
 
 ### Applying demographic inclusion criteria
@@ -179,9 +186,9 @@ Note that all these `require*()` functions that come from the CohortConstructor 
 
 ### Applying cohort-based inclusion criteria
 
-As well as requirements about specific demographics, we may also want to use another cohort for inclusion criteria. Let's say we want to exclude anyone with a history of cardiac conditions before their Covid-19 cohort entry.
+In addition to demographic requirements, we may also want to use another cohort as part of the inclusion or exclusion criteria. For example, we might exclude anyone with a history of cardiac conditions prior to their COVID-19 cohort entry.
 
-We can first generate this new cohort table with records of cardiac conditions.
+We can first generate a cohort table with records of myocardial infarction.
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$cardiac <- conceptCohort(
@@ -192,7 +199,7 @@ cdm$cardiac <- conceptCohort(
 cdm$cardiac
 ```
 
-And now we can apply the inclusion criteria that individuals have zero intersections with the table in the time prior to their Covid-19 cohort entry.
+Now we can apply the inclusion criteria that individuals have no records of myocardical infarction prior to their Covid-19 cohort entry.
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |> 
@@ -219,7 +226,7 @@ cdm$covid <- cdm$covid |>
   )
 ```
 
-In fact, this approach would be more efficient unless we want to re-use the `myocardial_infarction` cohort for another inclusion criteria or analysis. Note that the intersection with the cohort table is more flexible as it can have more complicated inclusion/exclusion criteria, but you have to be more careful with the order of inclusion criteria (e.g., if we would restrict the myocardial_infarction cohort to a certain time span when we would do the intersect, we would require to not have the inclusion criteria on that time span).
+In fact, this approach is generally more efficient unless we plan to reuse the myocardial_infarction cohort for another inclusion criteria or analysis. Note, however, that intersecting with the cohort table is more flexible, as it allows for more complex inclusion and exclusion logic. However, you need to be careful with the order of criteria, for example if we restricted the myocardial_infarction cohort to a specific time period before performing the intersection, we would need to avoid applying a separate inclusion criterion based on that same time span.
 :::
 
 ## Cohort attributes
@@ -280,7 +287,7 @@ cdm$my_cohort <- cdm$my_cohort |>
 settings(cdm$my_cohort)
 ```
 
-This functionality also applies to other packages, such as CohortCharacteristics, PatientProfiles, DrugUtilisation, etc. Finally, in some cases, it is useful to add the cohort_name as a column to not have to check manually the equivalence between *cohort definition id* and *cohort name*. This can be done using the PatientProfiles utility function `addCohortName()`:
+This functionality also applies to other packages, such as CohortCharacteristics, PatientProfiles and DrugUtilisation. In some cases, it is useful to add the cohort_name as a column to not have to check manually the equivalence between *cohort definition id* and *cohort name*. This can be done using the PatientProfiles utility function `addCohortName()`:
 
 ```{r}
 library(PatientProfiles)
@@ -313,4 +320,4 @@ cdmDisconnect(cdm)
 
 -   [Cohort tables](https://darwin-eu.github.io/omopgenerics/articles/cohorts.html)
 
-- Burn E, Català M, Mercade-Besora N, Alcalde-Herraiz M, Du M, Guo Y, Chen X, Lopez-Guell K, Rowlands E (2025). *CohortConstructor: Build and Manipulate Study Cohorts Using a Common Data Model*. R package version 0.5.0, <https://ohdsi.github.io/CohortConstructor/>.
+-   Burn E, Català M, Mercade-Besora N, Alcalde-Herraiz M, Du M, Guo Y, Chen X, Lopez-Guell K, Rowlands E (2025). *CohortConstructor: Build and Manipulate Study Cohorts Using a Common Data Model*. R package version 0.5.0, <https://ohdsi.github.io/CohortConstructor/>.
