@@ -8,5 +8,5 @@ If you find this book useful then joining the **Tidy R in OMOP** OHDSI working g
 
 ## Support us
 
-We encourage you to support this work by either citing the book in your papers or documentation, recommending it to your colleagues, or starring the [GitHub repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP), or simply letting us know how it helped you. Most importantly, please **use it** in research that results in patient benefit.
+We encourage you to support this work by either citing the book in your papers or documentation, recommending it to your colleagues, or starring the [GitHub repository](https://github.com/OHDSI/Tidy-R-programming-with-OMOP), or simply letting us know how it helped you. Most importantly, please **use it** in research that results in patient benefit.
 

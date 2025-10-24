@@ -2,9 +2,9 @@
 
 ## 📕 Read the book
 
--   **HTML version**: <https://oxford-pharmacoepi.github.io/Tidy-R-programming-with-OMOP>
+-   **HTML version**: <https://OHDSI.github.io/Tidy-R-programming-with-OMOP>
 
--   **pdf version**: <https://oxford-pharmacoepi.github.io/Tidy-R-programming-with-OMOP/tidy-r-programming-omop.pdf>
+-   **pdf version**: <https://OHDSI.github.io/Tidy-R-programming-with-OMOP/tidy-r-programming-omop.pdf>
 
 ## :star: Reader questions and clarifications
 
