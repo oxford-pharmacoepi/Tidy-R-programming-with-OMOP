@@ -142,7 +142,7 @@ names(attributes(cdm$covid))
 In particular, the `cohort_set` (contains the [`settings()`](https://darwin-eu.github.io/omopgenerics/reference/settings.html) source), `cohort_attrition` (contains the source for [`cohortCount()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html) and [`attrition()`](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)) and `cohort_codelist` (contains the source for [`cohortCodelist()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)) attributes are the ones of interest. For database backends, these attributes are stored directly in the database so that they persist for when we read them again. Note that although it may appear that there is only one table—cdm\$covid—in fact, four tables are written to the database:
 
 ```{r}
-library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
+library(omopgenerics) # TODO can be eliminated after omock 0.6.0 release
 listSourceTables(cdm = cdm)
 ```
 
@@ -157,7 +157,7 @@ Let's say we first want to restrict our cohort to only include the first record 
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |> 
-     requireIsFirstEntry() 
+  requireIsFirstEntry() 
 ```
 
 ### Restrict to study period
@@ -166,7 +166,7 @@ Then we are only interested in records from January 1st, 2020 onwards.
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |>
-   requireInDateRange(dateRange = c(as.Date("2020-01-01"), NA))
+  requireInDateRange(dateRange = c(as.Date("2020-01-01"), NA))
 ```
 
 ### Applying demographic inclusion criteria
@@ -252,7 +252,7 @@ We can visualize the attrition with the CohortCharacteristics package. We can fi
 
 ```{r, warning=FALSE, message=FALSE}
 attrition_summary <- summariseCohortAttrition(cohort = cdm$covid)
-plotCohortAttrition(result = attrition_summary, type = 'png')
+plotCohortAttrition(result = attrition_summary, type = "png")
 ```
 
 Note that the `conceptCohort()` first step leads to several rows in the attrition table, whereas any other `require*()` function always adds just one record of attrition.

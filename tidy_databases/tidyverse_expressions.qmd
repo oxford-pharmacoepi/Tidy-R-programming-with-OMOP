@@ -835,8 +835,6 @@ lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
 :::
 :::
 
-TODO add note arrange vs window_order
-
 ::: {.callout-note collapse="true"}
 ### `arrange()` vs `window_order()`
 
@@ -846,7 +844,7 @@ Although `arrange()` and `window_order()` both involve ordering, they serve diff
 
 - **`window_order()`:** defines the order within window functions. It controlls how functions (e.g., `lag()`, `lead()`, `rank()`, `cumsum()`) are applied across rows.
 
-In conclusion, for all dialects, `arrange()` changes the output row order, while `window_order()` changes how window functions calculate values.
+In conclusion, for all dialects, `arrange()` changes the output row order, while `window_order()` changes how window functions calculate values. 
 
 :::
 
@@ -864,10 +862,10 @@ A case where this is not true is when we are interested in summarising distribut
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_duckdb()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
@@ -876,10 +874,10 @@ lazy_frame(x = c(1,2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_postgres()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
@@ -888,10 +886,10 @@ lazy_frame(x = c(1,2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_mssql()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
@@ -900,10 +898,10 @@ lazy_frame(x = c(1,2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_redshift()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
@@ -912,10 +910,10 @@ lazy_frame(x = c(1,2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_snowflake()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
@@ -924,10 +922,10 @@ lazy_frame(x = c(1,2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_spark_sql()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
