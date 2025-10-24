@@ -17,6 +17,7 @@ library(duckdb)
 library(dplyr)
 library(omock)
 library(CDMConnector)
+library(omopgenerics) # to be removed after CDMConnector > 2.2.0
 library(palmerpenguins)
 
 cdm_local <- mockCdmReference() |>
@@ -84,7 +85,8 @@ Our cdm reference will be associated with a name. By default, this name will be 
 cdm <- cdmFromCon(con = con,
                   cdmSchema = "main", 
                   writeSchema = "main")
-cdm$cdm_source
+cdm$cdm_source |>
+  glimpse()
 cdmName(cdm)
 ```
 
@@ -151,6 +153,54 @@ cdmVersion(cdm$person)
 
 Although as stated, the [`cdmName()`](https://darwin-eu.github.io/omopgenerics/reference/cdmName.html) and [`cdmVersion()`](https://darwin-eu.github.io/omopgenerics/reference/cdmVersion.html) functions are defined by the omopgenerics packages, these functions are re-exported in other packages and you won't need to load omopgenerics explicitly.
 :::
+
+### Source
+
+You can get the source of a cdm object using the `cdmSource()` function:
+
+```{r}
+cdmSource(cdm)
+```
+
+In general the source is only used internally and it is an object defined by the connecting package, in this case [CDMConnector](https://darwin-eu.github.io/CDMConnector/) and allows that all the different functions such as `listSourceTables()`, `dropSourceTable()`, `readSourceTable()` and `compute()` (that we will see later in detail) work correctly in the source backend.
+
+::: {.callout-note collapse="true"}
+### Explore the source object
+
+In the CDMConnector case the source object contains the connection and the writting schema:
+
+```{r}
+unclass(cdmSource(cdm))
+```
+
+For local sources for example the source object is empty:
+
+```{r}
+unclass(cdmSource(cdm_local))
+```
+
+In general, the `source` object is not recommended to be used by the normal user, so only use it if you are proficient using the Tidy R in OMOP packages and tools.
+:::
+
+You can easily extract the source type of your cdm as:
+
+```{r}
+sourceType(cdm)
+```
+
+The function can also be used with a cdm_table object:
+
+```{r}
+sourceType(cdm$person)
+```
+
+### Retrive the cdm reference
+
+You can use the `cdmReference()` function to retrieve the `cdm_reference` object that a given `cdm_table` comes from:
+
+```{r}
+cdmReference(cdm$person)
+```
 
 ## Including cohort tables in the cdm reference
 
