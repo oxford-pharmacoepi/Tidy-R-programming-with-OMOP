@@ -157,7 +157,7 @@ Let's say we first want to restrict our cohort to only include the first record 
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |> 
-     requireIsFirstEntry() 
+  requireIsFirstEntry() 
 ```
 
 ### Restrict to study period
@@ -166,7 +166,7 @@ Then we are only interested in records from January 1st, 2020 onwards.
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |>
-   requireInDateRange(dateRange = c(as.Date("2020-01-01"), NA))
+  requireInDateRange(dateRange = c(as.Date("2020-01-01"), NA))
 ```
 
 ### Applying demographic inclusion criteria
@@ -252,7 +252,7 @@ We can visualize the attrition with the CohortCharacteristics package. We can fi
 
 ```{r, warning=FALSE, message=FALSE}
 attrition_summary <- summariseCohortAttrition(cohort = cdm$covid)
-plotCohortAttrition(result = attrition_summary, type = 'png')
+plotCohortAttrition(result = attrition_summary, type = "png")
 ```
 
 Note that the `conceptCohort()` first step leads to several rows in the attrition table, whereas any other `require*()` function always adds just one record of attrition.

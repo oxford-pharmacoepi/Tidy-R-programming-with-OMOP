@@ -343,7 +343,7 @@ lahman$Salaries |>
 To improve the performance of the code, we can build a single function to get simultaneously the birth country and birth year, so only one join is done.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
-addCharacteristics <- function(lahmanTbl){
+addCharacteristics <- function(lahmanTbl) {
   lahmanTbl |> 
     left_join(
       lahman$People |> 
@@ -427,7 +427,7 @@ lahman$Pitching |>
     by = "playerID"
   ) |> 
   group_by(schoolID, birthYear) |>
-  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop")|> 
+  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |> 
   collect()
 ```
 

@@ -27,18 +27,18 @@ The [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) package ma
 Let’s say we’re interested in individuals’ age and sex at the time of COVID-19 diagnosis. We can add these variables to the table as follows (noting that, since age is time-varying, we need to specify the date relative to which it should be calculated).
 
 ```{r}
-cdm$condition_occurrence <- cdm$condition_occurrence |> 
-  addSex() |> 
+cdm$condition_occurrence <- cdm$condition_occurrence |>
+  addSex() |>
   addAge(indexDate = "condition_start_date")
 
-cdm$condition_occurrence |> 
+cdm$condition_occurrence |>
   glimpse()
 ```
 
 We have now added two variables containing values for age and sex.
 
 ```{r}
-cdm$condition_occurrence |> 
+cdm$condition_occurrence |>
   glimpse()
 ```
 
@@ -47,13 +47,13 @@ With these now added, it is straightforward to calculate the mean age at conditi
 ```{r}
 cdm$condition_occurrence |>
   group_by(sex) |>
-  summarise(mean_age = mean(age, na.rm=TRUE)) |> 
+  summarise(mean_age = mean(age, na.rm = TRUE)) |>
   collect()
 ```
 
 ```{r}
 cdm$condition_occurrence |>
-  select("person_id", "age", "sex") |> 
+  select("person_id", "age", "sex") |>
   collect()  |>
   ggplot(aes(fill = sex)) +
   facet_grid(sex ~ .) +
@@ -66,8 +66,8 @@ cdm$condition_occurrence |>
 ### Show query
 
 ```{r}
-cdm$condition_occurrence |> 
-  addSexQuery() |> 
+cdm$condition_occurrence |>
+  addSexQuery() |>
   show_query()
 ```
 
@@ -81,7 +81,7 @@ We've now seen individual functions from [`PatientProfiles`](https://darwin-eu.g
 [^adding_features-3]: This function also provides a more time-efficient method than getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables, and so can be identified simultaneously.
 
 ```{r}
-cdm$drug_exposure <- cdm$drug_exposure |> 
+cdm$drug_exposure <- cdm$drug_exposure |>
   addDemographics(
     indexDate = "drug_exposure_start_date",
     age = TRUE,
@@ -91,7 +91,7 @@ cdm$drug_exposure <- cdm$drug_exposure |>
     dateOfBirth = TRUE
   )
 
-cdm$drug_exposure |> 
+cdm$drug_exposure |>
   glimpse()
 ```
 
@@ -100,9 +100,9 @@ With these characteristics added, we can now calculate mean age, prior observati
 ```{r}
 cdm$drug_exposure |>
   group_by(sex) |>
-  summarise(mean_age = mean(age, na.rm=TRUE),
-            mean_prior_observation = mean(prior_observation, na.rm=TRUE),
-            mean_future_observation = mean(future_observation, na.rm=TRUE)) |> 
+  summarise(mean_age = mean(age, na.rm = TRUE),
+            mean_prior_observation = mean(prior_observation, na.rm = TRUE),
+            mean_future_observation = mean(future_observation, na.rm = TRUE)) |>
   collect()
 ```
 
@@ -112,23 +112,23 @@ cdm$drug_exposure |>
 In the above examples, the functions from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) execute queries and write the results to a table in the database (either a temporary table if no name is provided when calling the function, or a permanent table). We might instead want to just get the underlying query back so that we have more control over how and when the query is executed.
 
 ```{r, echo = TRUE}
-cdm$visit_occurrence |> 
-  addSex() |> 
-  filter(sex == "Male") |> 
+cdm$visit_occurrence |>
+  addSex() |>
+  filter(sex == "Male") |>
   show_query()
 ```
 
 ```{r, echo = TRUE}
-cdm$visit_occurrence |> 
-  addSex(name = "my_new_table") |> 
-  filter(sex == "Male") |> 
+cdm$visit_occurrence |>
+  addSex(name = "my_new_table") |>
+  filter(sex == "Male") |>
   show_query()
 ```
 
 ```{r, echo = TRUE}
-cdm$visit_occurrence |> 
+cdm$visit_occurrence |>
   addSexQuery() |> 
-  filter(sex == "Male") |> 
+  filter(sex == "Male") |>
   show_query()
 ```
 
@@ -143,18 +143,18 @@ When adding age, either via [addAge](https://darwin-eu.github.io/PatientProfiles
 cdm$visit_occurrence <- cdm$visit_occurrence |>
   addAge(
     indexDate = "visit_start_date",
-    ageGroup = list(c(0,17), c(18, 64), c(65, Inf))
+    ageGroup = list(c(0, 17), c(18, 64), c(65, Inf))
   )
 
-cdm$visit_occurrence |> 
+cdm$visit_occurrence |>
   # data quality issues with our synthetic data means we have 
   # some negative ages so will drop these
-  filter(age >= 0) |> 
-  group_by(age_group) |> 
-  tally() |> 
-  collect() |> 
-  ggplot() + 
-  geom_col(aes(x = age_group, y = n, fill = age_group)) + 
+  filter(age >= 0) |>
+  group_by(age_group) |>
+  tally() |>
+  collect() |>
+  ggplot() +
+  geom_col(aes(x = age_group, y = n, fill = age_group)) +
   theme_bw()
 ```
 
@@ -167,14 +167,14 @@ As we have seen, by default the age groups are named according to their lower an
 cdm$condition_occurrence |>
   addAgeQuery(
     indexDate = "condition_start_date",
-    ageGroup = list("pediatric" = c(0,17), "adult" = c(18, Inf))
+    ageGroup = list("pediatric" = c(0, 17), "adult" = c(18, Inf))
   ) |>
-  filter(age >= 0) |> 
-  group_by(age_group) |> 
-  tally() |> 
-  collect() |> 
-  ggplot() + 
-  geom_col(aes(x = age_group, y = n, fill = age_group)) + 
+  filter(age >= 0) |>
+  group_by(age_group) |>
+  tally() |>
+  collect() |>
+  ggplot() +
+  geom_col(aes(x = age_group, y = n, fill = age_group)) +
   theme_bw()
 ```
 
@@ -205,44 +205,44 @@ While [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) provides
 In the first case, where we want to add a new variable derived from existing variables within our table, we'll typically use [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) (from the [`dplyr`](https://dplyr.tidyverse.org) package). For example, perhaps we just want to add a new variable to our observation period table that contains the year of each individual’s observation period start date. This is rather straightforward.
 
 ```{r}
-cdm$observation_period <- cdm$observation_period |> 
+cdm$observation_period <- cdm$observation_period |>
   mutate(observation_period_start_year = get_year(observation_period_start_date))
 
-cdm$observation_period |> 
+cdm$observation_period |>
   glimpse()
 ```
 
 The second case is usually a more complex task, as adding a new variable involves joining to some other table following a certain logic. This table may have been created by some intermediate query that we wrote to derive the variable of interest. For example, let's say we want to add the number of condition occurrence records for each individual to the person table (remember that we saw how to calculate this in the previous chapter). To do this, we will need to perform a join between the person and condition occurrence tables (as some people might not have any records in the condition occurrence table). Here we'll create a table containing just the information we're interested in and compute it to a temporary table.
 
 ```{r}
-condition_summary <- cdm$person |> 
-  select("person_id") |> 
+condition_summary <- cdm$person |>
+  select("person_id") |>
   left_join(
-    cdm$condition_occurrence |> 
-      group_by(person_id) |> 
+    cdm$condition_occurrence |>
+      group_by(person_id) |>
       count(name = "condition_occurrence_records"),
-    by="person_id"
-  ) |> 
-  select("person_id", "condition_occurrence_records") |> 
+    by = "person_id"
+  ) |>
+  select("person_id", "condition_occurrence_records") |>
   mutate(condition_occurrence_records = coalesce(condition_occurrence_records, 0)) |>
   compute()
 
-condition_summary |> 
+condition_summary |>
   glimpse()
 ```
 
 We can see what goes on behind the scenes by viewing the associated SQL.
 
 ```{r}
-cdm$person |> 
-  select("person_id") |> 
+cdm$person |>
+  select("person_id") |>
   left_join(
-    cdm$condition_occurrence |> 
-      group_by(person_id) |> 
+    cdm$condition_occurrence |>
+      group_by(person_id) |>
       count(name = "condition_occurrence_records"),
-    by="person_id"
-  ) |> 
-  select("person_id", "condition_occurrence_records") |> 
+    by = "person_id"
+  ) |>
+  select("person_id", "condition_occurrence_records") |>
   mutate(condition_occurrence_records = coalesce(condition_occurrence_records, 0)) |>
   show_query()
 ```

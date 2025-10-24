@@ -862,10 +862,10 @@ A case where this is not true is when we are interested in summarising distribut
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_duckdb()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
@@ -874,10 +874,10 @@ lazy_frame(x = c(1,2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_postgres()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
@@ -886,10 +886,10 @@ lazy_frame(x = c(1,2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_mssql()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
@@ -898,10 +898,10 @@ lazy_frame(x = c(1,2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_redshift()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
@@ -910,10 +910,10 @@ lazy_frame(x = c(1,2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_snowflake()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```
@@ -922,10 +922,10 @@ lazy_frame(x = c(1,2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_spark_sql()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   summarise(median = median(x, na.rm = TRUE)) |> 
   show_query()
-lazy_frame(x = c(1,2), con = con) |>
+lazy_frame(x = c(1, 2), con = con) |>
   mutate(median = median(x, na.rm = TRUE)) |> 
   show_query()
 ```

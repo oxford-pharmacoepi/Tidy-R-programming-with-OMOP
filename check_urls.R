@@ -12,7 +12,6 @@ list.files(recursive = TRUE, pattern = "\\.(qmd|md|Rmd)$", full.names = TRUE) |>
     urls <- c(urls1, urls2) |>
       unique()
     RCurl::url.exists(urls) |>
-      purrr::keep(\(x) !x) |> 
+      purrr::keep(\(x) !x) |>
       names()
   })
-

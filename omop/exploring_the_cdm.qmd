@@ -149,7 +149,7 @@ number_condition_occurrence_records <- cdm$person |>
     cdm$condition_occurrence |> 
       group_by(person_id) |> 
       count(name = "condition_occurrence_records"),
-    by="person_id"
+    by = "person_id"
   ) |> 
   mutate(condition_occurrence_records = coalesce(condition_occurrence_records, 0)) |>
   group_by(condition_occurrence_records) |>
@@ -174,7 +174,7 @@ symptoms_records <- cdm$condition_occurrence |>
 
 ggplot(symptoms_records) +
   geom_col(mapping = aes(x = concept_name, y = n)) +
-  theme_bw()+
+  theme_bw() +
   xlab("")
 ```
 
@@ -182,12 +182,12 @@ We can also use summarise for various other calculations
 
 ```{r, echo = TRUE}
 cdm$person |> 
-  summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
-            q05_year_of_birth = quantile(year_of_birth, 0.05, na.rm=TRUE),
-            mean_year_of_birth = round(mean(year_of_birth, na.rm=TRUE),0),
-            median_year_of_birth = median(year_of_birth, na.rm=TRUE),
-            q95_year_of_birth = quantile(year_of_birth, 0.95, na.rm=TRUE),
-            max_year_of_birth = max(year_of_birth, na.rm=TRUE)) |>  
+  summarise(min_year_of_birth = min(year_of_birth, na.rm = TRUE),
+            q05_year_of_birth = quantile(year_of_birth, 0.05, na.rm = TRUE),
+            mean_year_of_birth = round(mean(year_of_birth, na.rm = TRUE), 0),
+            median_year_of_birth = median(year_of_birth, na.rm = TRUE),
+            q95_year_of_birth = quantile(year_of_birth, 0.95, na.rm = TRUE),
+            max_year_of_birth = max(year_of_birth, na.rm = TRUE)) |>  
   glimpse()
 ```
 
@@ -196,11 +196,11 @@ As we've seen before, we can also quickly get results for various groupings or r
 ```{r, echo = TRUE}
 grouped_summary <- cdm$person |> 
    group_by(gender_concept_id) |> 
-   summarise(min_year_of_birth = min(year_of_birth, na.rm=TRUE),
-             q25_year_of_birth = quantile(year_of_birth, 0.25, na.rm=TRUE),
-             median_year_of_birth = median(year_of_birth, na.rm=TRUE),
-             q75_year_of_birth = quantile(year_of_birth, 0.75, na.rm=TRUE),
-             max_year_of_birth = max(year_of_birth, na.rm=TRUE)) |> 
+   summarise(min_year_of_birth = min(year_of_birth, na.rm = TRUE),
+             q25_year_of_birth = quantile(year_of_birth, 0.25, na.rm = TRUE),
+             median_year_of_birth = median(year_of_birth, na.rm = TRUE),
+             q75_year_of_birth = quantile(year_of_birth, 0.75, na.rm = TRUE),
+             max_year_of_birth = max(year_of_birth, na.rm = TRUE)) |> 
   left_join(cdm$concept, by = c("gender_concept_id" = "concept_id")) |> 
   collect() 
 
@@ -213,7 +213,7 @@ grouped_summary |>
     ymin = min_year_of_birth, 
     ymax = max_year_of_birth),
     stat = "identity", width = 0.5) + 
-  theme_bw()+ 
+  theme_bw() + 
   theme(legend.position = "none") +
   xlab("")
 
