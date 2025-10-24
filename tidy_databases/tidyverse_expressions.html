@@ -2349,7 +2349,6 @@ WINDOW
 </div>
 </div>
 </div>
-<p>TODO add note arrange vs window_order</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2394,7 +2393,7 @@ WINDOW
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb638"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb638-1"><a href="#cb638-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_duckdb</span>()</span>
-<span id="cb638-2"><a href="#cb638-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb638-2"><a href="#cb638-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb638-3"><a href="#cb638-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb638-4"><a href="#cb638-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2402,7 +2401,7 @@ WINDOW
 SELECT MEDIAN(`x`) AS `median`
 FROM `df`</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb640"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb640-1"><a href="#cb640-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb640"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb640-1"><a href="#cb640-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb640-2"><a href="#cb640-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb640-3"><a href="#cb640-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2415,7 +2414,7 @@ FROM `df`</code></pre>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb642"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb642-1"><a href="#cb642-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_postgres</span>()</span>
-<span id="cb642-2"><a href="#cb642-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb642-2"><a href="#cb642-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb642-3"><a href="#cb642-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb642-4"><a href="#cb642-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2423,7 +2422,7 @@ FROM `df`</code></pre>
 SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY `x`) AS `median`
 FROM `df`</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb644"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb644-1"><a href="#cb644-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb644"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb644-1"><a href="#cb644-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb644-2"><a href="#cb644-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb644-3"><a href="#cb644-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
@@ -2438,7 +2437,7 @@ FROM `df`</code></pre>
 <div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb646"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb646-1"><a href="#cb646-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_mssql</span>()</span>
-<span id="cb646-2"><a href="#cb646-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb646-2"><a href="#cb646-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb646-3"><a href="#cb646-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb646-4"><a href="#cb646-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
@@ -2448,7 +2447,7 @@ FROM `df`</code></pre>
 ℹ Use a combination of `distinct()` and `mutate()` for the same result:
   `mutate(&lt;col&gt; = median(x, na.rm = TRUE)) %&gt;% distinct(&lt;col&gt;)`</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb648"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb648-1"><a href="#cb648-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb648"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb648-1"><a href="#cb648-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb648-2"><a href="#cb648-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb648-3"><a href="#cb648-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2463,7 +2462,7 @@ FROM `df`</code></pre>
 <div id="tabset-8-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-4-tab">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb650"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb650-1"><a href="#cb650-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_redshift</span>()</span>
-<span id="cb650-2"><a href="#cb650-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb650-2"><a href="#cb650-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb650-3"><a href="#cb650-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb650-4"><a href="#cb650-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2471,7 +2470,7 @@ FROM `df`</code></pre>
 SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY `x`) AS `median`
 FROM `df`</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb652"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb652-1"><a href="#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb652"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb652-1"><a href="#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb652-2"><a href="#cb652-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb652-3"><a href="#cb652-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
@@ -2486,7 +2485,7 @@ FROM `df`</code></pre>
 <div id="tabset-8-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-5-tab">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb654"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb654-1"><a href="#cb654-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_snowflake</span>()</span>
-<span id="cb654-2"><a href="#cb654-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb654-2"><a href="#cb654-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb654-3"><a href="#cb654-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb654-4"><a href="#cb654-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2494,7 +2493,7 @@ FROM `df`</code></pre>
 SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY `x`) AS `median`
 FROM `df`</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb656"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb656-1"><a href="#cb656-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb656"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb656-1"><a href="#cb656-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb656-2"><a href="#cb656-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb656-3"><a href="#cb656-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2509,7 +2508,7 @@ FROM `df`</code></pre>
 <div id="tabset-8-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-6-tab">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb658"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb658-1"><a href="#cb658-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_spark_sql</span>()</span>
-<span id="cb658-2"><a href="#cb658-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb658-2"><a href="#cb658-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb658-3"><a href="#cb658-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb658-4"><a href="#cb658-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2517,7 +2516,7 @@ FROM `df`</code></pre>
 SELECT MEDIAN(`x`) AS `median`
 FROM `df`</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb660"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb660-1"><a href="#cb660-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb660"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb660-1"><a href="#cb660-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
 <span id="cb660-2"><a href="#cb660-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb660-3"><a href="#cb660-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -3839,104 +3838,102 @@ FROM `df`</code></pre>
 <span id="cb662-835"><a href="#cb662-835" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb662-836"><a href="#cb662-836" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb662-837"><a href="#cb662-837" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-838"><a href="#cb662-838" aria-hidden="true" tabindex="-1"></a>TODO add note arrange vs window_order</span>
-<span id="cb662-839"><a href="#cb662-839" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-840"><a href="#cb662-840" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb662-841"><a href="#cb662-841" aria-hidden="true" tabindex="-1"></a><span class="fu">### `arrange()` vs `window_order()`</span></span>
+<span id="cb662-838"><a href="#cb662-838" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb662-839"><a href="#cb662-839" aria-hidden="true" tabindex="-1"></a><span class="fu">### `arrange()` vs `window_order()`</span></span>
+<span id="cb662-840"><a href="#cb662-840" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-841"><a href="#cb662-841" aria-hidden="true" tabindex="-1"></a>Although <span class="in">`arrange()`</span> and <span class="in">`window_order()`</span> both involve ordering, they serve different purposes.</span>
 <span id="cb662-842"><a href="#cb662-842" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-843"><a href="#cb662-843" aria-hidden="true" tabindex="-1"></a>Although <span class="in">`arrange()`</span> and <span class="in">`window_order()`</span> both involve ordering, they serve different purposes.</span>
+<span id="cb662-843"><a href="#cb662-843" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`arrange()`:** changes the order of the final output of a table, by ordering it as the user specified. </span>
 <span id="cb662-844"><a href="#cb662-844" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-845"><a href="#cb662-845" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`arrange()`:** changes the order of the final output of a table, by ordering it as the user specified. </span>
+<span id="cb662-845"><a href="#cb662-845" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`window_order()`:** defines the order within window functions. It controlls how functions (e.g., <span class="in">`lag()`</span>, <span class="in">`lead()`</span>, <span class="in">`rank()`</span>, <span class="in">`cumsum()`</span>) are applied across rows.</span>
 <span id="cb662-846"><a href="#cb662-846" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-847"><a href="#cb662-847" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`window_order()`:** defines the order within window functions. It controlls how functions (e.g., <span class="in">`lag()`</span>, <span class="in">`lead()`</span>, <span class="in">`rank()`</span>, <span class="in">`cumsum()`</span>) are applied across rows.</span>
+<span id="cb662-847"><a href="#cb662-847" aria-hidden="true" tabindex="-1"></a>In conclusion, for all dialects, <span class="in">`arrange()`</span> changes the output row order, while <span class="in">`window_order()`</span> changes how window functions calculate values. </span>
 <span id="cb662-848"><a href="#cb662-848" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-849"><a href="#cb662-849" aria-hidden="true" tabindex="-1"></a>In conclusion, for all dialects, <span class="in">`arrange()`</span> changes the output row order, while <span class="in">`window_order()`</span> changes how window functions calculate values.</span>
+<span id="cb662-849"><a href="#cb662-849" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb662-850"><a href="#cb662-850" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-851"><a href="#cb662-851" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb662-851"><a href="#cb662-851" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculating quantiles, including the median</span></span>
 <span id="cb662-852"><a href="#cb662-852" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-853"><a href="#cb662-853" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculating quantiles, including the median</span></span>
+<span id="cb662-853"><a href="#cb662-853" aria-hidden="true" tabindex="-1"></a>So far we've seen that we can perform various data manipulations and calculate summary statistics for different database management systems using the same R code. Although the translated SQL has been different, the databases all supported similar approaches to perform these queries.</span>
 <span id="cb662-854"><a href="#cb662-854" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-855"><a href="#cb662-855" aria-hidden="true" tabindex="-1"></a>So far we've seen that we can perform various data manipulations and calculate summary statistics for different database management systems using the same R code. Although the translated SQL has been different, the databases all supported similar approaches to perform these queries.</span>
+<span id="cb662-855"><a href="#cb662-855" aria-hidden="true" tabindex="-1"></a>A case where this is not true is when we are interested in summarising distributions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately, this means that for some databases, quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.</span>
 <span id="cb662-856"><a href="#cb662-856" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-857"><a href="#cb662-857" aria-hidden="true" tabindex="-1"></a>A case where this is not true is when we are interested in summarising distributions of the data and estimating quantiles. For example, let's take estimating the median as an example. Some databases only support calculating the median as an aggregation function similar to how min, mean, and max were calculated above. However, some others only support it as a window function like lead and lag above. Unfortunately, this means that for some databases, quantiles can only be calculated using the summarise aggregation approach, while in others only the mutate window approach can be used.</span>
-<span id="cb662-858"><a href="#cb662-858" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-859"><a href="#cb662-859" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
-<span id="cb662-860"><a href="#cb662-860" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show SQL</span></span>
-<span id="cb662-861"><a href="#cb662-861" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-862"><a href="#cb662-862" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset collapse="true"}</span>
-<span id="cb662-863"><a href="#cb662-863" aria-hidden="true" tabindex="-1"></a><span class="fu">### DuckDB</span></span>
-<span id="cb662-864"><a href="#cb662-864" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-865"><a href="#cb662-865" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
-<span id="cb662-866"><a href="#cb662-866" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_duckdb</span>()</span>
-<span id="cb662-867"><a href="#cb662-867" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-868"><a href="#cb662-868" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-869"><a href="#cb662-869" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-870"><a href="#cb662-870" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-871"><a href="#cb662-871" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-872"><a href="#cb662-872" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-873"><a href="#cb662-873" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-857"><a href="#cb662-857" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
+<span id="cb662-858"><a href="#cb662-858" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show SQL</span></span>
+<span id="cb662-859"><a href="#cb662-859" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-860"><a href="#cb662-860" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset collapse="true"}</span>
+<span id="cb662-861"><a href="#cb662-861" aria-hidden="true" tabindex="-1"></a><span class="fu">### DuckDB</span></span>
+<span id="cb662-862"><a href="#cb662-862" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-863"><a href="#cb662-863" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
+<span id="cb662-864"><a href="#cb662-864" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_duckdb</span>()</span>
+<span id="cb662-865"><a href="#cb662-865" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-866"><a href="#cb662-866" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-867"><a href="#cb662-867" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-868"><a href="#cb662-868" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-869"><a href="#cb662-869" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-870"><a href="#cb662-870" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-871"><a href="#cb662-871" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-872"><a href="#cb662-872" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-873"><a href="#cb662-873" aria-hidden="true" tabindex="-1"></a><span class="fu">### Postgres</span></span>
 <span id="cb662-874"><a href="#cb662-874" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-875"><a href="#cb662-875" aria-hidden="true" tabindex="-1"></a><span class="fu">### Postgres</span></span>
-<span id="cb662-876"><a href="#cb662-876" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-877"><a href="#cb662-877" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
-<span id="cb662-878"><a href="#cb662-878" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_postgres</span>()</span>
-<span id="cb662-879"><a href="#cb662-879" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-880"><a href="#cb662-880" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-881"><a href="#cb662-881" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-882"><a href="#cb662-882" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-883"><a href="#cb662-883" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-884"><a href="#cb662-884" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-885"><a href="#cb662-885" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-875"><a href="#cb662-875" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
+<span id="cb662-876"><a href="#cb662-876" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_postgres</span>()</span>
+<span id="cb662-877"><a href="#cb662-877" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-878"><a href="#cb662-878" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-879"><a href="#cb662-879" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-880"><a href="#cb662-880" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-881"><a href="#cb662-881" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-882"><a href="#cb662-882" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-883"><a href="#cb662-883" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-884"><a href="#cb662-884" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-885"><a href="#cb662-885" aria-hidden="true" tabindex="-1"></a><span class="fu">### SQL Server</span></span>
 <span id="cb662-886"><a href="#cb662-886" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-887"><a href="#cb662-887" aria-hidden="true" tabindex="-1"></a><span class="fu">### SQL Server</span></span>
-<span id="cb662-888"><a href="#cb662-888" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-889"><a href="#cb662-889" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
-<span id="cb662-890"><a href="#cb662-890" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_mssql</span>()</span>
-<span id="cb662-891"><a href="#cb662-891" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-892"><a href="#cb662-892" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-893"><a href="#cb662-893" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-894"><a href="#cb662-894" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-895"><a href="#cb662-895" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-896"><a href="#cb662-896" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-897"><a href="#cb662-897" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-887"><a href="#cb662-887" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
+<span id="cb662-888"><a href="#cb662-888" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_mssql</span>()</span>
+<span id="cb662-889"><a href="#cb662-889" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-890"><a href="#cb662-890" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-891"><a href="#cb662-891" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-892"><a href="#cb662-892" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-893"><a href="#cb662-893" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-894"><a href="#cb662-894" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-895"><a href="#cb662-895" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-896"><a href="#cb662-896" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-897"><a href="#cb662-897" aria-hidden="true" tabindex="-1"></a><span class="fu">### Redshift</span></span>
 <span id="cb662-898"><a href="#cb662-898" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-899"><a href="#cb662-899" aria-hidden="true" tabindex="-1"></a><span class="fu">### Redshift</span></span>
-<span id="cb662-900"><a href="#cb662-900" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-901"><a href="#cb662-901" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
-<span id="cb662-902"><a href="#cb662-902" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_redshift</span>()</span>
-<span id="cb662-903"><a href="#cb662-903" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-904"><a href="#cb662-904" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-905"><a href="#cb662-905" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-906"><a href="#cb662-906" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-907"><a href="#cb662-907" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-908"><a href="#cb662-908" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-909"><a href="#cb662-909" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-899"><a href="#cb662-899" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
+<span id="cb662-900"><a href="#cb662-900" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_redshift</span>()</span>
+<span id="cb662-901"><a href="#cb662-901" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-902"><a href="#cb662-902" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-903"><a href="#cb662-903" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-904"><a href="#cb662-904" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-905"><a href="#cb662-905" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-906"><a href="#cb662-906" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-907"><a href="#cb662-907" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-908"><a href="#cb662-908" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-909"><a href="#cb662-909" aria-hidden="true" tabindex="-1"></a><span class="fu">### Snowflake</span></span>
 <span id="cb662-910"><a href="#cb662-910" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-911"><a href="#cb662-911" aria-hidden="true" tabindex="-1"></a><span class="fu">### Snowflake</span></span>
-<span id="cb662-912"><a href="#cb662-912" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-913"><a href="#cb662-913" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
-<span id="cb662-914"><a href="#cb662-914" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_snowflake</span>()</span>
-<span id="cb662-915"><a href="#cb662-915" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-916"><a href="#cb662-916" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-917"><a href="#cb662-917" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-918"><a href="#cb662-918" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-919"><a href="#cb662-919" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-920"><a href="#cb662-920" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-921"><a href="#cb662-921" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-911"><a href="#cb662-911" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
+<span id="cb662-912"><a href="#cb662-912" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_snowflake</span>()</span>
+<span id="cb662-913"><a href="#cb662-913" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-914"><a href="#cb662-914" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-915"><a href="#cb662-915" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-916"><a href="#cb662-916" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-917"><a href="#cb662-917" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-918"><a href="#cb662-918" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-919"><a href="#cb662-919" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-920"><a href="#cb662-920" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-921"><a href="#cb662-921" aria-hidden="true" tabindex="-1"></a><span class="fu">### Spark</span></span>
 <span id="cb662-922"><a href="#cb662-922" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-923"><a href="#cb662-923" aria-hidden="true" tabindex="-1"></a><span class="fu">### Spark</span></span>
-<span id="cb662-924"><a href="#cb662-924" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-925"><a href="#cb662-925" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
-<span id="cb662-926"><a href="#cb662-926" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_spark_sql</span>()</span>
-<span id="cb662-927"><a href="#cb662-927" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-928"><a href="#cb662-928" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-929"><a href="#cb662-929" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-930"><a href="#cb662-930" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
-<span id="cb662-931"><a href="#cb662-931" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb662-932"><a href="#cb662-932" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
-<span id="cb662-933"><a href="#cb662-933" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb662-934"><a href="#cb662-934" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb662-935"><a href="#cb662-935" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb662-923"><a href="#cb662-923" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, error=TRUE}</span></span>
+<span id="cb662-924"><a href="#cb662-924" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">simulate_spark_sql</span>()</span>
+<span id="cb662-925"><a href="#cb662-925" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-926"><a href="#cb662-926" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-927"><a href="#cb662-927" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-928"><a href="#cb662-928" aria-hidden="true" tabindex="-1"></a><span class="fu">lazy_frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">con =</span> con) <span class="sc">|&gt;</span></span>
+<span id="cb662-929"><a href="#cb662-929" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">median =</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb662-930"><a href="#cb662-930" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span>
+<span id="cb662-931"><a href="#cb662-931" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb662-932"><a href="#cb662-932" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb662-933"><a href="#cb662-933" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

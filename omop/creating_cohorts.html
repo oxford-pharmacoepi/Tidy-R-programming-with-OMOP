@@ -316,19 +316,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_covid&gt; [?? x 4]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpP7hxuj/file366913efe62c.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmprB2MkE/file36e62a298c32.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       1606 2021-01-18        2021-02-13     
- 2                    1       2527 2021-08-22        2021-09-14     
- 3                    1       2695 2020-07-18        2020-07-31     
- 4                    1       2002 2021-04-23        2021-04-23     
- 5                    1       2954 2020-06-13        2020-06-29     
- 6                    1       5361 2020-10-05        2020-11-01     
- 7                    1      10503 2021-08-14        2021-09-19     
- 8                    1       4029 2020-08-27        2020-09-20     
- 9                    1       4343 2021-02-08        2021-02-28     
-10                    1       4677 2020-07-31        2020-08-14     
+ 1                    1       4506 2020-11-14        2020-12-11     
+ 2                    1       5473 2021-01-01        2021-02-06     
+ 3                    1       8128 2020-12-04        2021-01-10     
+ 4                    1       8622 2020-12-06        2020-12-06     
+ 5                    1       8991 2020-12-09        2021-01-09     
+ 6                    1       9952 2020-12-18        2021-01-09     
+ 7                    1         36 2020-10-09        2020-11-07     
+ 8                    1       3324 2020-11-09        2020-11-24     
+ 9                    1       5348 2020-11-15        2020-11-27     
+10                    1       5656 2020-06-05        2020-06-21     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -406,16 +406,16 @@ Time taken: 0 minutes and 1 seconds</code></pre>
 <pre><code># A tibble: 37 × 6
    concept_id found_from   concept_name domain_id vocabulary_id standard_concept
         &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
- 1   37310254 From initia… Otitis medi… Condition SNOMED        S               
- 2   37310287 From initia… Myocarditis… Condition SNOMED        S               
- 3     703445 From initia… Low risk ca… Condition SNOMED        S               
- 4     756039 From initia… Respiratory… Condition OMOP Extensi… S               
- 5     705076 From initia… Post-acute … Condition OMOP Extensi… S               
- 6   37311061 From initia… COVID-19     Condition SNOMED        S               
- 7    3655975 From initia… Sepsis due … Condition SNOMED        S               
- 8    3655977 From initia… Rhabdomyoly… Condition SNOMED        S               
- 9     703446 From initia… Moderate ri… Condition SNOMED        S               
-10     756031 From initia… Bronchitis … Condition OMOP Extensi… S               
+ 1    3656667 From initia… Cardiomyopa… Condition SNOMED        S               
+ 2    3661885 From initia… Fever cause… Condition SNOMED        S               
+ 3   37310286 From initia… Infection o… Condition SNOMED        S               
+ 4     703447 From initia… High risk c… Condition SNOMED        S               
+ 5    3661406 From initia… Acute respi… Condition SNOMED        S               
+ 6   37016927 From initia… Pneumonia c… Condition SNOMED        S               
+ 7    1340294 From initia… Exacerbatio… Condition OMOP Extensi… S               
+ 8    3661631 From initia… Lymphocytop… Condition SNOMED        S               
+ 9    3661632 From initia… Thrombocyto… Condition SNOMED        S               
+10    3655973 From initia… At increase… Condition SNOMED        S               
 # ℹ 27 more rows</code></pre>
 </div>
 </div>
@@ -539,7 +539,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0</code></pre>
 </div>
 <p>In particular, the <code>cohort_set</code> (contains the <a href="https://darwin-eu.github.io/omopgenerics/reference/settings.html"><code>settings()</code></a> source), <code>cohort_attrition</code> (contains the source for <a href="https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html"><code>cohortCount()</code></a> and <a href="https://darwin-eu.github.io/omopgenerics/reference/attrition.html"><code>attrition()</code></a>) and <code>cohort_codelist</code> (contains the source for <a href="https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html"><code>cohortCodelist()</code></a>) attributes are the ones of interest. For database backends, these attributes are stored directly in the database so that they persist for when we read them again. Note that although it may appear that there is only one table—cdm$covid—in fact, four tables are written to the database:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> https://github.com/OHDSI/omock/issues/189 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> can be eliminated after omock 0.6.0 release</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'omopgenerics'</code></pre>
@@ -566,7 +566,7 @@ Attaching package: 'omopgenerics'</code></pre>
 <p>Let’s say we first want to restrict our cohort to only include the first record for each person. This can be done by using the funtion <a href="https://ohdsi.github.io/CohortConstructor/reference/requireIsFirstEntry.html"><code>requireIsFirstEntry()</code></a>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span> </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">requireIsFirstEntry</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">requireIsFirstEntry</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="restrict-to-study-period" class="level3" data-number="8.4.2">
@@ -574,7 +574,7 @@ Attaching package: 'omopgenerics'</code></pre>
 <p>Then we are only interested in records from January 1st, 2020 onwards.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireInDateRange</span>(<span class="at">dateRange =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>), <span class="cn">NA</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">requireInDateRange</span>(<span class="at">dateRange =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>), <span class="cn">NA</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="applying-demographic-inclusion-criteria" class="level3" data-number="8.4.3">
@@ -614,19 +614,19 @@ Attaching package: 'omopgenerics'</code></pre>
 <span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_cardiac&gt; [?? x 4]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpP7hxuj/file366913efe62c.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmprB2MkE/file36e62a298c32.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       4333 2004-05-11        2004-05-11     
- 2                    1       4841 2000-04-10        2000-04-10     
- 3                    1       4947 2018-03-02        2018-03-02     
- 4                    1       6321 2014-09-19        2014-09-19     
- 5                    1       6385 2022-12-15        2022-12-15     
- 6                    1       6745 1990-11-01        1990-11-01     
- 7                    1       7713 2011-05-20        2011-05-20     
- 8                    1       9648 1993-11-09        1993-11-09     
- 9                    1       9658 2020-03-22        2020-03-22     
-10                    1      10101 2007-12-24        2007-12-24     
+ 1                    1       2393 2002-10-24        2002-10-24     
+ 2                    1       3221 2016-12-29        2016-12-29     
+ 3                    1       3411 2005-06-14        2005-06-14     
+ 4                    1       3747 1990-07-09        1990-07-09     
+ 5                    1       5088 1991-10-15        1991-10-15     
+ 6                    1       5446 2016-07-04        2016-07-04     
+ 7                    1       5945 2020-08-18        2020-08-18     
+ 8                    1       6693 2020-03-10        2020-03-10     
+ 9                    1       7440 2014-11-27        2014-11-27     
+10                    1       7792 2011-04-12        2011-04-12     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -715,7 +715,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</c
 <p>We can visualize the attrition with the CohortCharacteristics package. We can first extract it with <code>summariseCohortAttrition()</code> and then <code>plotCohortAttrition</code> to better view the impact of applying each inclusion criteria:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>attrition_summary <span class="ot">&lt;-</span> <span class="fu">summariseCohortAttrition</span>(<span class="at">cohort =</span> cdm<span class="sc">$</span>covid)</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCohortAttrition</span>(<span class="at">result =</span> attrition_summary, <span class="at">type =</span> <span class="st">'png'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCohortAttrition</span>(<span class="at">result =</span> attrition_summary, <span class="at">type =</span> <span class="st">"png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -799,7 +799,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</c
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 5
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpP7hxuj/file366913efe62c.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmprB2MkE/file36e62a298c32.duckdb]
 $ cohort_definition_id &lt;int&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
 $ subject_id           &lt;int&gt; 71, 82, 134, 151, 153, 183, 194, 196, 200, 215, 2…
 $ cohort_start_date    &lt;date&gt; 1936-01-24, 1997-08-04, 2001-01-09, 2022-01-13, …
@@ -1467,7 +1467,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb72-152"><a href="#cb72-152" aria-hidden="true" tabindex="-1"></a>In particular, the <span class="in">`cohort_set`</span> (contains the <span class="co">[</span><span class="ot">`settings()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/settings.html)</span> source), <span class="in">`cohort_attrition`</span> (contains the source for <span class="co">[</span><span class="ot">`cohortCount()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html)</span> and <span class="co">[</span><span class="ot">`attrition()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)</span>) and <span class="in">`cohort_codelist`</span> (contains the source for <span class="co">[</span><span class="ot">`cohortCodelist()`</span><span class="co">](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)</span>) attributes are the ones of interest. For database backends, these attributes are stored directly in the database so that they persist for when we read them again. Note that although it may appear that there is only one table—cdm\$covid—in fact, four tables are written to the database:</span>
 <span id="cb72-153"><a href="#cb72-153" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-156"><a href="#cb72-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb72-157"><a href="#cb72-157" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> https://github.com/OHDSI/omock/issues/189 </span></span>
+<span id="cb72-157"><a href="#cb72-157" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> can be eliminated after omock 0.6.0 release</span></span>
 <span id="cb72-158"><a href="#cb72-158" aria-hidden="true" tabindex="-1"></a><span class="fu">listSourceTables</span>(<span class="at">cdm =</span> cdm)</span>
 <span id="cb72-159"><a href="#cb72-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb72-160"><a href="#cb72-160" aria-hidden="true" tabindex="-1"></a></span>
@@ -1482,7 +1482,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb72-169"><a href="#cb72-169" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-170"><a href="#cb72-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb72-171"><a href="#cb72-171" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span> </span>
-<span id="cb72-172"><a href="#cb72-172" aria-hidden="true" tabindex="-1"></a>     <span class="fu">requireIsFirstEntry</span>() </span>
+<span id="cb72-172"><a href="#cb72-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">requireIsFirstEntry</span>() </span>
 <span id="cb72-173"><a href="#cb72-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb72-174"><a href="#cb72-174" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-175"><a href="#cb72-175" aria-hidden="true" tabindex="-1"></a><span class="fu">### Restrict to study period</span></span>
@@ -1491,7 +1491,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb72-178"><a href="#cb72-178" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-179"><a href="#cb72-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb72-180"><a href="#cb72-180" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid <span class="ot">&lt;-</span> cdm<span class="sc">$</span>covid <span class="sc">|&gt;</span></span>
-<span id="cb72-181"><a href="#cb72-181" aria-hidden="true" tabindex="-1"></a>   <span class="fu">requireInDateRange</span>(<span class="at">dateRange =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>), <span class="cn">NA</span>))</span>
+<span id="cb72-181"><a href="#cb72-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">requireInDateRange</span>(<span class="at">dateRange =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>), <span class="cn">NA</span>))</span>
 <span id="cb72-182"><a href="#cb72-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb72-183"><a href="#cb72-183" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-184"><a href="#cb72-184" aria-hidden="true" tabindex="-1"></a><span class="fu">### Applying demographic inclusion criteria</span></span>
@@ -1577,7 +1577,7 @@ $ cohort_name          &lt;chr&gt; "concept_2_female", "concept_2_female", "conc
 <span id="cb72-264"><a href="#cb72-264" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-265"><a href="#cb72-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
 <span id="cb72-266"><a href="#cb72-266" aria-hidden="true" tabindex="-1"></a>attrition_summary <span class="ot">&lt;-</span> <span class="fu">summariseCohortAttrition</span>(<span class="at">cohort =</span> cdm<span class="sc">$</span>covid)</span>
-<span id="cb72-267"><a href="#cb72-267" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCohortAttrition</span>(<span class="at">result =</span> attrition_summary, <span class="at">type =</span> <span class="st">'png'</span>)</span>
+<span id="cb72-267"><a href="#cb72-267" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCohortAttrition</span>(<span class="at">result =</span> attrition_summary, <span class="at">type =</span> <span class="st">"png"</span>)</span>
 <span id="cb72-268"><a href="#cb72-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb72-269"><a href="#cb72-269" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-270"><a href="#cb72-270" aria-hidden="true" tabindex="-1"></a>Note that the <span class="in">`conceptCohort()`</span> first step leads to several rows in the attrition table, whereas any other <span class="in">`require*()`</span> function always adds just one record of attrition.</span>

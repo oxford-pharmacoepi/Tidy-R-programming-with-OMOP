@@ -388,16 +388,16 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    person_id gender_concept_id year_of_birth month_of_birth day_of_birth
        &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
- 1         1              8532          1974              7            1
- 2         2              8507          1954              2           25
- 3         3              8532          1998              5            2
- 4         4              8532          1958              5           23
- 5         5              8507          1964              8           14
- 6         6              8507          1972              9           24
- 7         7              8532          1964              6           22
- 8         8              8507          1992              8           10
- 9         9              8532          1967              4           21
-10        10              8532          1957              1           10
+ 1         1              8532          1977              3            6
+ 2         2              8507          1971              6           23
+ 3         3              8532          1966              7           24
+ 4         4              8532          1963              8           24
+ 5         5              8507          1962              3            7
+ 6         6              8532          1955              8           13
+ 7         7              8507          1961              3           10
+ 8         8              8507          1970              3           16
+ 9         9              8507          1981             10           22
+10        10              8507          1994             11            6
 # ℹ more rows
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
@@ -412,16 +412,16 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    observation_period_id person_id observation_period_s…¹ observation_period_e…²
                    &lt;int&gt;     &lt;int&gt; &lt;date&gt;                 &lt;date&gt;                
- 1                     1         1 1989-04-03             1995-10-15            
- 2                     2         2 1957-04-14             2017-03-02            
- 3                     3         3 2019-10-11             2019-11-14            
- 4                     4         4 2011-04-21             2016-12-07            
- 5                     5         5 2009-10-11             2015-07-12            
- 6                     6         6 1985-10-29             1994-06-28            
- 7                     7         7 1995-09-14             2017-03-31            
- 8                     8         8 2019-01-13             2019-02-17            
- 9                     9         9 1973-12-16             1980-02-12            
-10                    10        10 1977-11-25             2016-02-29            
+ 1                     1         1 2016-07-03             2016-10-03            
+ 2                     2         2 1980-03-27             2007-08-06            
+ 3                     3         3 1966-09-22             1994-09-07            
+ 4                     4         4 1981-04-04             2004-09-16            
+ 5                     5         5 2013-12-17             2019-07-13            
+ 6                     6         6 1996-03-04             2017-08-27            
+ 7                     7         7 2003-09-24             2009-04-27            
+ 8                     8         8 1979-05-02             1992-09-03            
+ 9                     9         9 2012-05-07             2014-08-27            
+10                    10        10 1997-04-20             2018-06-28            
 # ℹ more rows
 # ℹ abbreviated names: ¹​observation_period_start_date,
 #   ²​observation_period_end_date
@@ -601,9 +601,9 @@ visit_occurrence, vocabulary</code></pre>
 Columns: 4
 Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
 $ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ subject_id           &lt;int&gt; 1, 1, 1, 3, 3, 3, 4, 5, 5, 5, 6, 8, 9, 10, 12, 12…
-$ cohort_start_date    &lt;date&gt; 1989-09-20, 1991-08-04, 1995-08-27, 2019-11-04, …
-$ cohort_end_date      &lt;date&gt; 1989-12-18, 1993-08-15, 1995-10-07, 2019-11-08, …</code></pre>
+$ subject_id           &lt;int&gt; 1, 2, 3, 4, 4, 4, 4, 5, 5, 7, 7, 8, 8, 8, 8, 8, 9…
+$ cohort_start_date    &lt;date&gt; 2016-07-20, 1987-04-13, 1972-05-31, 1982-03-27, …
+$ cohort_end_date      &lt;date&gt; 2016-09-22, 1998-05-10, 1991-03-12, 1982-08-14, …</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -871,7 +871,6 @@ visit_occurrence, vocabulary</code></pre>
 </ul>
 <p>In general, for studies using OMOP CDM data, you should use <code>insertTable()</code> rather than <code>dbWriteTable()</code>. It ensures the table is both written to the correct location in the database and accessible through the cdm reference object. Only use <code>dbWriteTable()</code> if you are confident working directly with the database and understand its structure.</p>
 <p>Note <code>insertTable()</code> would also work for a local cdm reference or any other defined cdm reference source, whereas the <code>dbWriteTable()</code> is a database specific function.</p>
-<p>TODO reference to omopgenerics supported sources.</p>
 </div>
 </div>
 </div>
@@ -890,7 +889,8 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1        33              8532          1970              5           21
+1         8              8507          1970              3           16
+2        60              8507          1970              8           19
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -908,7 +908,7 @@ visit_occurrence, vocabulary</code></pre>
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
       n
   &lt;dbl&gt;
-1     1</code></pre>
+1     2</code></pre>
 </div>
 </div>
 <p>The original OMOP CDM data itself however will remain unaffected. We can see that, indeed, if we create our reference again the underlying data is unchanged.</p>
@@ -1017,15 +1017,15 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   table&lt;og_001_1761244255&gt; [?? x 18]
+<pre><code># Source:   table&lt;og_001_1761323985&gt; [?? x 18]
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         1              8532          1974              7            1
-2         2              8507          1954              2           25
-3         3              8532          1998              5            2
-4         4              8532          1958              5           23
-5         5              8507          1964              8           14
+1         1              8532          1977              3            6
+2         2              8507          1971              6           23
+3         3              8532          1966              7           24
+4         4              8532          1963              8           24
+5         5              8507          1962              3            7
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -1039,11 +1039,11 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   person_id gender_concept_id year_of_birth month_of_birth day_of_birth
       &lt;int&gt;             &lt;int&gt;         &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
-1         1              8532          1974              7            1
-2         2              8507          1954              2           25
-3         3              8532          1998              5            2
-4         4              8532          1958              5           23
-5         5              8507          1964              8           14
+1         1              8532          1977              3            6
+2         2              8507          1971              6           23
+3         3              8532          1966              7           24
+4         4              8532          1963              8           24
+5         5              8507          1962              3            7
 # ℹ 13 more variables: race_concept_id &lt;int&gt;, ethnicity_concept_id &lt;int&gt;,
 #   birth_datetime &lt;dttm&gt;, location_id &lt;int&gt;, provider_id &lt;int&gt;,
 #   care_site_id &lt;int&gt;, person_source_value &lt;chr&gt;, gender_source_value &lt;chr&gt;,
@@ -1887,134 +1887,132 @@ cdm[['new_table']] &lt;- yourObject |&gt;
 <span id="cb100-339"><a href="#cb100-339" aria-hidden="true" tabindex="-1"></a>In general, for studies using OMOP CDM data, you should use <span class="in">`insertTable()`</span> rather than <span class="in">`dbWriteTable()`</span>. It ensures the table is both written to the correct location in the database and accessible through the cdm reference object. Only use <span class="in">`dbWriteTable()`</span> if you are confident working directly with the database and understand its structure.</span>
 <span id="cb100-340"><a href="#cb100-340" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-341"><a href="#cb100-341" aria-hidden="true" tabindex="-1"></a>Note <span class="in">`insertTable()`</span> would also work for a local cdm reference or any other defined cdm reference source, whereas the <span class="in">`dbWriteTable()`</span> is a database specific function.</span>
-<span id="cb100-342"><a href="#cb100-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-343"><a href="#cb100-343" aria-hidden="true" tabindex="-1"></a>TODO reference to omopgenerics supported sources.</span>
-<span id="cb100-344"><a href="#cb100-344" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb100-342"><a href="#cb100-342" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb100-343"><a href="#cb100-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-344"><a href="#cb100-344" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mutability of the cdm reference</span></span>
 <span id="cb100-345"><a href="#cb100-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-346"><a href="#cb100-346" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mutability of the cdm reference</span></span>
+<span id="cb100-346"><a href="#cb100-346" aria-hidden="true" tabindex="-1"></a>An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected. We will therefore only be transforming the data in our cdm object but the original datasets behind it will remain intact.</span>
 <span id="cb100-347"><a href="#cb100-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-348"><a href="#cb100-348" aria-hidden="true" tabindex="-1"></a>An important characteristic of our cdm reference is that we can alter the tables in R, but the OMOP CDM data will not be affected. We will therefore only be transforming the data in our cdm object but the original datasets behind it will remain intact.</span>
+<span id="cb100-348"><a href="#cb100-348" aria-hidden="true" tabindex="-1"></a>For example, let's say we want to perform a study with only people born in 1970. For this we could filter our person table to only people born in this year.</span>
 <span id="cb100-349"><a href="#cb100-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-350"><a href="#cb100-350" aria-hidden="true" tabindex="-1"></a>For example, let's say we want to perform a study with only people born in 1970. For this we could filter our person table to only people born in this year.</span>
-<span id="cb100-351"><a href="#cb100-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-352"><a href="#cb100-352" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb100-353"><a href="#cb100-353" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb100-354"><a href="#cb100-354" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year_of_birth <span class="sc">==</span> <span class="dv">1970</span>)</span>
-<span id="cb100-355"><a href="#cb100-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-356"><a href="#cb100-356" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person</span>
-<span id="cb100-357"><a href="#cb100-357" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-350"><a href="#cb100-350" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb100-351"><a href="#cb100-351" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb100-352"><a href="#cb100-352" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year_of_birth <span class="sc">==</span> <span class="dv">1970</span>)</span>
+<span id="cb100-353"><a href="#cb100-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-354"><a href="#cb100-354" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person</span>
+<span id="cb100-355"><a href="#cb100-355" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-356"><a href="#cb100-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-357"><a href="#cb100-357" aria-hidden="true" tabindex="-1"></a>From now on, when we work with our cdm reference this restriction will continue to have been applied.</span>
 <span id="cb100-358"><a href="#cb100-358" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-359"><a href="#cb100-359" aria-hidden="true" tabindex="-1"></a>From now on, when we work with our cdm reference this restriction will continue to have been applied.</span>
-<span id="cb100-360"><a href="#cb100-360" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-361"><a href="#cb100-361" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb100-362"><a href="#cb100-362" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb100-363"><a href="#cb100-363" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
-<span id="cb100-364"><a href="#cb100-364" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-359"><a href="#cb100-359" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb100-360"><a href="#cb100-360" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb100-361"><a href="#cb100-361" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
+<span id="cb100-362"><a href="#cb100-362" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-363"><a href="#cb100-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-364"><a href="#cb100-364" aria-hidden="true" tabindex="-1"></a>The original OMOP CDM data itself however will remain unaffected. We can see that, indeed, if we create our reference again the underlying data is unchanged.</span>
 <span id="cb100-365"><a href="#cb100-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-366"><a href="#cb100-366" aria-hidden="true" tabindex="-1"></a>The original OMOP CDM data itself however will remain unaffected. We can see that, indeed, if we create our reference again the underlying data is unchanged.</span>
-<span id="cb100-367"><a href="#cb100-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-368"><a href="#cb100-368" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo = TRUE}</span></span>
-<span id="cb100-369"><a href="#cb100-369" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> con,</span>
-<span id="cb100-370"><a href="#cb100-370" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
-<span id="cb100-371"><a href="#cb100-371" aria-hidden="true" tabindex="-1"></a>                  <span class="at">writeSchema =</span> <span class="st">"main"</span>, </span>
-<span id="cb100-372"><a href="#cb100-372" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmName =</span> <span class="st">"example_data"</span>)</span>
-<span id="cb100-373"><a href="#cb100-373" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb100-374"><a href="#cb100-374" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
-<span id="cb100-375"><a href="#cb100-375" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-366"><a href="#cb100-366" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo = TRUE}</span></span>
+<span id="cb100-367"><a href="#cb100-367" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> con,</span>
+<span id="cb100-368"><a href="#cb100-368" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmSchema =</span> <span class="st">"main"</span>, </span>
+<span id="cb100-369"><a href="#cb100-369" aria-hidden="true" tabindex="-1"></a>                  <span class="at">writeSchema =</span> <span class="st">"main"</span>, </span>
+<span id="cb100-370"><a href="#cb100-370" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cdmName =</span> <span class="st">"example_data"</span>)</span>
+<span id="cb100-371"><a href="#cb100-371" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb100-372"><a href="#cb100-372" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
+<span id="cb100-373"><a href="#cb100-373" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-374"><a href="#cb100-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-375"><a href="#cb100-375" aria-hidden="true" tabindex="-1"></a>The mutability of our cdm reference is a useful feature for studies as it means we can easily tweak our OMOP CDM data if needed. Meanwhile, leaving the underlying data unchanged is essential so that other study code can run against the data, unaffected by any of our changes.</span>
 <span id="cb100-376"><a href="#cb100-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-377"><a href="#cb100-377" aria-hidden="true" tabindex="-1"></a>The mutability of our cdm reference is a useful feature for studies as it means we can easily tweak our OMOP CDM data if needed. Meanwhile, leaving the underlying data unchanged is essential so that other study code can run against the data, unaffected by any of our changes.</span>
+<span id="cb100-377"><a href="#cb100-377" aria-hidden="true" tabindex="-1"></a>One thing we can't do, though, is alter the structure of OMOP CDM tables. For example, the following code would cause an error as the person table must always have the column person_id.</span>
 <span id="cb100-378"><a href="#cb100-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-379"><a href="#cb100-379" aria-hidden="true" tabindex="-1"></a>One thing we can't do, though, is alter the structure of OMOP CDM tables. For example, the following code would cause an error as the person table must always have the column person_id.</span>
-<span id="cb100-380"><a href="#cb100-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-381"><a href="#cb100-381" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
-<span id="cb100-382"><a href="#cb100-382" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb100-383"><a href="#cb100-383" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"new_id"</span> <span class="ot">=</span> <span class="st">"person_id"</span>)</span>
-<span id="cb100-384"><a href="#cb100-384" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-379"><a href="#cb100-379" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
+<span id="cb100-380"><a href="#cb100-380" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb100-381"><a href="#cb100-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"new_id"</span> <span class="ot">=</span> <span class="st">"person_id"</span>)</span>
+<span id="cb100-382"><a href="#cb100-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-383"><a href="#cb100-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-384"><a href="#cb100-384" aria-hidden="true" tabindex="-1"></a>In such a case we would have to call the table something else first, and then run the previous code:</span>
 <span id="cb100-385"><a href="#cb100-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-386"><a href="#cb100-386" aria-hidden="true" tabindex="-1"></a>In such a case we would have to call the table something else first, and then run the previous code:</span>
-<span id="cb100-387"><a href="#cb100-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-390"><a href="#cb100-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb100-391"><a href="#cb100-391" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb100-392"><a href="#cb100-392" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"new_id"</span> <span class="ot">=</span> <span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb100-393"><a href="#cb100-393" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"person_new"</span>)</span>
-<span id="cb100-394"><a href="#cb100-394" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-388"><a href="#cb100-388" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb100-389"><a href="#cb100-389" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb100-390"><a href="#cb100-390" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"new_id"</span> <span class="ot">=</span> <span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb100-391"><a href="#cb100-391" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"person_new"</span>)</span>
+<span id="cb100-392"><a href="#cb100-392" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-393"><a href="#cb100-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-394"><a href="#cb100-394" aria-hidden="true" tabindex="-1"></a>Now we would be allowed to have this new table as an additional table in our cdm reference, knowing it was not in the format of one of the core OMOP CDM tables.</span>
 <span id="cb100-395"><a href="#cb100-395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-396"><a href="#cb100-396" aria-hidden="true" tabindex="-1"></a>Now we would be allowed to have this new table as an additional table in our cdm reference, knowing it was not in the format of one of the core OMOP CDM tables.</span>
-<span id="cb100-397"><a href="#cb100-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-398"><a href="#cb100-398" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb100-399"><a href="#cb100-399" aria-hidden="true" tabindex="-1"></a>cdm</span>
-<span id="cb100-400"><a href="#cb100-400" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-396"><a href="#cb100-396" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb100-397"><a href="#cb100-397" aria-hidden="true" tabindex="-1"></a>cdm</span>
+<span id="cb100-398"><a href="#cb100-398" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-399"><a href="#cb100-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-400"><a href="#cb100-400" aria-hidden="true" tabindex="-1"></a>The package <span class="in">`omopgenerics`</span> provides a comprehensive list of the required features of a valid cdm reference. You can read more about it <span class="co">[</span><span class="ot">here</span><span class="co">](https://darwin-eu.github.io/omopgenerics/articles/cdm_reference.html)</span>.</span>
 <span id="cb100-401"><a href="#cb100-401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-402"><a href="#cb100-402" aria-hidden="true" tabindex="-1"></a>The package <span class="in">`omopgenerics`</span> provides a comprehensive list of the required features of a valid cdm reference. You can read more about it <span class="co">[</span><span class="ot">here</span><span class="co">](https://darwin-eu.github.io/omopgenerics/articles/cdm_reference.html)</span>.</span>
-<span id="cb100-403"><a href="#cb100-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-404"><a href="#cb100-404" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb100-405"><a href="#cb100-405" aria-hidden="true" tabindex="-1"></a><span class="fu">### Name consistency</span></span>
+<span id="cb100-402"><a href="#cb100-402" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb100-403"><a href="#cb100-403" aria-hidden="true" tabindex="-1"></a><span class="fu">### Name consistency</span></span>
+<span id="cb100-404"><a href="#cb100-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-405"><a href="#cb100-405" aria-hidden="true" tabindex="-1"></a>Note also that there must be a name consistency between the name of the table and the assignment in the cdm_reference object.</span>
 <span id="cb100-406"><a href="#cb100-406" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-407"><a href="#cb100-407" aria-hidden="true" tabindex="-1"></a>Note also that there must be a name consistency between the name of the table and the assignment in the cdm_reference object.</span>
-<span id="cb100-408"><a href="#cb100-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-409"><a href="#cb100-409" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
-<span id="cb100-410"><a href="#cb100-410" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>new_table <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb100-411"><a href="#cb100-411" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"not_new_table"</span>)</span>
-<span id="cb100-412"><a href="#cb100-412" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb100-413"><a href="#cb100-413" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb100-407"><a href="#cb100-407" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
+<span id="cb100-408"><a href="#cb100-408" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>new_table <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb100-409"><a href="#cb100-409" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"not_new_table"</span>)</span>
+<span id="cb100-410"><a href="#cb100-410" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-411"><a href="#cb100-411" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb100-412"><a href="#cb100-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-413"><a href="#cb100-413" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with temporary and permanent tables</span></span>
 <span id="cb100-414"><a href="#cb100-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-415"><a href="#cb100-415" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with temporary and permanent tables</span></span>
+<span id="cb100-415"><a href="#cb100-415" aria-hidden="true" tabindex="-1"></a>When we create new tables and our cdm reference is in a database we have a choice between using temporary or permanent tables. In most cases we can work with these interchangeably. Below we create one temporary table and one permanent table. We can see that both of these tables have been added to our cdm reference and that we can use them in the same way. Note that any new computed table will by default be temporary unless otherwise specified.</span>
 <span id="cb100-416"><a href="#cb100-416" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-417"><a href="#cb100-417" aria-hidden="true" tabindex="-1"></a>When we create new tables and our cdm reference is in a database we have a choice between using temporary or permanent tables. In most cases we can work with these interchangeably. Below we create one temporary table and one permanent table. We can see that both of these tables have been added to our cdm reference and that we can use them in the same way. Note that any new computed table will by default be temporary unless otherwise specified.</span>
-<span id="cb100-418"><a href="#cb100-418" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-419"><a href="#cb100-419" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb100-420"><a href="#cb100-420" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb100-421"><a href="#cb100-421" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb100-422"><a href="#cb100-422" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">temporary =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb100-423"><a href="#cb100-423" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb100-424"><a href="#cb100-424" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-425"><a href="#cb100-425" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb100-426"><a href="#cb100-426" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_permanent <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb100-427"><a href="#cb100-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb100-428"><a href="#cb100-428" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"person_new_permanent"</span>, <span class="at">temporary =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb100-429"><a href="#cb100-429" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb100-430"><a href="#cb100-430" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-431"><a href="#cb100-431" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb100-432"><a href="#cb100-432" aria-hidden="true" tabindex="-1"></a>cdm</span>
+<span id="cb100-417"><a href="#cb100-417" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb100-418"><a href="#cb100-418" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb100-419"><a href="#cb100-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb100-420"><a href="#cb100-420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">temporary =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb100-421"><a href="#cb100-421" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-422"><a href="#cb100-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-423"><a href="#cb100-423" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb100-424"><a href="#cb100-424" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_permanent <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb100-425"><a href="#cb100-425" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb100-426"><a href="#cb100-426" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"person_new_permanent"</span>, <span class="at">temporary =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb100-427"><a href="#cb100-427" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-428"><a href="#cb100-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-429"><a href="#cb100-429" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb100-430"><a href="#cb100-430" aria-hidden="true" tabindex="-1"></a>cdm</span>
+<span id="cb100-431"><a href="#cb100-431" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-432"><a href="#cb100-432" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp</span>
 <span id="cb100-433"><a href="#cb100-433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-434"><a href="#cb100-434" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp</span>
-<span id="cb100-435"><a href="#cb100-435" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-436"><a href="#cb100-436" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_permanent</span>
-<span id="cb100-437"><a href="#cb100-437" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-434"><a href="#cb100-434" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_permanent</span>
+<span id="cb100-435"><a href="#cb100-435" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-436"><a href="#cb100-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-437"><a href="#cb100-437" aria-hidden="true" tabindex="-1"></a>One benefit of working with temporary tables is that they will be automatically dropped at the end of the session, whereas the permanent tables will be left in the database until explicitly dropped. This helps maintain the original database structure tidy and free of irrelevant data.</span>
 <span id="cb100-438"><a href="#cb100-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-439"><a href="#cb100-439" aria-hidden="true" tabindex="-1"></a>One benefit of working with temporary tables is that they will be automatically dropped at the end of the session, whereas the permanent tables will be left in the database until explicitly dropped. This helps maintain the original database structure tidy and free of irrelevant data.</span>
+<span id="cb100-439"><a href="#cb100-439" aria-hidden="true" tabindex="-1"></a>However, one disadvantage of using temporary tables is that we will generally accumulate more and more of them as we go (in a single R session), whereas we can overwrite permanent tables continuously. For example, if our study code contains a loop that requires a compute, we would either overwrite an intermediate permanent table 100 times or create 100 different temporary tables in the process. In the latter case we should be wary of consuming a lot of drive memory, which could lead to performance issues or even crashes.</span>
 <span id="cb100-440"><a href="#cb100-440" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-441"><a href="#cb100-441" aria-hidden="true" tabindex="-1"></a>However, one disadvantage of using temporary tables is that we will generally accumulate more and more of them as we go (in a single R session), whereas we can overwrite permanent tables continuously. For example, if our study code contains a loop that requires a compute, we would either overwrite an intermediate permanent table 100 times or create 100 different temporary tables in the process. In the latter case we should be wary of consuming a lot of drive memory, which could lead to performance issues or even crashes.</span>
-<span id="cb100-442"><a href="#cb100-442" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-443"><a href="#cb100-443" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb100-444"><a href="#cb100-444" aria-hidden="true" tabindex="-1"></a><span class="fu">### `name` argument in `compute()`</span></span>
+<span id="cb100-441"><a href="#cb100-441" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb100-442"><a href="#cb100-442" aria-hidden="true" tabindex="-1"></a><span class="fu">### `name` argument in `compute()`</span></span>
+<span id="cb100-443"><a href="#cb100-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-444"><a href="#cb100-444" aria-hidden="true" tabindex="-1"></a>Note that in the previous examples we explicitly specified the name of the new table and whether it must be temporary or permanent (temporary = FALSE), but we do not need to populate the temporary field explicitly as if name is left as NULL (default behavior), then the table will be temporary (temporary = TRUE), and if the name argument is populated with a character (e.g., name = "my_custom_table"), then the created table will be permanent:</span>
 <span id="cb100-445"><a href="#cb100-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-446"><a href="#cb100-446" aria-hidden="true" tabindex="-1"></a>Note that in the previous examples we explicitly specified the name of the new table and whether it must be temporary or permanent (temporary = FALSE), but we do not need to populate the temporary field explicitly as if name is left as NULL (default behavior), then the table will be temporary (temporary = TRUE), and if the name argument is populated with a character (e.g., name = "my_custom_table"), then the created table will be permanent:</span>
-<span id="cb100-447"><a href="#cb100-447" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-450"><a href="#cb100-450" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb100-451"><a href="#cb100-451" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb100-452"><a href="#cb100-452" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>()</span>
-<span id="cb100-453"><a href="#cb100-453" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-454"><a href="#cb100-454" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_permanent <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb100-455"><a href="#cb100-455" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"person_new_permanent"</span>)</span>
-<span id="cb100-456"><a href="#cb100-456" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb100-457"><a href="#cb100-457" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb100-448"><a href="#cb100-448" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb100-449"><a href="#cb100-449" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_temp <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb100-450"><a href="#cb100-450" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>()</span>
+<span id="cb100-451"><a href="#cb100-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-452"><a href="#cb100-452" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person_new_permanent <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb100-453"><a href="#cb100-453" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>(<span class="at">name =</span> <span class="st">"person_new_permanent"</span>)</span>
+<span id="cb100-454"><a href="#cb100-454" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-455"><a href="#cb100-455" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb100-456"><a href="#cb100-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-457"><a href="#cb100-457" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting</span></span>
 <span id="cb100-458"><a href="#cb100-458" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-459"><a href="#cb100-459" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting</span></span>
+<span id="cb100-459"><a href="#cb100-459" aria-hidden="true" tabindex="-1"></a>Once we have finished our analysis we can close our connection to the database behind our cdm reference.</span>
 <span id="cb100-460"><a href="#cb100-460" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-461"><a href="#cb100-461" aria-hidden="true" tabindex="-1"></a>Once we have finished our analysis we can close our connection to the database behind our cdm reference.</span>
-<span id="cb100-462"><a href="#cb100-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-465"><a href="#cb100-465" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb100-466"><a href="#cb100-466" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span>
-<span id="cb100-467"><a href="#cb100-467" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-463"><a href="#cb100-463" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb100-464"><a href="#cb100-464" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span>
+<span id="cb100-465"><a href="#cb100-465" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb100-466"><a href="#cb100-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-467"><a href="#cb100-467" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
 <span id="cb100-468"><a href="#cb100-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-469"><a href="#cb100-469" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
-<span id="cb100-470"><a href="#cb100-470" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-471"><a href="#cb100-471" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Català M, Burn E (2025). *omopgenerics: Methods and Classes for thecOMOP Common Data Model*. R package version 1.3.1, <span class="ot">&lt;https://darwin-eu.github.io/omopgenerics/&gt;</span>.</span>
-<span id="cb100-472"><a href="#cb100-472" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Black A, Gorbachev A, Burn E, Català M, Nika I (2025). CDMConnector: Connect to an OMOP Common Data Model. R package version 2.2.0, <span class="ot">&lt;https://darwin-eu.github.io/CDMConnector/&gt;</span>.</span>
-<span id="cb100-473"><a href="#cb100-473" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>OmopOnPostgres (*in progress*)</span>
-<span id="cb100-474"><a href="#cb100-474" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>OmopOnSpark (*in progress*)</span>
-<span id="cb100-475"><a href="#cb100-475" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>OmopOnDuckDB (*in progress*)</span>
+<span id="cb100-469"><a href="#cb100-469" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Català M, Burn E (2025). *omopgenerics: Methods and Classes for thecOMOP Common Data Model*. R package version 1.3.1, <span class="ot">&lt;https://darwin-eu.github.io/omopgenerics/&gt;</span>.</span>
+<span id="cb100-470"><a href="#cb100-470" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Black A, Gorbachev A, Burn E, Català M, Nika I (2025). CDMConnector: Connect to an OMOP Common Data Model. R package version 2.2.0, <span class="ot">&lt;https://darwin-eu.github.io/CDMConnector/&gt;</span>.</span>
+<span id="cb100-471"><a href="#cb100-471" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>OmopOnPostgres (*in progress*)</span>
+<span id="cb100-472"><a href="#cb100-472" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>OmopOnSpark (*in progress*)</span>
+<span id="cb100-473"><a href="#cb100-473" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>OmopOnDuckDB (*in progress*)</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

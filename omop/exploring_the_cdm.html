@@ -280,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omock)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clock)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> https://github.com/OHDSI/omock/issues/189 </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> can be eliminated after omock 0.6.0 release</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(OmopSketch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -362,7 +362,7 @@ visit_detail, visit_occurrence, vocabulary</code></pre>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpcNPbp9/file35692d8c693d.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0lBew8/file35e24b7ee9b0.duckdb]
       n
   &lt;dbl&gt;
 1 10754</code></pre>
@@ -404,7 +404,7 @@ visit_detail, visit_occurrence, vocabulary</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 10
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpcNPbp9/file35692d8c693d.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0lBew8/file35e24b7ee9b0.duckdb]
 $ concept_id       &lt;int&gt; 45756805, 45756804, 45756803, 45756802, 45756801, 457…
 $ concept_name     &lt;chr&gt; "Pediatric Cardiology", "Pediatric Anesthesiology", "…
 $ domain_id        &lt;chr&gt; "Provider", "Provider", "Provider", "Provider", "Prov…
@@ -424,7 +424,7 @@ $ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpcNPbp9/file35692d8c693d.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0lBew8/file35e24b7ee9b0.duckdb]
 $ concept_id_1     &lt;int&gt; 35804314, 35804314, 35804314, 35804327, 35804327, 358…
 $ concept_id_2     &lt;int&gt; 912065, 42542145, 42542145, 35803584, 42542145, 42542…
 $ relationship_id  &lt;chr&gt; "Has modality", "Has accepted use", "Is current in", …
@@ -437,7 +437,7 @@ $ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 4
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpcNPbp9/file35692d8c693d.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0lBew8/file35e24b7ee9b0.duckdb]
 $ ancestor_concept_id      &lt;int&gt; 375415, 727760, 735979, 438112, 529411, 14196…
 $ descendant_concept_id    &lt;int&gt; 4335743, 2056453, 41070383, 36566114, 4326940…
 $ min_levels_of_separation &lt;int&gt; 4, 1, 3, 2, 3, 3, 4, 3, 2, 5, 1, 3, 4, 2, 2, …
@@ -468,7 +468,7 @@ $ max_levels_of_separation &lt;int&gt; 4, 1, 5, 3, 3, 6, 12, 3, 2, 10, 1, 3, 4, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 24
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpcNPbp9/file35692d8c693d.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0lBew8/file35e24b7ee9b0.duckdb]
 $ person_id                        &lt;int&gt; 10752, 10754, 10746, 10753, 10745, 10…
 $ gender_concept_id                &lt;int&gt; 8532, 8507, 8532, 8507, 8532, 8507, 8…
 $ year_of_birth                    &lt;int&gt; 2017, 1942, 2017, 1953, 2010, 1930, 1…
@@ -503,7 +503,7 @@ $ ethnicity_source_concept_id_name &lt;chr&gt; "No matching concept", "No matchi
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 19
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpcNPbp9/file35692d8c693d.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0lBew8/file35e24b7ee9b0.duckdb]
 $ person_id                   &lt;int&gt; 10752, 10754, 10746, 10753, 10745, 10751, …
 $ gender_concept_id           &lt;int&gt; 8532, 8507, 8532, 8507, 8532, 8507, 8532, …
 $ year_of_birth               &lt;int&gt; 2017, 1942, 2017, 1953, 2010, 1930, 1970, …
@@ -572,7 +572,7 @@ $ sex                         &lt;chr&gt; "FEMALE", "MALE", "FEMALE", "MALE", "F
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">by=</span><span class="st">"person_id"</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"person_id"</span></span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">coalesce</span>(condition_occurrence_records, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition_occurrence_records) <span class="sc">|&gt;</span></span>
@@ -602,7 +602,7 @@ $ sex                         &lt;chr&gt; "FEMALE", "MALE", "FEMALE", "MALE", "F
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(symptoms_records) <span class="sc">+</span></span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> concept_name, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
@@ -615,17 +615,17 @@ $ sex                         &lt;chr&gt; "FEMALE", "MALE", "FEMALE", "MALE", "F
 <p>We can also use summarise for various other calculations</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">q05_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.05</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_year_of_birth =</span> <span class="fu">round</span>(<span class="fu">mean</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">0</span>),</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">q95_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.95</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">q05_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.05</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_year_of_birth =</span> <span class="fu">round</span>(<span class="fu">mean</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">0</span>),</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">q95_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.95</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span>  </span>
 <span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpcNPbp9/file35692d8c693d.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp0lBew8/file35e24b7ee9b0.duckdb]
 $ min_year_of_birth    &lt;int&gt; 1923
 $ q05_year_of_birth    &lt;dbl&gt; 1927
 $ mean_year_of_birth   &lt;dbl&gt; 1971
@@ -638,11 +638,11 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>grouped_summary <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(gender_concept_id) <span class="sc">|&gt;</span> </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">q25_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.25</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">q75_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.75</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">q25_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">q75_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"gender_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -655,7 +655,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
 <span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> min_year_of_birth, </span>
 <span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> max_year_of_birth),</span>
 <span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span> </span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
 <span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -674,23 +674,23 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseObservationPeriod</span>(cdm<span class="sc">$</span>observation_period)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tableObservationPeriod</span>(<span class="at">result =</span> result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="oygnwjuipu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#oygnwjuipu table {
+<div id="eypabxgtdz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#eypabxgtdz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#oygnwjuipu thead, #oygnwjuipu tbody, #oygnwjuipu tfoot, #oygnwjuipu tr, #oygnwjuipu td, #oygnwjuipu th {
+#eypabxgtdz thead, #eypabxgtdz tbody, #eypabxgtdz tfoot, #eypabxgtdz tr, #eypabxgtdz td, #eypabxgtdz th {
   border-style: none;
 }
 
-#oygnwjuipu p {
+#eypabxgtdz p {
   margin: 0;
   padding: 0;
 }
 
-#oygnwjuipu .gt_table {
+#eypabxgtdz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -716,12 +716,12 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-left-color: #D9D9D9;
 }
 
-#oygnwjuipu .gt_caption {
+#eypabxgtdz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#oygnwjuipu .gt_title {
+#eypabxgtdz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -733,7 +733,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-bottom-width: 0;
 }
 
-#oygnwjuipu .gt_subtitle {
+#eypabxgtdz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -745,7 +745,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-top-width: 0;
 }
 
-#oygnwjuipu .gt_heading {
+#eypabxgtdz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -757,13 +757,13 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#oygnwjuipu .gt_bottom_border {
+#eypabxgtdz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#oygnwjuipu .gt_col_headings {
+#eypabxgtdz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -778,7 +778,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#oygnwjuipu .gt_col_heading {
+#eypabxgtdz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -798,7 +798,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   overflow-x: hidden;
 }
 
-#oygnwjuipu .gt_column_spanner_outer {
+#eypabxgtdz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -810,15 +810,15 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 4px;
 }
 
-#oygnwjuipu .gt_column_spanner_outer:first-child {
+#eypabxgtdz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#oygnwjuipu .gt_column_spanner_outer:last-child {
+#eypabxgtdz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#oygnwjuipu .gt_column_spanner {
+#eypabxgtdz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -830,11 +830,11 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   width: 100%;
 }
 
-#oygnwjuipu .gt_spanner_row {
+#eypabxgtdz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#oygnwjuipu .gt_group_heading {
+#eypabxgtdz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -860,7 +860,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   text-align: left;
 }
 
-#oygnwjuipu .gt_empty_group_heading {
+#eypabxgtdz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -875,15 +875,15 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   vertical-align: middle;
 }
 
-#oygnwjuipu .gt_from_md > :first-child {
+#eypabxgtdz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#oygnwjuipu .gt_from_md > :last-child {
+#eypabxgtdz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#oygnwjuipu .gt_row {
+#eypabxgtdz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -902,7 +902,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   overflow-x: hidden;
 }
 
-#oygnwjuipu .gt_stub {
+#eypabxgtdz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -915,7 +915,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 5px;
 }
 
-#oygnwjuipu .gt_stub_row_group {
+#eypabxgtdz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -929,15 +929,15 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   vertical-align: top;
 }
 
-#oygnwjuipu .gt_row_group_first td {
+#eypabxgtdz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#oygnwjuipu .gt_row_group_first th {
+#eypabxgtdz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#oygnwjuipu .gt_summary_row {
+#eypabxgtdz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -947,16 +947,16 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 5px;
 }
 
-#oygnwjuipu .gt_first_summary_row {
+#eypabxgtdz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#oygnwjuipu .gt_first_summary_row.thick {
+#eypabxgtdz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#oygnwjuipu .gt_last_summary_row {
+#eypabxgtdz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -966,7 +966,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#oygnwjuipu .gt_grand_summary_row {
+#eypabxgtdz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -976,7 +976,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 5px;
 }
 
-#oygnwjuipu .gt_first_grand_summary_row {
+#eypabxgtdz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -986,7 +986,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#oygnwjuipu .gt_last_grand_summary_row_top {
+#eypabxgtdz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -996,11 +996,11 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#oygnwjuipu .gt_striped {
+#eypabxgtdz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#oygnwjuipu .gt_table_body {
+#eypabxgtdz .gt_table_body {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #D9D9D9;
@@ -1009,7 +1009,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#oygnwjuipu .gt_footnotes {
+#eypabxgtdz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1023,7 +1023,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#oygnwjuipu .gt_footnote {
+#eypabxgtdz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1032,7 +1032,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 5px;
 }
 
-#oygnwjuipu .gt_sourcenotes {
+#eypabxgtdz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1046,7 +1046,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#oygnwjuipu .gt_sourcenote {
+#eypabxgtdz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1054,72 +1054,72 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 5px;
 }
 
-#oygnwjuipu .gt_left {
+#eypabxgtdz .gt_left {
   text-align: left;
 }
 
-#oygnwjuipu .gt_center {
+#eypabxgtdz .gt_center {
   text-align: center;
 }
 
-#oygnwjuipu .gt_right {
+#eypabxgtdz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#oygnwjuipu .gt_font_normal {
+#eypabxgtdz .gt_font_normal {
   font-weight: normal;
 }
 
-#oygnwjuipu .gt_font_bold {
+#eypabxgtdz .gt_font_bold {
   font-weight: bold;
 }
 
-#oygnwjuipu .gt_font_italic {
+#eypabxgtdz .gt_font_italic {
   font-style: italic;
 }
 
-#oygnwjuipu .gt_super {
+#eypabxgtdz .gt_super {
   font-size: 65%;
 }
 
-#oygnwjuipu .gt_footnote_marks {
+#eypabxgtdz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#oygnwjuipu .gt_asterisk {
+#eypabxgtdz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#oygnwjuipu .gt_indent_1 {
+#eypabxgtdz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#oygnwjuipu .gt_indent_2 {
+#eypabxgtdz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#oygnwjuipu .gt_indent_3 {
+#eypabxgtdz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#oygnwjuipu .gt_indent_4 {
+#eypabxgtdz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#oygnwjuipu .gt_indent_5 {
+#eypabxgtdz .gt_indent_5 {
   text-indent: 25px;
 }
 
-#oygnwjuipu .katex-display {
+#eypabxgtdz .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#oygnwjuipu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#eypabxgtdz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1257,14 +1257,14 @@ CDM name
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ The following estimates will be computed:
 • age: median
-→ Start summary of data, at 2025-10-23 18:32:36.322842
+→ Start summary of data, at 2025-10-24 16:41:23.92931
 
-✔ Summary finished, at 2025-10-23 18:32:36.484312
+✔ Summary finished, at 2025-10-24 16:41:24.088495
 ℹ The following estimates will be computed:
 • age: median
-→ Start summary of data, at 2025-10-23 18:32:38.479882
+→ Start summary of data, at 2025-10-24 16:41:26.048637
 
-✔ Summary finished, at 2025-10-23 18:32:38.690504</code></pre>
+✔ Summary finished, at 2025-10-24 16:41:26.25421</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotInObservation</span>(<span class="at">result =</span> result, <span class="at">colour =</span> <span class="st">"sex"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -1290,23 +1290,23 @@ CDM name
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tableClinicalRecords</span>(<span class="at">result =</span> result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="pyxibmztio" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#pyxibmztio table {
+<div id="picsfskphq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#picsfskphq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pyxibmztio thead, #pyxibmztio tbody, #pyxibmztio tfoot, #pyxibmztio tr, #pyxibmztio td, #pyxibmztio th {
+#picsfskphq thead, #picsfskphq tbody, #picsfskphq tfoot, #picsfskphq tr, #picsfskphq td, #picsfskphq th {
   border-style: none;
 }
 
-#pyxibmztio p {
+#picsfskphq p {
   margin: 0;
   padding: 0;
 }
 
-#pyxibmztio .gt_table {
+#picsfskphq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1332,12 +1332,12 @@ CDM name
   border-left-color: #D9D9D9;
 }
 
-#pyxibmztio .gt_caption {
+#picsfskphq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pyxibmztio .gt_title {
+#picsfskphq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1349,7 +1349,7 @@ CDM name
   border-bottom-width: 0;
 }
 
-#pyxibmztio .gt_subtitle {
+#picsfskphq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1361,7 +1361,7 @@ CDM name
   border-top-width: 0;
 }
 
-#pyxibmztio .gt_heading {
+#picsfskphq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1373,13 +1373,13 @@ CDM name
   border-right-color: #D3D3D3;
 }
 
-#pyxibmztio .gt_bottom_border {
+#picsfskphq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pyxibmztio .gt_col_headings {
+#picsfskphq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1394,7 +1394,7 @@ CDM name
   border-right-color: #D3D3D3;
 }
 
-#pyxibmztio .gt_col_heading {
+#picsfskphq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1414,7 +1414,7 @@ CDM name
   overflow-x: hidden;
 }
 
-#pyxibmztio .gt_column_spanner_outer {
+#picsfskphq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1426,15 +1426,15 @@ CDM name
   padding-right: 4px;
 }
 
-#pyxibmztio .gt_column_spanner_outer:first-child {
+#picsfskphq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pyxibmztio .gt_column_spanner_outer:last-child {
+#picsfskphq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pyxibmztio .gt_column_spanner {
+#picsfskphq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1446,11 +1446,11 @@ CDM name
   width: 100%;
 }
 
-#pyxibmztio .gt_spanner_row {
+#picsfskphq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pyxibmztio .gt_group_heading {
+#picsfskphq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1476,7 +1476,7 @@ CDM name
   text-align: left;
 }
 
-#pyxibmztio .gt_empty_group_heading {
+#picsfskphq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1491,15 +1491,15 @@ CDM name
   vertical-align: middle;
 }
 
-#pyxibmztio .gt_from_md > :first-child {
+#picsfskphq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pyxibmztio .gt_from_md > :last-child {
+#picsfskphq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pyxibmztio .gt_row {
+#picsfskphq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1518,7 +1518,7 @@ CDM name
   overflow-x: hidden;
 }
 
-#pyxibmztio .gt_stub {
+#picsfskphq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1531,7 +1531,7 @@ CDM name
   padding-right: 5px;
 }
 
-#pyxibmztio .gt_stub_row_group {
+#picsfskphq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1545,15 +1545,15 @@ CDM name
   vertical-align: top;
 }
 
-#pyxibmztio .gt_row_group_first td {
+#picsfskphq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pyxibmztio .gt_row_group_first th {
+#picsfskphq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pyxibmztio .gt_summary_row {
+#picsfskphq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1563,16 +1563,16 @@ CDM name
   padding-right: 5px;
 }
 
-#pyxibmztio .gt_first_summary_row {
+#picsfskphq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pyxibmztio .gt_first_summary_row.thick {
+#picsfskphq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pyxibmztio .gt_last_summary_row {
+#picsfskphq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1582,7 +1582,7 @@ CDM name
   border-bottom-color: #D3D3D3;
 }
 
-#pyxibmztio .gt_grand_summary_row {
+#picsfskphq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1592,7 +1592,7 @@ CDM name
   padding-right: 5px;
 }
 
-#pyxibmztio .gt_first_grand_summary_row {
+#picsfskphq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1602,7 +1602,7 @@ CDM name
   border-top-color: #D3D3D3;
 }
 
-#pyxibmztio .gt_last_grand_summary_row_top {
+#picsfskphq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1612,11 +1612,11 @@ CDM name
   border-bottom-color: #D3D3D3;
 }
 
-#pyxibmztio .gt_striped {
+#picsfskphq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pyxibmztio .gt_table_body {
+#picsfskphq .gt_table_body {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #D9D9D9;
@@ -1625,7 +1625,7 @@ CDM name
   border-bottom-color: #D3D3D3;
 }
 
-#pyxibmztio .gt_footnotes {
+#picsfskphq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1639,7 +1639,7 @@ CDM name
   border-right-color: #D3D3D3;
 }
 
-#pyxibmztio .gt_footnote {
+#picsfskphq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1648,7 +1648,7 @@ CDM name
   padding-right: 5px;
 }
 
-#pyxibmztio .gt_sourcenotes {
+#picsfskphq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1662,7 +1662,7 @@ CDM name
   border-right-color: #D3D3D3;
 }
 
-#pyxibmztio .gt_sourcenote {
+#picsfskphq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1670,72 +1670,72 @@ CDM name
   padding-right: 5px;
 }
 
-#pyxibmztio .gt_left {
+#picsfskphq .gt_left {
   text-align: left;
 }
 
-#pyxibmztio .gt_center {
+#picsfskphq .gt_center {
   text-align: center;
 }
 
-#pyxibmztio .gt_right {
+#picsfskphq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pyxibmztio .gt_font_normal {
+#picsfskphq .gt_font_normal {
   font-weight: normal;
 }
 
-#pyxibmztio .gt_font_bold {
+#picsfskphq .gt_font_bold {
   font-weight: bold;
 }
 
-#pyxibmztio .gt_font_italic {
+#picsfskphq .gt_font_italic {
   font-style: italic;
 }
 
-#pyxibmztio .gt_super {
+#picsfskphq .gt_super {
   font-size: 65%;
 }
 
-#pyxibmztio .gt_footnote_marks {
+#picsfskphq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pyxibmztio .gt_asterisk {
+#picsfskphq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pyxibmztio .gt_indent_1 {
+#picsfskphq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pyxibmztio .gt_indent_2 {
+#picsfskphq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pyxibmztio .gt_indent_3 {
+#picsfskphq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pyxibmztio .gt_indent_4 {
+#picsfskphq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pyxibmztio .gt_indent_5 {
+#picsfskphq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#pyxibmztio .katex-display {
+#picsfskphq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#pyxibmztio div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#picsfskphq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2363,7 +2363,7 @@ Database name
 <span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omock)</span>
 <span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clock)</span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> https://github.com/OHDSI/omock/issues/189 </span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> can be eliminated after omock 0.6.0 release</span></span>
 <span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
 <span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(OmopSketch)</span>
 <span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
@@ -2505,7 +2505,7 @@ Database name
 <span id="cb50-157"><a href="#cb50-157" aria-hidden="true" tabindex="-1"></a>    cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
 <span id="cb50-158"><a href="#cb50-158" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
 <span id="cb50-159"><a href="#cb50-159" aria-hidden="true" tabindex="-1"></a>      <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
-<span id="cb50-160"><a href="#cb50-160" aria-hidden="true" tabindex="-1"></a>    <span class="at">by=</span><span class="st">"person_id"</span></span>
+<span id="cb50-160"><a href="#cb50-160" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"person_id"</span></span>
 <span id="cb50-161"><a href="#cb50-161" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
 <span id="cb50-162"><a href="#cb50-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">coalesce</span>(condition_occurrence_records, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb50-163"><a href="#cb50-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition_occurrence_records) <span class="sc">|&gt;</span></span>
@@ -2530,7 +2530,7 @@ Database name
 <span id="cb50-182"><a href="#cb50-182" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-183"><a href="#cb50-183" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(symptoms_records) <span class="sc">+</span></span>
 <span id="cb50-184"><a href="#cb50-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> concept_name, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb50-185"><a href="#cb50-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb50-185"><a href="#cb50-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb50-186"><a href="#cb50-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span>
 <span id="cb50-187"><a href="#cb50-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb50-188"><a href="#cb50-188" aria-hidden="true" tabindex="-1"></a></span>
@@ -2538,12 +2538,12 @@ Database name
 <span id="cb50-190"><a href="#cb50-190" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-191"><a href="#cb50-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
 <span id="cb50-192"><a href="#cb50-192" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb50-193"><a href="#cb50-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb50-194"><a href="#cb50-194" aria-hidden="true" tabindex="-1"></a>            <span class="at">q05_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.05</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb50-195"><a href="#cb50-195" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_year_of_birth =</span> <span class="fu">round</span>(<span class="fu">mean</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">0</span>),</span>
-<span id="cb50-196"><a href="#cb50-196" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb50-197"><a href="#cb50-197" aria-hidden="true" tabindex="-1"></a>            <span class="at">q95_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.95</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb50-198"><a href="#cb50-198" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb50-193"><a href="#cb50-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-194"><a href="#cb50-194" aria-hidden="true" tabindex="-1"></a>            <span class="at">q05_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.05</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-195"><a href="#cb50-195" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_year_of_birth =</span> <span class="fu">round</span>(<span class="fu">mean</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">0</span>),</span>
+<span id="cb50-196"><a href="#cb50-196" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-197"><a href="#cb50-197" aria-hidden="true" tabindex="-1"></a>            <span class="at">q95_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.95</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-198"><a href="#cb50-198" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span>  </span>
 <span id="cb50-199"><a href="#cb50-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb50-200"><a href="#cb50-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb50-201"><a href="#cb50-201" aria-hidden="true" tabindex="-1"></a></span>
@@ -2552,11 +2552,11 @@ Database name
 <span id="cb50-204"><a href="#cb50-204" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
 <span id="cb50-205"><a href="#cb50-205" aria-hidden="true" tabindex="-1"></a>grouped_summary <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
 <span id="cb50-206"><a href="#cb50-206" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(gender_concept_id) <span class="sc">|&gt;</span> </span>
-<span id="cb50-207"><a href="#cb50-207" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb50-208"><a href="#cb50-208" aria-hidden="true" tabindex="-1"></a>             <span class="at">q25_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.25</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb50-209"><a href="#cb50-209" aria-hidden="true" tabindex="-1"></a>             <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb50-210"><a href="#cb50-210" aria-hidden="true" tabindex="-1"></a>             <span class="at">q75_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.75</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb50-211"><a href="#cb50-211" aria-hidden="true" tabindex="-1"></a>             <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb50-207"><a href="#cb50-207" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-208"><a href="#cb50-208" aria-hidden="true" tabindex="-1"></a>             <span class="at">q25_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-209"><a href="#cb50-209" aria-hidden="true" tabindex="-1"></a>             <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-210"><a href="#cb50-210" aria-hidden="true" tabindex="-1"></a>             <span class="at">q75_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-211"><a href="#cb50-211" aria-hidden="true" tabindex="-1"></a>             <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb50-212"><a href="#cb50-212" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"gender_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb50-213"><a href="#cb50-213" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>
 <span id="cb50-214"><a href="#cb50-214" aria-hidden="true" tabindex="-1"></a></span>
@@ -2569,7 +2569,7 @@ Database name
 <span id="cb50-221"><a href="#cb50-221" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> min_year_of_birth, </span>
 <span id="cb50-222"><a href="#cb50-222" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> max_year_of_birth),</span>
 <span id="cb50-223"><a href="#cb50-223" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb50-224"><a href="#cb50-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span> </span>
+<span id="cb50-224"><a href="#cb50-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
 <span id="cb50-225"><a href="#cb50-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb50-226"><a href="#cb50-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span>
 <span id="cb50-227"><a href="#cb50-227" aria-hidden="true" tabindex="-1"></a></span>

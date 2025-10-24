@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-10-23">
+<meta name="dcterms.date" content="2025-10-24">
 
 <title>Tidy R programming with the OMOP Common Data Model</title>
 <style>
@@ -251,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
   <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
-  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a></li>
+  <li><a href="#sec-r_packages" id="toc-sec-r_packages" class="nav-link" data-scroll-target="#sec-r_packages">R Packages</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -272,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 23, 2025</p>
+      <p class="date">October 24, 2025</p>
     </div>
   </div>
   
@@ -294,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="is-this-book-for-me" class="level2">
 <h2 class="anchored" data-anchor-id="is-this-book-for-me">Is this book for me?</h2>
 <p>We’ve written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <a href="https://design.tidyverse.org/unifying.html">Tidy design principles</a> for more details on these principles).</p>
-<p>New to R? We recommend you take a look at <a href="https://r4ds.had.co.nz/">R for data science</a> before reading this book. We assume that you have <a href="https://cran.r-project.org">R</a> installed together with an adequate Integrated Development Environment (IDE) such as <a href="https://posit.co/download/rstudio-desktop/">RStudio</a> or <a href="https://positron.posit.co">Positron</a>. See this <a href="https://rstudio-education.github.io/hopr/starting.html">tutorial</a> if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list in the <a href="TODO">R packages</a> section.</p>
+<p>New to R? We recommend you take a look at <a href="https://r4ds.had.co.nz/">R for data science</a> before reading this book. We assume that you have <a href="https://cran.r-project.org">R</a> installed together with an adequate Integrated Development Environment (IDE) such as <a href="https://posit.co/download/rstudio-desktop/">RStudio</a> or <a href="https://positron.posit.co">Positron</a>. See this <a href="https://rstudio-education.github.io/hopr/starting.html">tutorial</a> if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list of packages used in <a href="#sec-r_packages" class="quarto-xref"><span>R Packages</span></a>.</p>
 <p>New to databases? We recommend you take a look at some web tutorials on SQL, such as <a href="https://sqlbolt.com/">SQLBolt</a> or <a href="https://www.sqlzoo.net/wiki/SQL_Tutorial">SQLZoo</a> to have a basic understanding of how databases work.</p>
 <p>New to the OMOP CDM? We’d recommend you pair this book with <a href="https://ohdsi.github.io/TheBookOfOhdsi/">The Book of OHDSI</a>.</p>
 </section>
@@ -323,28 +323,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="code">Code</h2>
 <p>The source code for the book can be found at this <a href="https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP">GitHub repository</a>, please star it if you found it useful.</p>
 </section>
-<section id="r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="r-packages">R Packages</h2>
+<section id="sec-r_packages" class="level2">
+<h2 class="anchored" data-anchor-id="sec-r_packages">R Packages</h2>
 <p>This book is rendered automatically through <a href="https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml">GitHub Actions</a> using the following version of packages:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="ohhqutbkif" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ohhqutbkif table {
+<div id="zktjrhroia" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zktjrhroia table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ohhqutbkif thead, #ohhqutbkif tbody, #ohhqutbkif tfoot, #ohhqutbkif tr, #ohhqutbkif td, #ohhqutbkif th {
+#zktjrhroia thead, #zktjrhroia tbody, #zktjrhroia tfoot, #zktjrhroia tr, #zktjrhroia td, #zktjrhroia th {
   border-style: none;
 }
 
-#ohhqutbkif p {
+#zktjrhroia p {
   margin: 0;
   padding: 0;
 }
 
-#ohhqutbkif .gt_table {
+#zktjrhroia .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -370,12 +370,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_caption {
+#zktjrhroia .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ohhqutbkif .gt_title {
+#zktjrhroia .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -387,7 +387,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#ohhqutbkif .gt_subtitle {
+#zktjrhroia .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -399,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#ohhqutbkif .gt_heading {
+#zktjrhroia .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -411,13 +411,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_bottom_border {
+#zktjrhroia .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_col_headings {
+#zktjrhroia .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -432,7 +432,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_col_heading {
+#zktjrhroia .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -452,7 +452,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#ohhqutbkif .gt_column_spanner_outer {
+#zktjrhroia .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -464,15 +464,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#ohhqutbkif .gt_column_spanner_outer:first-child {
+#zktjrhroia .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ohhqutbkif .gt_column_spanner_outer:last-child {
+#zktjrhroia .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ohhqutbkif .gt_column_spanner {
+#zktjrhroia .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -484,11 +484,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#ohhqutbkif .gt_spanner_row {
+#zktjrhroia .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ohhqutbkif .gt_group_heading {
+#zktjrhroia .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -514,7 +514,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#ohhqutbkif .gt_empty_group_heading {
+#zktjrhroia .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -529,15 +529,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#ohhqutbkif .gt_from_md > :first-child {
+#zktjrhroia .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ohhqutbkif .gt_from_md > :last-child {
+#zktjrhroia .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ohhqutbkif .gt_row {
+#zktjrhroia .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -556,7 +556,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#ohhqutbkif .gt_stub {
+#zktjrhroia .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -569,7 +569,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#ohhqutbkif .gt_stub_row_group {
+#zktjrhroia .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -583,15 +583,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#ohhqutbkif .gt_row_group_first td {
+#zktjrhroia .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ohhqutbkif .gt_row_group_first th {
+#zktjrhroia .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ohhqutbkif .gt_summary_row {
+#zktjrhroia .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -601,16 +601,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#ohhqutbkif .gt_first_summary_row {
+#zktjrhroia .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_first_summary_row.thick {
+#zktjrhroia .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ohhqutbkif .gt_last_summary_row {
+#zktjrhroia .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -620,7 +620,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_grand_summary_row {
+#zktjrhroia .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -630,7 +630,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#ohhqutbkif .gt_first_grand_summary_row {
+#zktjrhroia .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -640,7 +640,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_last_grand_summary_row_top {
+#zktjrhroia .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -650,11 +650,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_striped {
+#zktjrhroia .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ohhqutbkif .gt_table_body {
+#zktjrhroia .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -663,7 +663,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_footnotes {
+#zktjrhroia .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -677,7 +677,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_footnote {
+#zktjrhroia .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -686,7 +686,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#ohhqutbkif .gt_sourcenotes {
+#zktjrhroia .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -700,7 +700,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#ohhqutbkif .gt_sourcenote {
+#zktjrhroia .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -708,72 +708,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#ohhqutbkif .gt_left {
+#zktjrhroia .gt_left {
   text-align: left;
 }
 
-#ohhqutbkif .gt_center {
+#zktjrhroia .gt_center {
   text-align: center;
 }
 
-#ohhqutbkif .gt_right {
+#zktjrhroia .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ohhqutbkif .gt_font_normal {
+#zktjrhroia .gt_font_normal {
   font-weight: normal;
 }
 
-#ohhqutbkif .gt_font_bold {
+#zktjrhroia .gt_font_bold {
   font-weight: bold;
 }
 
-#ohhqutbkif .gt_font_italic {
+#zktjrhroia .gt_font_italic {
   font-style: italic;
 }
 
-#ohhqutbkif .gt_super {
+#zktjrhroia .gt_super {
   font-size: 65%;
 }
 
-#ohhqutbkif .gt_footnote_marks {
+#zktjrhroia .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ohhqutbkif .gt_asterisk {
+#zktjrhroia .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ohhqutbkif .gt_indent_1 {
+#zktjrhroia .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ohhqutbkif .gt_indent_2 {
+#zktjrhroia .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ohhqutbkif .gt_indent_3 {
+#zktjrhroia .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ohhqutbkif .gt_indent_4 {
+#zktjrhroia .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ohhqutbkif .gt_indent_5 {
+#zktjrhroia .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ohhqutbkif .katex-display {
+#zktjrhroia .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ohhqutbkif div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zktjrhroia div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1406,7 +1406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>We've written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <span class="co">[</span><span class="ot">Tidy design principles</span><span class="co">](https://design.tidyverse.org/unifying.html)</span> for more details on these principles).</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>New to R? We recommend you take a look at <span class="co">[</span><span class="ot">R for data science</span><span class="co">](https://r4ds.had.co.nz/)</span> before reading this book. We assume that you have <span class="co">[</span><span class="ot">R</span><span class="co">](https://cran.r-project.org)</span> installed together with an adequate Integrated Development Environment (IDE) such as <span class="co">[</span><span class="ot">RStudio</span><span class="co">](https://posit.co/download/rstudio-desktop/)</span> or <span class="co">[</span><span class="ot">Positron</span><span class="co">](https://positron.posit.co)</span>. See this <span class="co">[</span><span class="ot">tutorial</span><span class="co">](https://rstudio-education.github.io/hopr/starting.html)</span> if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list in the <span class="co">[</span><span class="ot">R packages</span><span class="co">](TODO)</span> section.</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>New to R? We recommend you take a look at <span class="co">[</span><span class="ot">R for data science</span><span class="co">](https://r4ds.had.co.nz/)</span> before reading this book. We assume that you have <span class="co">[</span><span class="ot">R</span><span class="co">](https://cran.r-project.org)</span> installed together with an adequate Integrated Development Environment (IDE) such as <span class="co">[</span><span class="ot">RStudio</span><span class="co">](https://posit.co/download/rstudio-desktop/)</span> or <span class="co">[</span><span class="ot">Positron</span><span class="co">](https://positron.posit.co)</span>. See this <span class="co">[</span><span class="ot">tutorial</span><span class="co">](https://rstudio-education.github.io/hopr/starting.html)</span> if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list of packages used in @sec-r_packages.</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>New to databases? We recommend you take a look at some web tutorials on SQL, such as <span class="co">[</span><span class="ot">SQLBolt</span><span class="co">](https://sqlbolt.com/)</span> or <span class="co">[</span><span class="ot">SQLZoo</span><span class="co">](https://www.sqlzoo.net/wiki/SQL_Tutorial)</span> to have a basic understanding of how databases work.</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
@@ -1441,7 +1441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>The source code for the book can be found at this <span class="co">[</span><span class="ot">GitHub repository</span><span class="co">](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP)</span>, please star it if you found it useful.</span>
 <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## R Packages</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## R Packages {#sec-r_packages}</span></span>
 <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>This book is rendered automatically through <span class="co">[</span><span class="ot">GitHub Actions</span><span class="co">](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml)</span> using the following version of packages:</span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
