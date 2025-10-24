@@ -142,7 +142,7 @@ names(attributes(cdm$covid))
 In particular, the `cohort_set` (contains the [`settings()`](https://darwin-eu.github.io/omopgenerics/reference/settings.html) source), `cohort_attrition` (contains the source for [`cohortCount()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCount.html) and [`attrition()`](https://darwin-eu.github.io/omopgenerics/reference/attrition.html)) and `cohort_codelist` (contains the source for [`cohortCodelist()`](https://darwin-eu.github.io/omopgenerics/reference/cohortCodelist.html)) attributes are the ones of interest. For database backends, these attributes are stored directly in the database so that they persist for when we read them again. Note that although it may appear that there is only one table—cdm\$covid—in fact, four tables are written to the database:
 
 ```{r}
-library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
+library(omopgenerics) # TODO can be eliminated after omock 0.6.0 release
 listSourceTables(cdm = cdm)
 ```
 

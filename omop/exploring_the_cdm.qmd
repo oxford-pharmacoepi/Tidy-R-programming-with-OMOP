@@ -7,7 +7,7 @@ library(dplyr)
 library(omock)
 library(ggplot2)
 library(clock)
-library(omopgenerics) # TODO https://github.com/OHDSI/omock/issues/189 
+library(omopgenerics) # TODO can be eliminated after omock 0.6.0 release
 library(PatientProfiles)
 library(OmopSketch)
 ```

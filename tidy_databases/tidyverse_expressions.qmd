@@ -835,8 +835,6 @@ lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
 :::
 :::
 
-TODO add note arrange vs window_order
-
 ::: {.callout-note collapse="true"}
 ### `arrange()` vs `window_order()`
 
@@ -846,7 +844,7 @@ Although `arrange()` and `window_order()` both involve ordering, they serve diff
 
 - **`window_order()`:** defines the order within window functions. It controlls how functions (e.g., `lag()`, `lead()`, `rank()`, `cumsum()`) are applied across rows.
 
-In conclusion, for all dialects, `arrange()` changes the output row order, while `window_order()` changes how window functions calculate values.
+In conclusion, for all dialects, `arrange()` changes the output row order, while `window_order()` changes how window functions calculate values. 
 
 :::
 

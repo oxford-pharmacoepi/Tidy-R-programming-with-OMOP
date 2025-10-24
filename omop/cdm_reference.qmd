@@ -321,8 +321,6 @@ listSourceTables(cdm = cdm)
 In general, for studies using OMOP CDM data, you should use `insertTable()` rather than `dbWriteTable()`. It ensures the table is both written to the correct location in the database and accessible through the cdm reference object. Only use `dbWriteTable()` if you are confident working directly with the database and understand its structure.
 
 Note `insertTable()` would also work for a local cdm reference or any other defined cdm reference source, whereas the `dbWriteTable()` is a database specific function.
-
-TODO reference to omopgenerics supported sources.
 :::
 
 ## Mutability of the cdm reference
