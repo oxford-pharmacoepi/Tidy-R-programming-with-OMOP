@@ -34,7 +34,7 @@ If you found this book useful, please help us by citing it:
 
 ```{r, eval=FALSE}
 Burn E, Català M. Tidy R programming with the OMOP Common Data Model. GitHub; 
-2025. https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP
+2025. https://github.com/OHDSI/Tidy-R-programming-with-OMOP
 ```
 
 ## License
@@ -45,11 +45,11 @@ Burn E, Català M. Tidy R programming with the OMOP Common Data Model. GitHub;
 
 ## Code
 
-The source code for the book can be found at this [GitHub repository](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP), please star it if you found it useful.
+The source code for the book can be found at this [GitHub repository](https://github.com/OHDSI/Tidy-R-programming-with-OMOP), please star it if you found it useful.
 
 ## R Packages {#sec-r_packages}
 
-This book is rendered automatically through [GitHub Actions](https://github.com/oxford-pharmacoepi/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml) using the following version of packages:
+This book is rendered automatically through [GitHub Actions](https://github.com/OHDSI/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml) using the following version of packages:
 
 ```{r, echo=FALSE, message=FALSE}
 explicitPkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE, recursive = TRUE) |>
