@@ -280,9 +280,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omock)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clock)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> can be eliminated after omock 0.6.0 release</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(OmopSketch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(OmopSketch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You can download the dataset using the function <code>downloadMockDataset()</code>:</p>
 <div class="cell">
@@ -362,7 +361,7 @@ visit_detail, visit_occurrence, vocabulary</code></pre>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmphVUD9z/file34b3316f5605.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5whJpT/file53954399d0cf.duckdb]
       n
   &lt;dbl&gt;
 1 10754</code></pre>
@@ -404,7 +403,7 @@ visit_detail, visit_occurrence, vocabulary</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 10
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmphVUD9z/file34b3316f5605.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5whJpT/file53954399d0cf.duckdb]
 $ concept_id       &lt;int&gt; 45756805, 45756804, 45756803, 45756802, 45756801, 457…
 $ concept_name     &lt;chr&gt; "Pediatric Cardiology", "Pediatric Anesthesiology", "…
 $ domain_id        &lt;chr&gt; "Provider", "Provider", "Provider", "Provider", "Prov…
@@ -424,7 +423,7 @@ $ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmphVUD9z/file34b3316f5605.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5whJpT/file53954399d0cf.duckdb]
 $ concept_id_1     &lt;int&gt; 35804314, 35804314, 35804314, 35804327, 35804327, 358…
 $ concept_id_2     &lt;int&gt; 912065, 42542145, 42542145, 35803584, 42542145, 42542…
 $ relationship_id  &lt;chr&gt; "Has modality", "Has accepted use", "Is current in", …
@@ -437,7 +436,7 @@ $ invalid_reason   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 4
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmphVUD9z/file34b3316f5605.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5whJpT/file53954399d0cf.duckdb]
 $ ancestor_concept_id      &lt;int&gt; 375415, 727760, 735979, 438112, 529411, 14196…
 $ descendant_concept_id    &lt;int&gt; 4335743, 2056453, 41070383, 36566114, 4326940…
 $ min_levels_of_separation &lt;int&gt; 4, 1, 3, 2, 3, 3, 4, 3, 2, 5, 1, 3, 4, 2, 2, …
@@ -468,7 +467,7 @@ $ max_levels_of_separation &lt;int&gt; 4, 1, 5, 3, 3, 6, 12, 3, 2, 10, 1, 3, 4, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 24
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmphVUD9z/file34b3316f5605.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5whJpT/file53954399d0cf.duckdb]
 $ person_id                        &lt;int&gt; 10752, 10754, 10746, 10753, 10745, 10…
 $ gender_concept_id                &lt;int&gt; 8532, 8507, 8532, 8507, 8532, 8507, 8…
 $ year_of_birth                    &lt;int&gt; 2017, 1942, 2017, 1953, 2010, 1930, 1…
@@ -503,7 +502,7 @@ $ ethnicity_source_concept_id_name &lt;chr&gt; "No matching concept", "No matchi
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 19
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmphVUD9z/file34b3316f5605.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5whJpT/file53954399d0cf.duckdb]
 $ person_id                   &lt;int&gt; 10752, 10754, 10746, 10753, 10745, 10751, …
 $ gender_concept_id           &lt;int&gt; 8532, 8507, 8532, 8507, 8532, 8507, 8532, …
 $ year_of_birth               &lt;int&gt; 2017, 1942, 2017, 1953, 2010, 1930, 1970, …
@@ -625,7 +624,7 @@ $ sex                         &lt;chr&gt; "FEMALE", "MALE", "FEMALE", "MALE", "F
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmphVUD9z/file34b3316f5605.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp5whJpT/file53954399d0cf.duckdb]
 $ min_year_of_birth    &lt;int&gt; 1923
 $ q05_year_of_birth    &lt;dbl&gt; 1927
 $ mean_year_of_birth   &lt;dbl&gt; 1971
@@ -674,23 +673,23 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseObservationPeriod</span>(cdm<span class="sc">$</span>observation_period)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tableObservationPeriod</span>(<span class="at">result =</span> result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="zazaknuzvq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zazaknuzvq table {
+<div id="uorboukcny" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uorboukcny table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zazaknuzvq thead, #zazaknuzvq tbody, #zazaknuzvq tfoot, #zazaknuzvq tr, #zazaknuzvq td, #zazaknuzvq th {
+#uorboukcny thead, #uorboukcny tbody, #uorboukcny tfoot, #uorboukcny tr, #uorboukcny td, #uorboukcny th {
   border-style: none;
 }
 
-#zazaknuzvq p {
+#uorboukcny p {
   margin: 0;
   padding: 0;
 }
 
-#zazaknuzvq .gt_table {
+#uorboukcny .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -716,12 +715,12 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-left-color: #D9D9D9;
 }
 
-#zazaknuzvq .gt_caption {
+#uorboukcny .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zazaknuzvq .gt_title {
+#uorboukcny .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -733,7 +732,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-bottom-width: 0;
 }
 
-#zazaknuzvq .gt_subtitle {
+#uorboukcny .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -745,7 +744,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-top-width: 0;
 }
 
-#zazaknuzvq .gt_heading {
+#uorboukcny .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -757,13 +756,13 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zazaknuzvq .gt_bottom_border {
+#uorboukcny .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zazaknuzvq .gt_col_headings {
+#uorboukcny .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -778,7 +777,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zazaknuzvq .gt_col_heading {
+#uorboukcny .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -798,7 +797,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   overflow-x: hidden;
 }
 
-#zazaknuzvq .gt_column_spanner_outer {
+#uorboukcny .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -810,15 +809,15 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 4px;
 }
 
-#zazaknuzvq .gt_column_spanner_outer:first-child {
+#uorboukcny .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zazaknuzvq .gt_column_spanner_outer:last-child {
+#uorboukcny .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zazaknuzvq .gt_column_spanner {
+#uorboukcny .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -830,11 +829,11 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   width: 100%;
 }
 
-#zazaknuzvq .gt_spanner_row {
+#uorboukcny .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zazaknuzvq .gt_group_heading {
+#uorboukcny .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -860,7 +859,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   text-align: left;
 }
 
-#zazaknuzvq .gt_empty_group_heading {
+#uorboukcny .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -875,15 +874,15 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   vertical-align: middle;
 }
 
-#zazaknuzvq .gt_from_md > :first-child {
+#uorboukcny .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zazaknuzvq .gt_from_md > :last-child {
+#uorboukcny .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zazaknuzvq .gt_row {
+#uorboukcny .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -902,7 +901,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   overflow-x: hidden;
 }
 
-#zazaknuzvq .gt_stub {
+#uorboukcny .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -915,7 +914,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 5px;
 }
 
-#zazaknuzvq .gt_stub_row_group {
+#uorboukcny .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -929,15 +928,15 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   vertical-align: top;
 }
 
-#zazaknuzvq .gt_row_group_first td {
+#uorboukcny .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zazaknuzvq .gt_row_group_first th {
+#uorboukcny .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zazaknuzvq .gt_summary_row {
+#uorboukcny .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -947,16 +946,16 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 5px;
 }
 
-#zazaknuzvq .gt_first_summary_row {
+#uorboukcny .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zazaknuzvq .gt_first_summary_row.thick {
+#uorboukcny .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zazaknuzvq .gt_last_summary_row {
+#uorboukcny .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -966,7 +965,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#zazaknuzvq .gt_grand_summary_row {
+#uorboukcny .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -976,7 +975,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 5px;
 }
 
-#zazaknuzvq .gt_first_grand_summary_row {
+#uorboukcny .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -986,7 +985,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#zazaknuzvq .gt_last_grand_summary_row_top {
+#uorboukcny .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -996,11 +995,11 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#zazaknuzvq .gt_striped {
+#uorboukcny .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zazaknuzvq .gt_table_body {
+#uorboukcny .gt_table_body {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #D9D9D9;
@@ -1009,7 +1008,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#zazaknuzvq .gt_footnotes {
+#uorboukcny .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1023,7 +1022,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zazaknuzvq .gt_footnote {
+#uorboukcny .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1032,7 +1031,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 5px;
 }
 
-#zazaknuzvq .gt_sourcenotes {
+#uorboukcny .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1046,7 +1045,7 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zazaknuzvq .gt_sourcenote {
+#uorboukcny .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1054,72 +1053,72 @@ $ max_year_of_birth    &lt;int&gt; 2023</code></pre>
   padding-right: 5px;
 }
 
-#zazaknuzvq .gt_left {
+#uorboukcny .gt_left {
   text-align: left;
 }
 
-#zazaknuzvq .gt_center {
+#uorboukcny .gt_center {
   text-align: center;
 }
 
-#zazaknuzvq .gt_right {
+#uorboukcny .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zazaknuzvq .gt_font_normal {
+#uorboukcny .gt_font_normal {
   font-weight: normal;
 }
 
-#zazaknuzvq .gt_font_bold {
+#uorboukcny .gt_font_bold {
   font-weight: bold;
 }
 
-#zazaknuzvq .gt_font_italic {
+#uorboukcny .gt_font_italic {
   font-style: italic;
 }
 
-#zazaknuzvq .gt_super {
+#uorboukcny .gt_super {
   font-size: 65%;
 }
 
-#zazaknuzvq .gt_footnote_marks {
+#uorboukcny .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zazaknuzvq .gt_asterisk {
+#uorboukcny .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zazaknuzvq .gt_indent_1 {
+#uorboukcny .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zazaknuzvq .gt_indent_2 {
+#uorboukcny .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zazaknuzvq .gt_indent_3 {
+#uorboukcny .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zazaknuzvq .gt_indent_4 {
+#uorboukcny .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zazaknuzvq .gt_indent_5 {
+#uorboukcny .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zazaknuzvq .katex-display {
+#uorboukcny .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zazaknuzvq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#uorboukcny div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1257,14 +1256,14 @@ CDM name
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ The following estimates will be computed:
 • age: median
-→ Start summary of data, at 2025-10-27 00:57:08.826834
+→ Start summary of data, at 2025-10-31 15:28:53.402939
 
-✔ Summary finished, at 2025-10-27 00:57:08.985981
+✔ Summary finished, at 2025-10-31 15:28:53.566107
 ℹ The following estimates will be computed:
 • age: median
-→ Start summary of data, at 2025-10-27 00:57:10.986425
+→ Start summary of data, at 2025-10-31 15:28:55.590017
 
-✔ Summary finished, at 2025-10-27 00:57:11.197248</code></pre>
+✔ Summary finished, at 2025-10-31 15:28:55.80453</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotInObservation</span>(<span class="at">result =</span> result, <span class="at">colour =</span> <span class="st">"sex"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -1290,23 +1289,23 @@ CDM name
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tableClinicalRecords</span>(<span class="at">result =</span> result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="mgiwdfcptd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mgiwdfcptd table {
+<div id="kehxdeoktw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kehxdeoktw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mgiwdfcptd thead, #mgiwdfcptd tbody, #mgiwdfcptd tfoot, #mgiwdfcptd tr, #mgiwdfcptd td, #mgiwdfcptd th {
+#kehxdeoktw thead, #kehxdeoktw tbody, #kehxdeoktw tfoot, #kehxdeoktw tr, #kehxdeoktw td, #kehxdeoktw th {
   border-style: none;
 }
 
-#mgiwdfcptd p {
+#kehxdeoktw p {
   margin: 0;
   padding: 0;
 }
 
-#mgiwdfcptd .gt_table {
+#kehxdeoktw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1332,12 +1331,12 @@ CDM name
   border-left-color: #D9D9D9;
 }
 
-#mgiwdfcptd .gt_caption {
+#kehxdeoktw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mgiwdfcptd .gt_title {
+#kehxdeoktw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1349,7 +1348,7 @@ CDM name
   border-bottom-width: 0;
 }
 
-#mgiwdfcptd .gt_subtitle {
+#kehxdeoktw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1361,7 +1360,7 @@ CDM name
   border-top-width: 0;
 }
 
-#mgiwdfcptd .gt_heading {
+#kehxdeoktw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1373,13 +1372,13 @@ CDM name
   border-right-color: #D3D3D3;
 }
 
-#mgiwdfcptd .gt_bottom_border {
+#kehxdeoktw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mgiwdfcptd .gt_col_headings {
+#kehxdeoktw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1394,7 +1393,7 @@ CDM name
   border-right-color: #D3D3D3;
 }
 
-#mgiwdfcptd .gt_col_heading {
+#kehxdeoktw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1414,7 +1413,7 @@ CDM name
   overflow-x: hidden;
 }
 
-#mgiwdfcptd .gt_column_spanner_outer {
+#kehxdeoktw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1426,15 +1425,15 @@ CDM name
   padding-right: 4px;
 }
 
-#mgiwdfcptd .gt_column_spanner_outer:first-child {
+#kehxdeoktw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mgiwdfcptd .gt_column_spanner_outer:last-child {
+#kehxdeoktw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mgiwdfcptd .gt_column_spanner {
+#kehxdeoktw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1446,11 +1445,11 @@ CDM name
   width: 100%;
 }
 
-#mgiwdfcptd .gt_spanner_row {
+#kehxdeoktw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mgiwdfcptd .gt_group_heading {
+#kehxdeoktw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1476,7 +1475,7 @@ CDM name
   text-align: left;
 }
 
-#mgiwdfcptd .gt_empty_group_heading {
+#kehxdeoktw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1491,15 +1490,15 @@ CDM name
   vertical-align: middle;
 }
 
-#mgiwdfcptd .gt_from_md > :first-child {
+#kehxdeoktw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mgiwdfcptd .gt_from_md > :last-child {
+#kehxdeoktw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mgiwdfcptd .gt_row {
+#kehxdeoktw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1518,7 +1517,7 @@ CDM name
   overflow-x: hidden;
 }
 
-#mgiwdfcptd .gt_stub {
+#kehxdeoktw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1531,7 +1530,7 @@ CDM name
   padding-right: 5px;
 }
 
-#mgiwdfcptd .gt_stub_row_group {
+#kehxdeoktw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1545,15 +1544,15 @@ CDM name
   vertical-align: top;
 }
 
-#mgiwdfcptd .gt_row_group_first td {
+#kehxdeoktw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mgiwdfcptd .gt_row_group_first th {
+#kehxdeoktw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mgiwdfcptd .gt_summary_row {
+#kehxdeoktw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1563,16 +1562,16 @@ CDM name
   padding-right: 5px;
 }
 
-#mgiwdfcptd .gt_first_summary_row {
+#kehxdeoktw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mgiwdfcptd .gt_first_summary_row.thick {
+#kehxdeoktw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mgiwdfcptd .gt_last_summary_row {
+#kehxdeoktw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1582,7 +1581,7 @@ CDM name
   border-bottom-color: #D3D3D3;
 }
 
-#mgiwdfcptd .gt_grand_summary_row {
+#kehxdeoktw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1592,7 +1591,7 @@ CDM name
   padding-right: 5px;
 }
 
-#mgiwdfcptd .gt_first_grand_summary_row {
+#kehxdeoktw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1602,7 +1601,7 @@ CDM name
   border-top-color: #D3D3D3;
 }
 
-#mgiwdfcptd .gt_last_grand_summary_row_top {
+#kehxdeoktw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1612,11 +1611,11 @@ CDM name
   border-bottom-color: #D3D3D3;
 }
 
-#mgiwdfcptd .gt_striped {
+#kehxdeoktw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mgiwdfcptd .gt_table_body {
+#kehxdeoktw .gt_table_body {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #D9D9D9;
@@ -1625,7 +1624,7 @@ CDM name
   border-bottom-color: #D3D3D3;
 }
 
-#mgiwdfcptd .gt_footnotes {
+#kehxdeoktw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1639,7 +1638,7 @@ CDM name
   border-right-color: #D3D3D3;
 }
 
-#mgiwdfcptd .gt_footnote {
+#kehxdeoktw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1648,7 +1647,7 @@ CDM name
   padding-right: 5px;
 }
 
-#mgiwdfcptd .gt_sourcenotes {
+#kehxdeoktw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1662,7 +1661,7 @@ CDM name
   border-right-color: #D3D3D3;
 }
 
-#mgiwdfcptd .gt_sourcenote {
+#kehxdeoktw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1670,72 +1669,72 @@ CDM name
   padding-right: 5px;
 }
 
-#mgiwdfcptd .gt_left {
+#kehxdeoktw .gt_left {
   text-align: left;
 }
 
-#mgiwdfcptd .gt_center {
+#kehxdeoktw .gt_center {
   text-align: center;
 }
 
-#mgiwdfcptd .gt_right {
+#kehxdeoktw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mgiwdfcptd .gt_font_normal {
+#kehxdeoktw .gt_font_normal {
   font-weight: normal;
 }
 
-#mgiwdfcptd .gt_font_bold {
+#kehxdeoktw .gt_font_bold {
   font-weight: bold;
 }
 
-#mgiwdfcptd .gt_font_italic {
+#kehxdeoktw .gt_font_italic {
   font-style: italic;
 }
 
-#mgiwdfcptd .gt_super {
+#kehxdeoktw .gt_super {
   font-size: 65%;
 }
 
-#mgiwdfcptd .gt_footnote_marks {
+#kehxdeoktw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mgiwdfcptd .gt_asterisk {
+#kehxdeoktw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mgiwdfcptd .gt_indent_1 {
+#kehxdeoktw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mgiwdfcptd .gt_indent_2 {
+#kehxdeoktw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mgiwdfcptd .gt_indent_3 {
+#kehxdeoktw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mgiwdfcptd .gt_indent_4 {
+#kehxdeoktw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mgiwdfcptd .gt_indent_5 {
+#kehxdeoktw .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mgiwdfcptd .katex-display {
+#kehxdeoktw .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mgiwdfcptd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kehxdeoktw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2363,288 +2362,287 @@ Database name
 <span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omock)</span>
 <span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clock)</span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics) <span class="co"># </span><span class="al">TODO</span><span class="co"> can be eliminated after omock 0.6.0 release</span></span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(OmopSketch)</span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>You can download the dataset using the function <span class="in">`downloadMockDataset()`</span>:</span>
-<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
-<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="fu">downloadMockDataset</span>(<span class="at">datasetName =</span> <span class="st">"synthea-covid19-10k"</span>)</span>
-<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setup OMOP_DATA_FOLDER</span></span>
-<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a>The <span class="in">`downloadMockDataset`</span> function checks if the database has already been downloaded, and if it is not, it is downloaded in a temporary directory. To avoid downloading the database every time we want to use it, we need to set up the <span class="in">`OMOP_DATA_FOLDER`</span>. To do that, you need to create an environment variable named <span class="in">`OMOP_DATA_FOLDER`</span>. You can add it in the R environment file (<span class="in">`usethis::edit_r_environ()`</span>) or using <span class="in">`Sys.setenv(OMOP_DATA_FOLDER = "...")`</span>. Either way, <span class="in">`OMOP_DATA_FOLDER`</span> should point to a folder where the dataset will be downloaded. This way, the dataset will be stored permanently on your computer and you will not have to download it every time you want to use it.</span>
-<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a>Note that this folder is defined by omopgenerics and is also used by other packages to store OMOP-related data.</span>
-<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a>Once the dataset is downloaded you can create the cdm reference:</span>
-<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
-<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">mockCdmFromDataset</span>(<span class="at">datasetName =</span> <span class="st">"synthea-covid19-10k"</span>, <span class="at">source =</span> <span class="st">"duckdb"</span>)</span>
-<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-34"><a href="#cb50-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-35"><a href="#cb50-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=TRUE}</span></span>
-<span id="cb50-36"><a href="#cb50-36" aria-hidden="true" tabindex="-1"></a>cdm</span>
-<span id="cb50-37"><a href="#cb50-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-38"><a href="#cb50-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-39"><a href="#cb50-39" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb50-40"><a href="#cb50-40" aria-hidden="true" tabindex="-1"></a><span class="fu">### `mockCdmFromDataset()`</span></span>
-<span id="cb50-41"><a href="#cb50-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-42"><a href="#cb50-42" aria-hidden="true" tabindex="-1"></a>Note that if you call the function without downloading the database first you will be prompted to download it (or it will be downloaded directly if the session is not interactive).</span>
-<span id="cb50-43"><a href="#cb50-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-44"><a href="#cb50-44" aria-hidden="true" tabindex="-1"></a>By default, the mock cdm returns a local dataset that can be inserted in any source of interest using the <span class="in">`insertCdmTo()`</span> function. Setting the source to <span class="in">`source = "duckdb"`</span> will return an in-memory DuckDB cdm_reference with two schemas: cdmSchema = "main" and writeSchema = "results".</span>
-<span id="cb50-45"><a href="#cb50-45" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb50-46"><a href="#cb50-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-47"><a href="#cb50-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Counting people</span></span>
-<span id="cb50-48"><a href="#cb50-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-49"><a href="#cb50-49" aria-hidden="true" tabindex="-1"></a>The OMOP CDM is person-centric, with the person table containing records to uniquely identify each person in the database. As each row refers to a unique person, we can quickly get a count of the number of individuals in the database like so</span>
-<span id="cb50-50"><a href="#cb50-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-51"><a href="#cb50-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb50-52"><a href="#cb50-52" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb50-53"><a href="#cb50-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span>
-<span id="cb50-54"><a href="#cb50-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-55"><a href="#cb50-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-56"><a href="#cb50-56" aria-hidden="true" tabindex="-1"></a>The person table also contains some demographic information, including a gender concept for each person. We can easily get a count grouped by this variable. As the concept id is just a number it is more useful to get the concept name, this can be done with a join to the concept table.</span>
-<span id="cb50-57"><a href="#cb50-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-58"><a href="#cb50-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb50-59"><a href="#cb50-59" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb50-60"><a href="#cb50-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender_concept_id) <span class="sc">|&gt;</span> </span>
-<span id="cb50-61"><a href="#cb50-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb50-62"><a href="#cb50-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"gender_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb50-63"><a href="#cb50-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"gender_concept_id"</span>, <span class="st">"concept_name"</span>, <span class="st">"n"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb50-64"><a href="#cb50-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb50-65"><a href="#cb50-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-66"><a href="#cb50-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-67"><a href="#cb50-67" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
-<span id="cb50-68"><a href="#cb50-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vocabulary tables</span></span>
-<span id="cb50-69"><a href="#cb50-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-70"><a href="#cb50-70" aria-hidden="true" tabindex="-1"></a>Above we've got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associated with the concept, along with other information such as its domain and vocabulary id.</span>
-<span id="cb50-71"><a href="#cb50-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-72"><a href="#cb50-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb50-73"><a href="#cb50-73" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>concept <span class="sc">|&gt;</span> </span>
-<span id="cb50-74"><a href="#cb50-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb50-75"><a href="#cb50-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-76"><a href="#cb50-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-77"><a href="#cb50-77" aria-hidden="true" tabindex="-1"></a>Other vocabulary tables capture other information about concepts, such as the direct relationships between concepts (the concept relationship table) and hierarchical relationships between (the concept ancestor table).</span>
-<span id="cb50-78"><a href="#cb50-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-79"><a href="#cb50-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb50-80"><a href="#cb50-80" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>concept_relationship <span class="sc">|&gt;</span> </span>
-<span id="cb50-81"><a href="#cb50-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb50-82"><a href="#cb50-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-83"><a href="#cb50-83" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>concept_ancestor <span class="sc">|&gt;</span> </span>
-<span id="cb50-84"><a href="#cb50-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb50-85"><a href="#cb50-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-86"><a href="#cb50-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-87"><a href="#cb50-87" aria-hidden="true" tabindex="-1"></a>More information on the vocabulary tables (as well as other tables in the OMOP CDM version 5.3) can be found at <span class="ot">&lt;https://ohdsi.github.io/CommonDataModel/cdm53.html#Vocabulary_Tables&gt;</span>.</span>
-<span id="cb50-88"><a href="#cb50-88" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb50-89"><a href="#cb50-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-90"><a href="#cb50-90" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
-<span id="cb50-91"><a href="#cb50-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### `addConceptName()`</span></span>
-<span id="cb50-92"><a href="#cb50-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-93"><a href="#cb50-93" aria-hidden="true" tabindex="-1"></a>The PatientProfiles package has a utility function that helps you to add concept names to a table. By default, any column that ends in <span class="in">`concept_id`</span> will be used to join to the *concept* table and add a <span class="in">`concept_name`</span> column:</span>
-<span id="cb50-94"><a href="#cb50-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-97"><a href="#cb50-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-98"><a href="#cb50-98" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
-<span id="cb50-99"><a href="#cb50-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addConceptName</span>() <span class="sc">|&gt;</span></span>
-<span id="cb50-100"><a href="#cb50-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb50-101"><a href="#cb50-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-102"><a href="#cb50-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-103"><a href="#cb50-103" aria-hidden="true" tabindex="-1"></a>Note you can edit the arguments to only use one desired column or edit the concept name column.</span>
-<span id="cb50-104"><a href="#cb50-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-107"><a href="#cb50-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-108"><a href="#cb50-108" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
-<span id="cb50-109"><a href="#cb50-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addConceptName</span>(<span class="at">column =</span> <span class="st">"gender_concept_id"</span>, <span class="at">nameStyle =</span> <span class="st">"sex"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb50-110"><a href="#cb50-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb50-111"><a href="#cb50-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-112"><a href="#cb50-112" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb50-113"><a href="#cb50-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-114"><a href="#cb50-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarising observation periods</span></span>
-<span id="cb50-115"><a href="#cb50-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-116"><a href="#cb50-116" aria-hidden="true" tabindex="-1"></a>The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table (see <span class="co">[</span><span class="ot">formal definition</span><span class="co">](https://ohdsi.github.io/CommonDataModel/cdm54.html#observation_period)</span>). Someone can potentially have multiple observation periods. So, say we wanted a count of people grouped by the year during which their first observation period started.</span>
-<span id="cb50-117"><a href="#cb50-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-118"><a href="#cb50-118" aria-hidden="true" tabindex="-1"></a>To do this first we would need to get the first observation period per person:</span>
-<span id="cb50-119"><a href="#cb50-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-120"><a href="#cb50-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb50-121"><a href="#cb50-121" aria-hidden="true" tabindex="-1"></a>first_observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span></span>
-<span id="cb50-122"><a href="#cb50-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
-<span id="cb50-123"><a href="#cb50-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(observation_period_start_date) <span class="sc">|&gt;</span></span>
-<span id="cb50-124"><a href="#cb50-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb50-125"><a href="#cb50-125" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>()</span>
-<span id="cb50-126"><a href="#cb50-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-127"><a href="#cb50-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-128"><a href="#cb50-128" aria-hidden="true" tabindex="-1"></a>Now we can add this to the person table to make sure that all individuals defined in the observation period table are also defined the person table. Later we can extract the *observation_period_start_year* and count the number of records associated in each year:</span>
-<span id="cb50-131"><a href="#cb50-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-132"><a href="#cb50-132" aria-hidden="true" tabindex="-1"></a>first_records_per_year <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb50-133"><a href="#cb50-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(first_observation_period, <span class="at">by =</span> <span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb50-134"><a href="#cb50-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year =</span> <span class="fu">get_year</span>(observation_period_start_date)) <span class="sc">|&gt;</span> </span>
-<span id="cb50-135"><a href="#cb50-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(observation_period_start_year) <span class="sc">|&gt;</span> </span>
-<span id="cb50-136"><a href="#cb50-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb50-137"><a href="#cb50-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb50-138"><a href="#cb50-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-139"><a href="#cb50-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-140"><a href="#cb50-140" aria-hidden="true" tabindex="-1"></a>Finally we can plot the counts with ggplot2.</span>
-<span id="cb50-141"><a href="#cb50-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-144"><a href="#cb50-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-145"><a href="#cb50-145" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(first_records_per_year) <span class="sc">+</span></span>
-<span id="cb50-146"><a href="#cb50-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> observation_period_start_year, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb50-147"><a href="#cb50-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
-<span id="cb50-148"><a href="#cb50-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-149"><a href="#cb50-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-150"><a href="#cb50-150" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarising clinical records</span></span>
-<span id="cb50-151"><a href="#cb50-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-152"><a href="#cb50-152" aria-hidden="true" tabindex="-1"></a>What's the number of condition occurrence records per person in the database? We can find this out like so</span>
-<span id="cb50-153"><a href="#cb50-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-154"><a href="#cb50-154" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb50-155"><a href="#cb50-155" aria-hidden="true" tabindex="-1"></a>number_condition_occurrence_records <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb50-156"><a href="#cb50-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb50-157"><a href="#cb50-157" aria-hidden="true" tabindex="-1"></a>    cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
-<span id="cb50-158"><a href="#cb50-158" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
-<span id="cb50-159"><a href="#cb50-159" aria-hidden="true" tabindex="-1"></a>      <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
-<span id="cb50-160"><a href="#cb50-160" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"person_id"</span></span>
-<span id="cb50-161"><a href="#cb50-161" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb50-162"><a href="#cb50-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">coalesce</span>(condition_occurrence_records, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb50-163"><a href="#cb50-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition_occurrence_records) <span class="sc">|&gt;</span></span>
-<span id="cb50-164"><a href="#cb50-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb50-165"><a href="#cb50-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb50-166"><a href="#cb50-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-167"><a href="#cb50-167" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(number_condition_occurrence_records) <span class="sc">+</span></span>
-<span id="cb50-168"><a href="#cb50-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> condition_occurrence_records, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb50-169"><a href="#cb50-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
-<span id="cb50-170"><a href="#cb50-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-171"><a href="#cb50-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-172"><a href="#cb50-172" aria-hidden="true" tabindex="-1"></a>How about we were interested in getting record counts for some specific concepts related to Covid-19 symptoms?</span>
-<span id="cb50-173"><a href="#cb50-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-174"><a href="#cb50-174" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb50-175"><a href="#cb50-175" aria-hidden="true" tabindex="-1"></a>codes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">437663</span>, <span class="dv">437390</span>, <span class="dv">31967</span>, <span class="dv">4289517</span>, <span class="dv">4223659</span>, <span class="dv">312437</span>, <span class="dv">434490</span>, <span class="dv">254761</span>, <span class="dv">77074</span>)</span>
-<span id="cb50-176"><a href="#cb50-176" aria-hidden="true" tabindex="-1"></a>symptoms_records <span class="ot">&lt;-</span> cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
-<span id="cb50-177"><a href="#cb50-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(condition_concept_id <span class="sc">%in%</span> codes) <span class="sc">|&gt;</span> </span>
-<span id="cb50-178"><a href="#cb50-178" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition_concept_id) <span class="sc">|&gt;</span> </span>
-<span id="cb50-179"><a href="#cb50-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb50-180"><a href="#cb50-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addConceptName</span>(<span class="at">column =</span> <span class="st">"condition_concept_id"</span>, <span class="at">nameStyle =</span> <span class="st">"concept_name"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb50-181"><a href="#cb50-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
-<span id="cb50-182"><a href="#cb50-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-183"><a href="#cb50-183" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(symptoms_records) <span class="sc">+</span></span>
-<span id="cb50-184"><a href="#cb50-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> concept_name, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb50-185"><a href="#cb50-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb50-186"><a href="#cb50-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span>
-<span id="cb50-187"><a href="#cb50-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-188"><a href="#cb50-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-189"><a href="#cb50-189" aria-hidden="true" tabindex="-1"></a>We can also use summarise for various other calculations</span>
-<span id="cb50-190"><a href="#cb50-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-191"><a href="#cb50-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb50-192"><a href="#cb50-192" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb50-193"><a href="#cb50-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-194"><a href="#cb50-194" aria-hidden="true" tabindex="-1"></a>            <span class="at">q05_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.05</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-195"><a href="#cb50-195" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_year_of_birth =</span> <span class="fu">round</span>(<span class="fu">mean</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">0</span>),</span>
-<span id="cb50-196"><a href="#cb50-196" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-197"><a href="#cb50-197" aria-hidden="true" tabindex="-1"></a>            <span class="at">q95_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.95</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-198"><a href="#cb50-198" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span>  </span>
-<span id="cb50-199"><a href="#cb50-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
-<span id="cb50-200"><a href="#cb50-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-201"><a href="#cb50-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-202"><a href="#cb50-202" aria-hidden="true" tabindex="-1"></a>As we've seen before, we can also quickly get results for various groupings or restrictions</span>
-<span id="cb50-203"><a href="#cb50-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-204"><a href="#cb50-204" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
-<span id="cb50-205"><a href="#cb50-205" aria-hidden="true" tabindex="-1"></a>grouped_summary <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
-<span id="cb50-206"><a href="#cb50-206" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(gender_concept_id) <span class="sc">|&gt;</span> </span>
-<span id="cb50-207"><a href="#cb50-207" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-208"><a href="#cb50-208" aria-hidden="true" tabindex="-1"></a>             <span class="at">q25_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-209"><a href="#cb50-209" aria-hidden="true" tabindex="-1"></a>             <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-210"><a href="#cb50-210" aria-hidden="true" tabindex="-1"></a>             <span class="at">q75_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-211"><a href="#cb50-211" aria-hidden="true" tabindex="-1"></a>             <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb50-212"><a href="#cb50-212" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"gender_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb50-213"><a href="#cb50-213" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>
-<span id="cb50-214"><a href="#cb50-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-215"><a href="#cb50-215" aria-hidden="true" tabindex="-1"></a>grouped_summary <span class="sc">|&gt;</span> </span>
-<span id="cb50-216"><a href="#cb50-216" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> concept_name, <span class="at">group =</span> concept_name, <span class="at">fill =</span> concept_name)) <span class="sc">+</span></span>
-<span id="cb50-217"><a href="#cb50-217" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(</span>
-<span id="cb50-218"><a href="#cb50-218" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower =</span> q25_year_of_birth, </span>
-<span id="cb50-219"><a href="#cb50-219" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper =</span> q75_year_of_birth, </span>
-<span id="cb50-220"><a href="#cb50-220" aria-hidden="true" tabindex="-1"></a>    <span class="at">middle =</span> median_year_of_birth, </span>
-<span id="cb50-221"><a href="#cb50-221" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> min_year_of_birth, </span>
-<span id="cb50-222"><a href="#cb50-222" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> max_year_of_birth),</span>
-<span id="cb50-223"><a href="#cb50-223" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb50-224"><a href="#cb50-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb50-225"><a href="#cb50-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb50-226"><a href="#cb50-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span>
-<span id="cb50-227"><a href="#cb50-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-228"><a href="#cb50-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-229"><a href="#cb50-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-230"><a href="#cb50-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## The **OmopSketch** package</span></span>
-<span id="cb50-231"><a href="#cb50-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-232"><a href="#cb50-232" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">**OmopSketch**</span><span class="co">](https://OHDSI.github.io/OmopSketch/)</span> R package aims to characterise and visualise an OMOP CDM instance to asses if it meets the necessary criteria to answer a specific clinical question and conduct a certain study. It can be very useful to conduct some of the analyses that we were conducting in the previous sections with bespoke code. For example, you can quickly summarise and visualise the observation period table as:</span>
-<span id="cb50-233"><a href="#cb50-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-236"><a href="#cb50-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-237"><a href="#cb50-237" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseObservationPeriod</span>(cdm<span class="sc">$</span>observation_period)</span>
-<span id="cb50-238"><a href="#cb50-238" aria-hidden="true" tabindex="-1"></a><span class="fu">tableObservationPeriod</span>(<span class="at">result =</span> result)</span>
-<span id="cb50-239"><a href="#cb50-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-240"><a href="#cb50-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-241"><a href="#cb50-241" aria-hidden="true" tabindex="-1"></a>With this table we can see that only one pbservation period is defined by person and that individuals have a median follow up of ~ 9 years.</span>
-<span id="cb50-242"><a href="#cb50-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-243"><a href="#cb50-243" aria-hidden="true" tabindex="-1"></a>We can also visualise how many individuals are in observation per year:</span>
-<span id="cb50-244"><a href="#cb50-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-247"><a href="#cb50-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-248"><a href="#cb50-248" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseInObservation</span>(</span>
-<span id="cb50-249"><a href="#cb50-249" aria-hidden="true" tabindex="-1"></a>  cdm<span class="sc">$</span>observation_period,</span>
-<span id="cb50-250"><a href="#cb50-250" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="st">"years"</span>,</span>
-<span id="cb50-251"><a href="#cb50-251" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="st">"person"</span>, </span>
-<span id="cb50-252"><a href="#cb50-252" aria-hidden="true" tabindex="-1"></a>  <span class="at">dateRange =</span> <span class="fu">c</span>(<span class="st">"2000-01-01"</span>, <span class="st">"2023-12-31"</span>)</span>
-<span id="cb50-253"><a href="#cb50-253" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb50-254"><a href="#cb50-254" aria-hidden="true" tabindex="-1"></a><span class="fu">plotInObservation</span>(<span class="at">result =</span> result)</span>
-<span id="cb50-255"><a href="#cb50-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-256"><a href="#cb50-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-257"><a href="#cb50-257" aria-hidden="true" tabindex="-1"></a>Or even the median age of the individuals in observation stratified by sex:</span>
-<span id="cb50-258"><a href="#cb50-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-261"><a href="#cb50-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-262"><a href="#cb50-262" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseInObservation</span>(</span>
-<span id="cb50-263"><a href="#cb50-263" aria-hidden="true" tabindex="-1"></a>  cdm<span class="sc">$</span>observation_period,</span>
-<span id="cb50-264"><a href="#cb50-264" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="st">"years"</span>,</span>
-<span id="cb50-265"><a href="#cb50-265" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="st">"age"</span>, </span>
-<span id="cb50-266"><a href="#cb50-266" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb50-267"><a href="#cb50-267" aria-hidden="true" tabindex="-1"></a>  <span class="at">dateRange =</span> <span class="fu">c</span>(<span class="st">"2000-01-01"</span>, <span class="st">"2023-12-31"</span>)</span>
-<span id="cb50-268"><a href="#cb50-268" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb50-269"><a href="#cb50-269" aria-hidden="true" tabindex="-1"></a><span class="fu">plotInObservation</span>(<span class="at">result =</span> result, <span class="at">colour =</span> <span class="st">"sex"</span>)</span>
-<span id="cb50-270"><a href="#cb50-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-271"><a href="#cb50-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-272"><a href="#cb50-272" aria-hidden="true" tabindex="-1"></a>The package also provides functions to characterise the clinical tables to show percentage of records in observation, domains recorded or the source vocabularies:</span>
-<span id="cb50-273"><a href="#cb50-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-276"><a href="#cb50-276" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-277"><a href="#cb50-277" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseClinicalRecords</span>(<span class="at">cdm =</span> cdm, <span class="at">omopTableName =</span> <span class="st">"drug_exposure"</span>)</span>
-<span id="cb50-278"><a href="#cb50-278" aria-hidden="true" tabindex="-1"></a><span class="fu">tableClinicalRecords</span>(<span class="at">result =</span> result)</span>
-<span id="cb50-279"><a href="#cb50-279" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-280"><a href="#cb50-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-281"><a href="#cb50-281" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
-<span id="cb50-282"><a href="#cb50-282" aria-hidden="true" tabindex="-1"></a><span class="fu">### Database characterisation</span></span>
-<span id="cb50-283"><a href="#cb50-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-284"><a href="#cb50-284" aria-hidden="true" tabindex="-1"></a>When you start using a database characterising it is probably a good idea to know what information is recorded in the database and explore the studies that are feasible. You can perform a database characterisation using *OmopSketch* as:</span>
-<span id="cb50-285"><a href="#cb50-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-286"><a href="#cb50-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
-<span id="cb50-287"><a href="#cb50-287" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">databaseCharacteristics</span>(<span class="at">cdm =</span> cdm)</span>
-<span id="cb50-288"><a href="#cb50-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-289"><a href="#cb50-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-290"><a href="#cb50-290" aria-hidden="true" tabindex="-1"></a>Note this process can take several hours or even days depending on the size of the database. Later you can visualise all the results in a Shiny App such as the one shown at the beginning of this chapter.</span>
-<span id="cb50-291"><a href="#cb50-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-292"><a href="#cb50-292" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
-<span id="cb50-293"><a href="#cb50-293" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyCharacteristics</span>(<span class="at">result =</span> result, <span class="at">directory =</span> <span class="fu">getwd</span>())</span>
-<span id="cb50-294"><a href="#cb50-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-295"><a href="#cb50-295" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb50-296"><a href="#cb50-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-297"><a href="#cb50-297" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting</span></span>
-<span id="cb50-298"><a href="#cb50-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-299"><a href="#cb50-299" aria-hidden="true" tabindex="-1"></a>Once we have finished our analysis we can close our connection to the database behind our cdm reference.</span>
-<span id="cb50-300"><a href="#cb50-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-303"><a href="#cb50-303" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-304"><a href="#cb50-304" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span>
-<span id="cb50-305"><a href="#cb50-305" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-306"><a href="#cb50-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-307"><a href="#cb50-307" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
-<span id="cb50-308"><a href="#cb50-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-309"><a href="#cb50-309" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Alcalde-Herraiz M, Lopez-Guell K, Rowlands E, Campanile C, Burn E, Català M (2025). *OmopSketch: Characterise Tables of an OMOP Common Data Model Instance*. R package version 0.5.1, <span class="ot">&lt;https://OHDSI.github.io/OmopSketch/&gt;</span>.</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PatientProfiles)</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(OmopSketch)</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>You can download the dataset using the function <span class="in">`downloadMockDataset()`</span>:</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a><span class="fu">downloadMockDataset</span>(<span class="at">datasetName =</span> <span class="st">"synthea-covid19-10k"</span>)</span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setup OMOP_DATA_FOLDER</span></span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>The <span class="in">`downloadMockDataset`</span> function checks if the database has already been downloaded, and if it is not, it is downloaded in a temporary directory. To avoid downloading the database every time we want to use it, we need to set up the <span class="in">`OMOP_DATA_FOLDER`</span>. To do that, you need to create an environment variable named <span class="in">`OMOP_DATA_FOLDER`</span>. You can add it in the R environment file (<span class="in">`usethis::edit_r_environ()`</span>) or using <span class="in">`Sys.setenv(OMOP_DATA_FOLDER = "...")`</span>. Either way, <span class="in">`OMOP_DATA_FOLDER`</span> should point to a folder where the dataset will be downloaded. This way, the dataset will be stored permanently on your computer and you will not have to download it every time you want to use it.</span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a>Note that this folder is defined by omopgenerics and is also used by other packages to store OMOP-related data.</span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a>Once the dataset is downloaded you can create the cdm reference:</span>
+<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
+<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">mockCdmFromDataset</span>(<span class="at">datasetName =</span> <span class="st">"synthea-covid19-10k"</span>, <span class="at">source =</span> <span class="st">"duckdb"</span>)</span>
+<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-34"><a href="#cb50-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=TRUE}</span></span>
+<span id="cb50-35"><a href="#cb50-35" aria-hidden="true" tabindex="-1"></a>cdm</span>
+<span id="cb50-36"><a href="#cb50-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-37"><a href="#cb50-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-38"><a href="#cb50-38" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb50-39"><a href="#cb50-39" aria-hidden="true" tabindex="-1"></a><span class="fu">### `mockCdmFromDataset()`</span></span>
+<span id="cb50-40"><a href="#cb50-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-41"><a href="#cb50-41" aria-hidden="true" tabindex="-1"></a>Note that if you call the function without downloading the database first you will be prompted to download it (or it will be downloaded directly if the session is not interactive).</span>
+<span id="cb50-42"><a href="#cb50-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-43"><a href="#cb50-43" aria-hidden="true" tabindex="-1"></a>By default, the mock cdm returns a local dataset that can be inserted in any source of interest using the <span class="in">`insertCdmTo()`</span> function. Setting the source to <span class="in">`source = "duckdb"`</span> will return an in-memory DuckDB cdm_reference with two schemas: cdmSchema = "main" and writeSchema = "results".</span>
+<span id="cb50-44"><a href="#cb50-44" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb50-45"><a href="#cb50-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-46"><a href="#cb50-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## Counting people</span></span>
+<span id="cb50-47"><a href="#cb50-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-48"><a href="#cb50-48" aria-hidden="true" tabindex="-1"></a>The OMOP CDM is person-centric, with the person table containing records to uniquely identify each person in the database. As each row refers to a unique person, we can quickly get a count of the number of individuals in the database like so</span>
+<span id="cb50-49"><a href="#cb50-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-50"><a href="#cb50-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb50-51"><a href="#cb50-51" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb50-52"><a href="#cb50-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span>
+<span id="cb50-53"><a href="#cb50-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-54"><a href="#cb50-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-55"><a href="#cb50-55" aria-hidden="true" tabindex="-1"></a>The person table also contains some demographic information, including a gender concept for each person. We can easily get a count grouped by this variable. As the concept id is just a number it is more useful to get the concept name, this can be done with a join to the concept table.</span>
+<span id="cb50-56"><a href="#cb50-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-57"><a href="#cb50-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb50-58"><a href="#cb50-58" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb50-59"><a href="#cb50-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender_concept_id) <span class="sc">|&gt;</span> </span>
+<span id="cb50-60"><a href="#cb50-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb50-61"><a href="#cb50-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"gender_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb50-62"><a href="#cb50-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"gender_concept_id"</span>, <span class="st">"concept_name"</span>, <span class="st">"n"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb50-63"><a href="#cb50-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb50-64"><a href="#cb50-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-65"><a href="#cb50-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-66"><a href="#cb50-66" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
+<span id="cb50-67"><a href="#cb50-67" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vocabulary tables</span></span>
+<span id="cb50-68"><a href="#cb50-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-69"><a href="#cb50-69" aria-hidden="true" tabindex="-1"></a>Above we've got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associated with the concept, along with other information such as its domain and vocabulary id.</span>
+<span id="cb50-70"><a href="#cb50-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-71"><a href="#cb50-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb50-72"><a href="#cb50-72" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>concept <span class="sc">|&gt;</span> </span>
+<span id="cb50-73"><a href="#cb50-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb50-74"><a href="#cb50-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-75"><a href="#cb50-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-76"><a href="#cb50-76" aria-hidden="true" tabindex="-1"></a>Other vocabulary tables capture other information about concepts, such as the direct relationships between concepts (the concept relationship table) and hierarchical relationships between (the concept ancestor table).</span>
+<span id="cb50-77"><a href="#cb50-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-78"><a href="#cb50-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb50-79"><a href="#cb50-79" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>concept_relationship <span class="sc">|&gt;</span> </span>
+<span id="cb50-80"><a href="#cb50-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb50-81"><a href="#cb50-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-82"><a href="#cb50-82" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>concept_ancestor <span class="sc">|&gt;</span> </span>
+<span id="cb50-83"><a href="#cb50-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb50-84"><a href="#cb50-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-85"><a href="#cb50-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-86"><a href="#cb50-86" aria-hidden="true" tabindex="-1"></a>More information on the vocabulary tables (as well as other tables in the OMOP CDM version 5.3) can be found at <span class="ot">&lt;https://ohdsi.github.io/CommonDataModel/cdm53.html#Vocabulary_Tables&gt;</span>.</span>
+<span id="cb50-87"><a href="#cb50-87" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb50-88"><a href="#cb50-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-89"><a href="#cb50-89" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
+<span id="cb50-90"><a href="#cb50-90" aria-hidden="true" tabindex="-1"></a><span class="fu">### `addConceptName()`</span></span>
+<span id="cb50-91"><a href="#cb50-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-92"><a href="#cb50-92" aria-hidden="true" tabindex="-1"></a>The PatientProfiles package has a utility function that helps you to add concept names to a table. By default, any column that ends in <span class="in">`concept_id`</span> will be used to join to the *concept* table and add a <span class="in">`concept_name`</span> column:</span>
+<span id="cb50-93"><a href="#cb50-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-96"><a href="#cb50-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-97"><a href="#cb50-97" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
+<span id="cb50-98"><a href="#cb50-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addConceptName</span>() <span class="sc">|&gt;</span></span>
+<span id="cb50-99"><a href="#cb50-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb50-100"><a href="#cb50-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-101"><a href="#cb50-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-102"><a href="#cb50-102" aria-hidden="true" tabindex="-1"></a>Note you can edit the arguments to only use one desired column or edit the concept name column.</span>
+<span id="cb50-103"><a href="#cb50-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-106"><a href="#cb50-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-107"><a href="#cb50-107" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span></span>
+<span id="cb50-108"><a href="#cb50-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addConceptName</span>(<span class="at">column =</span> <span class="st">"gender_concept_id"</span>, <span class="at">nameStyle =</span> <span class="st">"sex"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb50-109"><a href="#cb50-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb50-110"><a href="#cb50-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-111"><a href="#cb50-111" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb50-112"><a href="#cb50-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-113"><a href="#cb50-113" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarising observation periods</span></span>
+<span id="cb50-114"><a href="#cb50-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-115"><a href="#cb50-115" aria-hidden="true" tabindex="-1"></a>The observation period table contains records indicating spans of time over which clinical events can be reliably observed for the people in the person table (see <span class="co">[</span><span class="ot">formal definition</span><span class="co">](https://ohdsi.github.io/CommonDataModel/cdm54.html#observation_period)</span>). Someone can potentially have multiple observation periods. So, say we wanted a count of people grouped by the year during which their first observation period started.</span>
+<span id="cb50-116"><a href="#cb50-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-117"><a href="#cb50-117" aria-hidden="true" tabindex="-1"></a>To do this first we would need to get the first observation period per person:</span>
+<span id="cb50-118"><a href="#cb50-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-119"><a href="#cb50-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb50-120"><a href="#cb50-120" aria-hidden="true" tabindex="-1"></a>first_observation_period <span class="ot">&lt;-</span> cdm<span class="sc">$</span>observation_period <span class="sc">|&gt;</span></span>
+<span id="cb50-121"><a href="#cb50-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
+<span id="cb50-122"><a href="#cb50-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(observation_period_start_date) <span class="sc">|&gt;</span></span>
+<span id="cb50-123"><a href="#cb50-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb50-124"><a href="#cb50-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute</span>()</span>
+<span id="cb50-125"><a href="#cb50-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-126"><a href="#cb50-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-127"><a href="#cb50-127" aria-hidden="true" tabindex="-1"></a>Now we can add this to the person table to make sure that all individuals defined in the observation period table are also defined the person table. Later we can extract the *observation_period_start_year* and count the number of records associated in each year:</span>
+<span id="cb50-130"><a href="#cb50-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-131"><a href="#cb50-131" aria-hidden="true" tabindex="-1"></a>first_records_per_year <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb50-132"><a href="#cb50-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(first_observation_period, <span class="at">by =</span> <span class="st">"person_id"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb50-133"><a href="#cb50-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">observation_period_start_year =</span> <span class="fu">get_year</span>(observation_period_start_date)) <span class="sc">|&gt;</span> </span>
+<span id="cb50-134"><a href="#cb50-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(observation_period_start_year) <span class="sc">|&gt;</span> </span>
+<span id="cb50-135"><a href="#cb50-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb50-136"><a href="#cb50-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb50-137"><a href="#cb50-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-138"><a href="#cb50-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-139"><a href="#cb50-139" aria-hidden="true" tabindex="-1"></a>Finally we can plot the counts with ggplot2.</span>
+<span id="cb50-140"><a href="#cb50-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-143"><a href="#cb50-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-144"><a href="#cb50-144" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(first_records_per_year) <span class="sc">+</span></span>
+<span id="cb50-145"><a href="#cb50-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> observation_period_start_year, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb50-146"><a href="#cb50-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb50-147"><a href="#cb50-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-148"><a href="#cb50-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-149"><a href="#cb50-149" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarising clinical records</span></span>
+<span id="cb50-150"><a href="#cb50-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-151"><a href="#cb50-151" aria-hidden="true" tabindex="-1"></a>What's the number of condition occurrence records per person in the database? We can find this out like so</span>
+<span id="cb50-152"><a href="#cb50-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-153"><a href="#cb50-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb50-154"><a href="#cb50-154" aria-hidden="true" tabindex="-1"></a>number_condition_occurrence_records <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb50-155"><a href="#cb50-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb50-156"><a href="#cb50-156" aria-hidden="true" tabindex="-1"></a>    cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
+<span id="cb50-157"><a href="#cb50-157" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(person_id) <span class="sc">|&gt;</span> </span>
+<span id="cb50-158"><a href="#cb50-158" aria-hidden="true" tabindex="-1"></a>      <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"condition_occurrence_records"</span>),</span>
+<span id="cb50-159"><a href="#cb50-159" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"person_id"</span></span>
+<span id="cb50-160"><a href="#cb50-160" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb50-161"><a href="#cb50-161" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition_occurrence_records =</span> <span class="fu">coalesce</span>(condition_occurrence_records, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb50-162"><a href="#cb50-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition_occurrence_records) <span class="sc">|&gt;</span></span>
+<span id="cb50-163"><a href="#cb50-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb50-164"><a href="#cb50-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb50-165"><a href="#cb50-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-166"><a href="#cb50-166" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(number_condition_occurrence_records) <span class="sc">+</span></span>
+<span id="cb50-167"><a href="#cb50-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> condition_occurrence_records, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb50-168"><a href="#cb50-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb50-169"><a href="#cb50-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-170"><a href="#cb50-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-171"><a href="#cb50-171" aria-hidden="true" tabindex="-1"></a>How about we were interested in getting record counts for some specific concepts related to Covid-19 symptoms?</span>
+<span id="cb50-172"><a href="#cb50-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-173"><a href="#cb50-173" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb50-174"><a href="#cb50-174" aria-hidden="true" tabindex="-1"></a>codes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">437663</span>, <span class="dv">437390</span>, <span class="dv">31967</span>, <span class="dv">4289517</span>, <span class="dv">4223659</span>, <span class="dv">312437</span>, <span class="dv">434490</span>, <span class="dv">254761</span>, <span class="dv">77074</span>)</span>
+<span id="cb50-175"><a href="#cb50-175" aria-hidden="true" tabindex="-1"></a>symptoms_records <span class="ot">&lt;-</span> cdm<span class="sc">$</span>condition_occurrence <span class="sc">|&gt;</span> </span>
+<span id="cb50-176"><a href="#cb50-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(condition_concept_id <span class="sc">%in%</span> codes) <span class="sc">|&gt;</span> </span>
+<span id="cb50-177"><a href="#cb50-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition_concept_id) <span class="sc">|&gt;</span> </span>
+<span id="cb50-178"><a href="#cb50-178" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb50-179"><a href="#cb50-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addConceptName</span>(<span class="at">column =</span> <span class="st">"condition_concept_id"</span>, <span class="at">nameStyle =</span> <span class="st">"concept_name"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb50-180"><a href="#cb50-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb50-181"><a href="#cb50-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-182"><a href="#cb50-182" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(symptoms_records) <span class="sc">+</span></span>
+<span id="cb50-183"><a href="#cb50-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> concept_name, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb50-184"><a href="#cb50-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb50-185"><a href="#cb50-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span>
+<span id="cb50-186"><a href="#cb50-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-187"><a href="#cb50-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-188"><a href="#cb50-188" aria-hidden="true" tabindex="-1"></a>We can also use summarise for various other calculations</span>
+<span id="cb50-189"><a href="#cb50-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-190"><a href="#cb50-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb50-191"><a href="#cb50-191" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb50-192"><a href="#cb50-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-193"><a href="#cb50-193" aria-hidden="true" tabindex="-1"></a>            <span class="at">q05_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.05</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-194"><a href="#cb50-194" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_year_of_birth =</span> <span class="fu">round</span>(<span class="fu">mean</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">0</span>),</span>
+<span id="cb50-195"><a href="#cb50-195" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-196"><a href="#cb50-196" aria-hidden="true" tabindex="-1"></a>            <span class="at">q95_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.95</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-197"><a href="#cb50-197" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb50-198"><a href="#cb50-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
+<span id="cb50-199"><a href="#cb50-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-200"><a href="#cb50-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-201"><a href="#cb50-201" aria-hidden="true" tabindex="-1"></a>As we've seen before, we can also quickly get results for various groupings or restrictions</span>
+<span id="cb50-202"><a href="#cb50-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-203"><a href="#cb50-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE}</span></span>
+<span id="cb50-204"><a href="#cb50-204" aria-hidden="true" tabindex="-1"></a>grouped_summary <span class="ot">&lt;-</span> cdm<span class="sc">$</span>person <span class="sc">|&gt;</span> </span>
+<span id="cb50-205"><a href="#cb50-205" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(gender_concept_id) <span class="sc">|&gt;</span> </span>
+<span id="cb50-206"><a href="#cb50-206" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">min_year_of_birth =</span> <span class="fu">min</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-207"><a href="#cb50-207" aria-hidden="true" tabindex="-1"></a>             <span class="at">q25_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-208"><a href="#cb50-208" aria-hidden="true" tabindex="-1"></a>             <span class="at">median_year_of_birth =</span> <span class="fu">median</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-209"><a href="#cb50-209" aria-hidden="true" tabindex="-1"></a>             <span class="at">q75_year_of_birth =</span> <span class="fu">quantile</span>(year_of_birth, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-210"><a href="#cb50-210" aria-hidden="true" tabindex="-1"></a>             <span class="at">max_year_of_birth =</span> <span class="fu">max</span>(year_of_birth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb50-211"><a href="#cb50-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cdm<span class="sc">$</span>concept, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"gender_concept_id"</span> <span class="ot">=</span> <span class="st">"concept_id"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb50-212"><a href="#cb50-212" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>
+<span id="cb50-213"><a href="#cb50-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-214"><a href="#cb50-214" aria-hidden="true" tabindex="-1"></a>grouped_summary <span class="sc">|&gt;</span> </span>
+<span id="cb50-215"><a href="#cb50-215" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> concept_name, <span class="at">group =</span> concept_name, <span class="at">fill =</span> concept_name)) <span class="sc">+</span></span>
+<span id="cb50-216"><a href="#cb50-216" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(</span>
+<span id="cb50-217"><a href="#cb50-217" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower =</span> q25_year_of_birth, </span>
+<span id="cb50-218"><a href="#cb50-218" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper =</span> q75_year_of_birth, </span>
+<span id="cb50-219"><a href="#cb50-219" aria-hidden="true" tabindex="-1"></a>    <span class="at">middle =</span> median_year_of_birth, </span>
+<span id="cb50-220"><a href="#cb50-220" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> min_year_of_birth, </span>
+<span id="cb50-221"><a href="#cb50-221" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> max_year_of_birth),</span>
+<span id="cb50-222"><a href="#cb50-222" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb50-223"><a href="#cb50-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb50-224"><a href="#cb50-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb50-225"><a href="#cb50-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span>
+<span id="cb50-226"><a href="#cb50-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-227"><a href="#cb50-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-228"><a href="#cb50-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-229"><a href="#cb50-229" aria-hidden="true" tabindex="-1"></a><span class="fu">## The **OmopSketch** package</span></span>
+<span id="cb50-230"><a href="#cb50-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-231"><a href="#cb50-231" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">**OmopSketch**</span><span class="co">](https://OHDSI.github.io/OmopSketch/)</span> R package aims to characterise and visualise an OMOP CDM instance to asses if it meets the necessary criteria to answer a specific clinical question and conduct a certain study. It can be very useful to conduct some of the analyses that we were conducting in the previous sections with bespoke code. For example, you can quickly summarise and visualise the observation period table as:</span>
+<span id="cb50-232"><a href="#cb50-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-235"><a href="#cb50-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-236"><a href="#cb50-236" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseObservationPeriod</span>(cdm<span class="sc">$</span>observation_period)</span>
+<span id="cb50-237"><a href="#cb50-237" aria-hidden="true" tabindex="-1"></a><span class="fu">tableObservationPeriod</span>(<span class="at">result =</span> result)</span>
+<span id="cb50-238"><a href="#cb50-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-239"><a href="#cb50-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-240"><a href="#cb50-240" aria-hidden="true" tabindex="-1"></a>With this table we can see that only one pbservation period is defined by person and that individuals have a median follow up of ~ 9 years.</span>
+<span id="cb50-241"><a href="#cb50-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-242"><a href="#cb50-242" aria-hidden="true" tabindex="-1"></a>We can also visualise how many individuals are in observation per year:</span>
+<span id="cb50-243"><a href="#cb50-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-246"><a href="#cb50-246" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-247"><a href="#cb50-247" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseInObservation</span>(</span>
+<span id="cb50-248"><a href="#cb50-248" aria-hidden="true" tabindex="-1"></a>  cdm<span class="sc">$</span>observation_period,</span>
+<span id="cb50-249"><a href="#cb50-249" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="st">"years"</span>,</span>
+<span id="cb50-250"><a href="#cb50-250" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="st">"person"</span>, </span>
+<span id="cb50-251"><a href="#cb50-251" aria-hidden="true" tabindex="-1"></a>  <span class="at">dateRange =</span> <span class="fu">c</span>(<span class="st">"2000-01-01"</span>, <span class="st">"2023-12-31"</span>)</span>
+<span id="cb50-252"><a href="#cb50-252" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb50-253"><a href="#cb50-253" aria-hidden="true" tabindex="-1"></a><span class="fu">plotInObservation</span>(<span class="at">result =</span> result)</span>
+<span id="cb50-254"><a href="#cb50-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-255"><a href="#cb50-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-256"><a href="#cb50-256" aria-hidden="true" tabindex="-1"></a>Or even the median age of the individuals in observation stratified by sex:</span>
+<span id="cb50-257"><a href="#cb50-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-260"><a href="#cb50-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-261"><a href="#cb50-261" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseInObservation</span>(</span>
+<span id="cb50-262"><a href="#cb50-262" aria-hidden="true" tabindex="-1"></a>  cdm<span class="sc">$</span>observation_period,</span>
+<span id="cb50-263"><a href="#cb50-263" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="st">"years"</span>,</span>
+<span id="cb50-264"><a href="#cb50-264" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="st">"age"</span>, </span>
+<span id="cb50-265"><a href="#cb50-265" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb50-266"><a href="#cb50-266" aria-hidden="true" tabindex="-1"></a>  <span class="at">dateRange =</span> <span class="fu">c</span>(<span class="st">"2000-01-01"</span>, <span class="st">"2023-12-31"</span>)</span>
+<span id="cb50-267"><a href="#cb50-267" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb50-268"><a href="#cb50-268" aria-hidden="true" tabindex="-1"></a><span class="fu">plotInObservation</span>(<span class="at">result =</span> result, <span class="at">colour =</span> <span class="st">"sex"</span>)</span>
+<span id="cb50-269"><a href="#cb50-269" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-270"><a href="#cb50-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-271"><a href="#cb50-271" aria-hidden="true" tabindex="-1"></a>The package also provides functions to characterise the clinical tables to show percentage of records in observation, domains recorded or the source vocabularies:</span>
+<span id="cb50-272"><a href="#cb50-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-275"><a href="#cb50-275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-276"><a href="#cb50-276" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseClinicalRecords</span>(<span class="at">cdm =</span> cdm, <span class="at">omopTableName =</span> <span class="st">"drug_exposure"</span>)</span>
+<span id="cb50-277"><a href="#cb50-277" aria-hidden="true" tabindex="-1"></a><span class="fu">tableClinicalRecords</span>(<span class="at">result =</span> result)</span>
+<span id="cb50-278"><a href="#cb50-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-279"><a href="#cb50-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-280"><a href="#cb50-280" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
+<span id="cb50-281"><a href="#cb50-281" aria-hidden="true" tabindex="-1"></a><span class="fu">### Database characterisation</span></span>
+<span id="cb50-282"><a href="#cb50-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-283"><a href="#cb50-283" aria-hidden="true" tabindex="-1"></a>When you start using a database characterising it is probably a good idea to know what information is recorded in the database and explore the studies that are feasible. You can perform a database characterisation using *OmopSketch* as:</span>
+<span id="cb50-284"><a href="#cb50-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-285"><a href="#cb50-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
+<span id="cb50-286"><a href="#cb50-286" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">databaseCharacteristics</span>(<span class="at">cdm =</span> cdm)</span>
+<span id="cb50-287"><a href="#cb50-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-288"><a href="#cb50-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-289"><a href="#cb50-289" aria-hidden="true" tabindex="-1"></a>Note this process can take several hours or even days depending on the size of the database. Later you can visualise all the results in a Shiny App such as the one shown at the beginning of this chapter.</span>
+<span id="cb50-290"><a href="#cb50-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-291"><a href="#cb50-291" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
+<span id="cb50-292"><a href="#cb50-292" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyCharacteristics</span>(<span class="at">result =</span> result, <span class="at">directory =</span> <span class="fu">getwd</span>())</span>
+<span id="cb50-293"><a href="#cb50-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-294"><a href="#cb50-294" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb50-295"><a href="#cb50-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-296"><a href="#cb50-296" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting</span></span>
+<span id="cb50-297"><a href="#cb50-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-298"><a href="#cb50-298" aria-hidden="true" tabindex="-1"></a>Once we have finished our analysis we can close our connection to the database behind our cdm reference.</span>
+<span id="cb50-299"><a href="#cb50-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-302"><a href="#cb50-302" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-303"><a href="#cb50-303" aria-hidden="true" tabindex="-1"></a><span class="fu">cdmDisconnect</span>(cdm) </span>
+<span id="cb50-304"><a href="#cb50-304" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-305"><a href="#cb50-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-306"><a href="#cb50-306" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
+<span id="cb50-307"><a href="#cb50-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-308"><a href="#cb50-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Alcalde-Herraiz M, Lopez-Guell K, Rowlands E, Campanile C, Burn E, Català M (2025). *OmopSketch: Characterise Tables of an OMOP Common Data Model Instance*. R package version 0.5.1, <span class="ot">&lt;https://OHDSI.github.io/OmopSketch/&gt;</span>.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

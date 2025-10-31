@@ -603,7 +603,7 @@ FROM (
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTeams</span>(<span class="at">lahman =</span> lahman, <span class="at">name =</span> <span class="st">"Barry Bonds"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Pittsburgh Pirates"   "San Francisco Giants"</code></pre>
+<pre><code>[1] "San Francisco Giants" "Pittsburgh Pirates"  </code></pre>
 </div>
 </div>
 <p>However, in other cases we may need to collect the data to perform analyses that can not be done in SQL. This might be the case for plotting or for other analytic steps(i.e., fitting statistical models). In such cases, it is important to only bring out the data that we need (as our local computer will typically have far less memory available than the database system).</p>
@@ -959,16 +959,16 @@ GROUP BY birthCountry, birthYear</code></pre>
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
    birthCountry birthYear average_salary
    &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;
- 1 USA               1954        860729.
- 2 USA               1967       1833526.
- 3 D.R.              1977       2724606.
- 4 Mexico            1970        783395.
- 5 USA               1958        960490.
- 6 D.R.              1991        582794.
- 7 USA               1971       1547025.
- 8 USA               1963       1585150.
- 9 USA               1962       1303970.
-10 P.R.              1982       4261730.
+ 1 USA               1966       1761151.
+ 2 Venezuela         1974       4269365.
+ 3 D.R.              1984       2924854.
+ 4 Mexico            1982       1174912.
+ 5 Panama            1981        555833.
+ 6 USA               1978       3133596.
+ 7 P.R.              1959        297786.
+ 8 USA               1961        811250.
+ 9 USA               1990        728740.
+10 USA               1950        625076.
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1092,7 +1092,7 @@ FROM (
 <pre><code># A tibble: 3,663 × 3
    schoolID   birthYear strike_outs
    &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 pennst          1981         340
+ 1 rice            1981         340
  2 cacerri         1971         327
  3 usc             1947         275
  4 pepperdine      1969           4
@@ -1175,7 +1175,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
-FROM dbplyr_xv10YE8hHV</code></pre>
+FROM dbplyr_9p8AfFYmY7</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1186,18 +1186,18 @@ FROM dbplyr_xv10YE8hHV</code></pre>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6,205 × 3
-   schoolID   birthYear home_runs
-   &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
- 1 illinoisst      1981         1
- 2 unc             1988       518
- 3 unc             1980       218
- 4 utah            1898       101
- 5 sillinois       1959        34
- 6 capalom         1963        15
- 7 bostonuniv      1929       135
- 8 scstate         1954       675
- 9 casequo         1940         7
-10 upperiowa       1918         0
+   schoolID  birthYear home_runs
+   &lt;chr&gt;         &lt;int&gt;     &lt;dbl&gt;
+ 1 kentucky       1972       157
+ 2 longbeach      1968        19
+ 3 elon           1921         1
+ 4 lehigh         1901         1
+ 5 ucla           1952       306
+ 6 usc            1947        11
+ 7 tamukvill      1978         0
+ 8 stanford       1972        55
+ 9 lsu            1927      1832
+10 wake           1915        72
 # ℹ 6,195 more rows</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
@@ -1241,8 +1241,8 @@ SELECT schoolID, birthYear, SUM(H) AS home_runs
 FROM (
   SELECT Batting.*, birthYear, schoolID
   FROM Batting
-  LEFT JOIN dbplyr_xv10YE8hHV
-    ON (Batting.playerID = dbplyr_xv10YE8hHV.playerID)
+  LEFT JOIN dbplyr_9p8AfFYmY7
+    ON (Batting.playerID = dbplyr_9p8AfFYmY7.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1252,8 +1252,8 @@ SELECT schoolID, birthYear, SUM(SO) AS strike_outs
 FROM (
   SELECT Pitching.*, birthYear, schoolID
   FROM Pitching
-  LEFT JOIN dbplyr_xv10YE8hHV
-    ON (Pitching.playerID = dbplyr_xv10YE8hHV.playerID)
+  LEFT JOIN dbplyr_9p8AfFYmY7
+    ON (Pitching.playerID = dbplyr_9p8AfFYmY7.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
