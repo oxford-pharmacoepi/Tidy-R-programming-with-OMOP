@@ -17,7 +17,7 @@ library(duckdb)
 library(dplyr)
 library(omock)
 library(CDMConnector)
-library(omopgenerics) # to be removed after CDMConnector > 2.2.0
+library(omopgenerics)
 library(palmerpenguins)
 
 cdm_local <- mockCdmReference() |>

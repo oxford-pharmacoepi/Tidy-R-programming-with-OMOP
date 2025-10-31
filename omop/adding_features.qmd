@@ -7,7 +7,6 @@ library(dplyr)
 library(omock)
 library(PatientProfiles)
 library(ggplot2)
-library(omopgenerics) # TODO can be eliminated after omock 0.6.0 release
 ```
 
 ```{r}
