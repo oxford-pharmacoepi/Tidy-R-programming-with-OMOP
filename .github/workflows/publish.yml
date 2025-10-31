@@ -29,7 +29,13 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           needs: website
-
+          
+      - name: Install dev omock
+        shell: Rscript {0}
+        run: |
+          install.packages("pak")
+          pak::pkg_install("ohdsi/omock")
+          
       - name: Install LaTeX (TinyTeX)
         uses: r-lib/actions/setup-tinytex@v2
       
