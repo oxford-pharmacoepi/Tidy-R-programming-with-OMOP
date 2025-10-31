@@ -29,6 +29,7 @@ jobs:
           needs: website
           
       - name: Install dev omock
+        shell: Rscript {0}
         run: |
           install.packages("pak")
           pak::pkg_install("ohdsi/omock")
