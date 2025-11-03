@@ -316,19 +316,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_covid&gt; [?? x 4]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpZkTg7y/file5434196bc681.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpl7DfSK/file42ee3f5b74c7.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       2399 2020-11-09        2020-11-23     
- 2                    1       6468 2020-07-12        2020-08-15     
- 3                    1       6843 2021-01-17        2021-02-13     
- 4                    1       6860 2020-12-29        2021-01-21     
- 5                    1       9588 2021-01-09        2021-01-27     
- 6                    1       9725 2021-01-15        2021-02-04     
- 7                    1        313 2021-02-25        2021-03-07     
- 8                    1       1039 2021-01-31        2021-03-02     
- 9                    1       2245 2021-02-08        2021-02-22     
-10                    1       7272 2021-08-13        2021-09-04     
+ 1                    1       1635 2020-07-14        2020-08-08     
+ 2                    1       2000 2020-11-15        2020-12-10     
+ 3                    1       4649 2021-09-08        2021-10-12     
+ 4                    1       9822 2021-02-06        2021-02-25     
+ 5                    1      10394 2020-11-29        2020-12-31     
+ 6                    1        724 2020-11-21        2020-12-23     
+ 7                    1        975 2021-03-03        2021-03-23     
+ 8                    1       2802 2020-11-16        2020-12-23     
+ 9                    1       4038 2020-07-09        2020-07-24     
+10                    1       7967 2021-01-19        2021-02-14     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -406,16 +406,16 @@ Time taken: 0 minutes and 1 seconds</code></pre>
 <pre><code># A tibble: 37 × 6
    concept_id found_from   concept_name domain_id vocabulary_id standard_concept
         &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
- 1    3656668 From initia… Conjunctivi… Condition SNOMED        S               
- 2    3656669 From initia… Dyspnea cau… Condition SNOMED        S               
- 3   37310284 From initia… Encephalopa… Condition SNOMED        S               
- 4   37310283 From initia… Gastroenter… Condition SNOMED        S               
- 5    3655976 From initia… Acute hypox… Condition SNOMED        S               
- 6     439676 From initia… Coronavirus… Condition SNOMED        S               
- 7   40479642 From initia… Pneumonia d… Condition SNOMED        S               
- 8    3661406 From initia… Acute respi… Condition SNOMED        S               
- 9   37016927 From initia… Pneumonia c… Condition SNOMED        S               
-10    1340294 From initia… Exacerbatio… Condition OMOP Extensi… S               
+ 1    1340294 From initia… Exacerbatio… Condition OMOP Extensi… S               
+ 2    3656667 From initia… Cardiomyopa… Condition SNOMED        S               
+ 3    3661885 From initia… Fever cause… Condition SNOMED        S               
+ 4   37310286 From initia… Infection o… Condition SNOMED        S               
+ 5     703447 From initia… High risk c… Condition SNOMED        S               
+ 6    3661406 From initia… Acute respi… Condition SNOMED        S               
+ 7   37016927 From initia… Pneumonia c… Condition SNOMED        S               
+ 8    3661631 From initia… Lymphocytop… Condition SNOMED        S               
+ 9    3661632 From initia… Thrombocyto… Condition SNOMED        S               
+10    3655973 From initia… At increase… Condition SNOMED        S               
 # ℹ 27 more rows</code></pre>
 </div>
 </div>
@@ -476,15 +476,15 @@ $ number_subjects      &lt;int&gt; 964</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 6
+<pre><code>Rows: 4
 Columns: 7
-$ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1
-$ number_records       &lt;int&gt; 964, 964, 964, 964, 964, 964
-$ number_subjects      &lt;int&gt; 964, 964, 964, 964, 964, 964
-$ reason_id            &lt;int&gt; 1, 2, 3, 4, 5, 6
+$ cohort_definition_id &lt;int&gt; 1, 1, 1, 1
+$ number_records       &lt;int&gt; 964, 964, 964, 964
+$ number_subjects      &lt;int&gt; 964, 964, 964, 964
+$ reason_id            &lt;int&gt; 1, 2, 3, 4
 $ reason               &lt;chr&gt; "Initial qualifying events", "Record in observati…
-$ excluded_records     &lt;int&gt; 0, 0, 0, 0, 0, 0
-$ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0</code></pre>
+$ excluded_records     &lt;int&gt; 0, 0, 0, 0
+$ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 </div>
 </div>
 <p>And finally, you can extract the codelists used to create a cohort table:</p>
@@ -604,19 +604,19 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0</code></pre>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_cardiac&gt; [?? x 4]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpZkTg7y/file5434196bc681.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpl7DfSK/file42ee3f5b74c7.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1       1822 2005-09-28        2005-09-28     
- 2                    1       3492 2008-09-01        2008-09-01     
- 3                    1       7004 1998-07-02        1998-07-02     
- 4                    1        116 2021-08-08        2021-08-08     
- 5                    1        223 2016-10-16        2016-10-16     
- 6                    1        671 1984-05-29        1984-05-29     
- 7                    1       1198 1993-08-14        1993-08-14     
- 8                    1       1610 2003-08-22        2003-08-22     
- 9                    1       2116 2023-03-09        2023-03-09     
-10                    1       3999 2020-11-25        2020-11-25     
+ 1                    1        352 2020-11-20        2020-11-20     
+ 2                    1        519 2013-07-31        2013-07-31     
+ 3                    1        625 2007-04-26        2007-04-26     
+ 4                    1       1989 2019-02-28        2019-02-28     
+ 5                    1       2185 2018-05-21        2018-05-21     
+ 6                    1       2234 1989-01-10        1989-01-10     
+ 7                    1       3538 2018-03-27        2018-03-27     
+ 8                    1       4282 2006-01-14        2006-01-14     
+ 9                    1       5511 2010-09-13        2010-09-13     
+10                    1       5932 1983-12-11        1983-12-11     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -691,15 +691,15 @@ $ number_subjects      &lt;int&gt; 193</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attrition</span>(cdm<span class="sc">$</span>covid) <span class="sc">|&gt;</span> </span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 13
+<pre><code>Rows: 11
 Columns: 7
-$ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-$ number_records       &lt;int&gt; 964, 964, 964, 964, 964, 964, 964, 964, 443, 210,…
-$ number_subjects      &lt;int&gt; 964, 964, 964, 964, 964, 964, 964, 964, 443, 210,…
-$ reason_id            &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
+$ cohort_definition_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+$ number_records       &lt;int&gt; 964, 964, 964, 964, 964, 964, 443, 210, 210, 210,…
+$ number_subjects      &lt;int&gt; 964, 964, 964, 964, 964, 964, 443, 210, 210, 210,…
+$ reason_id            &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
 $ reason               &lt;chr&gt; "Initial qualifying events", "Record in observati…
-$ excluded_records     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17
-$ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></pre>
+$ excluded_records     &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17
+$ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></pre>
 </div>
 </div>
 <p>We can visualize the attrition with the CohortCharacteristics package. We can first extract it with <code>summariseCohortAttrition()</code> and then <code>plotCohortAttrition</code> to better view the impact of applying each inclusion criteria:</p>
@@ -789,7 +789,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</c
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 5
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpZkTg7y/file5434196bc681.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmpl7DfSK/file42ee3f5b74c7.duckdb]
 $ cohort_definition_id &lt;int&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
 $ subject_id           &lt;int&gt; 71, 82, 134, 151, 153, 183, 194, 196, 200, 215, 2…
 $ cohort_start_date    &lt;date&gt; 1936-01-24, 1997-08-04, 2001-01-09, 2022-01-13, …

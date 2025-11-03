@@ -477,9 +477,9 @@ Foreign keys: 1</code></pre>
 # Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1/:memory:]
   name            
   &lt;chr&gt;           
-1 Boston Braves   
-2 Boston Red Sox  
-3 New York Yankees</code></pre>
+1 Boston Red Sox  
+2 New York Yankees
+3 Boston Braves   </code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1175,7 +1175,7 @@ GROUP BY schoolID, birthYear</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
 SELECT *
-FROM dbplyr_9p8AfFYmY7</code></pre>
+FROM dbplyr_886E77gtMz</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1186,18 +1186,18 @@ FROM dbplyr_9p8AfFYmY7</code></pre>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6,205 × 3
-   schoolID  birthYear home_runs
-   &lt;chr&gt;         &lt;int&gt;     &lt;dbl&gt;
- 1 kentucky       1972       157
- 2 longbeach      1968        19
- 3 elon           1921         1
- 4 lehigh         1901         1
- 5 ucla           1952       306
- 6 usc            1947        11
- 7 tamukvill      1978         0
- 8 stanford       1972        55
- 9 lsu            1927      1832
-10 wake           1915        72
+   schoolID   birthYear home_runs
+   &lt;chr&gt;          &lt;int&gt;     &lt;dbl&gt;
+ 1 vermont         1869        38
+ 2 michigan        1967         2
+ 3 nmstate         1968         0
+ 4 cacerri         1971         3
+ 5 chicago         1874         2
+ 6 byu             1961        28
+ 7 pepperdine      1969         1
+ 8 lsu             1978         2
+ 9 miamidade       1982         0
+10 stanford        1961      1611
 # ℹ 6,195 more rows</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>lahman<span class="sc">$</span>Pitching <span class="sc">|&gt;</span> </span>
@@ -1207,18 +1207,18 @@ FROM dbplyr_9p8AfFYmY7</code></pre>
 <span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3,663 × 3
-   schoolID   birthYear strike_outs
-   &lt;chr&gt;          &lt;int&gt;       &lt;dbl&gt;
- 1 vermont         1869         161
- 2 michigan        1967         888
- 3 nmstate         1968          98
- 4 cacerri         1971         327
- 5 byu             1961        1030
- 6 pepperdine      1969           4
- 7 lsu             1978         162
- 8 miamidade       1982          56
- 9 stanford        1961           0
-10 incante         1893         526
+   schoolID  birthYear strike_outs
+   &lt;chr&gt;         &lt;int&gt;       &lt;dbl&gt;
+ 1 elon           1921          13
+ 2 lehigh         1901           1
+ 3 usc            1947         275
+ 4 tamukvill      1978         409
+ 5 stanford       1972         218
+ 6 upenn          1964          14
+ 7 arkansas       1962         537
+ 8 kentucky       1985          91
+ 9 txsjjcn        1983         571
+10 rhodestn       1888         457
 # ℹ 3,653 more rows</code></pre>
 </div>
 </div>
@@ -1241,8 +1241,8 @@ SELECT schoolID, birthYear, SUM(H) AS home_runs
 FROM (
   SELECT Batting.*, birthYear, schoolID
   FROM Batting
-  LEFT JOIN dbplyr_9p8AfFYmY7
-    ON (Batting.playerID = dbplyr_9p8AfFYmY7.playerID)
+  LEFT JOIN dbplyr_886E77gtMz
+    ON (Batting.playerID = dbplyr_886E77gtMz.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
@@ -1252,8 +1252,8 @@ SELECT schoolID, birthYear, SUM(SO) AS strike_outs
 FROM (
   SELECT Pitching.*, birthYear, schoolID
   FROM Pitching
-  LEFT JOIN dbplyr_9p8AfFYmY7
-    ON (Pitching.playerID = dbplyr_9p8AfFYmY7.playerID)
+  LEFT JOIN dbplyr_886E77gtMz
+    ON (Pitching.playerID = dbplyr_886E77gtMz.playerID)
 ) q01
 GROUP BY schoolID, birthYear</code></pre>
 </div>
