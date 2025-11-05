@@ -299,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 18
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmps2v2OI/file422122c35aa6.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpQI5Mqh/file418e63767347.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
 $ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
@@ -327,7 +327,7 @@ $ age                           &lt;int&gt; 57, 25, 97, 2, 2, 2, 2, 75, 77, 57, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 18
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmps2v2OI/file422122c35aa6.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpQI5Mqh/file418e63767347.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
 $ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
@@ -402,7 +402,7 @@ $ age                           &lt;int&gt; 57, 25, 97, 2, 2, 2, 2, 75, 77, 57, 
 <pre><code>&lt;SQL&gt;
 SELECT
   condition_occurrence_id,
-  og_002_1762333857.person_id AS person_id,
+  og_002_1762341119.person_id AS person_id,
   condition_concept_id,
   condition_start_date,
   condition_start_datetime,
@@ -419,7 +419,7 @@ SELECT
   condition_status_source_value,
   age,
   RHS.sex AS sex
-FROM og_002_1762333857
+FROM og_002_1762341119
 LEFT JOIN (
   SELECT
     person_id,
@@ -430,7 +430,7 @@ ELSE 'None'
 END AS sex
   FROM person
 ) RHS
-  ON (og_002_1762333857.person_id = RHS.person_id)</code></pre>
+  ON (og_002_1762341119.person_id = RHS.person_id)</code></pre>
 </div>
 </div>
 <p>The difference between <a href="https://darwin-eu.github.io/PatientProfiles/reference/addSexQuery.html"><code>addSexQuery()</code></a> and <a href="https://darwin-eu.github.io/PatientProfiles/reference/addSex.html"><code>addSex()</code></a> will be explained in the next tip chunk.</p>
@@ -457,15 +457,15 @@ END AS sex
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 28
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmps2v2OI/file422122c35aa6.duckdb]
-$ drug_exposure_id             &lt;int&gt; 245761, 245762, 245763, 245764, 245765, 2…
-$ person_id                    &lt;int&gt; 7764, 7764, 7764, 7764, 7764, 7764, 7764,…
-$ drug_concept_id              &lt;int&gt; 40213227, 40213201, 40213198, 40213154, 4…
-$ drug_exposure_start_date     &lt;date&gt; 2015-02-08, 2010-01-10, 2010-01-10, 2017…
-$ drug_exposure_start_datetime &lt;dttm&gt; 2015-02-08 22:40:04, 2010-01-10 22:40:04…
-$ drug_exposure_end_date       &lt;date&gt; 2015-02-08, 2010-01-10, 2010-01-10, 2017…
-$ drug_exposure_end_datetime   &lt;dttm&gt; 2015-02-08 22:40:04, 2010-01-10 22:40:04…
-$ verbatim_end_date            &lt;date&gt; 2015-02-08, 2010-01-10, 2010-01-10, 2017…
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpQI5Mqh/file418e63767347.duckdb]
+$ drug_exposure_id             &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13…
+$ person_id                    &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+$ drug_concept_id              &lt;int&gt; 40213260, 40213260, 40213260, 40213260, 4…
+$ drug_exposure_start_date     &lt;date&gt; 2021-04-30, 2020-04-24, 2021-04-30, 2020…
+$ drug_exposure_start_datetime &lt;dttm&gt; 2021-04-30 16:49:39, 2020-04-24 16:49:39…
+$ drug_exposure_end_date       &lt;date&gt; 2021-04-30, 2020-04-24, 2021-04-30, 2020…
+$ drug_exposure_end_datetime   &lt;dttm&gt; 2021-04-30 16:49:39, 2020-04-24 16:49:39…
+$ verbatim_end_date            &lt;date&gt; 2021-04-30, 2020-04-24, 2021-04-30, 2020…
 $ drug_type_concept_id         &lt;int&gt; 32869, 32869, 32869, 32869, 32869, 32869,…
 $ stop_reason                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 $ refills                      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
@@ -474,18 +474,18 @@ $ days_supply                  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 $ sig                          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 $ route_concept_id             &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
 $ lot_number                   &lt;chr&gt; "0", "0", "0", "0", "0", "0", "0", "0", "…
-$ provider_id                  &lt;int&gt; 14656, 14656, 14656, 14656, 14656, 14656,…
-$ visit_occurrence_id          &lt;int&gt; 80896, 80891, 80891, 80892, 80895, 80896,…
-$ visit_detail_id              &lt;int&gt; 1080896, 1080891, 1080891, 1080892, 10808…
-$ drug_source_value            &lt;chr&gt; "113", "33", "133", "140", "140", "140", …
-$ drug_source_concept_id       &lt;int&gt; 40213227, 40213201, 40213198, 40213154, 4…
+$ provider_id                  &lt;int&gt; 12357, 12357, 12356, 12356, 12357, 12356,…
+$ visit_occurrence_id          &lt;int&gt; 6, 8, 6, 8, 6, 6, 7, 2, 6, 8, 9, 1, 7, 2,…
+$ visit_detail_id              &lt;int&gt; 1000006, 1000008, 1000006, 1000008, 10000…
+$ drug_source_value            &lt;chr&gt; "121", "121", "121", "121", "113", "113",…
+$ drug_source_concept_id       &lt;int&gt; 40213260, 40213260, 40213260, 40213260, 4…
 $ route_source_value           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 $ dose_unit_source_value       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ age                          &lt;int&gt; 71, 66, 66, 73, 72, 71, 69, 67, 65, 70, 6…
-$ sex                          &lt;chr&gt; "Male", "Male", "Male", "Male", "Male", "…
-$ prior_observation            &lt;int&gt; 2597, 742, 742, 3339, 2968, 2597, 1855, 1…
-$ future_observation           &lt;int&gt; 896, 2751, 2751, 154, 525, 896, 1638, 238…
-$ date_of_birth                &lt;date&gt; 1943-10-10, 1943-10-10, 1943-10-10, 1943…</code></pre>
+$ age                          &lt;int&gt; 51, 50, 51, 50, 51, 51, 53, 52, 51, 50, 4…
+$ sex                          &lt;chr&gt; "Female", "Female", "Female", "Female", "…
+$ prior_observation            &lt;int&gt; 2548, 2177, 2548, 2177, 2548, 2548, 3290,…
+$ future_observation           &lt;int&gt; 742, 1113, 742, 1113, 742, 742, 0, 371, 7…
+$ date_of_birth                &lt;date&gt; 1970-04-24, 1970-04-24, 1970-04-24, 1970…</code></pre>
 </div>
 </div>
 <p>With these characteristics added, we can now calculate mean age, prior observation (the number of days have passed since each individual’s most recent observation start date), and future observation (the number of days until the individual’s nearest observation end date) at drug exposure start date, stratified by sex.</p>
@@ -502,8 +502,8 @@ $ date_of_birth                &lt;date&gt; 1943-10-10, 1943-10-10, 1943-10-10, 
 <pre><code># A tibble: 2 × 4
   sex    mean_age mean_prior_observation mean_future_observation
   &lt;chr&gt;     &lt;dbl&gt;                  &lt;dbl&gt;                   &lt;dbl&gt;
-1 Female     39.4                  2096.                   1661.
-2 Male       43.0                  2455.                   1768.</code></pre>
+1 Male       43.0                  2455.                   1768.
+2 Female     39.4                  2096.                   1661.</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -526,8 +526,8 @@ $ date_of_birth                &lt;date&gt; 1943-10-10, 1943-10-10, 1943-10-10, 
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;SQL&gt;
-SELECT og_005_1762333860.*
-FROM og_005_1762333860
+SELECT og_005_1762341122.*
+FROM og_005_1762341122
 WHERE (sex = 'Male')</code></pre>
 </div>
 </div>
@@ -654,7 +654,7 @@ WHERE (sex = 'Male')</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 20
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmps2v2OI/file422122c35aa6.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpQI5Mqh/file418e63767347.duckdb]
 $ condition_occurrence_id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 2, 6, 7, 8, 8, 8, 8, 16, 16, 18, 18, 25,…
 $ condition_concept_id          &lt;int&gt; 381316, 321042, 381316, 37311061, 437663…
@@ -695,7 +695,7 @@ $ prior_observation_group       &lt;chr&gt; "365 or above", "365 or above", "365
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 6
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmps2v2OI/file422122c35aa6.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpQI5Mqh/file418e63767347.duckdb]
 $ observation_period_id         &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ person_id                     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…
 $ observation_period_start_date &lt;date&gt; 2014-05-09, 1977-04-11, 2014-04-19, 201…
@@ -723,7 +723,7 @@ $ observation_period_start_year &lt;dbl&gt; 2014, 1977, 2014, 2014, 2013, 2013, 
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 2
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmps2v2OI/file422122c35aa6.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpQI5Mqh/file418e63767347.duckdb]
 $ person_id                    &lt;int&gt; 2, 6, 7, 8, 16, 18, 25, 36, 40, 42, 44, 4…
 $ condition_occurrence_records &lt;dbl&gt; 1, 1, 1, 4, 2, 2, 1, 4, 1, 3, 2, 5, 1, 3,…</code></pre>
 </div>
@@ -751,7 +751,7 @@ FROM (
   FROM person
   LEFT JOIN (
     SELECT person_id, COUNT(*) AS condition_occurrence_records
-    FROM og_002_1762333857
+    FROM og_002_1762341119
     GROUP BY person_id
   ) RHS
     ON (person.person_id = RHS.person_id)
@@ -778,7 +778,7 @@ FROM (
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmps2v2OI/file422122c35aa6.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpQI5Mqh/file418e63767347.duckdb]
       n
   &lt;dbl&gt;
 1  9967</code></pre>
@@ -787,7 +787,7 @@ FROM (
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmps2v2OI/file422122c35aa6.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpQI5Mqh/file418e63767347.duckdb]
        n
    &lt;dbl&gt;
 1 337509</code></pre>
@@ -802,7 +802,7 @@ FROM (
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   SQL [?? x 1]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmps2v2OI/file422122c35aa6.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/RtmpQI5Mqh/file418e63767347.duckdb]
        n
    &lt;dbl&gt;
 1 410683</code></pre>
