@@ -2,11 +2,11 @@
 
 ## Adding intersection variables
 
-Studies using the OMOP CDM often start with creating patient cohorts. Often we will start by identifying a target (exposure) cohort. We can then create various other cohorts, for example, to characterise the comorbidities of individuals at time of entry into the target cohort or to summarise the occurrence of a health outcome after entering the target cohort. These intersections between our target cohort and other cohorts (or even other tables in the OMOP CDM) can take many forms and will typically require temporal logic. The `PatientProfiles` R package addresses these challenges by providing a suite of flexible functions to support the calculation of intersections between our target cohorts and other cohorts, concept sets, or other OMOP CDM tables.
+Studies using the OMOP CDM often start with creating patient cohorts. Typically we begin by identifying a target (exposure) cohort. We can then create various other cohorts, for example, to characterise the comorbidities of individuals at time of entry into the target cohort or to summarise the occurrence of a health outcome after entering the target cohort. These intersections between our target cohort and other cohorts (or even other tables in the OMOP CDM) can take many forms and will typically require temporal logic. The `PatientProfiles` R package addresses these challenges by providing a suite of flexible functions to support the calculation of intersections between our target cohorts and other cohorts, concept sets, or other OMOP CDM tables.
 
 ### Intersection between two cohorts
 
-Suppose we are interested in studying patients with gastrointestinal (GI) bleeding and describing their use of acetaminophen. We will first create one cohort for patients with GI bleeding (our target cohort). Next we can create another cohort for patients with exposure to acetaminophen, keeping only those individuals who are also in our GI cohort. Below is an example of the code used to create these cohorts within the GiBleed synthetic database (a characterisation of this dataset can be found [here](https://dpa-pde-oxford.shinyapps.io/OmopSketchCharacterisation/)).
+Suppose we are interested in studying patients with gastrointestinal (GI) bleeding and describing their use of acetaminophen. We will first create one cohort for patients with GI bleeding (our target cohort). Next we can create another cohort for patients with exposure to acetaminophen, keeping only those individuals who are also in our GI bleeding cohort. Below is an example of the code used to create these cohorts within the GiBleed synthetic database (a characterisation of this dataset can be found [here](https://dpa-pde-oxford.shinyapps.io/OmopSketchCharacterisation/)).
 
 ```{r, warning=FALSE, message=FALSE}
 library(omock)
@@ -14,28 +14,30 @@ library(dplyr)
 library(PatientProfiles)
 library(CohortCharacteristics)
 library(CohortConstructor)
-library(omopgenerics) 
+library(omopgenerics)
 
-cdm <- mockCdmFromDataset(datasetName = "GiBleed", 
-                          source = "duckdb")
+cdm <- mockCdmFromDataset(
+  datasetName = "GiBleed",
+  source = "duckdb"
+)
 
 cdm$gi_bleed <- conceptCohort(
   cdm = cdm,
-  conceptSet = list("gi_bleed" = 192671L), 
-  name = "gi_bleed", 
+  conceptSet = list("gi_bleed" = 192671L),
+  name = "gi_bleed",
   exit = "event_start_date"
 ) |>
-  padCohortEnd(days = 30) |> 
+  padCohortEnd(days = 30) |>
   requireIsFirstEntry()
 
 cdm$acetaminophen <- conceptCohort(
   cdm = cdm,
   conceptSet = list("acetaminophen" = c(
-    1125315L, 1127078L, 1127433L, 40229134L, 
+    1125315L, 1127078L, 1127433L, 40229134L,
     40231925L, 40162522L, 19133768L
-  )), 
-  name = "acetaminophen", 
-  exit = "event_end_date", 
+  )),
+  name = "acetaminophen",
+  exit = "event_end_date",
   subsetCohort = "gi_bleed"
 ) |>
   collapseCohorts(gap = 30)
@@ -50,14 +52,15 @@ To get a binary indicator showing the presence of an intersection between the co
 cdm$gi_bleed <- cdm$gi_bleed |>
   addCohortIntersectFlag(
     targetCohortTable = "acetaminophen",
-    window = list("flag_prior" = c(-Inf, -1), 
-                  "flag_on_index" = c(0, 0), 
-                  "flag_post" = c(1, Inf))
+    window = list(
+      "flag_prior" = c(-Inf, -1),
+      "flag_on_index" = c(0, 0),
+      "flag_post" = c(1, Inf)
+    )
   )
 
-cdm$gi_bleed |> 
+cdm$gi_bleed |>
   glimpse()
-
 ```
 
 ::: {.callout-note collapse="true"}
@@ -124,12 +127,14 @@ To get the count of occurrences of intersection between two cohorts, we can use 
 cdm$gi_bleed <- cdm$gi_bleed |>
   addCohortIntersectCount(
     targetCohortTable = "acetaminophen",
-    window = list("count_prior" = c(-Inf, -1), 
-                  "count_index" = c(0, 0), 
-                  "count_post" = c(1, Inf)),
+    window = list(
+      "count_prior" = c(-Inf, -1),
+      "count_index" = c(0, 0),
+      "count_post" = c(1, Inf)
+    ),
   )
 
-cdm$gi_bleed |> 
+cdm$gi_bleed |>
   glimpse()
 ```
 
@@ -180,7 +185,7 @@ cdm$gi_bleed <- cdm$gi_bleed |>
     order = "first"
   )
 
-cdm$gi_bleed |> 
+cdm$gi_bleed |>
   glimpse()
 ```
 
@@ -192,7 +197,7 @@ cdm$gi_bleed <- cdm$gi_bleed |>
     order = "last"
   )
 
-cdm$gi_bleed |> 
+cdm$gi_bleed |>
   glimpse()
 ```
 
@@ -212,9 +217,8 @@ cdm$gi_bleed <- cdm$gi_bleed |>
     nameStyle = "count_piror_visits"
   )
 
-cdm$gi_bleed |> 
+cdm$gi_bleed |>
   glimpse()
-  
 ```
 
 We can see that by using various functions from `PatientProfiles` we can add numerous variables that we can later use in our analysis. From this we can continue on to then work with this single tidy table to perform various analyses.
@@ -225,30 +229,55 @@ The `PatientProfiles` package provides maximum flexibility, allowining us to add
 Below we can see how we can generate a summary table of the characteristics of patients in our study cohort, along with summary statistics from our intersectiong of interest. 
 
 ```{r, warning=FALSE, message=FALSE}
-chars <- cdm$gi_bleed |> 
-  summariseCharacteristics(demographics = TRUE, 
-                           cohortIntersectFlag = list("flag_prior" = list(targetCohortTable = "acetaminophen", 
-                                                      window = c(-Inf, -1)),
-                                                      "flag_on_index" = list(targetCohortTable = "acetaminophen", 
-                                                      window = c(0, 0)),
-                                                      "flag_post" = list(targetCohortTable = "acetaminophen", 
-                                                      window = c(1, Inf))),
-                           cohortIntersectCount = list("count_prior" = list(targetCohortTable = "acetaminophen", 
-                                                      window = c(-Inf, -1)),
-                                                      "count_on_index" = list(targetCohortTable = "acetaminophen", 
-                                                      window = c(0, 0)),
-                                                      "count_post" = list(targetCohortTable = "acetaminophen", 
-                                                      window = c(1, Inf))), 
-                           cohortIntersectDays = list("days_prior" = list(targetCohortTable = "acetaminophen", 
-                                                      window = c(-Inf, -1),
-                                                      order = "last"),
-                                                      "days_post" = list(targetCohortTable = "acetaminophen", 
-                                                      window = c(1, Inf),
-                                                      order = "first")), 
-                           tableIntersectFlag = list("piror_visits" = list(
-                             tableName = "visit_occurrence",
-                             window = list(c(-Inf, -1)))))
-  
+chars <- cdm$gi_bleed |>
+  summariseCharacteristics(
+    demographics = TRUE,
+    cohortIntersectFlag = list(
+      "flag_prior" = list(
+        targetCohortTable = "acetaminophen",
+        window = c(-Inf, -1)
+      ),
+      "flag_on_index" = list(
+        targetCohortTable = "acetaminophen",
+        window = c(0, 0)
+      ),
+      "flag_post" = list(
+        targetCohortTable = "acetaminophen",
+        window = c(1, Inf)
+      )
+    ),
+    cohortIntersectCount = list(
+      "count_prior" = list(
+        targetCohortTable = "acetaminophen",
+        window = c(-Inf, -1)
+      ),
+      "count_on_index" = list(
+        targetCohortTable = "acetaminophen",
+        window = c(0, 0)
+      ),
+      "count_post" = list(
+        targetCohortTable = "acetaminophen",
+        window = c(1, Inf)
+      )
+    ),
+    cohortIntersectDays = list(
+      "days_prior" = list(
+        targetCohortTable = "acetaminophen",
+        window = c(-Inf, -1),
+        order = "last"
+      ),
+      "days_post" = list(
+        targetCohortTable = "acetaminophen",
+        window = c(1, Inf),
+        order = "first"
+      )
+    ),
+    tableIntersectFlag = list("piror_visits" = list(
+      tableName = "visit_occurrence",
+      window = list(c(-Inf, -1))
+    ))
+  )
+
 tableCharacteristics(chars)
 ```
 
@@ -257,7 +286,7 @@ tableCharacteristics(chars)
 Once we have finished our analysis we can close our connection to the database behind our cdm reference.
 
 ```{r}
-cdmDisconnect(cdm) 
+cdmDisconnect(cdm)
 ```
 
 ## Further reading
@@ -266,4 +295,3 @@ cdmDisconnect(cdm)
 
 -   Català M, Guo Y, Lopez-Guell K, Burn E, Mercade-Besora N,  Alcalde M (2025). *CohortCharacteristics: Summarise and Visualise Characteristics of Patients in the OMOP
 CDM*. R package version 1.0.0, <https://darwin-eu.github.io/CohortCharacteristics>.
-

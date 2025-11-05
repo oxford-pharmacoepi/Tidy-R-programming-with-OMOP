@@ -28,7 +28,7 @@ library(omopgenerics)
 library(CohortConstructor)
 library(CohortCharacteristics)
 library(dplyr)
-        
+
 cdm <- mockCdmFromDataset(datasetName = "synthea-covid19-10k", source = "duckdb")
 ```
 
@@ -37,9 +37,11 @@ cdm <- mockCdmFromDataset(datasetName = "synthea-covid19-10k", source = "duckdb"
 Often study cohorts will be based around a specific clinical event identified by some set of clinical codes. Here, for example, we use the [`CohortConstructor`](https://ohdsi.github.io/CohortConstructor/) package to create a cohort of people with Covid-19. For this we are identifying any clinical records with the code [37311061](https://athena.ohdsi.org/search-terms/terms/37311061).
 
 ```{r, warning=FALSE, message=FALSE}
-cdm$covid <- conceptCohort(cdm = cdm, 
-                           conceptSet = list("covid" = 37311061), 
-                           name = "covid")
+cdm$covid <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list("covid" = 37311061),
+  name = "covid"
+)
 cdm$covid
 ```
 
@@ -49,9 +51,11 @@ cdm$covid
 Note that the `name` argument determines the name of the permanent table written in the database and as we have seen before, we have to be consistent assigning the tables to the cdm object. That's why we used `name = "covid"` and then we were able to assign it to `cdm$covid`. Otherwise, see this failing example:
 
 ```{r, error = TRUE}
-cdm$not_covid <- conceptCohort(cdm = cdm, 
-                               conceptSet = list("covid" = 37311061), 
-                               name = "covid")
+cdm$not_covid <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list("covid" = 37311061),
+  name = "covid"
+)
 ```
 :::
 
@@ -64,10 +68,12 @@ We can search for codes of interest using the [`CodelistGenerator`](https://darw
 
 ```{r}
 library(CodelistGenerator)
-getCandidateCodes(cdm = cdm, 
-                  keywords = c("coronavirus", "covid"),
-                  domains = "condition",
-                  includeDescendants = TRUE)
+getCandidateCodes(
+  cdm = cdm,
+  keywords = c("coronavirus", "covid"),
+  domains = "condition",
+  includeDescendants = TRUE
+)
 ```
 
 We can also do automated searches that make use of the hierarchies in the vocabularies. Here, for example, we find the code for the drug ingredient Acetaminophen and all of its descendants.
@@ -86,7 +92,7 @@ We can see that as well as having the cohort entries above, our cohort table is 
 First, we can see the settings associated with cohort.
 
 ```{r, warning=FALSE, message=FALSE}
-settings(cdm$covid) |> 
+settings(cdm$covid) |>
   glimpse()
 ```
 
@@ -95,7 +101,7 @@ In settings, we can see the cohort name that by default is the name of the codel
 Second, we can get counts of each cohort.
 
 ```{r, warning=FALSE, message=FALSE}
-cohortCount(cdm$covid) |> 
+cohortCount(cdm$covid) |>
   glimpse()
 ```
 
@@ -104,7 +110,7 @@ Where you can see the number of records and number of subjects for each cohort. 
 Attrition can also be retrieved from any cohort.
 
 ```{r, warning=FALSE, message=FALSE}
-attrition(cdm$covid) |> 
+attrition(cdm$covid) |>
   glimpse()
 ```
 
@@ -151,8 +157,8 @@ We do not have to worry about the attributes and the naming of the tables as `Co
 Let's say we first want to restrict our cohort to only include the first record for each person. This can be done by using the function [`requireIsFirstEntry()`](https://ohdsi.github.io/CohortConstructor/reference/requireIsFirstEntry.html):
 
 ```{r, warning=FALSE, message=FALSE}
-cdm$covid <- cdm$covid |> 
-  requireIsFirstEntry() 
+cdm$covid <- cdm$covid |>
+  requireIsFirstEntry()
 ```
 
 ### Restrict to study period
@@ -170,7 +176,7 @@ Finally, we want to restrict our population of interest to only adult males unde
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |>
-   requireDemographics(ageRange = c(18, 64), sex = "Male")
+  requireDemographics(ageRange = c(18, 64), sex = "Male")
 ```
 
 ::: {.callout-note collapse="true"}
@@ -188,8 +194,10 @@ We can first generate a cohort table with records of myocardial infarction.
 ```{r, warning=FALSE, message=FALSE}
 cdm$cardiac <- conceptCohort(
   cdm = cdm,
-  conceptSet = list("myocaridal_infarction" = 
-                      c(317576L, 313217L, 321042L, 4329847L)), 
+  conceptSet = list(
+    "myocaridal_infarction" =
+      c(317576L, 313217L, 321042L, 4329847L)
+  ),
   name = "cardiac"
 )
 cdm$cardiac
@@ -198,11 +206,13 @@ cdm$cardiac
 Now we can apply the inclusion criteria that individuals have no records of myocardical infarction prior to their Covid-19 cohort entry.
 
 ```{r, warning=FALSE, message=FALSE}
-cdm$covid <- cdm$covid |> 
-  requireCohortIntersect(targetCohortTable = "cardiac", 
-                         indexDate = "cohort_start_date", 
-                         window = c(-Inf, -1), 
-                         intersections = 0) 
+cdm$covid <- cdm$covid |>
+  requireCohortIntersect(
+    targetCohortTable = "cardiac",
+    indexDate = "cohort_start_date",
+    window = c(-Inf, -1),
+    intersections = 0
+  )
 ```
 
 Note that if we had wanted to require that individuals did have a history of a cardiac condition, we would instead have set `intersections = c(1, Inf)` above.
@@ -212,17 +222,17 @@ Note that if we had wanted to require that individuals did have a history of a c
 Using the `require*()` functions, the cohort attributes have been updated to reflect the applied inclusion criteria.
 
 ```{r, warning=FALSE, message=FALSE}
-settings(cdm$covid) |> 
+settings(cdm$covid) |>
   glimpse()
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-cohortCount(cdm$covid) |> 
+cohortCount(cdm$covid) |>
   glimpse()
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-attrition(cdm$covid) |> 
+attrition(cdm$covid) |>
   glimpse()
 ```
 
@@ -239,10 +249,14 @@ tableCohortAttrition(attrition_summary)
 As we have seen, by default the naming of the cohorts is the name of the codelist:
 
 ```{r, message=FALSE, warning=FALSE}
-cdm$my_cohort <- conceptCohort(cdm = cdm, 
-                               conceptSet = list("concept_1" = 37311061L, 
-                                                 "concept_2" = 317576L), 
-                               name = "my_cohort")
+cdm$my_cohort <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list(
+    "concept_1" = 37311061L,
+    "concept_2" = 317576L
+  ),
+  name = "my_cohort"
+)
 settings(cdm$my_cohort)
 ```
 
@@ -250,10 +264,14 @@ But maybe we are interested in renaming a cohort (e.g., after applying the inclu
 
 ```{r}
 cdm$my_cohort <- cdm$my_cohort |>
-  requirePriorObservation(minPriorObservation = 365, 
-                          cohortId = 1) |>
-  renameCohort(cohortId = 1, 
-               newCohortName = "concept_1_365_obs")
+  requirePriorObservation(
+    minPriorObservation = 365,
+    cohortId = 1
+  ) |>
+  renameCohort(
+    cohortId = 1,
+    newCohortName = "concept_1_365_obs"
+  )
 settings(cdm$my_cohort)
 ```
 
@@ -262,8 +280,10 @@ Note that for arguments such as `cohortId`, `targetCohortId`, etc., we are able 
 ```{r}
 cdm$my_cohort <- cdm$my_cohort |>
   requireSex(sex = "Female", cohortId = "concept_2") |>
-  renameCohort(cohortId = "concept_2", 
-               newCohortName = "concept_2_female")
+  renameCohort(
+    cohortId = "concept_2",
+    newCohortName = "concept_2_female"
+  )
 settings(cdm$my_cohort)
 ```
 
@@ -280,13 +300,19 @@ Also other utility functions that can be useful are those provided by omopgeneri
 
 ```{r}
 library(omopgenerics)
-getCohortId(cohort = cdm$my_cohort, 
-            cohortName = "concept_2_female")
+getCohortId(
+  cohort = cdm$my_cohort,
+  cohortName = "concept_2_female"
+)
 getCohortId(cohort = cdm$my_cohort)
-getCohortName(cohort = cdm$my_cohort, 
-              cohortId = 1)
-getCohortName(cohort = cdm$my_cohort, 
-              cohortId = c(2, 1))
+getCohortName(
+  cohort = cdm$my_cohort,
+  cohortId = 1
+)
+getCohortName(
+  cohort = cdm$my_cohort,
+  cohortId = c(2, 1)
+)
 getCohortName(cohort = cdm$my_cohort)
 ```
 :::
@@ -296,7 +322,7 @@ getCohortName(cohort = cdm$my_cohort)
 Once we have finished our analysis we can close our connection to the database behind our cdm reference.
 
 ```{r}
-cdmDisconnect(cdm) 
+cdmDisconnect(cdm)
 ```
 
 ## Further reading

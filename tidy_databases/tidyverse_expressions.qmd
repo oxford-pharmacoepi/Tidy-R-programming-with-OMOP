@@ -230,12 +230,18 @@ con <- simulate_duckdb()
 translate_sql(ifelse(var == "a", 1L, 2L), con = con)
 translate_sql(if_else(var == "a", 1L, 2L), con = con)
 translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = NULL), 
-              con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = "something else"), 
-              con = con)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = NULL
+  ),
+  con = con
+)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = "something else"
+  ),
+  con = con
+)
 ```
 
 ### Postgres
@@ -245,12 +251,18 @@ con <- simulate_postgres()
 translate_sql(ifelse(var == "a", 1L, 2L), con = con)
 translate_sql(if_else(var == "a", 1L, 2L), con = con)
 translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = NULL), 
-              con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = "something else"), 
-              con = con)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = NULL
+  ),
+  con = con
+)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = "something else"
+  ),
+  con = con
+)
 ```
 
 ### SQL Server
@@ -260,12 +272,18 @@ con <- simulate_mssql()
 translate_sql(ifelse(var == "a", 1L, 2L), con = con)
 translate_sql(if_else(var == "a", 1L, 2L), con = con)
 translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = NULL), 
-              con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = "something else"), 
-              con = con)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = NULL
+  ),
+  con = con
+)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = "something else"
+  ),
+  con = con
+)
 ```
 
 ### Redshift
@@ -275,12 +293,18 @@ con <- simulate_redshift()
 translate_sql(ifelse(var == "a", 1L, 2L), con = con)
 translate_sql(if_else(var == "a", 1L, 2L), con = con)
 translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = NULL), 
-              con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = "something else"), 
-              con = con)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = NULL
+  ),
+  con = con
+)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = "something else"
+  ),
+  con = con
+)
 ```
 
 ### Snowflake
@@ -290,12 +314,18 @@ con <- simulate_snowflake()
 translate_sql(ifelse(var == "a", 1L, 2L), con = con)
 translate_sql(if_else(var == "a", 1L, 2L), con = con)
 translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = NULL), 
-              con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = "something else"), 
-              con = con)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = NULL
+  ),
+  con = con
+)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = "something else"
+  ),
+  con = con
+)
 ```
 
 ### Spark
@@ -305,12 +335,18 @@ con <- simulate_spark_sql()
 translate_sql(ifelse(var == "a", 1L, 2L), con = con)
 translate_sql(if_else(var == "a", 1L, 2L), con = con)
 translate_sql(case_when(var == "a" ~ 1L, .default = 2L), con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = NULL), 
-              con = con)
-translate_sql(case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L, 
-                        .default = "something else"), 
-              con = con)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = NULL
+  ),
+  con = con
+)
+translate_sql(
+  case_when(var == "a" ~ 1L, var == "b" ~ 2L, var == "c" ~ 3L,
+    .default = "something else"
+  ),
+  con = con
+)
 ```
 :::
 :::
@@ -592,7 +628,7 @@ lazy_frame(x = c(1, 2), con = simulate_duckdb()) |>
     mean = mean(x, na.rm = TRUE),
     max = max(x, na.rm = TRUE),
     sd = sd(x, na.rm = TRUE)
-  ) |> 
+  ) |>
   show_query()
 ```
 
@@ -609,7 +645,7 @@ lazy_frame(x = c(1, 2), con = simulate_postgres()) |>
     mean = mean(x, na.rm = TRUE),
     max = max(x, na.rm = TRUE),
     sd = sd(x, na.rm = TRUE)
-  ) |> 
+  ) |>
   show_query()
 ```
 
@@ -626,7 +662,7 @@ lazy_frame(x = c(1, 2), con = simulate_mssql()) |>
     mean = mean(x, na.rm = TRUE),
     max = max(x, na.rm = TRUE),
     sd = sd(x, na.rm = TRUE)
-  ) |> 
+  ) |>
   show_query()
 ```
 
@@ -643,7 +679,7 @@ lazy_frame(x = c(1, 2), con = simulate_redshift()) |>
     mean = mean(x, na.rm = TRUE),
     max = max(x, na.rm = TRUE),
     sd = sd(x, na.rm = TRUE)
-  ) |> 
+  ) |>
   show_query()
 ```
 
@@ -660,7 +696,7 @@ lazy_frame(x = c(1, 2), con = simulate_snowflake()) |>
     mean = mean(x, na.rm = TRUE),
     max = max(x, na.rm = TRUE),
     sd = sd(x, na.rm = TRUE)
-  ) |> 
+  ) |>
   show_query()
 ```
 
@@ -677,7 +713,7 @@ lazy_frame(x = c(1, 2), con = simulate_spark_sql()) |>
     mean = mean(x, na.rm = TRUE),
     max = max(x, na.rm = TRUE),
     sd = sd(x, na.rm = TRUE)
-  ) |> 
+  ) |>
   show_query()
 ```
 :::
@@ -699,24 +735,24 @@ Given that window functions compare rows to rows before or after them, we will o
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_duckdb()
-lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
-  window_order(z) |> 
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |>
+  window_order(z) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
-  window_order(z) |> 
-  group_by(y) |> 
+  window_order(z) |>
+  group_by(y) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 ```
 
@@ -724,24 +760,24 @@ lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_postgres()
-lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
-  window_order(z) |> 
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |>
+  window_order(z) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
-  window_order(z) |> 
-  group_by(y) |> 
+  window_order(z) |>
+  group_by(y) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 ```
 
@@ -749,24 +785,24 @@ lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_mssql()
-lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
-  window_order(z) |> 
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |>
+  window_order(z) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
-  window_order(z) |> 
-  group_by(y) |> 
+  window_order(z) |>
+  group_by(y) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 ```
 
@@ -774,24 +810,24 @@ lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_redshift()
-lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
-  window_order(z) |> 
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |>
+  window_order(z) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
-  window_order(z) |> 
-  group_by(y) |> 
+  window_order(z) |>
+  group_by(y) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 ```
 
@@ -799,24 +835,24 @@ lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_snowflake()
-lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
-  window_order(z) |> 
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |>
+  window_order(z) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
-  window_order(z) |> 
-  group_by(y) |> 
+  window_order(z) |>
+  group_by(y) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 ```
 
@@ -824,24 +860,24 @@ lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
 
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_spark_sql()
-lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |> 
-  window_order(z) |> 
+lazy_frame(x = c(10, 20, 30), z = c(1, 2, 3), con = con) |>
+  window_order(z) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 lazy_frame(x = c(10, 20), y = c("a", "b"), z = c(1, 2), con = con) |>
-  window_order(z) |> 
-  group_by(y) |> 
+  window_order(z) |>
+  group_by(y) |>
   mutate(
     sum_x = cumsum(x),
     mean_x = cummean(x),
-    lag_x = lag(x), 
+    lag_x = lag(x),
     lead_x = lead(x)
-  ) |> 
+  ) |>
   show_query()
 ```
 :::
@@ -875,10 +911,10 @@ A case where this is not true is when we are interested in summarising distribut
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_duckdb()
 lazy_frame(x = c(1, 2), con = con) |>
-  summarise(median = median(x, na.rm = TRUE)) |> 
+  summarise(median = median(x, na.rm = TRUE)) |>
   show_query()
 lazy_frame(x = c(1, 2), con = con) |>
-  mutate(median = median(x, na.rm = TRUE)) |> 
+  mutate(median = median(x, na.rm = TRUE)) |>
   show_query()
 ```
 
@@ -887,10 +923,10 @@ lazy_frame(x = c(1, 2), con = con) |>
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_postgres()
 lazy_frame(x = c(1, 2), con = con) |>
-  summarise(median = median(x, na.rm = TRUE)) |> 
+  summarise(median = median(x, na.rm = TRUE)) |>
   show_query()
 lazy_frame(x = c(1, 2), con = con) |>
-  mutate(median = median(x, na.rm = TRUE)) |> 
+  mutate(median = median(x, na.rm = TRUE)) |>
   show_query()
 ```
 
@@ -899,10 +935,10 @@ lazy_frame(x = c(1, 2), con = con) |>
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_mssql()
 lazy_frame(x = c(1, 2), con = con) |>
-  summarise(median = median(x, na.rm = TRUE)) |> 
+  summarise(median = median(x, na.rm = TRUE)) |>
   show_query()
 lazy_frame(x = c(1, 2), con = con) |>
-  mutate(median = median(x, na.rm = TRUE)) |> 
+  mutate(median = median(x, na.rm = TRUE)) |>
   show_query()
 ```
 
@@ -911,10 +947,10 @@ lazy_frame(x = c(1, 2), con = con) |>
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_redshift()
 lazy_frame(x = c(1, 2), con = con) |>
-  summarise(median = median(x, na.rm = TRUE)) |> 
+  summarise(median = median(x, na.rm = TRUE)) |>
   show_query()
 lazy_frame(x = c(1, 2), con = con) |>
-  mutate(median = median(x, na.rm = TRUE)) |> 
+  mutate(median = median(x, na.rm = TRUE)) |>
   show_query()
 ```
 
@@ -923,10 +959,10 @@ lazy_frame(x = c(1, 2), con = con) |>
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_snowflake()
 lazy_frame(x = c(1, 2), con = con) |>
-  summarise(median = median(x, na.rm = TRUE)) |> 
+  summarise(median = median(x, na.rm = TRUE)) |>
   show_query()
 lazy_frame(x = c(1, 2), con = con) |>
-  mutate(median = median(x, na.rm = TRUE)) |> 
+  mutate(median = median(x, na.rm = TRUE)) |>
   show_query()
 ```
 
@@ -935,10 +971,10 @@ lazy_frame(x = c(1, 2), con = con) |>
 ```{r, message=FALSE, warning=FALSE, error=TRUE}
 con <- simulate_spark_sql()
 lazy_frame(x = c(1, 2), con = con) |>
-  summarise(median = median(x, na.rm = TRUE)) |> 
+  summarise(median = median(x, na.rm = TRUE)) |>
   show_query()
 lazy_frame(x = c(1, 2), con = con) |>
-  mutate(median = median(x, na.rm = TRUE)) |> 
+  mutate(median = median(x, na.rm = TRUE)) |>
   show_query()
 ```
 :::

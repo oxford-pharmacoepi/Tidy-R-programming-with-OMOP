@@ -39,10 +39,12 @@ cdm <- insertCdmTo(cdm = cdm_local, to = src)
 Note that [`insertCdmTo()`](https://darwin-eu.github.io/omopgenerics/reference/insertCdmTo.html) output is already a `<cdm_reference>` object. But how would we create this cdm reference from the connection? We can use the function [`cdmFromCon()`](https://darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html) from [`CDMConnector`](https://darwin-eu.github.io/CDMConnector/) to create our cdm reference. Note that as well as specifying the schema containing our OMOP CDM tables, we will also specify a write schema where any database tables we create during our analysis will be stored. Often, our OMOP CDM tables will be in a schema that we only have read-access to, and we'll have another schema where we can have write-access and where intermediate tables can be created for a given study.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(con = con, 
-                  cdmSchema = "main", 
-                  writeSchema = "main",
-                  cdmName = "example_data")
+cdm <- cdmFromCon(
+  con = con,
+  cdmSchema = "main",
+  writeSchema = "main",
+  cdmName = "example_data"
+)
 ```
 
 ```{r}
@@ -55,11 +57,13 @@ cdm
 We can also specify a write prefix and this will be used whenever permanent tables are created in the write schema. This can be useful when we're sharing our write schema with others and want to avoid table name conflicts and easily drop tables created as part of a particular study.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE, eval = FALSE}
-cdm <- cdmFromCon(con = con,
-                  cdmSchema = "main", 
-                  writeSchema = "main", 
-                  writePrefix = "my_study_",
-                  cdmName = "example_data")
+cdm <- cdmFromCon(
+  con = con,
+  cdmSchema = "main",
+  writeSchema = "main",
+  writePrefix = "my_study_",
+  cdmName = "example_data"
+)
 ```
 
 Note you only have to specify this writePrefix once at the connection stage, and then the cdm_reference object will store that and use it every time that you create a new table.
@@ -82,9 +86,11 @@ Note that here we have first created a local version of the cdm with all the tab
 Our cdm reference will be associated with a name. By default, this name will be taken from the `cdm_source_name` field from the `cdm_source` table. We will use the function [`cdmName()`](https://darwin-eu.github.io/omopgenerics/reference/cdmName.html) from [`omopgenerics`](https://darwin-eu.github.io/omopgenerics/) to get it.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(con = con,
-                  cdmSchema = "main", 
-                  writeSchema = "main")
+cdm <- cdmFromCon(
+  con = con,
+  cdmSchema = "main",
+  writeSchema = "main"
+)
 cdm$cdm_source |>
   glimpse()
 cdmName(cdm)
@@ -93,10 +99,12 @@ cdmName(cdm)
 However, we can instead set this name to whatever else we want when creating our cdm reference.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(con = con,
-                  cdmSchema = "main", 
-                  writeSchema = "main", 
-                  cdmName = "my_cdm")
+cdm <- cdmFromCon(
+  con = con,
+  cdmSchema = "main",
+  writeSchema = "main",
+  cdmName = "my_cdm"
+)
 cdmName(cdm)
 ```
 
@@ -207,7 +215,7 @@ cdmReference(cdm$person)
 A [cohort](https://doi.org/10.1016/j.chest.2020.03.014) is a fundamental piece in epidemiological studies. Later, we'll see how to create cohorts in more detail in @sec-creating_cohorts. For the moment, let's just outline how we can include the reference to an existing cohort in our cdm reference. For this, we'll use [`omock`](https://ohdsi.github.io/omock) to add a cohort to our local cdm and upload that to a DuckDB database again.
 
 ```{r, echo = TRUE}
-cdm_local <- cdm_local |> 
+cdm_local <- cdm_local |>
   mockCohort(name = "my_study_cohort")
 con <- dbConnect(drv = duckdb())
 src <- dbSource(con = con, writeSchema = "main")
@@ -217,16 +225,18 @@ cdm <- insertCdmTo(cdm = cdm_local, to = src)
 Now we can specify we want to include this existing cohort table to our cdm object when creating our cdm reference.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(con = con, 
-                  cdmSchema = "main", 
-                  writeSchema = "main",
-                  cohortTables = "my_study_cohort",
-                  cdmName = "example_data")
+cdm <- cdmFromCon(
+  con = con,
+  cdmSchema = "main",
+  writeSchema = "main",
+  cohortTables = "my_study_cohort",
+  cdmName = "example_data"
+)
 cdm
 ```
 
 ```{r}
-cdm$my_study_cohort |> 
+cdm$my_study_cohort |>
   glimpse()
 ```
 
@@ -236,10 +246,12 @@ cdm$my_study_cohort |>
 Note that by default the cohort table won't be included in the cdm_reference object.
 
 ```{r}
-cdm <- cdmFromCon(con = con, 
-                  cdmSchema = "main", 
-                  writeSchema = "main",
-                  cdmName = "example_data")
+cdm <- cdmFromCon(
+  con = con,
+  cdmSchema = "main",
+  writeSchema = "main",
+  cdmName = "example_data"
+)
 cdm
 ```
 
@@ -259,58 +271,69 @@ If we have the results tables from the [`Achilles`](https://ohdsi.github.io/Achi
 Just to show how this can be done, let's upload some empty results tables in the Achilles format.
 
 ```{r}
-dbWriteTable(conn = con, 
-             name = "achilles_analysis",
-             value = tibble(
-               analysis_id = NA_integer_,
-               analysis_name = NA_character_,
-               stratum_1_name = NA_character_,
-               stratum_2_name = NA_character_,
-               stratum_3_name = NA_character_,
-               stratum_4_name = NA_character_,
-               stratum_5_name = NA_character_,
-               is_default = NA_character_,
-               category = NA_character_))
-dbWriteTable(conn = con, 
-             name = "achilles_results",
-             value = tibble(
-               analysis_id = NA_integer_,
-               stratum_1 = NA_character_,
-               stratum_2 = NA_character_,
-               stratum_3 = NA_character_,
-               stratum_4 = NA_character_,
-               stratum_5 = NA_character_,
-               count_value = NA_character_))
-dbWriteTable(conn = con, 
-             name = "achilles_results_dist",
-             value = tibble(
-               analysis_id = NA_integer_,
-               stratum_1 = NA_character_,
-               stratum_2 = NA_character_,
-               stratum_3 = NA_character_,
-               stratum_4 = NA_character_,
-               stratum_5 = NA_character_,
-               count_value = NA_character_,
-               min_value = NA_character_,
-               max_value = NA_character_,
-               avg_value = NA_character_,
-               stdev_value = NA_character_,
-               median_value = NA_character_,
-               p10_value = NA_character_,
-               p25_value = NA_character_,
-               p75_value = NA_character_,
-               p90_value = NA_character_))
+dbWriteTable(
+  conn = con,
+  name = "achilles_analysis",
+  value = tibble(
+    analysis_id = NA_integer_,
+    analysis_name = NA_character_,
+    stratum_1_name = NA_character_,
+    stratum_2_name = NA_character_,
+    stratum_3_name = NA_character_,
+    stratum_4_name = NA_character_,
+    stratum_5_name = NA_character_,
+    is_default = NA_character_,
+    category = NA_character_
+  )
+)
+dbWriteTable(
+  conn = con,
+  name = "achilles_results",
+  value = tibble(
+    analysis_id = NA_integer_,
+    stratum_1 = NA_character_,
+    stratum_2 = NA_character_,
+    stratum_3 = NA_character_,
+    stratum_4 = NA_character_,
+    stratum_5 = NA_character_,
+    count_value = NA_character_
+  )
+)
+dbWriteTable(
+  conn = con,
+  name = "achilles_results_dist",
+  value = tibble(
+    analysis_id = NA_integer_,
+    stratum_1 = NA_character_,
+    stratum_2 = NA_character_,
+    stratum_3 = NA_character_,
+    stratum_4 = NA_character_,
+    stratum_5 = NA_character_,
+    count_value = NA_character_,
+    min_value = NA_character_,
+    max_value = NA_character_,
+    avg_value = NA_character_,
+    stdev_value = NA_character_,
+    median_value = NA_character_,
+    p10_value = NA_character_,
+    p25_value = NA_character_,
+    p75_value = NA_character_,
+    p90_value = NA_character_
+  )
+)
 ```
 
 We can now include these achilles tables in our cdm reference as in the previous case.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(con = con, 
-                  cdmSchema = "main", 
-                  writeSchema = "main",
-                  cohortTables = "my_study_cohort",
-                  achillesSchema = "main",
-                  cdmName = "example_data")
+cdm <- cdmFromCon(
+  con = con,
+  cdmSchema = "main",
+  writeSchema = "main",
+  cohortTables = "my_study_cohort",
+  achillesSchema = "main",
+  cdmName = "example_data"
+)
 ```
 
 ```{r}
@@ -324,7 +347,7 @@ Note we specified the `achillesSchema` that in this case is the same as the `wri
 Let's say we have some additional **local** data that we want to add to our cdm reference. We can add this both to the same source (in this case a database) and to our cdm reference using [`insertTable()`](https://darwin-eu.github.io/omopgenerics/reference/insertTable.html) from [`omopgenerics`](https://darwin-eu.github.io/omopgenerics/) ([`insertTable()`](https://darwin-eu.github.io/omopgenerics/reference/insertTable.html) is also re-exported in [`CDMConnector`](https://darwin-eu.github.io/CDMConnector/)). We will show this with the dataset `cars` built-in to R.
 
 ```{r, echo = TRUE}
-cars |> 
+cars |>
   glimpse()
 ```
 
@@ -391,7 +414,7 @@ An important characteristic of our cdm reference is that we can alter the tables
 For example, let's say we want to perform a study with only people born in 1970. For this we could filter our person table to only people born in this year.
 
 ```{r, echo = TRUE}
-cdm$person <- cdm$person |> 
+cdm$person <- cdm$person |>
   filter(year_of_birth == 1970)
 
 cdm$person
@@ -400,18 +423,20 @@ cdm$person
 From now on, when we work with our cdm reference this restriction will continue to have been applied.
 
 ```{r, echo = TRUE}
-cdm$person |> 
+cdm$person |>
   tally()
 ```
 
 The original OMOP CDM data itself however will remain unaffected. We can see that, indeed, if we create our reference again the underlying data is unchanged.
 
 ```{r, message=FALSE, warning=FALSE, echo = TRUE}
-cdm <- cdmFromCon(con = con,
-                  cdmSchema = "main", 
-                  writeSchema = "main", 
-                  cdmName = "example_data")
-cdm$person |> 
+cdm <- cdmFromCon(
+  con = con,
+  cdmSchema = "main",
+  writeSchema = "main",
+  cdmName = "example_data"
+)
+cdm$person |>
   tally()
 ```
 
@@ -420,15 +445,15 @@ The mutability of our cdm reference is a useful feature for studies as it means 
 One thing we can't do, though, is alter the structure of OMOP CDM tables. For example, the following code would cause an error as the person table must always have the column person_id.
 
 ```{r, error=TRUE}
-cdm$person <- cdm$person |> 
+cdm$person <- cdm$person |>
   rename("new_id" = "person_id")
 ```
 
 In such a case we would have to call the table something else first, and then run the previous code:
 
 ```{r}
-cdm$person_new <- cdm$person |> 
-  rename("new_id" = "person_id") |> 
+cdm$person_new <- cdm$person |>
+  rename("new_id" = "person_id") |>
   compute(name = "person_new")
 ```
 
@@ -446,7 +471,7 @@ The package `omopgenerics` provides a comprehensive list of the required feature
 Note also that there must be a name consistency between the name of the table and the assignment in the cdm_reference object.
 
 ```{r, error=TRUE}
-cdm$new_table <- cdm$person |> 
+cdm$new_table <- cdm$person |>
   compute(name = "not_new_table")
 ```
 :::
@@ -456,14 +481,14 @@ cdm$new_table <- cdm$person |>
 When we create new tables and our cdm reference is in a database we have a choice between using temporary or permanent tables. In most cases we can work with these interchangeably. Below we create one temporary table and one permanent table. We can see that both of these tables have been added to our cdm reference and that we can use them in the same way. Note that any new computed table will by default be temporary unless otherwise specified.
 
 ```{r, message=FALSE, warning=FALSE}
-cdm$person_new_temp <- cdm$person |> 
-  head(5) |> 
+cdm$person_new_temp <- cdm$person |>
+  head(5) |>
   compute(temporary = TRUE)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-cdm$person_new_permanent <- cdm$person |> 
-  head(5) |> 
+cdm$person_new_permanent <- cdm$person |>
+  head(5) |>
   compute(name = "person_new_permanent", temporary = FALSE)
 ```
 
@@ -485,10 +510,10 @@ However, one disadvantage of using temporary tables is that we will generally ac
 Note that in the previous examples we explicitly specified the name of the new table and whether it must be temporary or permanent (temporary = FALSE), but we do not need to populate the temporary field explicitly as if name is left as NULL (default behavior), then the table will be temporary (temporary = TRUE), and if the name argument is populated with a character (e.g., name = "my_custom_table"), then the created table will be permanent:
 
 ```{r}
-cdm$person_new_temp <- cdm$person |> 
+cdm$person_new_temp <- cdm$person |>
   compute()
 
-cdm$person_new_permanent <- cdm$person |> 
+cdm$person_new_permanent <- cdm$person |>
   compute(name = "person_new_permanent")
 ```
 :::
@@ -498,7 +523,7 @@ cdm$person_new_permanent <- cdm$person |>
 Once we have finished our analysis we can close our connection to the database behind our cdm reference.
 
 ```{r}
-cdmDisconnect(cdm) 
+cdmDisconnect(cdm)
 ```
 
 ## Further reading

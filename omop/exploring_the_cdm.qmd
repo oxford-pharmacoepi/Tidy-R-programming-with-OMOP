@@ -48,18 +48,18 @@ By default, the mock cdm returns a local dataset that can be inserted in any sou
 The OMOP CDM is person-centric, with the person table containing records to uniquely identify each person in the database. As each row refers to a unique person, we can quickly get a count of the number of individuals in the database like so
 
 ```{r, echo = TRUE}
-cdm$person |> 
+cdm$person |>
   count()
 ```
 
 The person table also contains some demographic information, including a gender concept for each person. We can easily get a count grouped by this variable. As the concept id is just a number it is more useful to get the concept name, this can be done with a join to the concept table.
 
 ```{r, echo = TRUE}
-cdm$person |> 
-  group_by(gender_concept_id) |> 
-  count() |> 
-  left_join(cdm$concept, by = c("gender_concept_id" = "concept_id")) |> 
-  select("gender_concept_id", "concept_name", "n") |> 
+cdm$person |>
+  group_by(gender_concept_id) |>
+  count() |>
+  left_join(cdm$concept, by = c("gender_concept_id" = "concept_id")) |>
+  select("gender_concept_id", "concept_name", "n") |>
   collect()
 ```
 
@@ -69,17 +69,17 @@ cdm$person |>
 Above we've got counts by specific concept IDs recorded in the condition occurrence table. What these IDs represent is described in the concept table. Here we have the name associated with the concept, along with other information such as its domain and vocabulary id.
 
 ```{r, echo = TRUE}
-cdm$concept |> 
+cdm$concept |>
   glimpse()
 ```
 
 Other vocabulary tables capture other information about concepts, such as the direct relationships between concepts (the concept relationship table) and hierarchical relationships between (the concept ancestor table).
 
 ```{r, echo = TRUE}
-cdm$concept_relationship |> 
+cdm$concept_relationship |>
   glimpse()
 
-cdm$concept_ancestor |> 
+cdm$concept_ancestor |>
   glimpse()
 ```
 
@@ -114,19 +114,19 @@ To do this first we would need to get the first observation period per person:
 
 ```{r, echo = TRUE}
 first_observation_period <- cdm$observation_period |>
-  group_by(person_id) |> 
+  group_by(person_id) |>
   arrange(observation_period_start_date) |>
-  filter(row_number() == 1) |> 
+  filter(row_number() == 1) |>
   compute()
 ```
 
 Now we can add this to the person table to make sure that all individuals defined in the observation period table are also defined the person table. Later we can extract the *observation_period_start_year* and count the number of records associated in each year:
 ```{r}
-first_records_per_year <- cdm$person |> 
-  left_join(first_observation_period, by = "person_id") |> 
-  mutate(observation_period_start_year = get_year(observation_period_start_date)) |> 
-  group_by(observation_period_start_year) |> 
-  count() |> 
+first_records_per_year <- cdm$person |>
+  left_join(first_observation_period, by = "person_id") |>
+  mutate(observation_period_start_year = get_year(observation_period_start_date)) |>
+  group_by(observation_period_start_year) |>
+  count() |>
   collect()
 ```
 
@@ -143,36 +143,44 @@ ggplot(first_records_per_year) +
 What's the number of condition occurrence records per person in the database? We can find this out like so
 
 ```{r, echo = TRUE}
-number_condition_occurrence_records <- cdm$person |> 
+number_condition_occurrence_records <- cdm$person |>
   left_join(
-    cdm$condition_occurrence |> 
-      group_by(person_id) |> 
+    cdm$condition_occurrence |>
+      group_by(person_id) |>
       count(name = "condition_occurrence_records"),
     by = "person_id"
-  ) |> 
-  mutate(condition_occurrence_records = 
-           coalesce(condition_occurrence_records, 0)) |>
+  ) |>
+  mutate(
+    condition_occurrence_records =
+      coalesce(condition_occurrence_records, 0)
+  ) |>
   group_by(condition_occurrence_records) |>
-  count() |> 
+  count() |>
   collect()
 
 ggplot(number_condition_occurrence_records) +
-  geom_col(mapping = aes(x = condition_occurrence_records, 
-                         y = n)) +
+  geom_col(mapping = aes(
+    x = condition_occurrence_records,
+    y = n
+  )) +
   theme_bw()
 ```
 
 How about we were interested in getting record counts for some specific concepts related to Covid-19 symptoms?
 
 ```{r, echo = TRUE}
-codes <- c(437663, 437390, 31967, 4289517, 4223659, 
-           312437, 434490, 254761, 77074)
-symptoms_records <- cdm$condition_occurrence |> 
-  filter(condition_concept_id %in% codes) |> 
-  group_by(condition_concept_id) |> 
-  count() |> 
-  addConceptName(column = "condition_concept_id", 
-                 nameStyle = "concept_name") |>
+codes <- c(
+  437663, 437390, 31967, 4289517, 4223659,
+  312437, 434490, 254761, 77074
+)
+symptoms_records <- cdm$condition_occurrence |>
+  filter(condition_concept_id %in% codes) |>
+  group_by(condition_concept_id) |>
+  count() |>
+  addConceptName(
+    column = "condition_concept_id",
+    nameStyle = "concept_name"
+  ) |>
   collect()
 
 ggplot(symptoms_records) +
@@ -184,44 +192,52 @@ ggplot(symptoms_records) +
 We can also use summarise for various other calculations
 
 ```{r, echo = TRUE}
-cdm$person |> 
-  summarise(min_year_of_birth = min(year_of_birth, na.rm = TRUE),
-            q05_year_of_birth = quantile(year_of_birth, 0.05, na.rm = TRUE),
-            mean_year_of_birth = round(mean(year_of_birth, na.rm = TRUE), 0),
-            median_year_of_birth = median(year_of_birth, na.rm = TRUE),
-            q95_year_of_birth = quantile(year_of_birth, 0.95, na.rm = TRUE),
-            max_year_of_birth = max(year_of_birth, na.rm = TRUE)) |>  
+cdm$person |>
+  summarise(
+    min_year_of_birth = min(year_of_birth, na.rm = TRUE),
+    q05_year_of_birth = quantile(year_of_birth, 0.05, na.rm = TRUE),
+    mean_year_of_birth = round(mean(year_of_birth, na.rm = TRUE), 0),
+    median_year_of_birth = median(year_of_birth, na.rm = TRUE),
+    q95_year_of_birth = quantile(year_of_birth, 0.95, na.rm = TRUE),
+    max_year_of_birth = max(year_of_birth, na.rm = TRUE)
+  ) |>
   glimpse()
 ```
 
 As we've seen before, we can also quickly get results for various groupings or restrictions
 
 ```{r, echo = TRUE}
-grouped_summary <- cdm$person |> 
-   group_by(gender_concept_id) |> 
-   summarise(min_year_of_birth = min(year_of_birth, na.rm = TRUE),
-             q25_year_of_birth = quantile(year_of_birth, 0.25, na.rm = TRUE),
-             median_year_of_birth = median(year_of_birth, na.rm = TRUE),
-             q75_year_of_birth = quantile(year_of_birth, 0.75, na.rm = TRUE),
-             max_year_of_birth = max(year_of_birth, na.rm = TRUE)) |> 
-  left_join(cdm$concept, by = c("gender_concept_id" = "concept_id")) |> 
-  collect() 
+grouped_summary <- cdm$person |>
+  group_by(gender_concept_id) |>
+  summarise(
+    min_year_of_birth = min(year_of_birth, na.rm = TRUE),
+    q25_year_of_birth = quantile(year_of_birth, 0.25, na.rm = TRUE),
+    median_year_of_birth = median(year_of_birth, na.rm = TRUE),
+    q75_year_of_birth = quantile(year_of_birth, 0.75, na.rm = TRUE),
+    max_year_of_birth = max(year_of_birth, na.rm = TRUE)
+  ) |>
+  left_join(cdm$concept, by = c("gender_concept_id" = "concept_id")) |>
+  collect()
 
-grouped_summary |> 
-  ggplot(mapping = aes(x = concept_name, 
-                       group = concept_name, 
-                       fill = concept_name)) +
-  geom_boxplot(mapping = aes(
-    lower = q25_year_of_birth, 
-    upper = q75_year_of_birth, 
-    middle = median_year_of_birth, 
-    ymin = min_year_of_birth, 
-    ymax = max_year_of_birth),
-    stat = "identity", width = 0.5) + 
-  theme_bw() + 
+grouped_summary |>
+  ggplot(mapping = aes(
+    x = concept_name,
+    group = concept_name,
+    fill = concept_name
+  )) +
+  geom_boxplot(
+    mapping = aes(
+      lower = q25_year_of_birth,
+      upper = q75_year_of_birth,
+      middle = median_year_of_birth,
+      ymin = min_year_of_birth,
+      ymax = max_year_of_birth
+    ),
+    stat = "identity", width = 0.5
+  ) +
+  theme_bw() +
   theme(legend.position = "none") +
   xlab("")
-
 ```
 
 ## The **OmopSketch** package
@@ -241,7 +257,7 @@ We can also visualise how many individuals are in observation per year:
 result <- summariseInObservation(
   cdm$observation_period,
   interval = "years",
-  output = "person", 
+  output = "person",
   dateRange = c("2000-01-01", "2023-12-31")
 )
 plotInObservation(result = result) +
@@ -254,8 +270,8 @@ Or even the median age of the individuals in observation stratified by sex:
 result <- summariseInObservation(
   cdm$observation_period,
   interval = "years",
-  output = "age", 
-  sex = TRUE, 
+  output = "age",
+  sex = TRUE,
   dateRange = c("2000-01-01", "2023-12-31")
 )
 plotInObservation(result = result, colour = "sex")
@@ -289,7 +305,7 @@ shinyCharacteristics(result = result, directory = getwd())
 Once we have finished our analysis we can close our connection to the database behind our cdm reference.
 
 ```{r}
-cdmDisconnect(cdm) 
+cdmDisconnect(cdm)
 ```
 
 ## Further reading

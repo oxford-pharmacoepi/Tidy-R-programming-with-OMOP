@@ -90,19 +90,19 @@ s3_methods_generic("inner_join")
 When working with references to tables in the database the `tbl_lazy` method will be used.
 
 ```{r, message=FALSE, warning=FALSE}
-s3_dispatch(flights_db |> 
-              inner_join(planes_db))
+s3_dispatch(flights_db |>
+  inner_join(planes_db))
 ```
 
 But once we bring data into R, the `data.frame` method will be used.
 
 ```{r, message=FALSE, warning=FALSE}
-s3_dispatch(flights_db |> 
-              head(1) |> 
-              collect() |> 
-              inner_join(planes_db |> 
-                           head(1) |> 
-                           collect()))
+s3_dispatch(flights_db |>
+  head(1) |>
+  collect() |>
+  inner_join(planes_db |>
+    head(1) |>
+    collect()))
 ```
 :::
 
@@ -113,10 +113,12 @@ To see a little more on how we can use the above functions, let's say we want to
 For this, we'll first use the [`filter()`](https://dplyr.tidyverse.org/reference/filter.html) and [`select()`](https://dplyr.tidyverse.org/reference/select.html) [`dplyr`](https://dplyr.tidyverse.org) verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.
 
 ```{r, message=FALSE, warning=FALSE}
-delayed_flights_db <- flights_db |> 
-  filter(!is.na(arr_delay) & origin == "JFK") |> 
-  select("dest", "distance", "carrier", 
-         "tailnum", "delay" = "arr_delay")
+delayed_flights_db <- flights_db |>
+  filter(!is.na(arr_delay) & origin == "JFK") |>
+  select("dest", "distance", "carrier",
+    "tailnum",
+    "delay" = "arr_delay"
+  )
 ```
 
 ::: {.callout-note collapse="true"}
@@ -138,9 +140,9 @@ delayed_flights_db
 Now we'll add plane characteristics from the planes table. We will use an inner_join so that only records for which we have the plane characteristics are kept.
 
 ```{r, message=FALSE, warning=FALSE}
-delayed_flights_db <- delayed_flights_db |> 
+delayed_flights_db <- delayed_flights_db |>
   inner_join(
-    planes_db |> 
+    planes_db |>
       select("tailnum", "seats"),
     by = "tailnum"
   )
@@ -167,8 +169,8 @@ delayed_flights_db
 This tidy dataset has been created in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and proceed from there (for example, to perform statistical analyses locally that might not be possible to run in a database, such as plots, density distributions, regression, or anything beyond data manipulation).
 
 ```{r, message=FALSE, warning=FALSE}
-delayed_flights <- delayed_flights_db |> 
-  collect() 
+delayed_flights <- delayed_flights_db |>
+  collect()
 
 glimpse(delayed_flights)
 ```
