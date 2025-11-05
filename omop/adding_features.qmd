@@ -9,7 +9,7 @@ library(PatientProfiles)
 library(ggplot2)
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 cdm <- mockCdmFromDataset(datasetName = "synthea-covid19-10k", source = "duckdb")
 ```
 
@@ -23,7 +23,7 @@ The [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) package ma
 
 [^adding_features-2]: Although these manipulations can seem quite simple on the face of it, their implementation across different database platforms with different data granularity (for example, whether day of birth has been filled in for all patients or not) presents challenges that the [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) package solves for us.
 
-Let’s say we’re interested in individuals’ age and sex at the time of COVID-19 diagnosis. We can add these variables to the table as follows (noting that, since age is time-varying, we need to specify the date relative to which it should be calculated).
+Let’s say we’re interested in individuals’ age and sex at the time of diagnosis records held in the condition occurrence table. We can add these variables to the table as follows (noting that, since age is time-varying, we need to specify the date relative to which it should be calculated).
 
 ```{r}
 cdm$condition_occurrence <- cdm$condition_occurrence |>
@@ -53,7 +53,7 @@ cdm$condition_occurrence |>
 ```{r}
 cdm$condition_occurrence |>
   select("person_id", "age", "sex") |>
-  collect()  |>
+  collect() |>
   ggplot(aes(fill = sex)) +
   facet_grid(sex ~ .) +
   geom_histogram(aes(age), colour = "black", binwidth = 5) +
@@ -75,7 +75,7 @@ The difference between [`addSexQuery()`](https://darwin-eu.github.io/PatientProf
 
 ## Adding multiple demographics simultaneously
 
-We've now seen individual functions from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) that add specific patient characteristics, such as age and sex. The package also includes functions to add other characteristics, such as the number of days of prior observation in the database (rather unimaginatively named [`addPriorObservation()`](https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html)). In addition to these individual functions, the package also provides a more general function that retrieves all of these characteristics at the same time.[^adding_features-3]
+We've now seen individual functions from [`PatientProfiles`](https://darwin-eu.github.io/PatientProfiles/) that add specific patient characteristics, such as age and sex. The package also includes functions to add other characteristics, such as the number of days of prior observation in the database (rather unimaginatively named [`addPriorObservation()`](https://darwin-eu.github.io/PatientProfiles/reference/addPriorObservation.html)). In addition to these individual functions, the package also provides a more general function that retrieves all of these characteristics at the same time.[^adding_features-3] Let's use in to help us summarise patient characteristics at start of drug exposure records.
 
 [^adding_features-3]: This function also provides a more time-efficient method than getting the characteristics one by one. This is because these characteristics are all derived from the OMOP CDM person and observation period tables, and so can be identified simultaneously.
 
@@ -99,9 +99,11 @@ With these characteristics added, we can now calculate mean age, prior observati
 ```{r}
 cdm$drug_exposure |>
   group_by(sex) |>
-  summarise(mean_age = mean(age, na.rm = TRUE),
-            mean_prior_observation = mean(prior_observation, na.rm = TRUE),
-            mean_future_observation = mean(future_observation, na.rm = TRUE)) |>
+  summarise(
+    mean_age = mean(age, na.rm = TRUE),
+    mean_prior_observation = mean(prior_observation, na.rm = TRUE),
+    mean_future_observation = mean(future_observation, na.rm = TRUE)
+  ) |>
   collect()
 ```
 
@@ -126,7 +128,7 @@ cdm$visit_occurrence |>
 
 ```{r, echo = TRUE}
 cdm$visit_occurrence |>
-  addSexQuery() |> 
+  addSexQuery() |>
   filter(sex == "Male") |>
   show_query()
 ```
@@ -146,7 +148,7 @@ cdm$visit_occurrence <- cdm$visit_occurrence |>
   )
 
 cdm$visit_occurrence |>
-  # data quality issues with our synthetic data means we have 
+  # data quality issues with our synthetic data means we have
   # some negative ages so will drop these
   filter(age >= 0) |>
   group_by(age_group) |>
@@ -162,7 +164,7 @@ cdm$visit_occurrence |>
 
 As we have seen, by default the age groups are named according to their lower and upper bounds (‘0 to 17’, ‘18 to 64’, and ‘65 or above’). However, we can customise these labels by assigning names to the list of age groups:
 
-```{r}
+```{r, warning=FALSE}
 cdm$condition_occurrence |>
   addAgeQuery(
     indexDate = "condition_start_date",
@@ -188,9 +190,9 @@ cdm$condition_occurrence |>
   addCategories(
     variable = "prior_observation",
     categories = list("prior_observation_group" = list(
-      c(0, 364), c(365, Inf)  
+      c(0, 364), c(365, Inf)
     ))
-  ) |> 
+  ) |>
   glimpse()
 ```
 
@@ -256,17 +258,17 @@ Examples where to be careful include when joining to the observation period tabl
 Just to underline how problematic joins can become if we don't take care, here we join the condition occurrence table and the drug exposure table, both of which have multiple records per person. Even with our small synthetic dataset, this produces an extremely large table. When working with real patient data, which is oftentimes much, much larger, this would be extremely problematic (and would unlikely be needed to answer any research question). In other words, don't try this at home!
 
 ```{r}
-cdm$condition_occurrence |> 
+cdm$condition_occurrence |>
   tally()
-cdm$drug_exposure |> 
+cdm$drug_exposure |>
   tally()
-cdm$condition_occurrence |> 
-  select(person_id, condition_start_date) |> 
+cdm$condition_occurrence |>
+  select(person_id, condition_start_date) |>
   left_join(
-    cdm$drug_exposure |> 
-      select(person_id, drug_exposure_start_date), 
+    cdm$drug_exposure |>
+      select(person_id, drug_exposure_start_date),
     by = "person_id"
-  ) |> 
+  ) |>
   tally()
 ```
 :::
@@ -276,7 +278,7 @@ cdm$condition_occurrence |>
 Once we have finished our analysis we can close our connection to the database behind our cdm reference.
 
 ```{r}
-cdmDisconnect(cdm) 
+cdmDisconnect(cdm)
 ```
 
 ## Further reading

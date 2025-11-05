@@ -77,21 +77,25 @@ In this book, for simplicity, we will mostly be working with in-process DuckDB d
 ```{r, eval=FALSE}
 library(DBI)
 library(RPostgres)
-con <- dbConnect(drv = Postgres(),
-                 dbname = "my_database",
-                 host = "my_server",
-                 user = "user",
-                 password = "password")
+con <- dbConnect(
+  drv = Postgres(),
+  dbname = "my_database",
+  host = "my_server",
+  user = "user",
+  password = "password"
+)
 ```
 
 Or if using the `DatabaseConnector` R package creating a connection would look something like:
 ```{r, eval=FALSE}
 library(DatabaseConnector)
 downloadJdbcDrivers("postgresql")
-con <- connect(dbms = "postgresql",
-               connectionString = "jdbc:postgresql://my_server",
-               user = "user",
-               password = "password")
+con <- connect(
+  dbms = "postgresql",
+  connectionString = "jdbc:postgresql://my_server",
+  user = "user",
+  password = "password"
+)
 ```
 
 :::
@@ -114,7 +118,7 @@ head(penguins_db, 5)
 The magic here is provided by the [`dbplyr`](https://dbplyr.tidyverse.org) package, which takes the R code and converts it into SQL. In this case the query looks like the SQL we wrote directly before.
 
 ```{r}
-head(penguins_db, 5) |> 
+head(penguins_db, 5) |>
   show_query()
 ```
 
@@ -197,7 +201,7 @@ summaryQuery <- function(x) {
 
 ```{r, echo=FALSE}
 con2 <- simulate_postgres()
-lazy_frame(!!!args, con = con2)  |>
+lazy_frame(!!!args, con = con2) |>
   summaryQuery()
 ```
 
@@ -205,7 +209,7 @@ lazy_frame(!!!args, con = con2)  |>
 
 ```{r, echo=FALSE}
 con2 <- simulate_mssql()
-lazy_frame(!!!args, con = con2)  |>
+lazy_frame(!!!args, con = con2) |>
   summaryQuery()
 ```
 
@@ -213,7 +217,7 @@ lazy_frame(!!!args, con = con2)  |>
 
 ```{r, echo=FALSE}
 con2 <- simulate_redshift()
-lazy_frame(!!!args, con = con2)  |>
+lazy_frame(!!!args, con = con2) |>
   summaryQuery()
 ```
 
@@ -221,7 +225,7 @@ lazy_frame(!!!args, con = con2)  |>
 
 ```{r, echo=FALSE}
 con2 <- simulate_snowflake()
-lazy_frame(!!!args, con = con2)  |>
+lazy_frame(!!!args, con = con2) |>
   summaryQuery()
 ```
 
@@ -229,7 +233,7 @@ lazy_frame(!!!args, con = con2)  |>
 
 ```{r, echo=FALSE}
 con2 <- simulate_spark_sql()
-lazy_frame(!!!args, con = con2)  |>
+lazy_frame(!!!args, con = con2) |>
   summaryQuery()
 ```
 
@@ -259,7 +263,7 @@ We could also make a histogram of values for each of the species using the `ggpl
 
 ```{r, warning=FALSE, message=FALSE}
 penguins_db |>
-  select("species", "body_mass_g") |> 
+  select("species", "body_mass_g") |>
   collect() |>
   ggplot(aes(group = species, fill = species)) +
   facet_grid(species ~ .) +
@@ -273,7 +277,7 @@ Now let's look at the relationship between body mass and bill depth.
 
 ```{r, warning=FALSE, message=FALSE}
 penguins_db |>
-  select("species", "body_mass_g", "bill_depth_mm") |> 
+  select("species", "body_mass_g", "bill_depth_mm") |>
   collect() |>
   ggplot(aes(x = bill_depth_mm, y = body_mass_g)) +
   geom_point() +

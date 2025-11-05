@@ -45,9 +45,9 @@ lahmanFromCon <- function(con) {
     "PitchingPost", "Salaries", "Schools", "SeriesPost", "Teams", "TeamsFranchises",
     "TeamsHalf"
   ))
-  
+
   lahmanRef <- map(lahmanRef, \(x) tbl(src = con, from = x))
-  
+
   class(lahmanRef) <- c("lahman_ref", class(lahmanRef))
   return(lahmanRef)
 }
@@ -63,7 +63,7 @@ lahman$People |>
 ```
 
 ::: {.callout-note collapse="true"}
-### The dm package
+### The dm R package
 
 In this chapter we will be creating a bespoke data model for our database. This approach can be further extended using the [`dm`](https://dm.cynkra.com/) package, which also provides various helpful functions for creating a data model and working with it.
 
@@ -80,7 +80,7 @@ Using this approach, we can make use of various utility functions. For example h
 ```{r, echo=TRUE}
 lahman_dm <- lahman_dm |>
   dm_add_pk(table = "people", columns = "playerID") |>
-  dm_add_fk(table = "batting", columns = "playerID", ref_table = "people") 
+  dm_add_fk(table = "batting", columns = "playerID", ref_table = "people")
 
 lahman_dm
 
@@ -108,8 +108,9 @@ getTeams <- function(lahman, name = "Barry Bonds") {
     ) |>
     distinct(teamID, yearID) |>
     left_join(
-      lahman$Teams, 
-      by = c("teamID", "yearID")) |>
+      lahman$Teams,
+      by = c("teamID", "yearID")
+    ) |>
     distinct(name)
 }
 ```
@@ -161,10 +162,10 @@ However, in other cases we may need to collect the data to perform analyses that
 Similarly, we can make a function to add a player's year of birth to another Lahman table.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
-addBirthCountry <- function(x){
-  x |> 
+addBirthCountry <- function(x) {
+  x |>
     left_join(
-      lahman$People |> 
+      lahman$People |>
         select("playerID", "birthCountry"),
       by = "playerID"
     )
@@ -205,9 +206,9 @@ We can then use our `addBirthCountry()` function as part of a larger query to su
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 plot_data <- lahman$Batting |>
-  select("playerID", "yearID") |> 
+  select("playerID", "yearID") |>
   addBirthCountry() |>
-  filter(yearID > 1960) |> 
+  filter(yearID > 1960) |>
   mutate(birthCountry = case_when(
     birthCountry == "USA" ~ "USA",
     birthCountry == "D.R." ~ "Dominican Republic",
@@ -217,12 +218,12 @@ plot_data <- lahman$Batting |>
     birthCountry == "CAN" ~ "Canada",
     birthCountry == "Mexico" ~ "Mexico",
     .default = "Other"
-  )) |> 
+  )) |>
   group_by(yearID, birthCountry) |>
-  summarise(n = n(), .groups = "drop") |> 
+  summarise(n = n(), .groups = "drop") |>
   group_by(yearID) |>
-  mutate(percentage = n / sum(n) * 100) |> 
-  ungroup() |> 
+  mutate(percentage = n / sum(n) * 100) |>
+  ungroup() |>
   collect()
 ```
 
@@ -231,9 +232,9 @@ plot_data <- lahman$Batting |>
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 lahman$Batting |>
-  select(playerID, yearID) |> 
+  select(playerID, yearID) |>
   addBirthCountry() |>
-  filter(yearID > 1960) |> 
+  filter(yearID > 1960) |>
   mutate(birthCountry = case_when(
     birthCountry == "USA" ~ "USA",
     birthCountry == "D.R." ~ "Dominican Republic",
@@ -243,27 +244,27 @@ lahman$Batting |>
     birthCountry == "CAN" ~ "Canada",
     birthCountry == "Mexico" ~ "Mexico",
     .default = "Other"
-  )) |> 
+  )) |>
   group_by(yearID, birthCountry) |>
-  summarise(n = n(), .groups = "drop") |> 
+  summarise(n = n(), .groups = "drop") |>
   group_by(yearID) |>
-  mutate(percentage = n / sum(n) * 100) |> 
-  ungroup() |> 
+  mutate(percentage = n / sum(n) * 100) |>
+  ungroup() |>
   show_query()
 ```
 :::
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 library(ggplot2)
-plot_data |> 
+plot_data |>
   ggplot() +
   geom_col(
-    mapping = aes(yearID, percentage, fill = birthCountry), 
+    mapping = aes(yearID, percentage, fill = birthCountry),
     width = 1
-  ) + 
-  theme_minimal() + 
+  ) +
+  theme_minimal() +
   theme(
-    legend.title = element_blank(), 
+    legend.title = element_blank(),
     legend.position = "top"
   )
 ```
@@ -309,33 +310,33 @@ s3_dispatch(print(lahman))
 Following on from the above approach, we might think it is a good idea to make another function `addBirthYear()`. We can then use it along with our `addBirthCountry()` to get a summarised average salary by birth country and birth year.
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
-addBirthYear <- function(lahmanTbl){
-  lahmanTbl |> 
+addBirthYear <- function(lahmanTbl) {
+  lahmanTbl |>
     left_join(
-      lahman$People |> 
+      lahman$People |>
         select("playerID", "birthYear"),
       by = "playerID"
     )
 }
 
-lahman$Salaries |> 
-  addBirthCountry() |> 
-  addBirthYear() |> 
+lahman$Salaries |>
+  addBirthCountry() |>
+  addBirthYear() |>
   group_by(birthCountry, birthYear) |>
   summarise(average_salary = mean(salary), .groups = "drop")
 ```
 
-Although the R code looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.
+Although the R code looks quite concise, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.
 
 ::: {.callout-note collapse="true"}
 ### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
-lahman$Salaries |> 
-  addBirthCountry() |> 
-  addBirthYear() |> 
+lahman$Salaries |>
+  addBirthCountry() |>
+  addBirthYear() |>
   group_by(birthCountry, birthYear) |>
-  summarise(average_salary = mean(salary), .groups = "drop") |> 
+  summarise(average_salary = mean(salary), .groups = "drop") |>
   show_query()
 ```
 :::
@@ -344,16 +345,16 @@ To improve the performance of the code, we can build a single function to get si
 
 ```{r, message = FALSE, warning = FALSE, echo = TRUE}
 addCharacteristics <- function(lahmanTbl) {
-  lahmanTbl |> 
+  lahmanTbl |>
     left_join(
-      lahman$People |> 
+      lahman$People |>
         select("playerID", "birthYear", "birthCountry"),
       by = "playerID"
     )
 }
 
-lahman$Salaries |> 
-  addCharacteristics() |> 
+lahman$Salaries |>
+  addCharacteristics() |>
   group_by(birthCountry, birthYear) |>
   summarise(average_salary = mean(salary), .groups = "drop")
 ```
@@ -362,10 +363,10 @@ lahman$Salaries |>
 ### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
-lahman$Salaries |> 
-  addCharacteristics() |> 
+lahman$Salaries |>
+  addCharacteristics() |>
   group_by(birthCountry, birthYear) |>
-  summarise(average_salary = mean(salary), .groups = "drop") |> 
+  summarise(average_salary = mean(salary), .groups = "drop") |>
   show_query()
 ```
 :::
@@ -379,22 +380,22 @@ Piping functions has little impact on performance when using R with data in memo
 For example, a single mutate function creating two new variables would generate the below SQL.
 
 ```{r, echo = TRUE}
-lahman$People |> 
+lahman$People |>
   mutate(
     birthDatePlus1 = add_years(x = birthDate, n = 1L),
     birthDatePlus10 = add_years(x = birthDate, n = 10L)
-  ) |> 
-  select("playerID", "birthDatePlus1", "birthDatePlus10") |> 
+  ) |>
+  select("playerID", "birthDatePlus1", "birthDatePlus10") |>
   show_query()
 ```
 
 Whereas the SQL will be different if these were created using multiple mutate calls (with now one being created in a sub-query).
 
 ```{r, echo = TRUE}
-lahman$People |> 
-  mutate(birthDatePlus1 = add_years(x = birthDate, n = 1L)) |> 
-  mutate(birthDatePlus10 = add_years(x = birthDate, n = 10L)) |> 
-  select("playerID", "birthDatePlus1", "birthDatePlus10") |> 
+lahman$People |>
+  mutate(birthDatePlus1 = add_years(x = birthDate, n = 1L)) |>
+  mutate(birthDatePlus10 = add_years(x = birthDate, n = 10L)) |>
+  select("playerID", "birthDatePlus1", "birthDatePlus10") |>
   show_query()
 ```
 
@@ -403,31 +404,31 @@ lahman$People |>
 Let's now summarise home runs (Batting table) and strike outs (Pitching table) by college player and their birth year. We can do this like so:
 
 ```{r, echo = TRUE}
-players_with_college <- lahman$People |> 
-  select("playerID", "birthYear") |> 
+players_with_college <- lahman$People |>
+  select("playerID", "birthYear") |>
   inner_join(
-    lahman$CollegePlaying |> 
-      filter(!is.na(schoolID)) |> 
+    lahman$CollegePlaying |>
+      filter(!is.na(schoolID)) |>
       distinct(playerID, schoolID),
     by = "playerID"
   )
 
-lahman$Batting |> 
+lahman$Batting |>
   left_join(
     players_with_college,
     by = "playerID"
-  ) |> 
+  ) |>
   group_by(schoolID, birthYear) |>
-  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |> 
+  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |>
   collect()
 
-lahman$Pitching |> 
+lahman$Pitching |>
   left_join(
-    players_with_college, 
+    players_with_college,
     by = "playerID"
-  ) |> 
+  ) |>
   group_by(schoolID, birthYear) |>
-  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |> 
+  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |>
   collect()
 ```
 
@@ -437,16 +438,16 @@ If we look at the SQL code we will realise that there is code duplication, becau
 ### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
-lahman$Batting |> 
-  left_join(players_with_college, by = "playerID") |> 
-  group_by(schoolID, birthYear) |>
-  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |> 
-  show_query()
-
-lahman$Pitching |> 
+lahman$Batting |>
   left_join(players_with_college, by = "playerID") |>
   group_by(schoolID, birthYear) |>
-  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |> 
+  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |>
+  show_query()
+
+lahman$Pitching |>
+  left_join(players_with_college, by = "playerID") |>
+  group_by(schoolID, birthYear) |>
+  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |>
   show_query()
 ```
 :::
@@ -454,28 +455,28 @@ lahman$Pitching |>
 To avoid this, we can make use of the [`compute()`](https://dplyr.tidyverse.org/reference/compute.html) function to force the computation of the players_with_college query to a temporary table in the database.
 
 ```{r, echo = TRUE}
-players_with_college <- players_with_college |> 
+players_with_college <- players_with_college |>
   compute()
 ```
 
 Now we have a temporary table with the result of our players_with_college query, and we can use this in both of our aggregation queries.
 
 ```{r, echo = TRUE}
-players_with_college |> 
+players_with_college |>
   show_query()
 ```
 
 ```{r, echo = TRUE}
-lahman$Batting |> 
-  left_join(players_with_college, by = "playerID") |> 
+lahman$Batting |>
+  left_join(players_with_college, by = "playerID") |>
   group_by(schoolID, birthYear) |>
-  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |> 
+  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |>
   collect()
 
-lahman$Pitching |> 
-  left_join(players_with_college, by = "playerID") |> 
+lahman$Pitching |>
+  left_join(players_with_college, by = "playerID") |>
   group_by(schoolID, birthYear) |>
-  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |> 
+  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |>
   collect()
 ```
 
@@ -483,16 +484,16 @@ lahman$Pitching |>
 ### Show query
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
-lahman$Batting |> 
+lahman$Batting |>
   left_join(players_with_college, by = "playerID") |>
   group_by(schoolID, birthYear) |>
-  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |> 
+  summarise(home_runs = sum(H, na.rm = TRUE), .groups = "drop") |>
   show_query()
 
-lahman$Pitching |> 
-  left_join(players_with_college, by = "playerID") |> 
+lahman$Pitching |>
+  left_join(players_with_college, by = "playerID") |>
   group_by(schoolID, birthYear) |>
-  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |> 
+  summarise(strike_outs = sum(SO, na.rm = TRUE), .groups = "drop") |>
   show_query()
 ```
 :::

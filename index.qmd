@@ -10,7 +10,7 @@
 
 ## Is this book for me?
 
-We've written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see [Tidy design principles](https://design.tidyverse.org/unifying.html) for more details on these principles).
+We've written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see [Tidy design principles](https://design.tidyverse.org/unifying.html) for more details).
 
 New to R? We recommend you take a look at [R for data science](https://r4ds.had.co.nz/) before reading this book. We assume that you have [R](https://cran.r-project.org) installed together with an adequate Integrated Development Environment (IDE) such as [RStudio](https://posit.co/download/rstudio-desktop/) or [Positron](https://positron.posit.co). See this [tutorial](https://rstudio-education.github.io/hopr/starting.html) if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list of packages used in @sec-r_packages.
 
@@ -33,7 +33,7 @@ The book is divided into two parts. The first half of the book is focused on the
 If you found this book useful, please help us by citing it:
 
 ```{r, eval=FALSE}
-Burn E, Català M. Tidy R programming with the OMOP Common Data Model. GitHub; 
+Burn E, Català M. Tidy R programming with the OMOP Common Data Model. GitHub;
 2025. https://github.com/OHDSI/Tidy-R-programming-with-OMOP
 ```
 
@@ -52,7 +52,10 @@ The source code for the book can be found at this [GitHub repository](https://gi
 This book is rendered automatically through [GitHub Actions](https://github.com/OHDSI/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml) using the following version of packages:
 
 ```{r, echo=FALSE, message=FALSE}
-explicitPkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE, recursive = TRUE) |>
+explicitPkgs <- list.files(here::here(),
+  pattern = ".qmd$",
+  full.names = TRUE, recursive = TRUE
+) |>
   purrr::map(\(x) {
     lines <- paste0(readLines(x), collapse = " ")
     regmatches(lines, gregexpr("library\\(([^)]+)\\)", lines)) |>
@@ -65,7 +68,7 @@ explicitPkgs <- list.files(here::here(), pattern = ".qmd$", full.names = TRUE, r
 options("renv.verbose" = FALSE)
 allPkgs <- renv::dependencies()$Package
 
-# to decide if we want to include all the packages or only the packages that we 
+# to decide if we want to include all the packages or only the packages that we
 # use explicitly
 explicitPkgs |>
   unique() |>
