@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-11-03">
+<meta name="dcterms.date" content="2025-11-05">
 
 <title>Tidy R programming with the OMOP Common Data Model</title>
 <style>
@@ -272,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 3, 2025</p>
+      <p class="date">November 5, 2025</p>
     </div>
   </div>
   
@@ -293,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 class="unnumbered">Welcome</h1>
 <section id="is-this-book-for-me" class="level2">
 <h2 class="anchored" data-anchor-id="is-this-book-for-me">Is this book for me?</h2>
-<p>We’ve written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <a href="https://design.tidyverse.org/unifying.html">Tidy design principles</a> for more details on these principles).</p>
+<p>We’ve written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <a href="https://design.tidyverse.org/unifying.html">Tidy design principles</a> for more details).</p>
 <p>New to R? We recommend you take a look at <a href="https://r4ds.had.co.nz/">R for data science</a> before reading this book. We assume that you have <a href="https://cran.r-project.org">R</a> installed together with an adequate Integrated Development Environment (IDE) such as <a href="https://posit.co/download/rstudio-desktop/">RStudio</a> or <a href="https://positron.posit.co">Positron</a>. See this <a href="https://rstudio-education.github.io/hopr/starting.html">tutorial</a> if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list of packages used in <a href="#sec-r_packages" class="quarto-xref"><span>R Packages</span></a>.</p>
 <p>New to databases? We recommend you take a look at some web tutorials on SQL, such as <a href="https://sqlbolt.com/">SQLBolt</a> or <a href="https://www.sqlzoo.net/wiki/SQL_Tutorial">SQLZoo</a> to have a basic understanding of how databases work.</p>
 <p>New to the OMOP CDM? We’d recommend you pair this book with <a href="https://ohdsi.github.io/TheBookOfOhdsi/">The Book of OHDSI</a>.</p>
@@ -311,7 +311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="citation">Citation</h2>
 <p>If you found this book useful, please help us by citing it:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Burn E, Català M. Tidy R programming with the OMOP Common Data Model. GitHub; </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Burn E, Català M. Tidy R programming with the OMOP Common Data Model. GitHub;</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2025.</span> https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>OHDSI<span class="sc">/</span>Tidy<span class="sc">-</span>R<span class="sc">-</span>programming<span class="sc">-</span>with<span class="sc">-</span>OMOP</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -328,23 +328,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This book is rendered automatically through <a href="https://github.com/OHDSI/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml">GitHub Actions</a> using the following version of packages:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="rrleqrfddz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rrleqrfddz table {
+<div id="fsiwiqjvqd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fsiwiqjvqd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rrleqrfddz thead, #rrleqrfddz tbody, #rrleqrfddz tfoot, #rrleqrfddz tr, #rrleqrfddz td, #rrleqrfddz th {
+#fsiwiqjvqd thead, #fsiwiqjvqd tbody, #fsiwiqjvqd tfoot, #fsiwiqjvqd tr, #fsiwiqjvqd td, #fsiwiqjvqd th {
   border-style: none;
 }
 
-#rrleqrfddz p {
+#fsiwiqjvqd p {
   margin: 0;
   padding: 0;
 }
 
-#rrleqrfddz .gt_table {
+#fsiwiqjvqd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -370,12 +370,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_caption {
+#fsiwiqjvqd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rrleqrfddz .gt_title {
+#fsiwiqjvqd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -387,7 +387,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#rrleqrfddz .gt_subtitle {
+#fsiwiqjvqd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -399,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#rrleqrfddz .gt_heading {
+#fsiwiqjvqd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -411,13 +411,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_bottom_border {
+#fsiwiqjvqd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_col_headings {
+#fsiwiqjvqd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -432,7 +432,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_col_heading {
+#fsiwiqjvqd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -452,7 +452,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#rrleqrfddz .gt_column_spanner_outer {
+#fsiwiqjvqd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -464,15 +464,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#rrleqrfddz .gt_column_spanner_outer:first-child {
+#fsiwiqjvqd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rrleqrfddz .gt_column_spanner_outer:last-child {
+#fsiwiqjvqd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rrleqrfddz .gt_column_spanner {
+#fsiwiqjvqd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -484,11 +484,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#rrleqrfddz .gt_spanner_row {
+#fsiwiqjvqd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rrleqrfddz .gt_group_heading {
+#fsiwiqjvqd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -514,7 +514,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#rrleqrfddz .gt_empty_group_heading {
+#fsiwiqjvqd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -529,15 +529,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#rrleqrfddz .gt_from_md > :first-child {
+#fsiwiqjvqd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rrleqrfddz .gt_from_md > :last-child {
+#fsiwiqjvqd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rrleqrfddz .gt_row {
+#fsiwiqjvqd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -556,7 +556,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#rrleqrfddz .gt_stub {
+#fsiwiqjvqd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -569,7 +569,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#rrleqrfddz .gt_stub_row_group {
+#fsiwiqjvqd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -583,15 +583,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#rrleqrfddz .gt_row_group_first td {
+#fsiwiqjvqd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rrleqrfddz .gt_row_group_first th {
+#fsiwiqjvqd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rrleqrfddz .gt_summary_row {
+#fsiwiqjvqd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -601,16 +601,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#rrleqrfddz .gt_first_summary_row {
+#fsiwiqjvqd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_first_summary_row.thick {
+#fsiwiqjvqd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rrleqrfddz .gt_last_summary_row {
+#fsiwiqjvqd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -620,7 +620,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_grand_summary_row {
+#fsiwiqjvqd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -630,7 +630,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#rrleqrfddz .gt_first_grand_summary_row {
+#fsiwiqjvqd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -640,7 +640,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_last_grand_summary_row_top {
+#fsiwiqjvqd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -650,11 +650,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_striped {
+#fsiwiqjvqd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rrleqrfddz .gt_table_body {
+#fsiwiqjvqd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -663,7 +663,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_footnotes {
+#fsiwiqjvqd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -677,7 +677,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_footnote {
+#fsiwiqjvqd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -686,7 +686,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#rrleqrfddz .gt_sourcenotes {
+#fsiwiqjvqd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -700,7 +700,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#rrleqrfddz .gt_sourcenote {
+#fsiwiqjvqd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -708,72 +708,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#rrleqrfddz .gt_left {
+#fsiwiqjvqd .gt_left {
   text-align: left;
 }
 
-#rrleqrfddz .gt_center {
+#fsiwiqjvqd .gt_center {
   text-align: center;
 }
 
-#rrleqrfddz .gt_right {
+#fsiwiqjvqd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rrleqrfddz .gt_font_normal {
+#fsiwiqjvqd .gt_font_normal {
   font-weight: normal;
 }
 
-#rrleqrfddz .gt_font_bold {
+#fsiwiqjvqd .gt_font_bold {
   font-weight: bold;
 }
 
-#rrleqrfddz .gt_font_italic {
+#fsiwiqjvqd .gt_font_italic {
   font-style: italic;
 }
 
-#rrleqrfddz .gt_super {
+#fsiwiqjvqd .gt_super {
   font-size: 65%;
 }
 
-#rrleqrfddz .gt_footnote_marks {
+#fsiwiqjvqd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rrleqrfddz .gt_asterisk {
+#fsiwiqjvqd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rrleqrfddz .gt_indent_1 {
+#fsiwiqjvqd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rrleqrfddz .gt_indent_2 {
+#fsiwiqjvqd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rrleqrfddz .gt_indent_3 {
+#fsiwiqjvqd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rrleqrfddz .gt_indent_4 {
+#fsiwiqjvqd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rrleqrfddz .gt_indent_5 {
+#fsiwiqjvqd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rrleqrfddz .katex-display {
+#fsiwiqjvqd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rrleqrfddz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fsiwiqjvqd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -899,7 +899,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Package">purrr</td>
-<td class="gt_row gt_right" headers="Version">1.1.0</td>
+<td class="gt_row gt_right" headers="Version">1.2.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://purrr.tidyverse.org/">🔗</a></td>
 </tr>
 <tr class="even">
@@ -909,7 +909,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Package">stringr</td>
-<td class="gt_row gt_right" headers="Version">1.5.2</td>
+<td class="gt_row gt_right" headers="Version">1.6.0</td>
 <td class="gt_row gt_left" headers="Link"><a href="https://stringr.tidyverse.org">🔗</a></td>
 </tr>
 <tr class="even">
@@ -1404,7 +1404,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Is this book for me?</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>We've written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <span class="co">[</span><span class="ot">Tidy design principles</span><span class="co">](https://design.tidyverse.org/unifying.html)</span> for more details on these principles).</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>We've written this book for anyone interested in working with Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) instances using a tidyverse style approach. That is, human centered, consistent, composable, and inclusive (see <span class="co">[</span><span class="ot">Tidy design principles</span><span class="co">](https://design.tidyverse.org/unifying.html)</span> for more details).</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>New to R? We recommend you take a look at <span class="co">[</span><span class="ot">R for data science</span><span class="co">](https://r4ds.had.co.nz/)</span> before reading this book. We assume that you have <span class="co">[</span><span class="ot">R</span><span class="co">](https://cran.r-project.org)</span> installed together with an adequate Integrated Development Environment (IDE) such as <span class="co">[</span><span class="ot">RStudio</span><span class="co">](https://posit.co/download/rstudio-desktop/)</span> or <span class="co">[</span><span class="ot">Positron</span><span class="co">](https://positron.posit.co)</span>. See this <span class="co">[</span><span class="ot">tutorial</span><span class="co">](https://rstudio-education.github.io/hopr/starting.html)</span> if you need guidance on how to get started. The book uses multiple packages that you will need to install. See the list of packages used in @sec-r_packages.</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -1427,7 +1427,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>If you found this book useful, please help us by citing it:</span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>Burn E, Català M. Tidy R programming with the OMOP Common Data Model. GitHub; </span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>Burn E, Català M. Tidy R programming with the OMOP Common Data Model. GitHub;</span>
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="fl">2025.</span> https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>OHDSI<span class="sc">/</span>Tidy<span class="sc">-</span>R<span class="sc">-</span>programming<span class="sc">-</span>with<span class="sc">-</span>OMOP</span>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
@@ -1446,41 +1446,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>This book is rendered automatically through <span class="co">[</span><span class="ot">GitHub Actions</span><span class="co">](https://github.com/OHDSI/Tidy-R-programming-with-OMOP/blob/main/.github/workflows/publish.yml)</span> using the following version of packages:</span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE, message=FALSE}</span></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>explicitPkgs <span class="ot">&lt;-</span> <span class="fu">list.files</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="at">pattern =</span> <span class="st">".qmd$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(\(x) {</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    lines <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">readLines</span>(x), <span class="at">collapse =</span> <span class="st">" "</span>)</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="fu">regmatches</span>(lines, <span class="fu">gregexpr</span>(<span class="st">"library</span><span class="sc">\\</span><span class="st">(([^)]+)</span><span class="sc">\\</span><span class="st">)"</span>, lines)) <span class="sc">|&gt;</span></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>      purrr<span class="sc">::</span><span class="fu">map</span>(\(s) <span class="fu">gsub</span>(<span class="st">"library</span><span class="sc">\\</span><span class="st">(([^)]+)</span><span class="sc">\\</span><span class="st">)"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, s)) <span class="sc">|&gt;</span></span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unlist</span>()</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="st">"renv.verbose"</span> <span class="ot">=</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>allPkgs <span class="ot">&lt;-</span> renv<span class="sc">::</span><span class="fu">dependencies</span>()<span class="sc">$</span>Package</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="co"># to decide if we want to include all the packages or only the packages that we </span></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="co"># use explicitly</span></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>explicitPkgs <span class="sc">|&gt;</span></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(\(pkg) {</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    d <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">packageDescription</span>(<span class="at">pkg =</span> pkg)</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    link <span class="ot">&lt;-</span> d<span class="sc">$</span>URL <span class="sc">|&gt;</span></span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>      stringr<span class="sc">::</span><span class="fu">str_split_1</span>(<span class="at">pattern =</span> <span class="st">"[,</span><span class="sc">\\</span><span class="st">s]+"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">first</span>()</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>      <span class="at">Package =</span> pkg,</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>      <span class="at">Version =</span> d<span class="sc">$</span>Version,</span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>      <span class="at">Link =</span> <span class="fu">paste0</span>(<span class="st">"[🔗]("</span>, link, <span class="st">")"</span>)</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span></span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_rows</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(Package) <span class="sc">|&gt;</span></span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_markdown</span>(<span class="st">"Link"</span>)</span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>Note: we only included the packages called explicitly in the book.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>explicitPkgs <span class="ot">&lt;-</span> <span class="fu">list.files</span>(here<span class="sc">::</span><span class="fu">here</span>(),</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">".qmd$"</span>,</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(\(x) {</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    lines <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">readLines</span>(x), <span class="at">collapse =</span> <span class="st">" "</span>)</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">regmatches</span>(lines, <span class="fu">gregexpr</span>(<span class="st">"library</span><span class="sc">\\</span><span class="st">(([^)]+)</span><span class="sc">\\</span><span class="st">)"</span>, lines)) <span class="sc">|&gt;</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>      purrr<span class="sc">::</span><span class="fu">map</span>(\(s) <span class="fu">gsub</span>(<span class="st">"library</span><span class="sc">\\</span><span class="st">(([^)]+)</span><span class="sc">\\</span><span class="st">)"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, s)) <span class="sc">|&gt;</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>      <span class="fu">unlist</span>()</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="st">"renv.verbose"</span> <span class="ot">=</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>allPkgs <span class="ot">&lt;-</span> renv<span class="sc">::</span><span class="fu">dependencies</span>()<span class="sc">$</span>Package</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="co"># to decide if we want to include all the packages or only the packages that we</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="co"># use explicitly</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>explicitPkgs <span class="sc">|&gt;</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(\(pkg) {</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    d <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">packageDescription</span>(<span class="at">pkg =</span> pkg)</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    link <span class="ot">&lt;-</span> d<span class="sc">$</span>URL <span class="sc">|&gt;</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>      stringr<span class="sc">::</span><span class="fu">str_split_1</span>(<span class="at">pattern =</span> <span class="st">"[,</span><span class="sc">\\</span><span class="st">s]+"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">first</span>()</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>      <span class="at">Package =</span> pkg,</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>      <span class="at">Version =</span> d<span class="sc">$</span>Version,</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>      <span class="at">Link =</span> <span class="fu">paste0</span>(<span class="st">"[🔗]("</span>, link, <span class="st">")"</span>)</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_rows</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(Package) <span class="sc">|&gt;</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_markdown</span>(<span class="st">"Link"</span>)</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>Note: we only included the packages called explicitly in the book.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

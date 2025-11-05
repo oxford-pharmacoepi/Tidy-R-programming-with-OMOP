@@ -433,19 +433,19 @@ Important
 <td>To order rows in a table.</td>
 </tr>
 <tr class="odd">
-<td>Column Transformation</td>
+<td>Column transformation</td>
 <td><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a>, <a href="https://dplyr.tidyverse.org/reference/select.html">select</a>, <a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a>, <a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></td>
 <td>To create new columns or change existing ones.</td>
 </tr>
 <tr class="even">
-<td>Grouping and ungrouping</td>
+<td>Grouping and un-grouping</td>
 <td><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a>, <a href="https://dplyr.tidyverse.org/reference/rowwise.html">rowwise</a>, <a href="https://dplyr.tidyverse.org/reference/ungroup.html">ungroup</a></td>
 <td>To group data by one or more variables and to remove grouping.</td>
 </tr>
 <tr class="odd">
 <td>Aggregation</td>
 <td><a href="https://dplyr.tidyverse.org/reference/count.html">count</a>, <a href="https://dplyr.tidyverse.org/reference/tally.html">tally</a>, <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></td>
-<td>These functions are used for summarising data.</td>
+<td>For producing summary statistics.</td>
 </tr>
 <tr class="even">
 <td>Data merging and joining</td>
@@ -514,8 +514,8 @@ Important
 </div>
 <p>When working with references to tables in the database the <code>tbl_lazy</code> method will be used.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">inner_join</span>(planes_db))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes_db))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   inner_join.tbl_duckdb_connection
    inner_join.tbl_dbi
@@ -527,8 +527,12 @@ Important
 </div>
 <p>But once we bring data into R, the <code>data.frame</code> method will be used.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">collect</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">inner_join</span>(planes_db <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">collect</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes_db <span class="sc">|&gt;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">collect</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   inner_join.tbl_df
    inner_join.tbl
@@ -545,9 +549,12 @@ Important
 <p>To see a little more on how we can use the above functions, let’s say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.</p>
 <p>For this, we’ll first use the <a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> and <a href="https://dplyr.tidyverse.org/reference/select.html"><code>select()</code></a> <a href="https://dplyr.tidyverse.org"><code>dplyr</code></a> verbs to get the data from the flights table. Note, we’ll rename arr_delay to just delay.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> flights_db <span class="sc">|&gt;</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arr_delay) <span class="sc">&amp;</span> origin <span class="sc">==</span> <span class="st">"JFK"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"dest"</span>, <span class="st">"distance"</span>, <span class="st">"carrier"</span>, <span class="st">"tailnum"</span>, <span class="st">"delay"</span> <span class="ot">=</span> <span class="st">"arr_delay"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> flights_db <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arr_delay) <span class="sc">&amp;</span> origin <span class="sc">==</span> <span class="st">"JFK"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"dest"</span>, <span class="st">"distance"</span>, <span class="st">"carrier"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tailnum"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"delay"</span> <span class="ot">=</span> <span class="st">"arr_delay"</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
@@ -596,9 +603,9 @@ WHERE (NOT((arr_delay IS NULL)) AND origin = 'JFK')</code></pre>
 </div>
 <p>Now we’ll add plane characteristics from the planes table. We will use an inner_join so that only records for which we have the plane characteristics are kept.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    planes_db <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    planes_db <span class="sc">|&gt;</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="st">"tailnum"</span>, <span class="st">"seats"</span>),</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"tailnum"</span></span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -656,8 +663,8 @@ INNER JOIN planes
 </div>
 <p>This tidy dataset has been created in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and proceed from there (for example, to perform statistical analyses locally that might not be possible to run in a database, such as plots, density distributions, regression, or anything beyond data manipulation).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(delayed_flights)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1213,9 +1220,9 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-56"><a href="#cb34-56" aria-hidden="true" tabindex="-1"></a><span class="pp">|-----------------|--------------------------------------|-----------------|</span></span>
 <span id="cb34-57"><a href="#cb34-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Selecting rows <span class="pp">|</span> <span class="co">[</span><span class="ot">filter</span><span class="co">](https://dplyr.tidyverse.org/reference/filter.html)</span>, <span class="co">[</span><span class="ot">distinct</span><span class="co">](https://dplyr.tidyverse.org/reference/distinct.html)</span> <span class="pp">|</span> To select rows in a table. <span class="pp">|</span></span>
 <span id="cb34-58"><a href="#cb34-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ordering rows <span class="pp">|</span> <span class="co">[</span><span class="ot">arrange</span><span class="co">](https://dplyr.tidyverse.org/reference/arrange.html)</span> <span class="pp">|</span> To order rows in a table. <span class="pp">|</span></span>
-<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Column Transformation <span class="pp">|</span> <span class="co">[</span><span class="ot">mutate</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate.html)</span>, <span class="co">[</span><span class="ot">select</span><span class="co">](https://dplyr.tidyverse.org/reference/select.html)</span>, <span class="co">[</span><span class="ot">relocate</span><span class="co">](https://dplyr.tidyverse.org/reference/relocate.html)</span>, <span class="co">[</span><span class="ot">rename</span><span class="co">](https://dplyr.tidyverse.org/reference/rename.html)</span> <span class="pp">|</span> To create new columns or change existing ones. <span class="pp">|</span></span>
-<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Grouping and ungrouping <span class="pp">|</span> <span class="co">[</span><span class="ot">group_by</span><span class="co">](https://dplyr.tidyverse.org/reference/group_by.html)</span>, <span class="co">[</span><span class="ot">rowwise</span><span class="co">](https://dplyr.tidyverse.org/reference/rowwise.html)</span>, <span class="co">[</span><span class="ot">ungroup</span><span class="co">](https://dplyr.tidyverse.org/reference/ungroup.html)</span> <span class="pp">|</span> To group data by one or more variables and to remove grouping. <span class="pp">|</span></span>
-<span id="cb34-61"><a href="#cb34-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Aggregation <span class="pp">|</span> <span class="co">[</span><span class="ot">count</span><span class="co">](https://dplyr.tidyverse.org/reference/count.html)</span>, <span class="co">[</span><span class="ot">tally</span><span class="co">](https://dplyr.tidyverse.org/reference/tally.html)</span>, <span class="co">[</span><span class="ot">summarise</span><span class="co">](https://dplyr.tidyverse.org/reference/summarise.html)</span> <span class="pp">|</span> These functions are used for summarising data. <span class="pp">|</span></span>
+<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Column transformation <span class="pp">|</span> <span class="co">[</span><span class="ot">mutate</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate.html)</span>, <span class="co">[</span><span class="ot">select</span><span class="co">](https://dplyr.tidyverse.org/reference/select.html)</span>, <span class="co">[</span><span class="ot">relocate</span><span class="co">](https://dplyr.tidyverse.org/reference/relocate.html)</span>, <span class="co">[</span><span class="ot">rename</span><span class="co">](https://dplyr.tidyverse.org/reference/rename.html)</span> <span class="pp">|</span> To create new columns or change existing ones. <span class="pp">|</span></span>
+<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Grouping and un-grouping <span class="pp">|</span> <span class="co">[</span><span class="ot">group_by</span><span class="co">](https://dplyr.tidyverse.org/reference/group_by.html)</span>, <span class="co">[</span><span class="ot">rowwise</span><span class="co">](https://dplyr.tidyverse.org/reference/rowwise.html)</span>, <span class="co">[</span><span class="ot">ungroup</span><span class="co">](https://dplyr.tidyverse.org/reference/ungroup.html)</span> <span class="pp">|</span> To group data by one or more variables and to remove grouping. <span class="pp">|</span></span>
+<span id="cb34-61"><a href="#cb34-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Aggregation <span class="pp">|</span> <span class="co">[</span><span class="ot">count</span><span class="co">](https://dplyr.tidyverse.org/reference/count.html)</span>, <span class="co">[</span><span class="ot">tally</span><span class="co">](https://dplyr.tidyverse.org/reference/tally.html)</span>, <span class="co">[</span><span class="ot">summarise</span><span class="co">](https://dplyr.tidyverse.org/reference/summarise.html)</span> <span class="pp">|</span> For producing summary statistics. <span class="pp">|</span></span>
 <span id="cb34-62"><a href="#cb34-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data merging and joining <span class="pp">|</span> <span class="co">[</span><span class="ot">inner_join</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate-joins.html)</span>, <span class="co">[</span><span class="ot">left_join</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate-joins.html)</span>, <span class="co">[</span><span class="ot">right_join</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate-joins.html)</span>, <span class="co">[</span><span class="ot">full_join</span><span class="co">](https://dplyr.tidyverse.org/reference/mutate-joins.html)</span>, <span class="co">[</span><span class="ot">anti_join</span><span class="co">](https://dplyr.tidyverse.org/reference/filter-joins.html)</span>, <span class="co">[</span><span class="ot">semi_join</span><span class="co">](https://dplyr.tidyverse.org/reference/filter-joins.html)</span>, <span class="co">[</span><span class="ot">cross_join</span><span class="co">](https://dplyr.tidyverse.org/reference/cross_join.html)</span> <span class="pp">|</span> These functions are used to combine data from different tables based on common columns. <span class="pp">|</span></span>
 <span id="cb34-63"><a href="#cb34-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data reshaping <span class="pp">|</span> <span class="co">[</span><span class="ot">pivot_wider</span><span class="co">](https://tidyr.tidyverse.org/reference/pivot_wider.html)</span>, <span class="co">[</span><span class="ot">pivot_longer</span><span class="co">](https://tidyr.tidyverse.org/reference/pivot_longer.html)</span> <span class="pp">|</span> These functions are used to reshape data between wide and long formats. <span class="pp">|</span></span>
 <span id="cb34-64"><a href="#cb34-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data union <span class="pp">|</span> <span class="co">[</span><span class="ot">union_all</span><span class="co">](https://dplyr.tidyverse.org/reference/setops.html)</span>, <span class="co">[</span><span class="ot">union</span><span class="co">](https://dplyr.tidyverse.org/reference/setops.html)</span> <span class="pp">|</span> This function combines two tables. <span class="pp">|</span></span>
@@ -1247,97 +1254,104 @@ $ seats    &lt;int&gt; 178, 182, 200, 178, 178, 200, 20, 200, 200, 20, 379, 20, 
 <span id="cb34-90"><a href="#cb34-90" aria-hidden="true" tabindex="-1"></a>When working with references to tables in the database the <span class="in">`tbl_lazy`</span> method will be used.</span>
 <span id="cb34-91"><a href="#cb34-91" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-92"><a href="#cb34-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb34-93"><a href="#cb34-93" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span> </span>
-<span id="cb34-94"><a href="#cb34-94" aria-hidden="true" tabindex="-1"></a>              <span class="fu">inner_join</span>(planes_db))</span>
+<span id="cb34-93"><a href="#cb34-93" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span></span>
+<span id="cb34-94"><a href="#cb34-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes_db))</span>
 <span id="cb34-95"><a href="#cb34-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-96"><a href="#cb34-96" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-97"><a href="#cb34-97" aria-hidden="true" tabindex="-1"></a>But once we bring data into R, the <span class="in">`data.frame`</span> method will be used.</span>
 <span id="cb34-98"><a href="#cb34-98" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-99"><a href="#cb34-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb34-100"><a href="#cb34-100" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">collect</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb34-101"><a href="#cb34-101" aria-hidden="true" tabindex="-1"></a>              <span class="fu">inner_join</span>(planes_db <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">collect</span>()))</span>
-<span id="cb34-102"><a href="#cb34-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-103"><a href="#cb34-103" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb34-104"><a href="#cb34-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-105"><a href="#cb34-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting to an analytic dataset</span></span>
-<span id="cb34-106"><a href="#cb34-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a>To see a little more on how we can use the above functions, let's say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.</span>
+<span id="cb34-100"><a href="#cb34-100" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_dispatch</span>(flights_db <span class="sc">|&gt;</span></span>
+<span id="cb34-101"><a href="#cb34-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-102"><a href="#cb34-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
+<span id="cb34-103"><a href="#cb34-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(planes_db <span class="sc">|&gt;</span></span>
+<span id="cb34-104"><a href="#cb34-104" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-105"><a href="#cb34-105" aria-hidden="true" tabindex="-1"></a>    <span class="fu">collect</span>()))</span>
+<span id="cb34-106"><a href="#cb34-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb34-108"><a href="#cb34-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a>For this, we'll first use the <span class="co">[</span><span class="ot">`filter()`</span><span class="co">](https://dplyr.tidyverse.org/reference/filter.html)</span> and <span class="co">[</span><span class="ot">`select()`</span><span class="co">](https://dplyr.tidyverse.org/reference/select.html)</span> <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span> verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.</span>
+<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting to an analytic dataset</span></span>
 <span id="cb34-110"><a href="#cb34-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> flights_db <span class="sc">|&gt;</span> </span>
-<span id="cb34-113"><a href="#cb34-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arr_delay) <span class="sc">&amp;</span> origin <span class="sc">==</span> <span class="st">"JFK"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb34-114"><a href="#cb34-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"dest"</span>, <span class="st">"distance"</span>, <span class="st">"carrier"</span>, <span class="st">"tailnum"</span>, <span class="st">"delay"</span> <span class="ot">=</span> <span class="st">"arr_delay"</span>)</span>
-<span id="cb34-115"><a href="#cb34-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-116"><a href="#cb34-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-117"><a href="#cb34-117" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb34-118"><a href="#cb34-118" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
-<span id="cb34-119"><a href="#cb34-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-120"><a href="#cb34-120" aria-hidden="true" tabindex="-1"></a>See the resultant DuckDB query:</span>
-<span id="cb34-121"><a href="#cb34-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-122"><a href="#cb34-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb34-123"><a href="#cb34-123" aria-hidden="true" tabindex="-1"></a><span class="fu">show_query</span>(delayed_flights_db)</span>
-<span id="cb34-124"><a href="#cb34-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-125"><a href="#cb34-125" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a>To see a little more on how we can use the above functions, let's say we want to do an analysis of late flights from JFK airport. We want to see whether there is some relationship between plane characteristics and the risk of delay.</span>
+<span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-113"><a href="#cb34-113" aria-hidden="true" tabindex="-1"></a>For this, we'll first use the <span class="co">[</span><span class="ot">`filter()`</span><span class="co">](https://dplyr.tidyverse.org/reference/filter.html)</span> and <span class="co">[</span><span class="ot">`select()`</span><span class="co">](https://dplyr.tidyverse.org/reference/select.html)</span> <span class="co">[</span><span class="ot">`dplyr`</span><span class="co">](https://dplyr.tidyverse.org)</span> verbs to get the data from the flights table. Note, we'll rename arr_delay to just delay.</span>
+<span id="cb34-114"><a href="#cb34-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-115"><a href="#cb34-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-116"><a href="#cb34-116" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> flights_db <span class="sc">|&gt;</span></span>
+<span id="cb34-117"><a href="#cb34-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arr_delay) <span class="sc">&amp;</span> origin <span class="sc">==</span> <span class="st">"JFK"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-118"><a href="#cb34-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"dest"</span>, <span class="st">"distance"</span>, <span class="st">"carrier"</span>,</span>
+<span id="cb34-119"><a href="#cb34-119" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tailnum"</span>,</span>
+<span id="cb34-120"><a href="#cb34-120" aria-hidden="true" tabindex="-1"></a>    <span class="st">"delay"</span> <span class="ot">=</span> <span class="st">"arr_delay"</span></span>
+<span id="cb34-121"><a href="#cb34-121" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-122"><a href="#cb34-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-123"><a href="#cb34-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-124"><a href="#cb34-124" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb34-125"><a href="#cb34-125" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
 <span id="cb34-126"><a href="#cb34-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-127"><a href="#cb34-127" aria-hidden="true" tabindex="-1"></a>When executed, our results will look like the following:</span>
+<span id="cb34-127"><a href="#cb34-127" aria-hidden="true" tabindex="-1"></a>See the resultant DuckDB query:</span>
 <span id="cb34-128"><a href="#cb34-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-129"><a href="#cb34-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb34-130"><a href="#cb34-130" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span>
+<span id="cb34-129"><a href="#cb34-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb34-130"><a href="#cb34-130" aria-hidden="true" tabindex="-1"></a><span class="fu">show_query</span>(delayed_flights_db)</span>
 <span id="cb34-131"><a href="#cb34-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-132"><a href="#cb34-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-133"><a href="#cb34-133" aria-hidden="true" tabindex="-1"></a>Now we'll add plane characteristics from the planes table. We will use an inner_join so that only records for which we have the plane characteristics are kept.</span>
-<span id="cb34-134"><a href="#cb34-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-135"><a href="#cb34-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb34-136"><a href="#cb34-136" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
-<span id="cb34-137"><a href="#cb34-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
-<span id="cb34-138"><a href="#cb34-138" aria-hidden="true" tabindex="-1"></a>    planes_db <span class="sc">|&gt;</span> </span>
-<span id="cb34-139"><a href="#cb34-139" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="st">"tailnum"</span>, <span class="st">"seats"</span>),</span>
-<span id="cb34-140"><a href="#cb34-140" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"tailnum"</span></span>
-<span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a>Note that our first query was not executed, as we didn't use either <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> or <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/collect.html)</span>, so we'll now have added our join to the original query.</span>
-<span id="cb34-145"><a href="#cb34-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-146"><a href="#cb34-146" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb34-147"><a href="#cb34-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
-<span id="cb34-148"><a href="#cb34-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-149"><a href="#cb34-149" aria-hidden="true" tabindex="-1"></a>See that now the SQL code combines both queries:</span>
+<span id="cb34-132"><a href="#cb34-132" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-133"><a href="#cb34-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-134"><a href="#cb34-134" aria-hidden="true" tabindex="-1"></a>When executed, our results will look like the following:</span>
+<span id="cb34-135"><a href="#cb34-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-136"><a href="#cb34-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-137"><a href="#cb34-137" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span>
+<span id="cb34-138"><a href="#cb34-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-139"><a href="#cb34-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-140"><a href="#cb34-140" aria-hidden="true" tabindex="-1"></a>Now we'll add plane characteristics from the planes table. We will use an inner_join so that only records for which we have the plane characteristics are kept.</span>
+<span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a>delayed_flights_db <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span></span>
+<span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb34-145"><a href="#cb34-145" aria-hidden="true" tabindex="-1"></a>    planes_db <span class="sc">|&gt;</span></span>
+<span id="cb34-146"><a href="#cb34-146" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="st">"tailnum"</span>, <span class="st">"seats"</span>),</span>
+<span id="cb34-147"><a href="#cb34-147" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"tailnum"</span></span>
+<span id="cb34-148"><a href="#cb34-148" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-149"><a href="#cb34-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-150"><a href="#cb34-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-151"><a href="#cb34-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
-<span id="cb34-152"><a href="#cb34-152" aria-hidden="true" tabindex="-1"></a><span class="fu">show_query</span>(delayed_flights_db)</span>
-<span id="cb34-153"><a href="#cb34-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-154"><a href="#cb34-154" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-151"><a href="#cb34-151" aria-hidden="true" tabindex="-1"></a>Note that our first query was not executed, as we didn't use either <span class="co">[</span><span class="ot">`compute()`</span><span class="co">](https://dplyr.tidyverse.org/reference/compute.html)</span> or <span class="co">[</span><span class="ot">`collect()`</span><span class="co">](https://dplyr.tidyverse.org/reference/collect.html)</span>, so we'll now have added our join to the original query.</span>
+<span id="cb34-152"><a href="#cb34-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-153"><a href="#cb34-153" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb34-154"><a href="#cb34-154" aria-hidden="true" tabindex="-1"></a><span class="fu">### Show query</span></span>
 <span id="cb34-155"><a href="#cb34-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-156"><a href="#cb34-156" aria-hidden="true" tabindex="-1"></a>And when executed, our results will look like the following:</span>
+<span id="cb34-156"><a href="#cb34-156" aria-hidden="true" tabindex="-1"></a>See that now the SQL code combines both queries:</span>
 <span id="cb34-157"><a href="#cb34-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-158"><a href="#cb34-158" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb34-159"><a href="#cb34-159" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span>
+<span id="cb34-158"><a href="#cb34-158" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE, echo=FALSE}</span></span>
+<span id="cb34-159"><a href="#cb34-159" aria-hidden="true" tabindex="-1"></a><span class="fu">show_query</span>(delayed_flights_db)</span>
 <span id="cb34-160"><a href="#cb34-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-161"><a href="#cb34-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a>This tidy dataset has been created in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and proceed from there (for example, to perform statistical analyses locally that might not be possible to run in a database, such as plots, density distributions, regression, or anything beyond data manipulation).</span>
-<span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-164"><a href="#cb34-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
-<span id="cb34-165"><a href="#cb34-165" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span> </span>
-<span id="cb34-166"><a href="#cb34-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>
-<span id="cb34-167"><a href="#cb34-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-168"><a href="#cb34-168" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(delayed_flights)</span>
-<span id="cb34-169"><a href="#cb34-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-161"><a href="#cb34-161" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a>And when executed, our results will look like the following:</span>
+<span id="cb34-164"><a href="#cb34-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-165"><a href="#cb34-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-166"><a href="#cb34-166" aria-hidden="true" tabindex="-1"></a>delayed_flights_db</span>
+<span id="cb34-167"><a href="#cb34-167" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-168"><a href="#cb34-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-169"><a href="#cb34-169" aria-hidden="true" tabindex="-1"></a>This tidy dataset has been created in the database via R code translated to SQL. With this, we can now collect our analytic dataset into R and proceed from there (for example, to perform statistical analyses locally that might not be possible to run in a database, such as plots, density distributions, regression, or anything beyond data manipulation).</span>
 <span id="cb34-170"><a href="#cb34-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-171"><a href="#cb34-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting from the database</span></span>
-<span id="cb34-172"><a href="#cb34-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-173"><a href="#cb34-173" aria-hidden="true" tabindex="-1"></a>Now that we've reached the end of this example, we can close our connection to the database.</span>
+<span id="cb34-171"><a href="#cb34-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, warning=FALSE}</span></span>
+<span id="cb34-172"><a href="#cb34-172" aria-hidden="true" tabindex="-1"></a>delayed_flights <span class="ot">&lt;-</span> delayed_flights_db <span class="sc">|&gt;</span></span>
+<span id="cb34-173"><a href="#cb34-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
 <span id="cb34-174"><a href="#cb34-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(<span class="at">conn =</span> con)</span>
-<span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-180"><a href="#cb34-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-181"><a href="#cb34-181" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
-<span id="cb34-182"><a href="#cb34-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-183"><a href="#cb34-183" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Wickham H, François R, Henry L, Müller K, Vaughan D (2025). *dplyr: A Grammar of Data Manipulation*. R package version 1.1.4, <span class="ot">&lt;https://dplyr.tidyverse.org&gt;</span></span>
-<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Wickham H, Vaughan D, Girlich M (2025). *tidyr: Tidy Messy Data*. R package version 1.3.1, <span class="ot">&lt;https://tidyr.tidyverse.org&gt;</span>.</span>
+<span id="cb34-175"><a href="#cb34-175" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(delayed_flights)</span>
+<span id="cb34-176"><a href="#cb34-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a><span class="fu">## Disconnecting from the database</span></span>
+<span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-180"><a href="#cb34-180" aria-hidden="true" tabindex="-1"></a>Now that we've reached the end of this example, we can close our connection to the database.</span>
+<span id="cb34-181"><a href="#cb34-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(<span class="at">conn =</span> con)</span>
+<span id="cb34-186"><a href="#cb34-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-187"><a href="#cb34-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-188"><a href="#cb34-188" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
+<span id="cb34-189"><a href="#cb34-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-190"><a href="#cb34-190" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Wickham H, François R, Henry L, Müller K, Vaughan D (2025). *dplyr: A Grammar of Data Manipulation*. R package version 1.1.4, <span class="ot">&lt;https://dplyr.tidyverse.org&gt;</span></span>
+<span id="cb34-191"><a href="#cb34-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-192"><a href="#cb34-192" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Wickham H, Vaughan D, Girlich M (2025). *tidyr: Tidy Messy Data*. R package version 1.3.1, <span class="ot">&lt;https://tidyr.tidyverse.org&gt;</span>.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
