@@ -329,7 +329,7 @@ chars <- cdm$gi_bleed |>
         order = "first"
       )
     ),
-    tableIntersectFlag = list("piror_visits" = list(
+    tableIntersectCount = list("piror_visits" = list(
       tableName = "visit_occurrence",
       window = list(c(-Inf, -1))
     ))
