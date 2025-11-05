@@ -33,8 +33,7 @@ The book is divided into two parts. The first half of the book is focused on the
 If you found this book useful, please help us by citing it:
 
 ```{r, eval=FALSE}
-Burn E, Català M. Tidy R programming with the OMOP Common Data Model. GitHub;
-2025. https://github.com/OHDSI/Tidy-R-programming-with-OMOP
+Burn, E., & Català Sabaté, M. (2025). Tidy R programming with the OMOP Common Data Model (first edition). Zenodo. https://doi.org/10.5281/zenodo.17532124
 ```
 
 ## License
