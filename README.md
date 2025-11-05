@@ -6,6 +6,9 @@
 
 -   **pdf version**: <https://OHDSI.github.io/Tidy-R-programming-with-OMOP/tidy-r-programming-omop.pdf>
 
+## :bow: Citing
+> Burn, E., & Català Sabaté, M. (2025). Tidy R programming with the OMOP Common Data Model (first edition). Zenodo. https://doi.org/10.5281/zenodo.17532124
+
 ## :star: Reader questions and clarifications
 
 -   Please use issues on this repository to ask for clarification on the current content, point out errata, or request additional topics to be covered.
