@@ -1,77 +1,74 @@
 # Working with cohorts {#sec-working_with_cohorts}
 
-## Cohort intersections
+## Adding intersection variables
 
-When conducting research, it is often necessary to study patients who meet multiple clinical criteria simultaneously. For example, we may be interested in analysing outcomes among patients who have both diabetes and hypertension. Using the OMOP CDM, this typically involves first creating two separate cohorts: one for patients with diabetes and another for those with hypertension. To identify patients who meet both conditions, the next step is to compute the intersection of these cohorts. This ensures that the final study population includes only individuals who satisfy all specified criteria. Hence, finding cohort intersections is a common and essential task when working with the OMOP CDM, enabling researchers to define precise target populations that align with their research objectives.
+Studies using the OMOP CDM often start with creating patient cohorts. Often we will start by identifying a target (exposure) cohort. We can then create various other cohorts, for example, to characterise the comorbidities of individuals at time of entry into the target cohort or to summarise the occurrence of a health outcome after entering the target cohort. These intersections between our target cohort and other cohorts (or even other tables in the OMOP CDM) can take many forms and will typically require temporal logic. The `PatientProfiles` R package addresses these challenges by providing a suite of flexible functions to support the calculation of intersections between our target cohorts and other cohorts, concept sets, or other OMOP CDM tables.
 
-Depending on the research question, the definition of a cohort intersection may vary. For instance, you might require patients to have a diagnosis of hypertension before developing diabetes, or that both diagnoses occur within a specific time window. These additional temporal or clinical criteria can make cohort intersection more complex. The `PatientProfiles` R package addresses these challenges by providing a suite of flexible functions to support the calculation of cohort intersections under various scenarios.
+### Intersection between two cohorts
 
-## Intersection between two cohorts
-
-Suppose we are interested in studying patients with gastrointestinal (GI) bleeding who have also been exposed to acetaminophen. First, we would create two separate cohorts: one for patients with GI bleeding and another for patients with exposure to acetaminophen. Below is an example of the code used to create these cohorts within the GiBleed synthetic database. A characterisation of this dataset can be found [here](https://dpa-pde-oxford.shinyapps.io/OmopSketchCharacterisation/).
+Suppose we are interested in studying patients with gastrointestinal (GI) bleeding and describing their use of acetaminophen. We will first create one cohort for patients with GI bleeding (our target cohort). Next we can create another cohort for patients with exposure to acetaminophen, keeping only those individuals who are also in our GI cohort. Below is an example of the code used to create these cohorts within the GiBleed synthetic database (a characterisation of this dataset can be found [here](https://dpa-pde-oxford.shinyapps.io/OmopSketchCharacterisation/)).
 
 ```{r, warning=FALSE, message=FALSE}
 library(omock)
 library(dplyr)
 library(PatientProfiles)
+library(CohortCharacteristics)
 library(CohortConstructor)
 library(omopgenerics) 
 
-cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", 
+                          source = "duckdb")
 
-# gi_bleed contains all records of GiBbleed, end date is 30 days after index 
-# date
 cdm$gi_bleed <- conceptCohort(
   cdm = cdm,
   conceptSet = list("gi_bleed" = 192671L), 
   name = "gi_bleed", 
   exit = "event_start_date"
 ) |>
-  padCohortEnd(days = 30)
+  padCohortEnd(days = 30) |> 
+  requireIsFirstEntry()
 
-# drugs cohort contains records of acetaminophen using start and end dates of 
-# the drug records and collapsing records separated by less than 30 days
-cdm$drugs <- conceptCohort(
+cdm$acetaminophen <- conceptCohort(
   cdm = cdm,
   conceptSet = list("acetaminophen" = c(
-    1125315L, 1127078L, 1127433L, 40229134L, 40231925L, 40162522L, 19133768L
+    1125315L, 1127078L, 1127433L, 40229134L, 
+    40231925L, 40162522L, 19133768L
   )), 
-  name = "drugs", 
-  exit = "event_end_date"
+  name = "acetaminophen", 
+  exit = "event_end_date", 
+  subsetCohort = "gi_bleed"
 ) |>
   collapseCohorts(gap = 30)
 ```
 
-The `PatientProfiles` package contains functions to obtain the intersection flag, count, date, or number of days between cohorts. 
+Now we have these two cohorts we can use functions from the `PatientProfiles` to add variables summarising the intersection between them as either a flag, count, date, or number of days. 
 
-### Flag
+#### Flag
 To get a binary indicator showing the presence of an intersection between the cohorts within a given time window, we can use `addCohortIntersectFlag()`.
 
 ```{r, warning=FALSE, message=FALSE}
-x <- cdm$gi_bleed |>
+cdm$gi_bleed <- cdm$gi_bleed |>
   addCohortIntersectFlag(
-    targetCohortTable = "drugs",
-    window = list("prior" = c(-Inf, -1), "index" = c(0, 0), "post" = c(1, Inf))
+    targetCohortTable = "acetaminophen",
+    window = list("flag_prior" = c(-Inf, -1), 
+                  "flag_on_index" = c(0, 0), 
+                  "flag_post" = c(1, Inf))
   )
 
-x |>
-  summarise(
-    acetaminophen_prior = sum(acetaminophen_prior, na.rm = TRUE),
-    acetaminophen_index = sum(acetaminophen_index, na.rm = TRUE),
-    acetaminophen_post = sum(acetaminophen_post, na.rm = TRUE)
-  ) |>
-  collect()
+cdm$gi_bleed |> 
+  glimpse()
+
 ```
 
 ::: {.callout-note collapse="true"}
-### Window naming
+#### Window naming
 
 Windows work very similarly to age groups that we have seen before. If a name is not provided, an automatic name will be obtained from the values of the window limits:
 
 ```{r}
 cdm$gi_bleed |>
   addCohortIntersectFlag(
-    targetCohortTable = "drugs",
+    targetCohortTable = "acetaminophen",
     window = list(c(-Inf, -1), c(0, 0), c(1, Inf))
   ) |>
   glimpse()
@@ -82,22 +79,22 @@ Note that to avoid conflicts with column naming, all names will be lower case, s
 ```{r}
 cdm$gi_bleed |>
   addCohortIntersectFlag(
-    targetCohortTable = "drugs",
-    window = list("prior" = c(-Inf, -1), "index" = c(0, 0), "post" = c(1, Inf))
+    targetCohortTable = "acetaminophen",
+    window = list("prior" = c(-Inf, -1), "on_index" = c(0, 0), "post" = c(1, Inf))
   ) |>
   glimpse()
 ```
 :::
 
 ::: {.callout-tip collapse="true"}
-### New column naming
+#### New column naming
 
 By default, the name of new columns is '{cohort_name}\_{window_name}' as we have seen in the prior examples. In some cases, you only have one cohort or one window and you might want to rename the column as you please. In that case, you can use the `nameStyle` argument to change the new naming of the columns:
 
 ```{r}
 cdm$gi_bleed |>
   addCohortIntersectFlag(
-    targetCohortTable = "drugs",
+    targetCohortTable = "acetaminophen",
     window = list("prior" = c(-Inf, -1), "index" = c(0, 0), "post" = c(1, Inf)),
     nameStyle = "my_column_{window_name}"
   ) |>
@@ -109,7 +106,7 @@ If multiple windows are provided but '{window_name}' is not included in `nameSty
 ```{r, error=TRUE}
 cdm$gi_bleed |>
   addCohortIntersectFlag(
-    targetCohortTable = "drugs",
+    targetCohortTable = "acetaminophen",
     window = list("prior" = c(-Inf, -1), "index" = c(0, 0), "post" = c(1, Inf)),
     nameStyle = "my_new_column"
   ) |>
@@ -119,32 +116,25 @@ cdm$gi_bleed |>
 Many functions that create new columns (usually functions that start with `add*()`) have this `nameStyle` functionality that allows you to control the naming of the new columns created.
 :::
 
-### Count
+#### Count
 
 To get the count of occurrences of intersection between two cohorts, we can use `addCohortIntersectCount()`:
 
 ```{r, warning=FALSE, message=FALSE}
-x <- cdm$gi_bleed |>
+cdm$gi_bleed <- cdm$gi_bleed |>
   addCohortIntersectCount(
-    targetCohortTable = "drugs",
-    window = list("prior" = c(-Inf, -1), "index" = c(0, 0), "post" = c(1, Inf)),
+    targetCohortTable = "acetaminophen",
+    window = list("count_prior" = c(-Inf, -1), 
+                  "count_index" = c(0, 0), 
+                  "count_post" = c(1, Inf)),
   )
 
-x |>
-  summarise(
-    sum_prior = sum(acetaminophen_prior, na.rm = TRUE),
-    mean_prior = mean(acetaminophen_prior, na.rm = TRUE),
-    sum_index = sum(acetaminophen_index, na.rm = TRUE),
-    mean_index = mean(acetaminophen_index, na.rm = TRUE),
-    sum_post = sum(acetaminophen_post, na.rm = TRUE),
-    mean_post = mean(acetaminophen_post, na.rm = TRUE)
-  ) |>
-  collect()
-  
+cdm$gi_bleed |> 
+  glimpse()
 ```
 
 ::: {.callout-note collapse="true"}
-### Handling the observation period
+#### Handling the observation period
 
 Note that **only intersections in the current observation period are considered**.
 
@@ -163,16 +153,16 @@ Now we will perform the intersect with the following window of interest: `c(2000
 cdm$gi_bleed |>
   filter(subject_id == 2070) |>
   addCohortIntersectCount(
-    targetCohortTable = "drugs",
+    targetCohortTable = "acetaminophen",
     window = list(c(2000, 3000), c(3000, 4000), c(4000, 5000)),
   ) |>
-glimpse()
+  glimpse()
 ```
 
 See that for the window 2000 to 3000, where the individual is still in observation, a 0 is reported. The same happens for the window 3000 to 4000 even if the individual does not have complete observation in the window. But for the last window, as the individual is not in observation at any point of the window, NA is reported.
 :::
 
-### Date and times
+#### Date and times
 
 To get the date of the intersection with a cohort within a given time window, we can use `addCohortIntersectDate()`. To get the number of days between the index date and intersection, we can use `addCohortIntersectDays()`.
 
@@ -183,52 +173,83 @@ Both functions allow the `order` argument to specify which value to return:
 -   `last` returns the last date/days that satisfy the window
 
 ```{r, warning=FALSE, message=FALSE}
-x <- cdm$gi_bleed |>
+cdm$gi_bleed <- cdm$gi_bleed |>
   addCohortIntersectDate(
-    targetCohortTable = "drugs",
-    window = list("post" = c(1, Inf)),
+    targetCohortTable = "acetaminophen",
+    window = list("date_post" = c(1, Inf)),
     order = "first"
   )
 
-x |>
-  summarise(acetaminophen_post = median(acetaminophen_post, na.rm = TRUE)) |>
-  collect()
-  
+cdm$gi_bleed |> 
+  glimpse()
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-x <- cdm$gi_bleed |>
+cdm$gi_bleed <- cdm$gi_bleed |>
   addCohortIntersectDays(
-    targetCohortTable = "drugs",
-    window = list("prior" = c(-Inf, -1)),
+    targetCohortTable = "acetaminophen",
+    window = list("days_prior" = c(-Inf, -1)),
     order = "last"
   )
 
-x |>
-  summarise(acetaminophen_prior = median(acetaminophen_prior, na.rm = TRUE)) |>
-  collect()
+cdm$gi_bleed |> 
+  glimpse()
 ```
 
-Note that for the window in the future, we used `order = "first"` and for the window in the past, we used `order = "last"` as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA on the newly created columns.
+Note that for the window in the future, we used `order = "first"` and for the window in the past, we used `order = "last"` as in both cases we wanted to get the intersection that was closer to the index date. Individuals with no intersection will have NA values in the newly created columns.
 
-## Intersection between a cohort and tables with patient data
+### Intersection between a cohort and tables with patient data
 
-Sometimes we might want to get the intersection between a cohort and another OMOP table. `PatientProfiles` also includes several `addTableIntersect*` functions to obtain intersection flags, counts, days, or dates between a cohort and clinical tables.
+Sometimes we might also want to get the intersection between a cohort and another OMOP CDM table. `PatientProfiles` also includes several `addTableIntersect*` functions to obtain intersection flags, counts, days, or dates between a cohort and clinical tables. These are analogous to the ones we've seen above for intersections with cohort tables.
 
-For example, if we want to get the number of general practitioner (GP) visits for individuals in the cohort, we can use the `visit_occurrence` table:
+As an example, say we want to get the number of visit occurrence records for individuals in the cohort, we can then look for an intersection with the `visit_occurrence` table:
 
 ```{r, warning=FALSE, message=FALSE}
-x <- cdm$gi_bleed |>
+cdm$gi_bleed <- cdm$gi_bleed |>
   addTableIntersectCount(
     tableName = "visit_occurrence",
     window = list(c(-Inf, -1)),
-    nameStyle = "number_visits"
+    nameStyle = "count_piror_visits"
   )
 
-x |>
-  summarise(visit_occurrence_prior = median(number_visits, na.rm = TRUE)) |>
-  collect()
+cdm$gi_bleed |> 
+  glimpse()
   
+```
+
+We can see that by using various functions from `PatientProfiles` we can add numerous variables that we can later use in our analysis. From this we can continue on to then work with this single tidy table to perform various analyses.
+
+## Cohort summaries
+The `PatientProfiles` package provides maximum flexibility, allowining us to add variables of interest for us to use in further analyses. If we simply want a summary of these variables we can use the `CohortCharacteristics` package, which uses `PatientProfiles` to add these variables and then summarises them. `CohortCharacteristics` also provides functions to visualsis these results.
+
+Below we can see how we can generate a summary table of the characteristics of patients in our study cohort, along with summary statistics from our intersectiong of interest. 
+
+```{r, warning=FALSE, message=FALSE}
+chars <- cdm$gi_bleed |> 
+  summariseCharacteristics(demographics = TRUE, 
+                           cohortIntersectFlag = list("flag_prior" = list(targetCohortTable = "acetaminophen", 
+                                                      window = c(-Inf, -1)),
+                                                      "flag_on_index" = list(targetCohortTable = "acetaminophen", 
+                                                      window = c(0, 0)),
+                                                      "flag_post" = list(targetCohortTable = "acetaminophen", 
+                                                      window = c(1, Inf))),
+                           cohortIntersectCount = list("count_prior" = list(targetCohortTable = "acetaminophen", 
+                                                      window = c(-Inf, -1)),
+                                                      "count_on_index" = list(targetCohortTable = "acetaminophen", 
+                                                      window = c(0, 0)),
+                                                      "count_post" = list(targetCohortTable = "acetaminophen", 
+                                                      window = c(1, Inf))), 
+                           cohortIntersectDays = list("days_prior" = list(targetCohortTable = "acetaminophen", 
+                                                      window = c(-Inf, -1),
+                                                      order = "last"),
+                                                      "days_post" = list(targetCohortTable = "acetaminophen", 
+                                                      window = c(1, Inf),
+                                                      order = "first")), 
+                           tableIntersectFlag = list("piror_visits" = list(
+                             tableName = "visit_occurrence",
+                             window = list(c(-Inf, -1)))))
+  
+tableCharacteristics(chars)
 ```
 
 ## Disconnecting
@@ -241,4 +262,8 @@ cdmDisconnect(cdm)
 
 ## Further reading
 
-Full details on the intersection functions in `PatientProfiles` can be found on the package website: <https://darwin-eu.github.io/PatientProfiles/>.
+-   Català M, Guo Y, Du M, Lopez-Guell K, Burn E, Mercade-Besora N (2025). *PatientProfiles: Identify Characteristics of Patients in the OMOP Common Data*. R package version 1.4.4, <https://darwin-eu.github.io/PatientProfiles>.
+
+-   Català M, Guo Y, Lopez-Guell K, Burn E, Mercade-Besora N,  Alcalde M (2025). *CohortCharacteristics: Summarise and Visualise Characteristics of Patients in the OMOP
+CDM*. R package version 1.0.0, <https://darwin-eu.github.io/CohortCharacteristics>.
+

@@ -149,9 +149,9 @@ cdmVersion(cdm$person)
 :::
 
 ::: {.callout-note collapse="true"}
-### Methods functions
+### Re-exported methods
 
-Although as stated, the [`cdmName()`](https://darwin-eu.github.io/omopgenerics/reference/cdmName.html) and [`cdmVersion()`](https://darwin-eu.github.io/omopgenerics/reference/cdmVersion.html) functions are defined by the omopgenerics packages, these functions are re-exported in other packages and you won't need to load omopgenerics explicitly.
+Although the [`cdmName()`](https://darwin-eu.github.io/omopgenerics/reference/cdmName.html) and [`cdmVersion()`](https://darwin-eu.github.io/omopgenerics/reference/cdmVersion.html) functions are defined by the omopgenerics packages, these functions are re-exported in other packages and so you won't need to load omopgenerics explicitly.
 :::
 
 ### Source
@@ -167,7 +167,7 @@ In general the source is only used internally and it is an object defined by the
 ::: {.callout-note collapse="true"}
 ### Explore the source object
 
-In the CDMConnector case the source object contains the connection and the writting schema:
+In the CDMConnector case the source object contains the connection and the writing schema:
 
 ```{r}
 unclass(cdmSource(cdm))
@@ -194,7 +194,7 @@ The function can also be used with a cdm_table object:
 sourceType(cdm$person)
 ```
 
-### Retrive the cdm reference
+### Retrieve the cdm reference
 
 You can use the `cdmReference()` function to retrieve the `cdm_reference` object that a given `cdm_table` comes from:
 
@@ -311,6 +311,9 @@ cdm <- cdmFromCon(con = con,
                   cohortTables = "my_study_cohort",
                   achillesSchema = "main",
                   cdmName = "example_data")
+```
+
+```{r}
 cdm
 ```
 
@@ -357,7 +360,15 @@ Note that omopgenerics provides these functions [`readSourceTable()`](https://da
 
 ```{r}
 listSourceTables(cdm = cdm)
-dropSourceTable(cdm = cdm, name = "penguins")
+```
+
+Note, not only will `dropSourceTable()` drop the underlying table it will also remove a reference to it in our cdm object.
+```{r, error=TRUE}
+cdm <- dropSourceTable(cdm = cdm, name = "penguins")
+cdm
+```
+
+```{r}
 listSourceTables(cdm = cdm)
 ```
 
@@ -492,8 +503,5 @@ cdmDisconnect(cdm)
 
 ## Further reading
 
--   Català M, Burn E (2025). *omopgenerics: Methods and Classes for thecOMOP Common Data Model*. R package version 1.3.1, <https://darwin-eu.github.io/omopgenerics/>.
+-   Català M, Burn E (2025). *omopgenerics: Methods and Classes for the OMOP Common Data Model*. R package version 1.3.1, <https://darwin-eu.github.io/omopgenerics/>.
 -   Black A, Gorbachev A, Burn E, Català M, Nika I (2025). CDMConnector: Connect to an OMOP Common Data Model. R package version 2.2.0, <https://darwin-eu.github.io/CDMConnector/>.
--   OmopOnPostgres (*in progress*)
--   OmopOnSpark (*in progress*)
--   OmopOnDuckDB (*in progress*)

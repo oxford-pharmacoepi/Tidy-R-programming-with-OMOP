@@ -56,9 +56,9 @@ Until we use [`compute()`](https://dplyr.tidyverse.org/reference/compute.html) o
 |-----------------|--------------------------------------|-----------------|
 | Selecting rows | [filter](https://dplyr.tidyverse.org/reference/filter.html), [distinct](https://dplyr.tidyverse.org/reference/distinct.html) | To select rows in a table. |
 | Ordering rows | [arrange](https://dplyr.tidyverse.org/reference/arrange.html) | To order rows in a table. |
-| Column Transformation | [mutate](https://dplyr.tidyverse.org/reference/mutate.html), [select](https://dplyr.tidyverse.org/reference/select.html), [relocate](https://dplyr.tidyverse.org/reference/relocate.html), [rename](https://dplyr.tidyverse.org/reference/rename.html) | To create new columns or change existing ones. |
-| Grouping and ungrouping | [group_by](https://dplyr.tidyverse.org/reference/group_by.html), [rowwise](https://dplyr.tidyverse.org/reference/rowwise.html), [ungroup](https://dplyr.tidyverse.org/reference/ungroup.html) | To group data by one or more variables and to remove grouping. |
-| Aggregation | [count](https://dplyr.tidyverse.org/reference/count.html), [tally](https://dplyr.tidyverse.org/reference/tally.html), [summarise](https://dplyr.tidyverse.org/reference/summarise.html) | These functions are used for summarising data. |
+| Column transformation | [mutate](https://dplyr.tidyverse.org/reference/mutate.html), [select](https://dplyr.tidyverse.org/reference/select.html), [relocate](https://dplyr.tidyverse.org/reference/relocate.html), [rename](https://dplyr.tidyverse.org/reference/rename.html) | To create new columns or change existing ones. |
+| Grouping and un-grouping | [group_by](https://dplyr.tidyverse.org/reference/group_by.html), [rowwise](https://dplyr.tidyverse.org/reference/rowwise.html), [ungroup](https://dplyr.tidyverse.org/reference/ungroup.html) | To group data by one or more variables and to remove grouping. |
+| Aggregation | [count](https://dplyr.tidyverse.org/reference/count.html), [tally](https://dplyr.tidyverse.org/reference/tally.html), [summarise](https://dplyr.tidyverse.org/reference/summarise.html) | For producing summary statistics. |
 | Data merging and joining | [inner_join](https://dplyr.tidyverse.org/reference/mutate-joins.html), [left_join](https://dplyr.tidyverse.org/reference/mutate-joins.html), [right_join](https://dplyr.tidyverse.org/reference/mutate-joins.html), [full_join](https://dplyr.tidyverse.org/reference/mutate-joins.html), [anti_join](https://dplyr.tidyverse.org/reference/filter-joins.html), [semi_join](https://dplyr.tidyverse.org/reference/filter-joins.html), [cross_join](https://dplyr.tidyverse.org/reference/cross_join.html) | These functions are used to combine data from different tables based on common columns. |
 | Data reshaping | [pivot_wider](https://tidyr.tidyverse.org/reference/pivot_wider.html), [pivot_longer](https://tidyr.tidyverse.org/reference/pivot_longer.html) | These functions are used to reshape data between wide and long formats. |
 | Data union | [union_all](https://dplyr.tidyverse.org/reference/setops.html), [union](https://dplyr.tidyverse.org/reference/setops.html) | This function combines two tables. |
@@ -97,8 +97,12 @@ s3_dispatch(flights_db |>
 But once we bring data into R, the `data.frame` method will be used.
 
 ```{r, message=FALSE, warning=FALSE}
-s3_dispatch(flights_db |> head(1) |> collect() |> 
-              inner_join(planes_db |> head(1) |> collect()))
+s3_dispatch(flights_db |> 
+              head(1) |> 
+              collect() |> 
+              inner_join(planes_db |> 
+                           head(1) |> 
+                           collect()))
 ```
 :::
 
@@ -111,7 +115,8 @@ For this, we'll first use the [`filter()`](https://dplyr.tidyverse.org/reference
 ```{r, message=FALSE, warning=FALSE}
 delayed_flights_db <- flights_db |> 
   filter(!is.na(arr_delay) & origin == "JFK") |> 
-  select("dest", "distance", "carrier", "tailnum", "delay" = "arr_delay")
+  select("dest", "distance", "carrier", 
+         "tailnum", "delay" = "arr_delay")
 ```
 
 ::: {.callout-note collapse="true"}

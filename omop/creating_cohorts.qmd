@@ -6,15 +6,15 @@ When conducting research using the OMOP Common Data Model (CDM), we often aim to
 
 The groups of individuals we identify are called cohorts. In the OMOP CDM, cohorts are represented using a specific structure: a cohort table with four required fields:
 
-1)  *Cohort definition id* a unique identifier for each cohort (multiple cohorts can be defined in the same cohort table).
+1)  *cohort_definition_id* a unique identifier for each cohort (multiple cohorts can be defined in the same cohort table).
 
-2)  *Subject id* a foreign key linking the subject in the cohort to the person table.
+2)  *subject_id* a foreign key linking the subject in the cohort to the person table.
 
-3)  *Cohort start date* date indicating the beginning of the cohort record.
+3)  *cohort_start_date* date indicating the beginning of the cohort record.
 
-4)  *Cohort end date* date indicating the end of the cohort record.
+4)  *cohort_end_date* date indicating the end of the cohort record.
 
-Individuals must be defined in the person table and must be under observation(i.e. have an ongoing record in the observation period table) to be part of a cohort. Individuals can enter a cohort multiple times, but the time periods in which they are in the cohort cannot overlap.
+Individuals must be defined in the person table and must be under observation (i.e. have an ongoing record in the observation period table) to be part of a cohort. Individuals can enter a cohort multiple times, but the time periods in which they are in the cohort cannot overlap.
 
 It is beyond the scope of this book to describe all the different ways cohorts could be created, however in this chapter we provide a summary of some of the key building blocks for cohort creation. Cohort-building pipelines can be created following these principles to create a wide range of study cohorts.
 
@@ -24,6 +24,7 @@ We'll use the same Covid-19 synthetic dataset that we used before for demonstrat
 
 ```{r, warning=FALSE, message=FALSE}
 library(omock)
+library(omopgenerics)
 library(CohortConstructor)
 library(CohortCharacteristics)
 library(dplyr)
@@ -77,12 +78,7 @@ codes <- getDrugIngredientCodes(cdm = cdm, name = "acetaminophen")
 codes
 ```
 
-Note that in practice clinical expertise is vital in the identification of appropriate codes so as to decide which the codes are in line with the clinical idea at hand. Additionally, not all codes may be used in the database. To check for this, we can use the function [`subsetToCodesInUse()`](https://darwin-eu.github.io/CodelistGenerator/reference/subsetToCodesInUse.html).
-
-```{r, eval = FALSE, echo = TRUE}
-usedCodes <- subsetToCodesInUse(list("acet" = codes[[1]]),
-                                cdm = cdm)
-```
+Note that in practice clinical expertise is vital in the identification of appropriate codes so as to decide which the codes are in line with the clinical idea at hand. 
 :::
 
 We can see that as well as having the cohort entries above, our cohort table is associated with several attributes.
@@ -152,7 +148,7 @@ We do not have to worry about the attributes and the naming of the tables as `Co
 
 ### Only include first cohort entry per person
 
-Let's say we first want to restrict our cohort to only include the first record for each person. This can be done by using the funtion [`requireIsFirstEntry()`](https://ohdsi.github.io/CohortConstructor/reference/requireIsFirstEntry.html):
+Let's say we first want to restrict our cohort to only include the first record for each person. This can be done by using the function [`requireIsFirstEntry()`](https://ohdsi.github.io/CohortConstructor/reference/requireIsFirstEntry.html):
 
 ```{r, warning=FALSE, message=FALSE}
 cdm$covid <- cdm$covid |> 
@@ -180,7 +176,7 @@ cdm$covid <- cdm$covid |>
 ::: {.callout-note collapse="true"}
 ### Similarity of naming with PatientProfiles
 
-Note that all these `require*()` functions that come from the CohortConstructor package use functionalities from PatientProfiles and the naming is consistent. For example, `requireDemographics()` uses `addDemographics()`, `requirePriorObservation()` uses `addPriorObservation()`, and so on...
+Note that all these `require*()` functions that come from the CohortConstructor package are built on the functionality provided from PatientProfiles we saw in the previous chapter. For example, `requireDemographics()` uses `addDemographics()`, `requirePriorObservation()` uses `addPriorObservation()`, and so on...
 :::
 
 ### Applying cohort-based inclusion criteria
@@ -192,7 +188,8 @@ We can first generate a cohort table with records of myocardial infarction.
 ```{r, warning=FALSE, message=FALSE}
 cdm$cardiac <- conceptCohort(
   cdm = cdm,
-  conceptSet = list("myocaridal_infarction" = c(317576L, 313217L, 321042L, 4329847L)), 
+  conceptSet = list("myocaridal_infarction" = 
+                      c(317576L, 313217L, 321042L, 4329847L)), 
   name = "cardiac"
 )
 cdm$cardiac
@@ -209,24 +206,6 @@ cdm$covid <- cdm$covid |>
 ```
 
 Note that if we had wanted to require that individuals did have a history of a cardiac condition, we would instead have set `intersections = c(1, Inf)` above.
-
-::: {.callout-note collapse="true"}
-### Use requireConceptIntersect
-
-We could have applied the exact same inclusion criteria using the `requireConceptIntersect()` function, this code would be equivalent:
-
-```{r, eval=FALSE}
-cdm$covid <- cdm$covid |> 
-  requireConceptIntersect(
-    conceptSet = list("myocaridal_infarction" = c(317576L, 313217L, 321042L, 4329847L)),
-    indexDate = "cohort_start_date", 
-    window = c(-Inf, -1), 
-    intersections = 0
-  )
-```
-
-In fact, this approach is generally more efficient unless we plan to reuse the myocardial_infarction cohort for another inclusion criteria or analysis. Note, however, that intersecting with the cohort table is more flexible, as it allows for more complex inclusion and exclusion logic. However, you need to be careful with the order of criteria, for example if we restricted the myocardial_infarction cohort to a specific time period before performing the intersection, we would need to avoid applying a separate inclusion criterion based on that same time span.
-:::
 
 ## Cohort attributes
 
@@ -251,19 +230,18 @@ We can visualize the attrition with the CohortCharacteristics package. We can fi
 
 ```{r, warning=FALSE, message=FALSE}
 attrition_summary <- summariseCohortAttrition(cohort = cdm$covid)
-plotCohortAttrition(result = attrition_summary, type = "png")
+tableCohortAttrition(attrition_summary)
 ```
-
-Note that the `conceptCohort()` first step leads to several rows in the attrition table, whereas any other `require*()` function always adds just one record of attrition.
 
 ::: {.callout-tip collapse="true"}
 ### Cohort naming utilities
 
 As we have seen, by default the naming of the cohorts is the name of the codelist:
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 cdm$my_cohort <- conceptCohort(cdm = cdm, 
-                               conceptSet = list("concept_1" = 37311061L, "concept_2" = 317576L), 
+                               conceptSet = list("concept_1" = 37311061L, 
+                                                 "concept_2" = 317576L), 
                                name = "my_cohort")
 settings(cdm$my_cohort)
 ```
@@ -272,8 +250,10 @@ But maybe we are interested in renaming a cohort (e.g., after applying the inclu
 
 ```{r}
 cdm$my_cohort <- cdm$my_cohort |>
-  requirePriorObservation(minPriorObservation = 365, cohortId = 1) |>
-  renameCohort(cohortId = 1, newCohortName = "concept_1_365obs")
+  requirePriorObservation(minPriorObservation = 365, 
+                          cohortId = 1) |>
+  renameCohort(cohortId = 1, 
+               newCohortName = "concept_1_365_obs")
 settings(cdm$my_cohort)
 ```
 
@@ -282,7 +262,8 @@ Note that for arguments such as `cohortId`, `targetCohortId`, etc., we are able 
 ```{r}
 cdm$my_cohort <- cdm$my_cohort |>
   requireSex(sex = "Female", cohortId = "concept_2") |>
-  renameCohort(cohortId = "concept_2", newCohortName = "concept_2_female")
+  renameCohort(cohortId = "concept_2", 
+               newCohortName = "concept_2_female")
 settings(cdm$my_cohort)
 ```
 
@@ -299,10 +280,13 @@ Also other utility functions that can be useful are those provided by omopgeneri
 
 ```{r}
 library(omopgenerics)
-getCohortId(cohort = cdm$my_cohort, cohortName = "concept_2_female")
+getCohortId(cohort = cdm$my_cohort, 
+            cohortName = "concept_2_female")
 getCohortId(cohort = cdm$my_cohort)
-getCohortName(cohort = cdm$my_cohort, cohortId = 1)
-getCohortName(cohort = cdm$my_cohort, cohortId = c(2, 1))
+getCohortName(cohort = cdm$my_cohort, 
+              cohortId = 1)
+getCohortName(cohort = cdm$my_cohort, 
+              cohortId = c(2, 1))
 getCohortName(cohort = cdm$my_cohort)
 ```
 :::

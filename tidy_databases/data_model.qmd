@@ -63,7 +63,7 @@ lahman$People |>
 ```
 
 ::: {.callout-note collapse="true"}
-### The dm package
+### The dm R package
 
 In this chapter we will be creating a bespoke data model for our database. This approach can be further extended using the [`dm`](https://dm.cynkra.com/) package, which also provides various helpful functions for creating a data model and working with it.
 
@@ -325,7 +325,7 @@ lahman$Salaries |>
   summarise(average_salary = mean(salary), .groups = "drop")
 ```
 
-Although the R code looks fine, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.
+Although the R code looks quite concise, when we look at the SQL we can see that our query has two joins to the People table. One join gets information on the birth country and the other on the birth year.
 
 ::: {.callout-note collapse="true"}
 ### Show query
