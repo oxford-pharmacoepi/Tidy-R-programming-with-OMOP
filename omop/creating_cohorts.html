@@ -319,19 +319,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>covid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_covid&gt; [?? x 4]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmppd8xo1/file41e8486a00e7.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp33FIDO/file41d3266b8b0.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        551 2020-04-16        2020-05-04     
- 2                    1       3421 2020-10-07        2020-11-06     
- 3                    1       9231 2020-09-14        2020-10-07     
- 4                    1        658 2020-06-06        2020-07-05     
- 5                    1       2436 2020-11-09        2020-12-16     
- 6                    1       8037 2021-09-10        2021-10-06     
- 7                    1       8562 2020-07-17        2020-08-19     
- 8                    1       8865 2020-12-16        2021-01-05     
- 9                    1       9790 2020-06-05        2020-06-24     
-10                    1      10721 2021-06-05        2021-07-06     
+ 1                    1       3263 2020-12-30        2021-01-31     
+ 2                    1       4769 2021-01-19        2021-02-05     
+ 3                    1       6642 2020-12-08        2020-12-27     
+ 4                    1       7783 2020-12-16        2020-12-16     
+ 5                    1      10338 2020-11-19        2020-12-13     
+ 6                    1       2017 2020-12-25        2021-01-21     
+ 7                    1       4529 2020-12-26        2021-01-25     
+ 8                    1       9403 2020-12-09        2021-01-11     
+ 9                    1       9526 2020-05-04        2020-05-22     
+10                    1      10164 2021-04-10        2021-04-27     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -413,13 +413,13 @@ Time taken: 0 minutes and 1 seconds</code></pre>
 <pre><code># A tibble: 37 × 6
    concept_id found_from   concept_name domain_id vocabulary_id standard_concept
         &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;           
- 1     703446 From initia… Moderate ri… Condition SNOMED        S               
- 2    3661748 From initia… Acute kidne… Condition SNOMED        S               
- 3     756031 From initia… Bronchitis … Condition OMOP Extensi… S               
- 4    3656667 From initia… Cardiomyopa… Condition SNOMED        S               
- 5    3661885 From initia… Fever cause… Condition SNOMED        S               
- 6   37310286 From initia… Infection o… Condition SNOMED        S               
- 7     703447 From initia… High risk c… Condition SNOMED        S               
+ 1    3656667 From initia… Cardiomyopa… Condition SNOMED        S               
+ 2    3661885 From initia… Fever cause… Condition SNOMED        S               
+ 3   37310286 From initia… Infection o… Condition SNOMED        S               
+ 4     703447 From initia… High risk c… Condition SNOMED        S               
+ 5    3661406 From initia… Acute respi… Condition SNOMED        S               
+ 6   37016927 From initia… Pneumonia c… Condition SNOMED        S               
+ 7    1340294 From initia… Exacerbatio… Condition OMOP Extensi… S               
  8    3661631 From initia… Lymphocytop… Condition SNOMED        S               
  9    3661632 From initia… Thrombocyto… Condition SNOMED        S               
 10    3655973 From initia… At increase… Condition SNOMED        S               
@@ -610,19 +610,19 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0</code></pre>
 <span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>cdm<span class="sc">$</span>cardiac</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Source:   table&lt;results.test_cardiac&gt; [?? x 4]
-# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmppd8xo1/file41e8486a00e7.duckdb]
+# Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp33FIDO/file41d3266b8b0.duckdb]
    cohort_definition_id subject_id cohort_start_date cohort_end_date
                   &lt;int&gt;      &lt;int&gt; &lt;date&gt;            &lt;date&gt;         
- 1                    1        674 2001-08-12        2001-08-12     
- 2                    1       3846 1976-11-03        1976-11-03     
- 3                    1       4290 2018-05-07        2018-05-07     
- 4                    1       5842 1964-04-08        1964-04-08     
- 5                    1       5926 2006-02-14        2006-02-14     
- 6                    1       8649 2019-06-16        2019-06-16     
- 7                    1       8805 1977-10-24        1977-10-24     
- 8                    1      10252 2008-12-18        2008-12-18     
- 9                    1       1725 2008-06-27        2008-06-27     
-10                    1       2645 2000-04-18        2000-04-18     
+ 1                    1        144 2006-04-11        2006-04-11     
+ 2                    1        699 2013-07-27        2013-07-27     
+ 3                    1       2075 1942-10-27        1942-10-27     
+ 4                    1       3699 2002-11-21        2002-11-21     
+ 5                    1       5307 2018-06-15        2018-06-15     
+ 6                    1       7093 2021-09-07        2021-09-07     
+ 7                    1       7115 2015-04-10        2015-04-10     
+ 8                    1       7368 2018-01-04        2018-01-04     
+ 9                    1      10135 1999-08-11        1999-08-11     
+10                    1      10376 2018-02-18        2018-02-18     
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -689,23 +689,23 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>attrition_summary <span class="ot">&lt;-</span> <span class="fu">summariseCohortAttrition</span>(<span class="at">cohort =</span> cdm<span class="sc">$</span>covid)</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tableCohortAttrition</span>(attrition_summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="ijkemyavau" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ijkemyavau table {
+<div id="hdrcqtgjwi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hdrcqtgjwi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ijkemyavau thead, #ijkemyavau tbody, #ijkemyavau tfoot, #ijkemyavau tr, #ijkemyavau td, #ijkemyavau th {
+#hdrcqtgjwi thead, #hdrcqtgjwi tbody, #hdrcqtgjwi tfoot, #hdrcqtgjwi tr, #hdrcqtgjwi td, #hdrcqtgjwi th {
   border-style: none;
 }
 
-#ijkemyavau p {
+#hdrcqtgjwi p {
   margin: 0;
   padding: 0;
 }
 
-#ijkemyavau .gt_table {
+#hdrcqtgjwi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -731,12 +731,12 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-left-color: #D9D9D9;
 }
 
-#ijkemyavau .gt_caption {
+#hdrcqtgjwi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ijkemyavau .gt_title {
+#hdrcqtgjwi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -748,7 +748,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-bottom-width: 0;
 }
 
-#ijkemyavau .gt_subtitle {
+#hdrcqtgjwi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -760,7 +760,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-top-width: 0;
 }
 
-#ijkemyavau .gt_heading {
+#hdrcqtgjwi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -772,13 +772,13 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-right-color: #D3D3D3;
 }
 
-#ijkemyavau .gt_bottom_border {
+#hdrcqtgjwi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ijkemyavau .gt_col_headings {
+#hdrcqtgjwi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -793,7 +793,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-right-color: #D3D3D3;
 }
 
-#ijkemyavau .gt_col_heading {
+#hdrcqtgjwi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -813,7 +813,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   overflow-x: hidden;
 }
 
-#ijkemyavau .gt_column_spanner_outer {
+#hdrcqtgjwi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -825,15 +825,15 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   padding-right: 4px;
 }
 
-#ijkemyavau .gt_column_spanner_outer:first-child {
+#hdrcqtgjwi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ijkemyavau .gt_column_spanner_outer:last-child {
+#hdrcqtgjwi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ijkemyavau .gt_column_spanner {
+#hdrcqtgjwi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -845,11 +845,11 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   width: 100%;
 }
 
-#ijkemyavau .gt_spanner_row {
+#hdrcqtgjwi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ijkemyavau .gt_group_heading {
+#hdrcqtgjwi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -875,7 +875,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   text-align: left;
 }
 
-#ijkemyavau .gt_empty_group_heading {
+#hdrcqtgjwi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -890,15 +890,15 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   vertical-align: middle;
 }
 
-#ijkemyavau .gt_from_md > :first-child {
+#hdrcqtgjwi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ijkemyavau .gt_from_md > :last-child {
+#hdrcqtgjwi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ijkemyavau .gt_row {
+#hdrcqtgjwi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -917,7 +917,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   overflow-x: hidden;
 }
 
-#ijkemyavau .gt_stub {
+#hdrcqtgjwi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -930,7 +930,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   padding-right: 5px;
 }
 
-#ijkemyavau .gt_stub_row_group {
+#hdrcqtgjwi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -944,15 +944,15 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   vertical-align: top;
 }
 
-#ijkemyavau .gt_row_group_first td {
+#hdrcqtgjwi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ijkemyavau .gt_row_group_first th {
+#hdrcqtgjwi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ijkemyavau .gt_summary_row {
+#hdrcqtgjwi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -962,16 +962,16 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   padding-right: 5px;
 }
 
-#ijkemyavau .gt_first_summary_row {
+#hdrcqtgjwi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ijkemyavau .gt_first_summary_row.thick {
+#hdrcqtgjwi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ijkemyavau .gt_last_summary_row {
+#hdrcqtgjwi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -981,7 +981,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-bottom-color: #D3D3D3;
 }
 
-#ijkemyavau .gt_grand_summary_row {
+#hdrcqtgjwi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -991,7 +991,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   padding-right: 5px;
 }
 
-#ijkemyavau .gt_first_grand_summary_row {
+#hdrcqtgjwi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1001,7 +1001,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-top-color: #D3D3D3;
 }
 
-#ijkemyavau .gt_last_grand_summary_row_top {
+#hdrcqtgjwi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1011,11 +1011,11 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-bottom-color: #D3D3D3;
 }
 
-#ijkemyavau .gt_striped {
+#hdrcqtgjwi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ijkemyavau .gt_table_body {
+#hdrcqtgjwi .gt_table_body {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #D9D9D9;
@@ -1024,7 +1024,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-bottom-color: #D3D3D3;
 }
 
-#ijkemyavau .gt_footnotes {
+#hdrcqtgjwi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1038,7 +1038,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-right-color: #D3D3D3;
 }
 
-#ijkemyavau .gt_footnote {
+#hdrcqtgjwi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1047,7 +1047,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   padding-right: 5px;
 }
 
-#ijkemyavau .gt_sourcenotes {
+#hdrcqtgjwi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1061,7 +1061,7 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   border-right-color: #D3D3D3;
 }
 
-#ijkemyavau .gt_sourcenote {
+#hdrcqtgjwi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1069,72 +1069,72 @@ $ excluded_subjects    &lt;int&gt; 0, 0, 0, 0, 0, 0, 521, 233, 0, 0, 17</code></
   padding-right: 5px;
 }
 
-#ijkemyavau .gt_left {
+#hdrcqtgjwi .gt_left {
   text-align: left;
 }
 
-#ijkemyavau .gt_center {
+#hdrcqtgjwi .gt_center {
   text-align: center;
 }
 
-#ijkemyavau .gt_right {
+#hdrcqtgjwi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ijkemyavau .gt_font_normal {
+#hdrcqtgjwi .gt_font_normal {
   font-weight: normal;
 }
 
-#ijkemyavau .gt_font_bold {
+#hdrcqtgjwi .gt_font_bold {
   font-weight: bold;
 }
 
-#ijkemyavau .gt_font_italic {
+#hdrcqtgjwi .gt_font_italic {
   font-style: italic;
 }
 
-#ijkemyavau .gt_super {
+#hdrcqtgjwi .gt_super {
   font-size: 65%;
 }
 
-#ijkemyavau .gt_footnote_marks {
+#hdrcqtgjwi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ijkemyavau .gt_asterisk {
+#hdrcqtgjwi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ijkemyavau .gt_indent_1 {
+#hdrcqtgjwi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ijkemyavau .gt_indent_2 {
+#hdrcqtgjwi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ijkemyavau .gt_indent_3 {
+#hdrcqtgjwi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ijkemyavau .gt_indent_4 {
+#hdrcqtgjwi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ijkemyavau .gt_indent_5 {
+#hdrcqtgjwi .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ijkemyavau .katex-display {
+#hdrcqtgjwi .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ijkemyavau div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hdrcqtgjwi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1372,7 +1372,7 @@ Variable name
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: ??
 Columns: 5
-Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmppd8xo1/file41e8486a00e7.duckdb]
+Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.4.1//tmp/Rtmp33FIDO/file41d3266b8b0.duckdb]
 $ cohort_definition_id &lt;int&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
 $ subject_id           &lt;int&gt; 71, 82, 134, 151, 153, 183, 194, 196, 200, 215, 2…
 $ cohort_start_date    &lt;date&gt; 1936-01-24, 1997-08-04, 2001-01-09, 2022-01-13, …
